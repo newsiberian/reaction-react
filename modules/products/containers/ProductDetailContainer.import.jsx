@@ -6,7 +6,7 @@ import ProductDetail from '../components/productDetail/ProductDetail';
 import {
   // selectedProduct as selectedProductReact,
   // selectedVariant,
-  // getProductPriceRange
+  getProductPriceRange
 } from '/common/helpers/products';
 import Unauthorized from '../../layout/components/notice/Unauthorized';
 import ProductNotFound from '../../layout/components/ProductNotFound';
@@ -27,7 +27,11 @@ export default React.createClass({
       newMetafield: {   // this one for handling a new metafield inputs
         key: '',
         value: ''
-      }
+      }//,
+      //title : '',
+      //pageTitle: '',
+      //vendor: '',
+      //description: ''
     };
   },
 
@@ -73,28 +77,28 @@ export default React.createClass({
   },
 
   actualPrice() {
+    // todo understand for what purchasable needed for
     /*let childVariants;
-    let purchasable;
+    //let purchasable;
     // todo should we use global methods here or exported functions?
-    let current = selectedVariant();
-    // we rename this method because
-    let product = selectedProductReact();
+    let current = this.state.selectedVariant; //selectedVariant();
+    let product = this.state.selectedProduct;
     if (product && current) {
       childVariants = (function () {
         let _results = [];
         for (let variant of product.variants) {
-          if ((variant !== null ? variant.parentId : void 0) === current._id) {
+          if ((typeof variant === 'object' && variant.parentId) === current._id) {
             _results.push(variant);
           }
         }
         return _results;
       })();
-      purchasable = childVariants.length > 0 ? false : true;
-    }
-    if (purchasable) {
+      // purchasable = childVariants.length > 0 ? false : true;
+    }*/
+    /* if (purchasable) {
       return current.price;
-    }
-    return getProductPriceRange();*/
+    } */
+    return getProductPriceRange(this.state.selectedProduct._id);
   },
 
   // this method was taken from example:
@@ -177,10 +181,58 @@ export default React.createClass({
   },
 
   /**
+   * @function handleInputChange
+   * @description onChange handler for title, titlePage, description, vendor, etc
+   * @param {Object} event - SyntheticEvent
+   * @param {String} field - name of property
+   * @fires context#setState
+   */
+  handleInputChange(event, field) {
+    this.setState(update(this.state, {
+      selectedProduct: {
+        [field]: { $set: event.target.value }
+      }
+    }));
+  },
+
+  /**
+   * @function handleInputBlur
+   * @description onBlur handler for title, titlePage, description, vendor, etc
+   * @param {Object} event - SyntheticEvent
+   * @param {String} field - name of property
+   * @fires context#setState
+   */
+  handleInputBlur(event, field) {
+    const product = this.state.selectedProduct;
+    Meteor.call('products/updateProductField', product._id, field,
+      event.target.value, error => {
+        if (error) {
+          // todo update on Semantic Alert
+          alert(error.reason);
+          /*return Alerts.add(error.reason, "danger", {
+            placement: "productManagement",
+            i18nKey: "productDetail.errorMsg",
+            id: this._id
+          });*/
+        }
+        if (field === 'title') {
+          Meteor.call('products/setHandle', product._id, (error, result) => {
+            if (result) {
+              return FlowRouter.go('product', {
+                _id: result
+              });
+            }
+          });
+        }
+      });
+  },
+
+  /**
    * @function handleTagChange
    * @description OnChange handler for a tags input field
    * @param {object} event - SyntheticEvent
    * @param {string} _id - tag cursor _id
+   * @fires context#setState
    */
   handleTagChange(event, _id) {
     const { tags } = this.state;
@@ -355,7 +407,7 @@ export default React.createClass({
    * @return {*} ProductDetail "stateless" component.
    */
   render() {
-    const product = this.state.selectedProduct;
+    const selectedProduct = this.state.selectedProduct;
 
     // const { variant, _id } = this.props.params;
 
@@ -364,14 +416,14 @@ export default React.createClass({
       return <Loading />;
     }
 
-    if (this.subscriptionsReady() && !product) {
+    if (this.subscriptionsReady() && !selectedProduct) {
       return <ProductNotFound />;
     }
 
     // we need to send permission down to children, so we put one in object
     let permissions = { createProduct: ReactionCore.hasPermission('createProduct') };
 
-    if (product && ! product.isVisible) {
+    if (selectedProduct && ! selectedProduct.isVisible) {
       // todo постестить реактивность с парой браузеров на этом участке
       if (! permissions) {
         // todo redirect back to product page after successfully authorization
@@ -410,10 +462,12 @@ export default React.createClass({
     // we can't pass permissions down to children, I think... because of reactivity
     return (
       <ProductDetail
-        product={ product }
+        selectedProduct={ selectedProduct }
         selectedVariant={ selectedVariant }
         permissions={ permissions }
         actualPrice={ this.actualPrice }
+        onInputChange={ this.handleInputChange }
+        onInputBlur={ this.handleInputBlur }
         tagsBundle={ tagsBundle }
         metaBundle={ metaBundle }
       />

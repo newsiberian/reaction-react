@@ -24,6 +24,7 @@ export default class GridContent extends Component {
 }
 
 GridContent.propTypes = {
+  // todo add handle for lin
   _id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   displayPrice: PropTypes.func.isRequired

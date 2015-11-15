@@ -14,9 +14,10 @@ import ProductMetaFieldForm from './attributes/ProductMetaFieldForm';
 import ProductMetaField from './attributes/ProductMetaField';
 import ProductSocial from './ProductSocial';
 import VariantList from './variants/VariantList';
-// import { formatPrice } from '/common/helpers/';
+import { formatPrice } from '/common/helpers/i18n';
 import {
-  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle
+  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
+  inputHoverStyle, inputStyle
 } from '../../styles/productDetail';
 
 const { Component, PropTypes } = React;
@@ -26,13 +27,13 @@ const T2 = i18n.createComponent('reaction.core.app');
 @DragDropContext(HTML5Backend)
 export default class ProductDetail extends Component {
   renderProductVisibilityAdminBlock() {
-    const { product } = this.props;
+    const { selectedProduct } = this.props;
     return(
       <div className="ui basic segment">
         <b>
           <i className="attention icon"></i>
           <T>productManagement</T>:&nbsp;
-          { product.isVisible
+          { selectedProduct.isVisible
             ? <span><a href="#" ref="toggle-product-isVisible-link"><T>makeInvisible</T></a>&nbsp;|&nbsp;</span>
             : false
           }
@@ -41,7 +42,7 @@ export default class ProductDetail extends Component {
             : false
           }
         </b>
-        { ! product.isVisible ? this.renderIsNotVisibleAlert() : false }
+        { ! selectedProduct.isVisible ? this.renderIsNotVisibleAlert() : false }
         {/* todo add bootstrapAlerts here */}
       </div>
     );
@@ -58,8 +59,15 @@ export default class ProductDetail extends Component {
   }
 
   renderFieldComponent(options) {
+    const { selectedProduct, onInputChange, onInputBlur } = this.props;
     if (this.props.permissions.createProduct) {
-      return <ProductDetailEdit options={ options } />;
+      return (
+        <ProductDetailEdit
+          selectedProduct={ selectedProduct }
+          onInputChange={ onInputChange }
+          onInputBlur={ onInputBlur }
+          options={ options }
+        />);
     }
     return (
       <div
@@ -118,27 +126,27 @@ export default class ProductDetail extends Component {
 
   renderProductSocialManage() {
     // todo make this part work
-    const { product } = this.props;
+    const { selectedProduct } = this.props;
     const social = [
       {
         name: 'facebook', // name goes from Semantic UI icon name
         field: 'facebookMsg',
-        value: product.facebookMsg
+        value: selectedProduct.facebookMsg
       },
       {
         name: 'twitter',
         field: 'twitterMsg',
-        value: product.facebookMsg
+        value: selectedProduct.facebookMsg
       },
       {
         name: 'pinterest',
         field: 'pinterestMsg',
-        value: product.pinterestMsg
+        value: selectedProduct.pinterestMsg
       },
       {
         name: 'google-plus',
         field: 'googleplusMsg',
-        value: product.googleplusMsg
+        value: selectedProduct.googleplusMsg
       }
     ];
     return (
@@ -161,37 +169,37 @@ export default class ProductDetail extends Component {
   }
 
   render() {
-    const { product, selectedVariant, permissions } = this.props;
+    const { selectedProduct, selectedVariant, permissions, actualPrice } = this.props;
     const titleOptions = {
       field: 'title',
-      value: product.title,
+      value: selectedProduct.title,
       type: 'input',
-      styles: titleStyle
+      styles: [titleStyle, inputHoverStyle, inputStyle]
     };
     const pageTitleOptions = {
       field: 'pageTitle',
-      value: product.pageTitle,
+      value: selectedProduct.pageTitle,
       type: 'input',
-      styles: pageTitleStyle
+      styles: [pageTitleStyle, inputHoverStyle, inputStyle]
     };
     const vendorOptions = {
       field: 'vendor',
-      value: product.vendor,
+      value: selectedProduct.vendor,
       type: 'input',
-      styles: vendorStyle
+      styles: [vendorStyle, inputHoverStyle]
     };
     const descriptionOptions = {
       field: 'description',
-      value: product.description,
+      value: selectedProduct.description,
       type: 'textarea',
-      styles: descriptionStyle,
+      styles: [descriptionStyle, inputHoverStyle],
       className: 'ui basic segment'
     };
 
     console.log('ProductDetail: rendering...');
     return (
       <section className="ui fluid container basic segment">
-        { permissions.createProduct ? this.renderProductVisibilityAdminBlock() : false }
+        { permissions.createProduct && this.renderProductVisibilityAdminBlock() }
         <div className="ui basic segment" itemScope itemType="http://schema.org/Product">
           <div className="ui basic segment">
             <h1 className="ui centered header" itemProp="name">
@@ -204,7 +212,7 @@ export default class ProductDetail extends Component {
           <div className="ui grid">
             <div className="seven wide column">
               <ProductImageGalleryContainer
-                product={ product }
+                product={ selectedProduct }
                 selectedVariant={ selectedVariant }
                 permissions={ permissions }
               />
@@ -216,8 +224,10 @@ export default class ProductDetail extends Component {
             <div className="nine wide column">
 
               { /* Price Fixation */ }
-              <span itemProp="price"></span>
-              { this.renderFieldComponent(vendorOptions) }
+              <span itemProp="price" style={ priceStyle }>{ formatPrice(actualPrice()) }</span>
+              <div>
+                { this.renderFieldComponent(vendorOptions) }
+              </div>
 
               { /* Social Commentary */ }
               { /* todo fix following code */ }
@@ -253,13 +263,15 @@ export default class ProductDetail extends Component {
 }
 
 ProductDetail.propTypes = {
-  product: PropTypes.object.isRequired,
+  selectedProduct: PropTypes.object.isRequired,
   selectedVariant: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.bool
   ]),
   permissions: PropTypes.object.isRequired,
   actualPrice: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  onInputBlur: PropTypes.func.isRequired,
   tagsBundle: PropTypes.shape({
     tags: PropTypes.object,
     tagValue: PropTypes.string,
