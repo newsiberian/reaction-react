@@ -1,0 +1,93 @@
+{
+  "env": {
+    "meteor": true,
+    "browser": true,
+    "jquery": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": ["react"],
+  "ecmaFeatures": {
+    "jsx": true,
+    "experimentalObjectRestSpread": true,
+    "modules": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "arrow-spacing": [2, {"before": true, "after": true}],
+    "no-bitwise": 2,
+    "no-class-assign": 2,
+    "no-console": 0,
+    "no-const-assign": 2,
+    "no-else-return": 2,
+    "no-eq-null": 2,
+    "no-extra-parens": 0,
+    "no-floating-decimal": 2,
+    "no-inner-declarations": [2, "both"],
+    "no-lonely-if": 2,
+    "no-multiple-empty-lines": [2, {"max": 3}],
+    "no-self-compare": 2,
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "no-useless-call": 2,
+    "no-unused-expressions": 0,
+    "no-void": 2,
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }], // http://eslint.org/docs/rules/brace-style
+    "camelcase": [1, {"properties": "never"}],
+    "consistent-return": 0,
+    "comma-style": [2, "last"], // http://eslint.org/docs/rules/comma-style
+    "eol-last": 2, // http://eslint.org/docs/rules/eol-last
+    "complexity": [1, 12],
+    "func-names": 0, // http://eslint.org/docs/rules/func-names
+    "guard-for-in": 2,
+    "indent": [2, 2, {"SwitchCase": 1}], // http://eslint.org/docs/rules/indent
+    "linebreak-style": [2, "unix"],
+    "max-len": [0, 120, 4],
+    "new-cap": [2, {"newIsCap": true, "capIsNew": false}],
+    "prefer-spread": 1,
+    "quotes": [2, "single"],
+    "quote-props": [2, "consistent-as-needed"], // http://eslint.org/docs/rules/quote-props
+    "jsx-quotes": [2, "prefer-double"],
+    "semi": [2, "always"], // http://eslint.org/docs/rules/semi
+    "space-before-function-paren": [2, {
+      "anonymous": "always",
+      "named": "never"
+    }], // http://eslint.org/docs/rules/space-before-function-paren
+    "space-after-keywords": [2, "always"],
+    "space-before-blocks": [2, "always"],
+    "spaced-comment": [2, "always"], // http://eslint.org/docs/rules/spaced-comment
+    "object-curly-spacing": [2, "always"], // http://eslint.org/docs/rules/object-curly-spacing
+    "array-bracket-spacing": [2, "never"],
+    "computed-property-spacing": [2, "never"],
+    "space-in-parens": [2, "never"],
+    "strict": [2, "global"],
+    "valid-jsdoc": 2,
+    "wrap-iife": [2, "any"],
+    "yoda": [1, "never"],
+
+    "react/jsx-boolean-value": 2,
+    "react/jsx-closing-bracket-location": 2,
+    "react/jsx-curly-spacing": [2, "always"], // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md
+    "react/jsx-indent-props": [2, 2], // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-indent-props.md
+    "react/jsx-no-duplicate-props": 2,
+    "react/jsx-no-undef": 2,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-danger": 2,
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 2,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 2,
+    "react/require-extension": 2,
+    "react/self-closing-comp": 2,
+    "react/wrap-multilines": 2
+  },
+  "globals": {
+    "moment": false,
+    "React": false,
+    "FlowRouter": false,
+    "ReactLayout": false,
+    "ReactionCore": false // todo is it really false?
+  }
+}

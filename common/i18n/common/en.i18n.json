@@ -1,0 +1,8 @@
+{
+  "_namespace": "common",
+  "core": {
+    "actions": {
+      "selectAll": "Select All"
+    }
+  }
+}
