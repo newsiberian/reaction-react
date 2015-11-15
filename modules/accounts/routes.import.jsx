@@ -49,7 +49,7 @@ if (Meteor.isClient) {
 
             // this will execute after login/logout/relogin without hot push side-effects
 
-            FlowRouter.go('home');
+            FlowRouter.go('shop');
         }
     });
 }
