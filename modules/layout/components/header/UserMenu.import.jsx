@@ -1,30 +1,29 @@
-/**
- *
- */
-
-// import { Component, PropTypes } from '{react}'
-import { styles } from './../../styles/userMenu'
+import { styles } from '../../styles/userMenu';
 // import { LoginBox } from '{universe:accounts-ui}'
-import I18nChooser from './I18nChooser'
-import CartIcon from '../../../cart/components/CartIcon'
+import I18nChooser from './I18nChooser';
+import CartIcon from '../../../cart/components/CartIcon';
 
-export default class UserMenu extends React.Component {
-	componentWillMount() {
-		// require('./../styles/header.import.css');
-	}
+const { Component, PropTypes } = React;
 
-	render() {
-		// className="ui fluid three item menu"
-		return (
-			<nav className="ui right text menu" style={ styles }>
-				<I18nChooser languages={ this.props.languages } />
+/**
+ * @class UserMenu
+ */
+export default class UserMenu extends Component {
+  render() {
+    const { languages, cartCount, onCartIconClick } = this.props;
+    // className="ui fluid three item menu"
+    return (
+      <nav className="ui right text menu" style={ styles }>
+        <I18nChooser languages={ languages } />
         <a className="item" href={ FlowRouter.path('login') }>Войти</a>
-        <CartIcon />
-			</nav>
-		);
-	}
+        <CartIcon cartCount={ cartCount } onCartIconClick={ onCartIconClick } />
+      </nav>
+    );
+  }
 }
 
 UserMenu.propTypes = {
-  languages: React.PropTypes.array
+  languages: PropTypes.array,
+  cartCount: PropTypes.number.isRequired,
+  onCartIconClick: PropTypes.func.isRequired
 };

@@ -1,13 +1,13 @@
+import LayoutHeader from './LayoutHeaderContainer';
+import LayoutFooter from './../components/footer/LayoutFooter';
+import { styles } from './../styles/coreLayout';
+
+const { Component, PropTypes } = React;
+
 /**
  *
  */
-
-// import { Component, PropTypes } from '{react}';
-import LayoutHeader from './LayoutHeader'
-import LayoutFooter from './../components/footer/LayoutFooter'
-import { styles } from './../styles/coreLayout'
-
-export default class CoreLayout extends React.Component {
+export default class CoreLayout extends Component {
   render() {
     return (
 			<div>
@@ -18,10 +18,10 @@ export default class CoreLayout extends React.Component {
 				<LayoutFooter />
 			</div>
 		);
-	}
+  }
 }
 
 CoreLayout.propTypes = {
-  content: React.PropTypes.node
-	// content2: React.PropTypes.node.isRequired
+  content: PropTypes.node
+	// content2: PropTypes.node.isRequired
 };
