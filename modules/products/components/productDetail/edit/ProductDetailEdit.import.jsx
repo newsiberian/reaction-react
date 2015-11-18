@@ -21,18 +21,15 @@ export default class ProductDetailEdit extends Component {
   render() {
     const { selectedProduct, onInputChange, onInputBlur, options } = this.props;
     const { value, field, type, styles, className } = options;
-    //const ReactMarkdownMediumEditor = Radium(ReactMarkdownMediumEditor);
     // todo we can't use Radium on editor don't know why...
     if (type === 'textarea') {
-      // placeholderText={ i18n.__(`reaction.core.productDetailEdit.${field}`) }
       console.log('ProductDetailEdit: rendering...');
       // todo непонятно зачем в темплейте product-detail-message. я его пока не скопировал
-      // style={ styles ? Radium.merge(styles, mediumHoverStyle) : mediumHoverStyle }
       return(
         <ReactMarkdownMediumEditor
           className={ className && className }
           markdown={ selectedProduct[field] }
-          onChange={ event => onInputChange(event, field) }
+          onChange={ text => onInputChange(text, field) }
           onBlur={ event => onInputBlur(event, field) }
           options={{
             disableReturn: false,
@@ -58,32 +55,6 @@ export default class ProductDetailEdit extends Component {
         style={ styles }
       />
     );
-    /*return(
-      <ReactMarkdownMediumEditor
-        className={ className && className }
-        markdown={ value }
-        onChange={ console.log.bind(console) }
-        options={{
-          disableReturn: true,
-          toolbar: false,
-          placeholder: {
-            text: i18n.__(`reaction.core.productDetailEdit.${field}`)
-          }
-        }}
-        style={ styles ? styles : {} }
-      />
-    );*/
-    /*return (
-      <div className="ui fluid input">
-        <input
-          type="text"
-          value={ value }
-          placeholder={ i18n.__(`reaction.core.productDetailEdit.${field}`) }
-          onChange={ console.log.bind(console) }
-          style={ styles }
-        />
-      </div>
-    );*/
   }
 }
 

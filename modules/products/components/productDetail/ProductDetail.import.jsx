@@ -69,6 +69,7 @@ export default class ProductDetail extends Component {
           options={ options }
         />);
     }
+    // todo add markdown support here:
     return (
       <div
         className={ options.className && options.className }

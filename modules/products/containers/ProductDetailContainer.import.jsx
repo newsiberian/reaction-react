@@ -183,14 +183,16 @@ export default React.createClass({
   /**
    * @function handleInputChange
    * @description onChange handler for title, titlePage, description, vendor, etc
-   * @param {Object} event - SyntheticEvent
+   * @param {Object|String} event - SyntheticEvent or markdown value
    * @param {String} field - name of property
    * @fires context#setState
    */
   handleInputChange(event, field) {
+    const text = typeof event === 'string' ? event : event.target.value;
+
     this.setState(update(this.state, {
       selectedProduct: {
-        [field]: { $set: event.target.value }
+        [field]: { $set: text }
       }
     }));
   },
@@ -198,14 +200,16 @@ export default React.createClass({
   /**
    * @function handleInputBlur
    * @description onBlur handler for title, titlePage, description, vendor, etc
-   * @param {Object} event - SyntheticEvent
+   * @param {Object|String} event - SyntheticEvent or markdown value
    * @param {String} field - name of property
    * @fires context#setState
    */
   handleInputBlur(event, field) {
     const product = this.state.selectedProduct;
+    const text = typeof event === 'string' ? event : event.target.value;
+
     Meteor.call('products/updateProductField', product._id, field,
-      event.target.value, error => {
+      text, error => {
         if (error) {
           // todo update on Semantic Alert
           alert(error.reason);
