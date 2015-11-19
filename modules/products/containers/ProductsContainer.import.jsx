@@ -1,19 +1,11 @@
-/**
- *
- */
-
-// import { Component } from '{react}'
-// we're using own autorun mixin instead of those provided by MDG but you can
-// use whatever is more convenient for you
-// import {AutorunMixin} from '{universe:utilities-react}';
 // import ReactMixin from '/myPackages/react-mixin'
-// import ReactMeteorData from 'react-meteor-data'meteor
-// import { ReactMeteorData } from '{react-meteor-data}!exports'
 import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}';
 import Radium from '/myPackages/radium';
 import { styles } from '../styles/products';
 import ProductGrid from '../components/productGrid/ProductGrid';
 import Loading from '../../layout/components/Loading';
+
+const { PropTypes } = React;
 
 // mixins: [AutorunMixin],
 // @Radium
@@ -21,10 +13,11 @@ import Loading from '../../layout/components/Loading';
 // @ReactMixin.decorate(AutorunMixin)
 // @ReactMixin.decorate(SubscriptionMixin)
 // export default class ProductsMain extends Component {
-let Products = React.createClass({
-  displayName: 'Products',
+const ProductsContainer = React.createClass({
+  displayName: 'ProductsContainer',
   propTypes: {
-
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired
   },
   mixins: [SubscriptionMixin, AutorunMixin],
 
@@ -59,10 +52,6 @@ let Products = React.createClass({
     }
   },
 
-	componentWillMount() {
-		// require('./../styles/main.import.css');
-	},
-
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize/*.bind(this)*/);
 	},
@@ -77,54 +66,56 @@ let Products = React.createClass({
     return false;
   },*/
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	},
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  },
 
-	handleResize(e) {
-		this.setState({windowWidth: window.innerWidth});
-	},
+  handleResize(e) {
+    this.setState({ windowWidth: window.innerWidth });
+  },
 
-	renderSidebar() {
-		if (this.state.windowWidth < 1024) {
-			return;
-		}
-		return (
-			<aside className="four wide column">
+  renderSidebar() {
+    if (this.state.windowWidth < 1024) {
+      return;
+    }
+    return (
+      <aside className="four wide column">
 
-			</aside>
-		);
-	},
+      </aside>
+    );
+  },
 
-	render() {
+  render() {
     if (!this.state.isSubscribed) {
-		// if (!this.subscriptionsReady()) {
-			return (
-				<Loading />
-			);
-		}
+    // if (!this.subscriptionsReady()) {
+      return (
+        <Loading />
+      );
+    }
 
-		let columns;
+    let columns;
 
     // for the wide-screens we split viewport on two parts. This part is not
     // coming from Reaction. It's our own.
-		if (this.state.windowWidth < 1024) {
-			columns = 'sixteen wide column';
-		} else {
-			columns = 'twelve wide column';
-		}
+    if (this.state.windowWidth < 1024) {
+      columns = 'sixteen wide column';
+    } else {
+      columns = 'twelve wide column';
+    }
     // todo do we need container class here?
+    const { location, params } = this.props;
+    const props = { location, params };
 
-		console.log('Products: rendering...');
-		return (
-			<div className="ui celled grid" style={ styles }>
-				<section className={ columns }>
-					<ProductGrid />
-				</section>
-				{ this.renderSidebar() }
-			</div>
-		);
-	}
+    console.log('ProductsContainer: rendering...');
+    return (
+      <div className="ui celled grid" style={ styles }>
+        <section className={ columns }>
+          <ProductGrid { ...props } />
+        </section>
+        { this.renderSidebar() }
+      </div>
+    );
+  }
 });
 
-export default Radium(Products);
+export default Radium(ProductsContainer);

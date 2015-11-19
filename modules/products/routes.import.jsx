@@ -1,9 +1,7 @@
-import Layout from 'layout'
-import ProductsContainer from './containers/ProductsContainer'
-import ProductDetailContainer from './containers/ProductDetailContainer'
-//import Unauthorized from './../layout/components/notice/Unauthorized'
-import AdminControls from '/modules/layout/containers/AdminControls'
+import ProductsContainer from './containers/ProductsContainer';
+import ProductDetailContainer from './containers/ProductDetailContainer';
 
+/*
 FlowRouter.route('/shop', {
     name: 'shop',
     action() {
@@ -29,4 +27,24 @@ FlowRouter.notFound = {
     action() {
         ReactLayout.render(Layout);
     }
-};
+};*/
+
+export default [
+  {
+    path: '/shop',
+    component: ProductsContainer,
+    // indexRoute: { component: ProductsContainer },
+    childRoutes: [
+      // { path: 'tag/:_id', component: ProductsContainer },
+      // { path: 'product/:_id', component: ProductDetailContainer }
+    ]
+  }, {
+    path: '/shop/product/:_id',
+    component: ProductDetailContainer
+    // indexRoute: { component: ProductsContainer },
+    /*childRoutes: [
+      // { path: 'tag/:_id', component: ProductsContainer },
+      { path: 'product/:_id', component: ProductDetailContainer }
+    ]*/
+  }
+];

@@ -3,8 +3,6 @@
  * renamed to "productGridItem"
  */
 
-// import { Component } from '{react}'
-import ReactMixin from '/myPackages/react-mixin'
 import Radium from '/myPackages/radium'
 import {
   styles,
@@ -25,6 +23,7 @@ import GridNotice from './GridNotice'
 import { getProductPriceRange } from '/common/helpers/products'
 
 const { Component, PropTypes } = React;
+const { Link } = ReactRouter;
 
 @Radium
 /**
@@ -262,9 +261,10 @@ export default class ProductGridItem extends Component {
 
   renderMedia() {
     let image;
+    const { data } = this.props;
     // we use 'call' here because it is important for now to save reaction
     // methods 'as it is' with minimum changes.
-    const media = this.media.call(this.props.data);
+    const media = this.media.call(data);
     const isObjectFitSupported = this.checkObjectFitSupported();
 
     if (isObjectFitSupported) {
@@ -282,18 +282,27 @@ export default class ProductGridItem extends Component {
         image = <div style={ [fakeImage, { backgroundImage: 'url(resources/placeholder.gif)' }] }></div>
       }
     }
-
+    //<a
+    //  className="image"
+    //  href={ FlowRouter.path('product', { _id: this.props.data.handle }) }
+    //  style={ linkStyles }
+    //  >
+    //  <div style={ primatyImage }>
+    //    { image }
+    //  </div>
+    //  { this.renderAdditionalMedia(isObjectFitSupported) }
+    //</a>
     return (
-      <a
+      <Link
         className="image"
-        href={ FlowRouter.path('product', { _id: this.props.data.handle }) }
+        to={ `/shop/product/${ data.handle }` }
         style={ linkStyles }
       >
         <div style={ primatyImage }>
           { image }
         </div>
         { this.renderAdditionalMedia(isObjectFitSupported) }
-      </a>
+      </Link>
     );
   }
 
@@ -306,9 +315,10 @@ export default class ProductGridItem extends Component {
         if (isObjectFitSupported) {
           return (
             <div style={ additionalImages }>
-              { additionalMedia.fetch().map((media) => {
+              { additionalMedia.fetch().map((media, i) => {
                 return (
                   <img
+                    key={ i }
                     style={ realAdditionalImage }
                     src={ media.url({ store: 'medium' }) }
                     alt={ media.name() }
@@ -320,13 +330,15 @@ export default class ProductGridItem extends Component {
         } else {
           return (
             <div style={ additionalImages }>
-              { additionalMedia.fetch().map((media) => {
-                return <div style={
-                  [
-                    additianalImage,
-                    fakeImage,
-                    { backgroundImage: `url(${media.url({ store: 'medium' })})` }
-                  ] }></div>;
+              { additionalMedia.fetch().map((media, i) => {
+                return (
+                  <div
+                    key={ i }
+                    style={ [additianalImage, fakeImage,
+                      { backgroundImage: `url(${media.url({ store: 'medium' })})` }
+                    ] }
+                  >
+                  </div>);
               }) }
             </div>
           );
@@ -363,7 +375,7 @@ export default class ProductGridItem extends Component {
         {/* todo добавить сюда product-grid-item-alerts */}
         { this.renderMedia() }
         { gridControls }
-        <GridContent _id={ data._id } title={ data.title } displayPrice={ this.displayPrice } />
+        <GridContent handle={ data.handle } title={ data.title } displayPrice={ this.displayPrice } />
 			</div>
 		);
 	}

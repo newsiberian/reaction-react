@@ -52,6 +52,7 @@ export default React.createClass({
 
   render() {
     const { languages, cart, cartCount } = this.state;
+    console.log('LayoutHeaderContainer rendering...');
     return (
       <LayoutHeader
         languages={ languages }

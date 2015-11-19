@@ -9,11 +9,12 @@ const { Component, PropTypes } = React;
  */
 export default class CoreLayout extends Component {
   render() {
+    console.log('CoreLayout rendering...');
     return (
 			<div>
 				<LayoutHeader />
         <main role="main" style={ styles }>
-          { this.props.content }
+          { this.props.children }
         </main>
 				<LayoutFooter />
 			</div>
@@ -22,6 +23,5 @@ export default class CoreLayout extends Component {
 }
 
 CoreLayout.propTypes = {
-  content: PropTypes.node
-	// content2: PropTypes.node.isRequired
+  children: PropTypes.node
 };

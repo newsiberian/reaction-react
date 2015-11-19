@@ -1,9 +1,10 @@
-import {ComboBox, LoginBox, RegisterBox, ResetPasswordBox} from '{universe:accounts-ui}';
+import { ComboBox, RegisterBox, ResetPasswordBox } from '{universe:accounts-ui}';
+import Accounts from './Accounts';
 
-import Layout from 'layout';
+// import Layout from 'layout';
 
 /* login2 could be used as a demo of another conception */
-FlowRouter.route('/login2', {
+/*FlowRouter.route('/login2', {
     name: 'login2',
     action () {
         ReactLayout.render(Layout, {
@@ -39,17 +40,25 @@ FlowRouter.route('/reset_password', {
                                        registerLink={FlowRouter.path('register')}/>
         });
     }
-});
+});*/
+
+export default {
+  path: 'accounts',
+  component: Accounts,
+  childRoutes: [
+    { path: '/login', component: ComboBox },
+    { path: '/register', component: RegisterBox },
+    { path: '/reset_password', component: ResetPasswordBox }
+  ]
+};
 
 if (Meteor.isClient) {
-    let lastLoggedInUserId = Meteor.userId();
-    Tracker.autorun(() => {
-        if (Meteor.userId() !== lastLoggedInUserId) {
-            lastLoggedInUserId = Meteor.userId();
-
-            // this will execute after login/logout/relogin without hot push side-effects
-
-            FlowRouter.go('shop');
-        }
-    });
+  let lastLoggedInUserId = Meteor.userId();
+  Tracker.autorun(() => {
+    if (Meteor.userId() !== lastLoggedInUserId) {
+      lastLoggedInUserId = Meteor.userId();
+      // this will execute after login/logout/relogin without hot push side-effects
+      // FlowRouter.go('shop');
+    }
+  });
 }

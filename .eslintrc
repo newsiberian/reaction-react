@@ -86,7 +86,7 @@
   "globals": {
     "moment": false,
     "React": false,
-    "FlowRouter": false,
+    "ReactRouter": false,
     "ReactLayout": false,
     "ReactionCore": false // todo is it really false?
   }

@@ -159,10 +159,14 @@ _.extend(ReactionCore, {
     Session.set("admin/actionView", undefined);
   },
 
-  getCurrentTag: function () {
-    if (FlowRouter.current() === "/product/tag") {
-      return FlowRouter.current().params._id;
+  getCurrentTag: function (location, params) {
+    // todo is this right statement?
+    if (location.pathname === '/product/tag' && typeof params._id === 'string') {
+      return params._id;
     }
+    //if (FlowRouter.current() === "/product/tag") {
+    //  return FlowRouter.current().params._id;
+    //}
     //if (Router.current().route.getName() === "/product/tag") {
     //  return Router.current().params._id;
     //}
