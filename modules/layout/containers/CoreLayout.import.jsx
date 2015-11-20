@@ -1,4 +1,4 @@
-import LayoutHeader from './LayoutHeaderContainer';
+import LayoutHeaderContainer from './LayoutHeaderContainer';
 import LayoutFooter from './../components/footer/LayoutFooter';
 import { styles } from './../styles/coreLayout';
 
@@ -9,12 +9,13 @@ const { Component, PropTypes } = React;
  */
 export default class CoreLayout extends Component {
   render() {
+    const { children, location } = this.props;
     console.log('CoreLayout rendering...');
     return (
 			<div>
-				<LayoutHeader />
+				<LayoutHeaderContainer location={ location } />
         <main role="main" style={ styles }>
-          { this.props.children }
+          { children }
         </main>
 				<LayoutFooter />
 			</div>
@@ -23,5 +24,6 @@ export default class CoreLayout extends Component {
 }
 
 CoreLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  location: PropTypes.object.isRequired
 };

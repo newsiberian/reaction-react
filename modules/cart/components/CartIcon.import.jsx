@@ -1,29 +1,42 @@
 import { showCartIconWarning } from '/common/helpers/cart';
 
 const { Component, PropTypes } = React;
+const { Link } = ReactRouter;
 
 /**
  * @classdesc This is "cartIcon" Reaction template ported to React
  */
 export default class CartIcon extends Component {
-  shouldComponentUpdate(nextProps) {
+  /*shouldComponentUpdate(nextProps) {
     //return !shallowCompare(this, nextProps.cartCount);
     return !(nextProps.cartCount === this.props.cartCount);
-  }
+  }*/
   render() {
-    const { cartCount, onCartIconClick } = this.props;
+    const { cartCount, location, showCart, onCartIconClick } = this.props;
     console.log('CartIcon rendering...');
+    // todo any better way for override this: location.pathname?
+    // todo because of location.pathname Link should rerender for every path
+    // change... could we change this?
     return (
-      <a className="item" onClick={ onCartIconClick }>
+      <Link
+        to={ location.pathname }
+        query={ !showCart ? { cart: !showCart } : {} }
+        onClick={ onCartIconClick }
+        className="item"
+      >
         <i className="cart large icon"></i>
-        <div className="floating ui red label" style={{ left: 0 }}>!</div>
+        {/* todo check showCartIconWarning method. currently it seems broken */}
+        { showCartIconWarning && // todo update styles here
+          <div className="floating ui red label" style={{ left: 0 }}>!</div> }
         <div className="floating ui teal label">{ cartCount }</div>
-      </a>
+      </Link>
     );
   }
 }
 
 CartIcon.propTypes = {
   cartCount: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
+  showCart: PropTypes.bool.isRequired,
   onCartIconClick: PropTypes.func.isRequired
 };

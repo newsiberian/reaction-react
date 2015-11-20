@@ -11,14 +11,14 @@ const { Link } = ReactRouter;
  */
 export default class UserMenu extends Component {
   render() {
-    const { languages, cartCount, onCartIconClick } = this.props;
+    const { languages, location, cartCount, showCart, onCartIconClick } = this.props;
     // className="ui fluid three item menu"
     // <a className="item" href={ FlowRouter.path('login') }>Войти</a>
     return (
       <nav className="ui right text menu" style={ styles }>
         <I18nChooser languages={ languages } />
         <Link className="item" to="/login">Войти</Link>
-        <CartIcon cartCount={ cartCount } onCartIconClick={ onCartIconClick } />
+        <CartIcon cartCount={ cartCount } location={ location } showCart={ showCart } onCartIconClick={ onCartIconClick }/>
       </nav>
     );
   }
@@ -26,6 +26,8 @@ export default class UserMenu extends Component {
 
 UserMenu.propTypes = {
   languages: PropTypes.array,
+  location: PropTypes.object.isRequired,
   cartCount: PropTypes.number.isRequired,
+  showCart: PropTypes.bool.isRequired,
   onCartIconClick: PropTypes.func.isRequired
 };

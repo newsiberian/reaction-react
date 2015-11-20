@@ -1,5 +1,4 @@
 import ProductsContainer from './containers/ProductsContainer';
-import ProductDetailContainer from './containers/ProductDetailContainer';
 
 /*
 FlowRouter.route('/shop', {
@@ -29,22 +28,12 @@ FlowRouter.notFound = {
     }
 };*/
 
-export default [
-  {
-    path: '/shop',
-    component: ProductsContainer,
-    // indexRoute: { component: ProductsContainer },
-    childRoutes: [
-      // { path: 'tag/:_id', component: ProductsContainer },
-      // { path: 'product/:_id', component: ProductDetailContainer }
-    ]
-  }, {
-    path: '/shop/product/:_id',
-    component: ProductDetailContainer
-    // indexRoute: { component: ProductsContainer },
-    /*childRoutes: [
-      // { path: 'tag/:_id', component: ProductsContainer },
-      { path: 'product/:_id', component: ProductDetailContainer }
-    ]*/
-  }
-];
+export default {
+  path: '/shop',
+  component: ProductsContainer,
+  // indexRoute: { component: ProductsContainer },
+  childRoutes: [
+    // { path: 'tag/:_id', component: ProductsContainer },
+    // { path: 'product/:_id', component: ProductDetailContainer }
+  ]
+};

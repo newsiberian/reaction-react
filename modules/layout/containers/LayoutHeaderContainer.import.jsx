@@ -2,14 +2,20 @@ import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}'
 import update from 'react/lib/update';
 import LayoutHeader from '../components/header/LayoutHeader';
 
+const { PropTypes } = React;
+
 export default React.createClass({
   displayName: 'LayoutHeaderContainer',
+  propTypes: {
+    location: PropTypes.object.isRequired
+  },
   mixins: [SubscriptionMixin, AutorunMixin],
   getInitialState() {
     return {
       languages: [],
       cart: {},
-      cartCount: 0
+      cartCount: 0,
+      showCart: false
     };
   },
 
@@ -46,18 +52,24 @@ export default React.createClass({
   },
 
   // todo this should be moved in container
-  handleCartIconClick(event) {
-    console.log(event);
+  handleCartIconClick() {
+    const { showCart } = this.state;
+    this.setState(update(this.state, {
+      showCart: { $set: !showCart }
+    }));
+
   },
 
   render() {
-    const { languages, cart, cartCount } = this.state;
+    const { languages, cart, cartCount, showCart } = this.state;
     console.log('LayoutHeaderContainer rendering...');
     return (
       <LayoutHeader
         languages={ languages }
+        location={ this.props.location }
         cart={ cart }
         cartCount={ cartCount }
+        showCart={ showCart }
         onCartIconClick={ this.handleCartIconClick }
       />
     );

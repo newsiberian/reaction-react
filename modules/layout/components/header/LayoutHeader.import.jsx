@@ -2,6 +2,7 @@ import Radium from '/myPackages/radium';
 import { styles } from '../../styles/layoutHeader';
 import HeaderBrand from './HeaderBrand';
 import UserMenu from './UserMenu';
+import CartDrawerContainer from '/modules/cart/containers/CartDrawerContainer';
 
 const { Component, PropTypes } = React;
 
@@ -12,15 +13,15 @@ const { Component, PropTypes } = React;
  */
 export default class LayoutHeader extends Component {
   render() {
-    const { languages, cart, cartCount, onCartIconClick } = this.props;
+    const { languages, location, cartCount, showCart, onCartIconClick } = this.props;
+    const menuProps = { languages, location, cartCount, showCart, onCartIconClick };
     return (
-      <header className="ui text menu" style={ styles }>
-        <HeaderBrand />
-        <UserMenu
-          languages={ languages }
-          cartCount={ cartCount }
-          onCartIconClick={ onCartIconClick }
-          />
+      <header>
+        <header className="ui text menu" style={ styles }>
+          <HeaderBrand />
+          <UserMenu { ...menuProps } />
+        </header>
+        { showCart && <CartDrawerContainer /> }
       </header>
     );
   }
@@ -28,6 +29,8 @@ export default class LayoutHeader extends Component {
 
 LayoutHeader.propTypes = {
   languages: PropTypes.array,
+  location: PropTypes.object.isRequired,
   cartCount: PropTypes.number.isRequired,
+  showCart: PropTypes.bool.isRequired,
   onCartIconClick: PropTypes.func.isRequired
 };

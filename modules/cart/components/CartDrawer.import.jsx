@@ -11,7 +11,7 @@ export default class CartDrawer extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>TEEEESSSTTT</div>
     );
   }
 }

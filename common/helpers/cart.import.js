@@ -11,6 +11,7 @@ export function showCartIconWarning() {
     return true;
   }
   return false;
+  // todo refactor this to [return !!showLowInventoryWarning();]
 }
 
 /**
@@ -19,11 +20,10 @@ export function showCartIconWarning() {
  */
 function showLowInventoryWarning() {
   let item;
-  // todo надо ли здесь подписываться на коллекцию Cart?
   let storedCart = ReactionCore.Collections.Cart.findOne();
   // we're not being picky here - first thing in cart
   // that is low will trigger a inventory warning
-  if (storedCart !== null ? storedCart.items : void 0) {
+  if (typeof storedCart === 'object' && storedCart.items) {
     for (item of storedCart.items) {
       if (item.variants !== null && item.variants.inventoryPolicy &&
         item.variants.lowInventoryWarningThreshold) {
