@@ -62,33 +62,17 @@ export default React.createClass({
     return defaultImage;
   },
 
-  swiperIsInitialized() {},
-
   handleKeepShoppingClick() {
 
   },
 
   render() {
-    const swiperOptions = {
-      direction: 'horizontal',
-      setWrapperSize: true,
-      loop: false,
-      grabCursor: true,
-      slidesPerView: 'auto',
-      //wrapperClass: 'cards',
-      //slideClass: 'card',
-      // slideActiveClass: 'cart-drawer-swiper-slide-active',
-      // pagination: '.cart-drawer-pagination',
-      // paginationClickable: true
-    };
     return (
       <CartDrawer
         checkCartIsEmpty={ this.checkCartIsEmpty }
         { ...this.props }
         cart={ this.state.cart }
         media={ this.media }
-        swiperOptions={ swiperOptions }
-        swiperIsInitialized={ this.swiperIsInitialized }
       />
     );
   }

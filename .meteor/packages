@@ -21,10 +21,10 @@ accounts-password
 semantic:ui
 flemay:less-autoprefixer
 
-#kadira:flow-router
-#kadira:react-layout
+# kadira:flow-router
+# kadira:react-layout
 reactrouter:react-router
-poetic:react-swiper
+# poetic:react-swiper
 
 universe:modules
 #universe:collection
@@ -36,6 +36,7 @@ universe:utilities-react
 # universe:react-grid-layout    # A draggable and resizable grid layout with responsive breakpoints, for React
 # universe:react-widgets
 universe:react-markdown-wysiwyg # Es6 modules with react components wysiwyg based on Medium Editor, It works with markdown in<->out
+universe:carousel
 
 #react
 react-runtime

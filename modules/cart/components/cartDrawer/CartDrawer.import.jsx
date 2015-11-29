@@ -11,8 +11,7 @@ const { Component, PropTypes } = React;
 export default class CartDrawer extends Component {
   render() {
     const {
-      cart, checkCartIsEmpty, displayCart, pathname, onCartIconClick, media,
-      swiperOptions, swiperIsInitialized
+      cart, checkCartIsEmpty, displayCart, pathname, onCartIconClick, media
     } = this.props;
 
     if (checkCartIsEmpty() === 0) {
@@ -31,8 +30,6 @@ export default class CartDrawer extends Component {
         cart={ cart }
         media={ media }
         style={ styles }
-        swiperOptions={ swiperOptions }
-        swiperIsInitialized={ swiperIsInitialized }
       />
     );
   }
@@ -44,7 +41,5 @@ CartDrawer.propTypes = {
   displayCart: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
   onCartIconClick: PropTypes.func.isRequired,
-  media: PropTypes.func.isRequired,
-  swiperOptions: PropTypes.object,
-  swiperIsInitialized: PropTypes.func
+  media: PropTypes.func.isRequired
 };

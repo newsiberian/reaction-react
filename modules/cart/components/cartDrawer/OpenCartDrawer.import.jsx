@@ -1,6 +1,7 @@
 import i18n from '{universe:i18n}';
 import CartSubTotals from './CartSubTotals';
 import CartDrawerItem from './CartDrawerItem';
+import Slider from '{universe:carousel}';
 import { openCartStyles as styles } from '../../styles/cartDrawer';
 
 const T = i18n.createComponent('reaction.core.cartDrawer');
@@ -12,30 +13,44 @@ const { Link } = ReactRouter;
  * @classdesc
  */
 export default class OpenCartDrawer extends Component {
-  render() {
-    const { cart, media, swiperOptions, swiperIsInitialized } = this.props;
+  componentDidMount() {
+    const elem = document.getElementsByClassName('slick-track');
+    if (elem[0] instanceof HTMLDivElement) {
+      elem[0].classList.add('ui');
+      elem[0].classList.add('cards');
+    }
+  }
 
-    console.log('OpenCartDrawer rendering...');
+  render() {
+    const { cart, media } = this.props;
+    const settings = {
+      adaptiveHeight: false,
+      arrows: false,
+      // className: 'ui cards',
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 4, // todo calculate this number
+      slidesToScroll: 4,
+      swipe: true,
+      swipeToSlide: true,
+      vertical: false
+    };
+    console.log('OpenCartDrawer rendering...'); //  className="ui cards"
     return (
       <div>
-        <div>
-          <SwiperComponent
-            className="ui cards"
-            options={ swiperOptions }
-            swiperIsInitialized={ swiperIsInitialized }
-          >
-            <CartSubTotals cart={ cart }/>
-            { cart.items.map(item => {
-              return (
-                <CartDrawerItem
-                  key={ item._id }
-                  item={ item }
-                  media={ media }
-                />
-              );
-            }) }
-          </SwiperComponent>
-        </div>
+        <Slider { ...settings }>
+          <CartSubTotals cart={ cart }/>
+          { cart.items.map(item => {
+            return (
+              <CartDrawerItem
+                key={ item._id }
+                item={ item }
+                media={ media }
+              />
+            );
+          }) }
+        </Slider>
         <Link
           to="/shop"
           query={ 1 }
@@ -51,7 +66,5 @@ export default class OpenCartDrawer extends Component {
 
 OpenCartDrawer.propTypes = {
   cart: PropTypes.object.isRequired,
-  media: PropTypes.func.isRequired,
-  swiperOptions: PropTypes.object,
-  swiperIsInitialized: PropTypes.func
+  media: PropTypes.func.isRequired
 };
