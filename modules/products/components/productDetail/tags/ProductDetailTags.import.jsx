@@ -1,6 +1,5 @@
-/**
- * @classdesc ProductDetailTags
- */
+const { Link } = ReactRouter;
+
 /**
  * @function ProductDetailTags
  * @description Stateless Functional Component which renders tag labels
@@ -12,12 +11,12 @@ export default ({ tags }) => (
       { tags.map((tag) => {
         return (
           <div className="item">
-            <a
+            <Link
               className="ui large label"
-              href={ FlowRouter.path('/product/tag', { _id: tag.slug }) }
+              to={ `/shop/product/tag/${ tag.slug }` }
             >
               { tag.name }
-            </a>
+            </Link>
           </div>
         );
       }) }

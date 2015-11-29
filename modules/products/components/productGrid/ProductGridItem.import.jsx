@@ -3,7 +3,7 @@
  * renamed to "productGridItem"
  */
 
-import Radium from '/myPackages/radium'
+import Radium from '/myPackages/radium';
 import {
   styles,
   linkStyles,
@@ -16,11 +16,12 @@ import {
   productMedium,
   productLarge,
   productSmall
-} from '../../styles/productGridItem'
-import GridControls from './GridControls'
-import GridContent from './GridContent'
-import GridNotice from './GridNotice'
-import { getProductPriceRange } from '/common/helpers/products'
+} from '../../styles/productGridItem';
+import GridControls from './GridControls';
+import GridContent from './GridContent';
+import GridNotice from './GridNotice';
+import { getProductPriceRange } from '/common/helpers/products';
+import { checkObjectFitSupported } from '/common/helpers/utilities';
 
 const { Component, PropTypes } = React;
 const { Link } = ReactRouter;
@@ -198,9 +199,10 @@ export default class ProductGridItem extends Component {
     }
   }
 
-  checkObjectFitSupported() {
-    return 'objectFit' in document.documentElement.style
-  }
+  // moved to helpers/utilities
+  //checkObjectFitSupported() {
+  //  return 'objectFit' in document.documentElement.style
+  //}
 
   /**
    * GridContent method
@@ -265,21 +267,21 @@ export default class ProductGridItem extends Component {
     // we use 'call' here because it is important for now to save reaction
     // methods 'as it is' with minimum changes.
     const media = this.media.call(data);
-    const isObjectFitSupported = this.checkObjectFitSupported();
+    const isObjectFitSupported = checkObjectFitSupported();
 
     if (isObjectFitSupported) {
-      if (typeof media === 'object') {
+      if (media instanceof FS.File) { // typeof media === 'object'
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <img style={ realImage } src={ media.url({ store: 'large' }) } alt={ media.name() } />
+        image = <img style={ realImage } src={ media.url({ store: 'large' }) } alt={ media.name() } />;
       } else {
-        image = <img style={ realImage } src="resources/placeholder.gif" alt="" />
+        image = <img style={ realImage } src="resources/placeholder.gif" alt="" />;
       }
     } else {
-      if (typeof media === 'object') {
+      if (media instanceof FS.File) {
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <div style={ [fakeImage, { backgroundImage: `url(${media.url({ store: 'large' })})` }] }></div>
+        image = <div style={ [fakeImage, { backgroundImage: `url(${media.url({ store: 'large' })})` }] }></div>;
       } else {
-        image = <div style={ [fakeImage, { backgroundImage: 'url(resources/placeholder.gif)' }] }></div>
+        image = <div style={ [fakeImage, { backgroundImage: 'url(resources/placeholder.gif)' }] }></div>;
       }
     }
     //<a

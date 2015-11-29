@@ -222,6 +222,7 @@ export default React.createClass({
         if (field === 'title') {
           Meteor.call('products/setHandle', product._id, (error, result) => {
             if (result) {
+              // todo update on ReactRouter
               return FlowRouter.go('product', {
                 _id: result
               });
@@ -298,6 +299,7 @@ export default React.createClass({
     Meteor.call('products/setHandleTag', this.state.selectedProduct._id, _id,
       function (error, result) {
         if (result) {
+          // todo update on ReactRouter
           return FlowRouter.go('product', {
             _id: result
           });

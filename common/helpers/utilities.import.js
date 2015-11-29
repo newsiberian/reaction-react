@@ -1,5 +1,5 @@
 /**
- * siteName
+ * @function siteName
  * @summary get the products name
  * @return {String} returns site name
  */
@@ -10,5 +10,15 @@ export function siteName() {
       return shop.name;
     }
   }
-  return "";
+  return '';
+}
+
+/**
+ * @function checkObjectFitSupported
+ * @description It checks whether the 'objectFit' css-property is supported
+ * by browser
+ * @return {boolean}
+ */
+export function checkObjectFitSupported() {
+  return 'objectFit' in document.documentElement.style;
 }

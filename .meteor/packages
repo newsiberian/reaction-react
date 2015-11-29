@@ -24,6 +24,7 @@ flemay:less-autoprefixer
 #kadira:flow-router
 #kadira:react-layout
 reactrouter:react-router
+poetic:react-swiper
 
 universe:modules
 #universe:collection
@@ -47,7 +48,6 @@ react-runtime
 # Reaction Commerce Packages
 
 reactioncommerce:core
-# reaction-flow-routing
 
 # mercuria-deps
 den:react-dropzone

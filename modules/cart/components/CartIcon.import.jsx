@@ -12,15 +12,15 @@ export default class CartIcon extends Component {
     return !(nextProps.cartCount === this.props.cartCount);
   }*/
   render() {
-    const { cartCount, location, showCart, onCartIconClick } = this.props;
+    const { cartCount, pathname, displayCart, onCartIconClick } = this.props;
     console.log('CartIcon rendering...');
     // todo any better way for override this: location.pathname?
     // todo because of location.pathname Link should rerender for every path
     // change... could we change this?
     return (
       <Link
-        to={ location.pathname }
-        query={ !showCart ? { cart: !showCart } : {} }
+        to={ pathname }
+        query={ !displayCart ? { cart: !displayCart } : {} }
         onClick={ onCartIconClick }
         className="item"
       >
@@ -36,7 +36,7 @@ export default class CartIcon extends Component {
 
 CartIcon.propTypes = {
   cartCount: PropTypes.number.isRequired,
-  location: PropTypes.object.isRequired,
-  showCart: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired,
+  displayCart: PropTypes.bool.isRequired,
   onCartIconClick: PropTypes.func.isRequired
 };

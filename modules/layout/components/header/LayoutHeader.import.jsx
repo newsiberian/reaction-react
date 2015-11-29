@@ -13,15 +13,22 @@ const { Component, PropTypes } = React;
  */
 export default class LayoutHeader extends Component {
   render() {
-    const { languages, location, cartCount, showCart, onCartIconClick } = this.props;
-    const menuProps = { languages, location, cartCount, showCart, onCartIconClick };
+    const {
+      languages, pathname, cartCount, displayCart, onCartIconClick
+    } = this.props;
+    const menuProps = { languages, pathname, cartCount, displayCart, onCartIconClick };
     return (
       <header>
         <header className="ui text menu" style={ styles }>
           <HeaderBrand />
           <UserMenu { ...menuProps } />
         </header>
-        { showCart && <CartDrawerContainer /> }
+        { displayCart &&
+          <CartDrawerContainer
+            displayCart={ displayCart }
+            pathname={ pathname }
+            onCartIconClick={ onCartIconClick }
+          /> }
       </header>
     );
   }
@@ -29,8 +36,8 @@ export default class LayoutHeader extends Component {
 
 LayoutHeader.propTypes = {
   languages: PropTypes.array,
-  location: PropTypes.object.isRequired,
+  pathname: PropTypes.string.isRequired,
   cartCount: PropTypes.number.isRequired,
-  showCart: PropTypes.bool.isRequired,
+  displayCart: PropTypes.bool.isRequired,
   onCartIconClick: PropTypes.func.isRequired
 };
