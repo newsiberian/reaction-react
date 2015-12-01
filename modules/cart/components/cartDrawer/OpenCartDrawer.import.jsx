@@ -2,7 +2,7 @@ import i18n from '{universe:i18n}';
 import CartSubTotals from './CartSubTotals';
 import CartDrawerItem from './CartDrawerItem';
 import Slider from '{universe:carousel}';
-import { openCartStyles as styles } from '../../styles/cartDrawer';
+import { openCartStyles as styles, cardStyles } from '../../styles/cartDrawer';
 
 const T = i18n.createComponent('reaction.core.cartDrawer');
 const { Component, PropTypes } = React;
@@ -23,23 +23,23 @@ export default class OpenCartDrawer extends Component {
 
   render() {
     const { cart, media } = this.props;
+    const slidesToShow = Math.floor(window.innerWidth / cardStyles.width);
     const settings = {
       adaptiveHeight: false,
       arrows: false,
-      // className: 'ui cards',
       dots: false,
       infinite: false,
       speed: 500,
-      slidesToShow: 4, // todo calculate this number
-      slidesToScroll: 4,
+      slidesToShow: slidesToShow,
+      slidesToScroll: 1,
       swipe: true,
       swipeToSlide: true,
       vertical: false
     };
-    console.log('OpenCartDrawer rendering...'); //  className="ui cards"
+    console.log('OpenCartDrawer rendering...');
     return (
       <div>
-        <Slider { ...settings }>
+        <Slider { ...settings } style={ styles }>
           <CartSubTotals cart={ cart }/>
           { cart.items.map(item => {
             return (
@@ -51,12 +51,7 @@ export default class OpenCartDrawer extends Component {
             );
           }) }
         </Slider>
-        <Link
-          to="/shop"
-          query={ 1 }
-          className="ui green fluid large button"
-          onClick={ console.log() }
-        >
+        <Link to="/checkout" className="ui green fluid large button">
           <T>checkout</T>
         </Link>
       </div>

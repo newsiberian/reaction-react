@@ -1,7 +1,8 @@
 import { checkObjectFitSupported } from '/common/helpers/utilities';
 import {
-  fakeImage, linkStyles, primatyImage, realImage
+  fakeImage, primatyImage, realImage
 } from '../../styles/cartDrawerItem';
+import { cardStyles } from '../../styles/cartDrawer';
 
 const { Component, PropTypes } = React;
 const { Link } = ReactRouter;
@@ -31,19 +32,25 @@ export default class CartDrawerItem extends Component {
         image = <div style={ [fakeImage, { backgroundImage: 'url(resources/placeholder.gif)' }] }></div>;
       }
     }
-
+// style={ linkStyles }
     console.log('CartDrawerItem rendering...');
     return (
-      <div className="ui card">
+      <div className="ui card" style={ cardStyles }>
         <Link
           className="image"
           to={ `/shop/product/` }
-          style={ linkStyles }
+
         >
           <div style={ primatyImage }>
             { image }
           </div>
         </Link>
+        <div className="center aligned content">
+          <Link to={ `/shop/product/` }>
+            <span className="ui grey circular label">{ item.quantity }</span>
+            <span>{ item.variants.title }</span>
+          </Link>
+        </div>
       </div>
     );
   }

@@ -163,12 +163,12 @@
             "adminMessage": "You are viewing orders as an administrator"
         },
         "checkoutLogin": {
-            "welcome": "Welcome, it's so good to see you.",
+            "welcome": "Приветствуем! Рады видеть вас.",
             "loginCompleted": "Вход выполнен",
-            "createOrLogin": "Создайте личный кабинет или авторизируйтесь чтобы продолжить",
-            "guestOrLogin": "Sign in, or checkout as a guest",
-            "continueAsGuest": "Continue as Guest",
-            "guestMessage": "You can checkout without creating an account. You'll have a chance to create an account later."
+            "createOrLogin": "Создайте учётную запись или зайдите чтобы продолжить",
+            "guestOrLogin": "Войти или оформить заказ без регистрации",
+            "continueAsGuest": "Продолжить без регистрации",
+            "guestMessage": "Вы можете оформить заказ без создания учётной записи. У вас будет возможность создать её позже."
         },
         "addressBookGrid": {
             "addAddress": "Добавить Адрес",
@@ -214,7 +214,7 @@
         },
         "checkoutProgressBar": {
             "login": "Авторизация",
-            "shippingBilling": "Доставки и оплата",
+            "shippingBilling": "Адреса",
             "shippingOptions": "Варианты доставки",
             "reviewPayment": "Подтверждение и Оплата",
             "complete": "Готово"

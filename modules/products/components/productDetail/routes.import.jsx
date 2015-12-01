@@ -2,10 +2,10 @@ import ProductDetailContainer from '../../containers/ProductDetailContainer';
 
 export default {
   path: '/shop/product/:_id',
-  component: ProductDetailContainer
+  component: ProductDetailContainer,
   // indexRoute: { component: ProductsContainer },
-  /*childRoutes: [
+  childRoutes: [
    // { path: 'tag/:_id', component: ProductsContainer },
-   { path: 'product/:_id', component: ProductDetailContainer }
-   ]*/
+   // { path: ':variantId', component: ProductDetailContainer }
+  ]
 };

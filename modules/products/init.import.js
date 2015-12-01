@@ -1,2 +1,2 @@
-import './server/methods/products@server'
-import './routes@client'
+import './server/methods/products@server';
+import './routes@client';

@@ -1,6 +1,7 @@
 import i18n from '{universe:i18n}';
 import { formatPrice } from '/common/helpers/i18n';
 import { tableStyles } from '../../styles/cartSubTotals';
+import { cardStyles } from '../../styles/cartDrawer';
 
 const T = i18n.createComponent('reaction.core.cartSubTotals');
 const { Component, PropTypes } = React;
@@ -15,7 +16,7 @@ export default class CartSubTotals extends Component {
     const { cart } = this.props;
     console.log('CartSubTotals rendering...');
     return (
-      <div className="ui card">
+      <div className="ui card" style={ cardStyles }>
         <table
           className="ui very basic very compact collapsing celled table"
           style={ tableStyles }
