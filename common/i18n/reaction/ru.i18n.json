@@ -151,6 +151,10 @@
             "shippingNotifyCustomer": "Notify the customer that their items will be shipping soon.",
             "resendShipmentNotification": "Resend Shipment Notification"
         },
+        "cartCheckout": {
+            "surprise": "Ого!",
+            "emptyCheckoutCart": "похоже, ваша корзина пуста!"
+        },
         "cartCompleted": {
             "thankYou": "Благодарим!",
             "itemsFrom": "item(s) from",

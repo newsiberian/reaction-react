@@ -137,6 +137,10 @@
             "shippingNotifyCustomer": "Notify the customer that their items will be shipping soon.",
             "resendShipmentNotification": "Resend Shipment Notification"
         },
+        "cartCheckout": {
+            "surprise": "Woah!",
+            "emptyCheckoutCart": "looks like your cart is empty!"
+        },
         "cartCompleted": {
             "thankYou": "Thank you!",
             "itemsFrom": "item(s) from",

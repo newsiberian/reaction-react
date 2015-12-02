@@ -10,7 +10,15 @@ const { Component, PropTypes } = React;
  */
 export default class CheckoutProgressBar extends Component {
   render() {
-    const { coreCartWorkflow, progressbarStatus } = this.props;
+    const { cartId, shopId, progressbarStatus, setStepIcon } = this.props;
+    const options = {
+      hash: {
+        id: cartId,
+        shopId: shopId,
+        workflow: 'coreCartWorkflow'
+      }
+    };
+    const coreCartWorkflow = reactionTemplate(options);
 
     console.log('CheckoutProgressBar...');
     return (
@@ -18,23 +26,7 @@ export default class CheckoutProgressBar extends Component {
         { coreCartWorkflow.map(workflow => {
           const label = workflow.label.toCamelCase();
           const statusClass = progressbarStatus(workflow.template);
-          let icon;
-          switch (label) {
-            case 'login':
-              icon = 'user icon';
-              break;
-            case 'shippingBilling':
-              icon = 'mail icon';
-              break;
-            case 'shippingOptions':
-              icon = 'shipping icon';
-              break;
-            case 'reviewPayment':
-              icon = 'payment icon';
-              break;
-            default:
-              icon = 'smile icon';
-          }
+          const icon = setStepIcon(label);
           // { /* <div className="description">Choose your shipping options</div> */ }
           return (
             <div className={ statusClass } key={ workflow.position }>
@@ -51,6 +43,8 @@ export default class CheckoutProgressBar extends Component {
 }
 
 CheckoutProgressBar.propTypes = {
-  coreCartWorkflow: PropTypes.array.isRequired,
-  progressbarStatus: PropTypes.func.isRequired
+  cartId: PropTypes.string.isRequired,
+  shopId: PropTypes.string.isRequired,
+  progressbarStatus: PropTypes.func.isRequired,
+  setStepIcon: PropTypes.func.isRequired
 };
