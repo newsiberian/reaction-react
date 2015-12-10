@@ -25,7 +25,7 @@ export function reactionTemplate(options) {
 
   if (layout) {
     // potentially we can make the default a workflow collection
-    layoutConfigCollection = layout.collection || "Cart";
+    layoutConfigCollection = layout.collection || 'Cart';
   } else {
     ReactionCore.Log.error("Shop Layout Undefined");
     layoutConfigCollection = "Cart";
@@ -33,14 +33,14 @@ export function reactionTemplate(options) {
 
   let currentId;
   // if we've got an id, we'll use it with the layout's collection
-  if (options.hash.id) {
-    currentId = options.hash.id;
-  } else {
-    let currentCart = ReactionCore.Collections.Cart.findOne({
-      userId: Meteor.userId()
-    });
-    currentId = currentCart._id;
-  }
+  //if (options.hash.id) {
+  //  currentId = options.hash.id;
+  //} else {
+  let currentCart = ReactionCore.Collections.Cart.findOne({
+    userId: Meteor.userId()
+  });
+  currentId = currentCart && currentCart._id;
+  //}
   // we'll get current cart status by default, as the most common case
   // TODO: expand query options
   // currentId = options.hash.id || currentId;
@@ -99,6 +99,6 @@ export function reactionTemplate(options) {
     }
   });
 
-  ReactionCore.Log.debug("reactionTemplates", reactionTemplates);
+  ReactionCore.Log.debug('reactionTemplates', reactionTemplates);
   return reactionTemplates;
 }

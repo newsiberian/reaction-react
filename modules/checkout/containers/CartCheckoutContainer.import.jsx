@@ -1,6 +1,6 @@
 import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}';
 // import update from 'react/lib/update';
-// import Loading from '../../layout/components/Loading';
+import Loading from '../../layout/components/Loading';
 import CartCheckout from '../components/CartCheckout';
 import { reactionTemplate } from '/common/helpers/layout';
 
@@ -13,9 +13,7 @@ export default React.createClass({
   mixins: [SubscriptionMixin, AutorunMixin],
 
   getInitialState() {
-    return {
-      cart: ReactionCore.Collections.Cart.findOne()
-    };
+    return {};
   },
 
   autorun() {
@@ -25,11 +23,15 @@ export default React.createClass({
     this.subscribe('AccountOrders');
   },
 
-  componentWillMount() {
-    // todo close cart
+  autorunGetCart() {
+    const cart = ReactionCore.Collections.Cart.findOne();
+    cart && this.setState({ cart: cart });
 
     // init cart workflow
-    if (!ReactionCore.Collections.Cart.findOne().workflow.workflow) {
+    // this run from here because sometimes inside `componentWillMount` cart
+    // still could be undefined. If this happens, this mean - we are stuck in
+    // "new" phase
+    if (cart && cart.workflow.status === 'new') {
       Meteor.call('workflow/pushCartWorkflow', 'coreCartWorkflow',
         'checkoutLogin');
     }
@@ -88,8 +90,14 @@ export default React.createClass({
     return currentStatus !== workflowStep.template && guestUser && !anonUser;
   },
 
+  clickContinueGuestHandle() {
+    Meteor.call('workflow/pushCartWorkflow', 'coreCartWorkflow', 'checkoutLogin');
+  },
+
   render() {
     const { cart } = this.state;
+
+    if (! cart) return <Loading />;
 
     return (
       <CartCheckout
@@ -98,6 +106,7 @@ export default React.createClass({
         checkoutStepBadgeClass={ this.getCheckoutStepBadgeClass }
         progressbarStatus={ this.getProgressbarStatus }
         setStepIcon={ this.setStepIcon }
+        onClickContinueGuest={ this.clickContinueGuestHandle }
       />
     );
   }

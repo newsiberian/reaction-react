@@ -13,7 +13,7 @@ export default class CartCheckout extends Component {
   render() {
     const {
       cart, checkoutLoginCompleted, checkoutStepBadgeClass, progressbarStatus,
-      setStepIcon
+      setStepIcon, onClickContinueGuest
     } = this.props;
 
     if (typeof cart.items !== 'object' ||
@@ -28,8 +28,11 @@ export default class CartCheckout extends Component {
       }
     };
     const coreCartWorkflow = reactionTemplate(options);
-
+    const checkoutStepsCompleted = {
+      checkoutLogin: checkoutLoginCompleted
+    };
     // todo refactor
+    // fixme: `onClickContinueGuest` this will be sent in every components instead of first
     return (
       <div className="ui container">
         <div className="ui basic segment">
@@ -48,9 +51,10 @@ export default class CartCheckout extends Component {
                 <CheckoutStep
                   key={ checkoutStep.position }
                   checkoutStep={ checkoutStep }
-                  checkoutLoginCompleted={ checkoutLoginCompleted }
+                  checkoutStepCompleted={ checkoutStepsCompleted[checkoutStep.template] }
                   checkoutStepBadgeClass={ checkoutStepBadgeClass }
                   setStepIcon={ setStepIcon }
+                  onClickContinueGuest={ onClickContinueGuest }
                 />
               );
             }) }
@@ -61,9 +65,10 @@ export default class CartCheckout extends Component {
                 <CheckoutStep
                   key={ checkoutStep.position }
                   checkoutStep={ checkoutStep }
-                  checkoutLoginCompleted={ checkoutLoginCompleted }
+                  checkoutStepCompleted={ checkoutStepsCompleted[checkoutStep.template] }
                   checkoutStepBadgeClass={ checkoutStepBadgeClass }
                   setStepIcon={ setStepIcon }
+                  onClickContinueGuest={ onClickContinueGuest }
                 />
               );
             }) }
@@ -79,5 +84,6 @@ CartCheckout.propTypes = {
   checkoutLoginCompleted: PropTypes.func.isRequired,
   checkoutStepBadgeClass: PropTypes.func,
   progressbarStatus: PropTypes.func,
-  setStepIcon: PropTypes.func
+  setStepIcon: PropTypes.func,
+  onClickContinueGuest: PropTypes.func
 };

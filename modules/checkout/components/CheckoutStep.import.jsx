@@ -21,9 +21,10 @@ const { Component, PropTypes } = React;
 export default class CheckoutStep extends Component {
   render() {
     const {
-      checkoutLoginCompleted, checkoutStep, checkoutStepBadgeClass, setStepIcon
+      checkoutStepCompleted, checkoutStep, checkoutStepBadgeClass, setStepIcon,
+      onClickContinueGuest
     } = this.props;
-    const isCompleted = checkoutStep.status && checkoutStep.status;
+    const isCompleted = checkoutStep.status ? checkoutStep.status : false;
     const isPending = checkoutStep.status === checkoutStep.template ?
       checkoutStep.status : false;
     const componentName = checkoutStep.template.charAt(0).toUpperCase() +
@@ -36,10 +37,11 @@ export default class CheckoutStep extends Component {
     if (isPending || isCompleted) {
       return (
         <StepComponent
-          checkoutLoginCompleted={ checkoutLoginCompleted }
+          checkoutStepCompleted={ checkoutStepCompleted }
           checkoutStep={ checkoutStep }
           badgeClass={ badgeClass }
           iconClass={ iconClass }
+          onClickContinueGuest={ onClickContinueGuest }
         />
       );
     }
@@ -53,8 +55,9 @@ export default class CheckoutStep extends Component {
 }
 
 CheckoutStep.propTypes = {
-  checkoutLoginCompleted: PropTypes.func.isRequired,
+  checkoutStepCompleted: PropTypes.func,
   checkoutStep: PropTypes.object.isRequired,
   checkoutStepBadgeClass: PropTypes.func.isRequired,
-  setStepIcon: PropTypes.func.isRequired
+  setStepIcon: PropTypes.func.isRequired,
+  onClickContinueGuest: PropTypes.func
 };
