@@ -140,7 +140,6 @@
         },
         "orderShipping": {
             "shipTo": "Ship To",
-            "shipped": "Shipped",
             "notShipped": "Not Yet Shipped",
             "noTracking": "No Tracking",
             "tracking": "Tracking",
@@ -204,17 +203,17 @@
             }
         },
         "address": {
-            "country": "Country",
-            "fullName": "Full name",
-            "address1": "Address",
-            "address2": "Address",
-            "postal": "Postal",
-            "city": "City",
-            "region": "Region",
-            "phone": "Phone",
-            "isShippingDefault": "Make this your default shipping address?",
-            "isBillingDefault": "Make this your default billing address?",
-            "isCommercial": "This is a commercial address."
+            "country": "Страна",
+            "fullName": "Ф.И.О.",
+            "address1": "Адрес",
+            "address2": "Адрес",
+            "postal": "Почтовый индекс",
+            "city": "Город",
+            "region": "Область",
+            "phone": "Телефон",
+            "isShippingDefault": "Сделать этот адрес адресом доставки по умолчанию?",
+            "isBillingDefault": "Сделать этот адрес платёжным адресом по умолчанию?",
+            "isCommercial": "Это юридический адрес."
         },
         "checkoutProgressBar": {
             "login": "Авторизация",

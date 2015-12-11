@@ -29,6 +29,7 @@ export default class CheckoutStep extends Component {
       checkoutStep.status : false;
     const componentName = checkoutStep.template.charAt(0).toUpperCase() +
       checkoutStep.template.slice(1);
+    // todo maybe switch will be better here instead of `StepComponent`
     const StepComponent = components[componentName];
     const badgeClass = checkoutStepBadgeClass(checkoutStep);
     const iconClass = setStepIcon(checkoutStep.label.toCamelCase());

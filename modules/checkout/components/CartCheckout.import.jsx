@@ -30,7 +30,10 @@ export default class CartCheckout extends Component {
     const coreCartWorkflow = reactionTemplate(options);
     const checkoutStepsCompleted = {
       checkoutLogin: checkoutLoginCompleted
+      // checkoutAddressBook: checkoutAddressBookCompleted
     };
+
+    console.log('CartCheckout...');
     // todo refactor
     // fixme: `onClickContinueGuest` this will be sent in every components instead of first
     return (

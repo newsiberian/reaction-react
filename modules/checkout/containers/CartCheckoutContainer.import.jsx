@@ -52,10 +52,12 @@ export default React.createClass({
   },
 
   getCheckoutStepBadgeClass(workflowStep) {
-    if (workflowStep.status === true ||
-      workflowStep.status === workflowStep.template) {
-      return 'active';
-    }
+    if (workflowStep.status === workflowStep.template) {
+      return 'olive';
+    }/* else if (workflowStep.status === true &&
+      workflowStep.status !== workflowStep.template) {
+      return 'green checkmark icon';
+    }*/
     return '';
   },
 

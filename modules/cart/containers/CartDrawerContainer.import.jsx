@@ -3,7 +3,7 @@ import update from 'react/lib/update';
 import CartDrawer from '../components/cartDrawer/CartDrawer';
 
 const { PropTypes } = React;
-
+const { Cart, Products, Media } = ReactionCore.Collections;
 /**
  *
  */
@@ -44,18 +44,14 @@ export default React.createClass({
 
   media(item) {
     const product = Products.findOne(item.productId);
-    let defaultImage = ReactionCore.Collections.Media.findOne({
-      "metadata.variantId": item.variants._id
-    });
+    let defaultImage = Media.findOne({ 'metadata.variantId': item.variants._id });
 
     if (defaultImage) {
       return defaultImage;
     } else if (product) {
       // todo needs update then ancestor will be implemented
       _.any(product.variants, function (variant) {
-        defaultImage = ReactionCore.Collections.Media.findOne({
-          "metadata.variantId": variant._id
-        });
+        defaultImage = Media.findOne({ 'metadata.variantId': variant._id });
         return !!defaultImage;
       });
     }

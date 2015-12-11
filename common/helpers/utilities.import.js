@@ -22,3 +22,13 @@ export function siteName() {
 export function checkObjectFitSupported() {
   return 'objectFit' in document.documentElement.style;
 }
+
+/**
+ * capitalize
+ * @summary capitalize first character of string
+ * @param {String} str - string
+ * @return {String} returns string with first letter capitalized
+ */
+export function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
