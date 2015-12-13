@@ -204,6 +204,7 @@
         },
         "address": {
             "country": "Страна",
+            "selectOne": "(Выберите Страну)",
             "fullName": "Ф.И.О.",
             "address1": "Адрес",
             "address2": "Адрес",

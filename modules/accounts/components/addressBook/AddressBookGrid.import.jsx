@@ -5,13 +5,11 @@ const { Component, PropTypes } = React;
  * @classdesc
  */
 export default class AddressBookGrid extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
-      <div></div>
+      <div className="ui basic segment">
+
+      </div>
     );
   }
 }

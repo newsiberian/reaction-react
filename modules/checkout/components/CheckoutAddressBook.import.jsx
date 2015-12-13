@@ -25,7 +25,7 @@ export default class CheckoutAddressBook extends Component {
             </div>
           </h4>
         </div>
-        <AddressBookContainer />
+        <AddressBookContainer accountId={ Meteor.userId() } />
       </div>
     );
   }

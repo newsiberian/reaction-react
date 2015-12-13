@@ -11,7 +11,10 @@ const T2 = i18n.createComponent('reaction.core.app');
  */
 export default class AddressBookAdd extends Component {
   render() {
-    const { account } = this.props;
+    const {
+      account, thisAddress, countryOptions,
+      onCheckboxChange, onBlur, onSubmit
+    } = this.props;
     const hasAddressBookEntries = account.profile &&
       account.profile.addressBook && account.profile.addressBook.length > 0;
     console.log('AddressBookAdd...');
@@ -20,8 +23,13 @@ export default class AddressBookAdd extends Component {
         <h4 className="ui dividing header">
           { hasAddressBookEntries ? <T>addAddress</T> : <T>createAddress</T> }
         </h4>
-        <form className="ui form">
-          <AddressBookForm />
+        <form className="ui form" onSubmit={ event => onSubmit(event) }>
+          <AddressBookForm
+            thisAddress={ thisAddress }
+            countryOptions={ countryOptions }
+            onCheckboxChange={ onCheckboxChange }
+            onBlur={ onBlur }
+          />
           <div className="field">
             <button type="submit" className="ui button">
               <T2>saveAndContinue</T2>
@@ -37,5 +45,10 @@ export default class AddressBookAdd extends Component {
 
 AddressBookAdd.propTypes = {
   account: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  thisAddress: PropTypes.object.isRequired,
+  countryOptions: PropTypes.func.isRequired,
+  onCheckboxChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };

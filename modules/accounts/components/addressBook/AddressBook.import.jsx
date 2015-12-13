@@ -18,18 +18,52 @@ const components = {
  */
 export default class AddressBook extends Component {
   render() {
-    const { account, currentView, data } = this.props;
+    const {
+      account, currentView, data, thisAddress, countryOptions, onCheckboxChange,
+      onBlur, onSubmit
+    } = this.props;
     const CurrentComponent = components[capitalize(currentView)];
     console.log('AddressBook...');
     // todo maybe switch will be better here instead of `CurrentComponent`
-    return (
-      <CurrentComponent account={ account } data={ data } />
-    );
+    //return (
+    //  <CurrentComponent
+    //    account={ account }
+    //    data={ data }
+    //    countryOptions={ countryOptions }
+    //    isBillingDefault={ isBillingDefault }
+    //    isShippingDefault={ isShippingDefault }
+    //  />
+    //);
+    switch (currentView) {
+      case 'addressBookEdit':
+        return (
+          <AddressBookEdit />
+        );
+      case 'addressBookGrid':
+        return <AddressBookGrid />;
+      default:
+        return (
+          <AddressBookAdd
+            account={ account }
+            data={ data }
+            thisAddress={ thisAddress }
+            countryOptions={ countryOptions }
+            onCheckboxChange={ onCheckboxChange }
+            onBlur={ onBlur }
+            onSubmit={ onSubmit }
+          />
+        );
+    }
   }
 }
 
 AddressBook.propTypes = {
   account: PropTypes.object.isRequired,
   currentView: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  thisAddress: PropTypes.object.isRequired, // todo describe each field in address
+  countryOptions: PropTypes.func.isRequired,
+  onCheckboxChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };

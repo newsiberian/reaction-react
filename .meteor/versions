@@ -142,13 +142,13 @@ underscore@1.0.4
 underscorestring:underscore.string@3.2.2
 universe:accounts-ui@0.1.4
 universe:carousel@1.1.0
-universe:i18n@1.2.2
+universe:i18n@1.2.3
 universe:modules@0.6.7
 universe:modules-compiler@1.0.5
 universe:modules-npm@0.9.9
 universe:react-markdown-wysiwyg@1.1.0
 universe:utilities@2.1.0
-universe:utilities-react@0.5.6
+universe:utilities-react@0.5.8
 url@1.0.5
 utilities:avatar@0.9.2
 utilities:spin@2.3.1
