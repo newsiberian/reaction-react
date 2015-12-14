@@ -19,7 +19,7 @@ export default class AddressBookAdd extends Component {
       account.profile.addressBook && account.profile.addressBook.length > 0;
     console.log('AddressBookAdd...');
     return (
-      <div className="ui basic segment">
+      <div className="ui attached segment">
         <h4 className="ui dividing header">
           { hasAddressBookEntries ? <T>addAddress</T> : <T>createAddress</T> }
         </h4>
@@ -35,7 +35,10 @@ export default class AddressBookAdd extends Component {
               <T2>saveAndContinue</T2>
             </button>
             { hasAddressBookEntries &&
-              <button type="reset" className="ui button"><T2>cancel</T2></button> }
+              <button type="reset" className="ui button">
+                <T2>cancel</T2>
+              </button>
+            }
           </div>
         </form>
       </div>

@@ -40,7 +40,11 @@ export default class AddressBook extends Component {
           <AddressBookEdit />
         );
       case 'addressBookGrid':
-        return <AddressBookGrid />;
+        return (
+          <AddressBookGrid
+            account={ account }
+          />
+        );
       default:
         return (
           <AddressBookAdd

@@ -32,12 +32,15 @@ export default React.createClass({
     const account = ReactionCore.Collections.Accounts.findOne({
       userId: this.props.accountId
     });
-    this.setState({ account: account });
+
     if (account && account.profile && account.profile.addressBook &&
       account.profile.addressBook.length > 0) {
       this.setState(update(this.state, {
+        account: { $set: account },
         currentView: { $set: 'addressBookGrid' }
       }));
+    } else {
+      this.setState({ account: account });
     }
   },
 

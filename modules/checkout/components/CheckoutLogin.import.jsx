@@ -23,35 +23,35 @@ export default class CheckoutLogin extends Component {
 
     console.log('CheckoutLogin...');
     return (
-      <div className="ui segment">
-        <div className="ui top attached label">
-          <h4 className="ui header">
-            <i className={ iconClassName }></i>
-            <div className="content">
-              { isLoginCompleted ? <T>loginCompleted</T> : <T>guestOrLogin</T> }
-            </div>
-          </h4>
+      <div className="ui segments">
+        <div className="ui top attached header">
+          <i className={ iconClassName }></i>
+          <div className="content">
+            { isLoginCompleted ? <T>loginCompleted</T> : <T>guestOrLogin</T> }
+          </div>
         </div>
         { isLoginCompleted ? <CheckoutLoggedIn /> :
-          <div className="ui two column very relaxed grid">
-            <div className="column">
-              <div className="ui basic segment">
-                <div style={{ textAlign: 'justify' }}>
-                  <T>guestMessage</T>
+          <div className="ui attached segment">
+            <div className="ui two column very relaxed grid">
+              <div className="column">
+                <div className="ui basic segment">
+                  <div style={{ textAlign: 'justify' }}>
+                    <T>guestMessage</T>
+                  </div>
+                  <button
+                    className="ui fluid primary button"
+                    onClick={ () => onClickContinueGuest() }
+                  >
+                    <T>continueAsGuest</T>
+                  </button>
                 </div>
-                <button
-                  className="ui fluid primary button"
-                  onClick={ () => onClickContinueGuest() }
-                >
-                  <T>continueAsGuest</T>
-                </button>
               </div>
-            </div>
-            <div className="ui vertical divider">
-              <T2>or</T2>
-            </div>
-            <div className="column">
-              <InlineLoginBox />
+              <div className="ui vertical divider">
+                <T2>or</T2>
+              </div>
+              <div className="column">
+                <InlineLoginBox />
+              </div>
             </div>
           </div>
         }

@@ -16,14 +16,12 @@ export default class CheckoutAddressBook extends Component {
       `${ badgeClass } ${ iconClass }`;
     console.log('CheckoutAddressBook...');
     return (
-      <div className="ui segment">
-        <div className="ui top attached label">
-          <h4 className="ui header">
-            <i className={ iconClassName }></i>
-            <div className="content">
-              <T>chooseAddress</T>
-            </div>
-          </h4>
+      <div className="ui segments">
+        <div className="ui top attached header">
+          <i className={ iconClassName }></i>
+          <div className="content">
+            <T>chooseAddress</T>
+          </div>
         </div>
         <AddressBookContainer accountId={ Meteor.userId() } />
       </div>
