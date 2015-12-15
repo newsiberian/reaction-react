@@ -112,7 +112,7 @@ export function selectedVariant() {
 export function selectedProduct() {
   let id;
   id = selectedProductId();
-  return Products.findOne(id);
+  return ReactionCore.Collections.Products.findOne(id);
 }
 
 /**
@@ -224,7 +224,7 @@ export function getVariantPriceRange(currentVariantId, currentProductId) {
   let productId = currentProductId || selectedProductId();
   let variantId = currentVariantId || selectedVariant()._id;
 
-  let product = Products.findOne(productId);
+  let product = ReactionCore.Collections.Products.findOne(productId);
   if (!(variantId && productId && product)) {
     return undefined;
   }
@@ -282,7 +282,7 @@ export function getVariantPriceRange(currentVariantId, currentProductId) {
  */
 export function getProductPriceRange(currentProductId) {
   let productId = currentProductId || selectedProductId();
-  let product = Products.findOne(productId);
+  let product = ReactionCore.Collections.Products.findOne(productId);
 
   if (!product) {
     return undefined;

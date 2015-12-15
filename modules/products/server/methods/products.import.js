@@ -17,13 +17,13 @@ Meteor.methods({
     this.unblock();
 
     let updateResult;
-    let product = Products.findOne({
+    let product = ReactionCore.Collections.Products.findOne({
       "_id": productId,
       "positions.tag": positionData.tag
     });
 
     function addPosition() {
-      updateResult = Products.update({
+      updateResult = ReactionCore.Collections.Products.update({
         _id: productId
       }, {
         $addToSet: {
@@ -41,7 +41,7 @@ Meteor.methods({
     }
 
     function updatePosition() {
-      updateResult = Products.update({
+      updateResult = ReactionCore.Collections.Products.update({
         "_id": productId,
         "positions.tag": positionData.tag
       }, {

@@ -1,3 +1,4 @@
+import { AutorunMixin } from '{universe:utilities-react}';
 import update from 'react/lib/update';
 import AddressBook from '../components/addressBook/AddressBook';
 
@@ -11,24 +12,21 @@ export default React.createClass({
   propTypes: {
     accountId: PropTypes.string.isRequired
   },
-  mixins: [],
+  mixins: [AutorunMixin],
   getInitialState() {
     return {
-      account: {},/*ReactionCore.Collections.Accounts.findOne({
-        userId: Meteor.userId()
-      }),*/ // todo receive account through props
+      addressBook: [],
       currentView: 'addressBookAdd',
-      data: {}, // unused for now
       thisAddress: {
         isShippingDefault: true,
         isBillingDefault: true,
         isCommercial: false
-      }
+      } // todo maybe we can avoid to using this object? Maybe we could use
+      // addressBook directly?
     };
   },
 
-  componentWillMount() {
-    //const { account } = this.state;
+  autorun() {
     const account = ReactionCore.Collections.Accounts.findOne({
       userId: this.props.accountId
     });
@@ -36,11 +34,9 @@ export default React.createClass({
     if (account && account.profile && account.profile.addressBook &&
       account.profile.addressBook.length > 0) {
       this.setState(update(this.state, {
-        account: { $set: account },
+        addressBook: { $set: account.profile.addressBook },
         currentView: { $set: 'addressBookGrid' }
       }));
-    } else {
-      this.setState({ account: account });
     }
   },
 
@@ -80,17 +76,37 @@ export default React.createClass({
     // todo add validation
   },
 
-  handleBlur(event) {
+  handleChange(event) {
     const { thisAddress } = this.state;
     this.setState(update(this.state, {
       thisAddress: { [event.target.name]: { $set: event.target.value }}
     }));
+  },
+
+  /**
+   * handleBlur
+   * @description this used for validation
+   * @param event
+   * @return {*}
+   */
+  handleBlur(event) {
+    //const { thisAddress } = this.state;
+    //this.setState(update(this.state, {
+    //  thisAddress: { [event.target.name]: { $set: event.target.value }}
+    //}));
 
     // todo add validation
     return this.validateField();
   },
 
-  handleSubmit(event) {
+  /**
+   * handleAddSubmit
+   * @description add new address submit handler
+   * @param event
+   * @fires "accounts/addressBookAdd"
+   * @return {undefined}
+   */
+  handleAddSubmit(event) {
     event.preventDefault();
 
     // todo add validation
@@ -98,29 +114,110 @@ export default React.createClass({
     Meteor.call('accounts/addressBookAdd', this.state.thisAddress, accountId,
       (error, result) => {
         if (error) {
-
+          // todo add error handling
         }
         if (result) {
           this.setState(update(this.state, {
             currentView: { $set: 'addressBookGrid' }
           }));
         }
-      });
+      }
+    );
   },
 
+  handleEditSubmit(event) {
+    event.preventDefault();
+
+    // todo add validation
+    const { accountId } = this.props;
+    Meteor.call('accounts/addressBookUpdate', this.state.thisAddress, accountId,
+      (error, result) => {
+        if (error) {
+          // todo add error handling
+        }
+        if (result) {
+          this.setState(update(this.state, {
+            currentView: { $set: 'addressBookGrid' }
+          }));
+        }
+      }
+    );
+  },
+
+  handleCancelClick(event) {
+    event.preventDefault();
+    this.setState(update(this.state, {
+      currentView: { $set: 'addressBookGrid' }
+    }));
+  },
+
+  handleAddAddressClick() {
+    this.setState(update(this.state, {
+      currentView: { $set: 'addressBookAdd' }
+    }));
+  },
+
+  handleEditAddressClick(index) {
+    const { addressBook } = this.state;
+    this.setState(update(this.state, {
+      thisAddress: { $set: addressBook[index] },
+      currentView: { $set: 'addressBookEdit' }
+    }));
+  },
+
+  handleRemoveAddressClick(addressId) {
+    const { accountId } = this.props;
+    Meteor.call('accounts/addressBookRemove', addressId, accountId,
+      (error, result) => {
+        if (error) {
+          // todo add alert here
+          //Alerts.add("Can't remove this address: " + error.message,
+          //  "danger", {
+          //    autoHide: true
+          //  });
+        }
+        if (result) {
+          let account = ReactionCore.Collections.Accounts.findOne({
+            userId: Meteor.userId()
+          });
+          if (account) {
+            if (account.profile) {
+              if (account.profile.addressBook.length === 0) {
+                this.setState(update(this.state, {
+                  currentView: { $set: 'addressBookAdd' }
+                }));
+              }
+            }
+          }
+        }
+      }
+    );
+  },
+
+  handleSelectShippingAddressChange() {},
+
+  handleSelectBillingAddressChange() {},
+
   render() {
-    const { account, currentView, data, thisAddress } = this.state;
+    const { addressBook, currentView, thisAddress } = this.state;
     console.log('AddressBookContainer...');
     return (
       <AddressBook
-        account={ account }
+        addressBook={ addressBook }
         currentView={ currentView }
-        data={ data }
         thisAddress={ thisAddress }
         countryOptions={ this.countryOptions }
         onCheckboxChange={ this.handleCheckboxChange }
+        onChange={ this.handleChange }
         onBlur={ this.handleBlur }
-        onSubmit={ this.handleSubmit }
+        onAddSubmit={ this.handleAddSubmit }
+        onEditSubmit={ this.handleEditSubmit }
+        onCancelClick={ this.handleCancelClick }
+        onAddAddressClick={ this.handleAddAddressClick }
+        onEditAddressClick={ this.handleEditAddressClick }
+        onRemoveAddressClick={ this.handleRemoveAddressClick }
+        onSelectShippingAddressChange={ this.handleSelectShippingAddressChange }
+        onSelectBillingAddressChange={ this.handleSelectBillingAddressChange }
       />
     );
   }

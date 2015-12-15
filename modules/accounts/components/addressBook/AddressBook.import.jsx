@@ -1,16 +1,8 @@
 import AddressBookAdd from './AddressBookAdd';
 import AddressBookEdit from './AddressBookEdit';
-import AddressBookForm from './AddressBookForm';
 import AddressBookGrid from './AddressBookGrid';
-import { capitalize } from '/common/helpers/utilities';
 
 const { Component, PropTypes } = React;
-const components = {
-  [AddressBookAdd.name]: AddressBookAdd,
-  [AddressBookEdit.name]: AddressBookEdit,
-  [AddressBookForm.name]: AddressBookForm,
-  [AddressBookGrid.name]: AddressBookGrid
-};
 
 /**
  * @class AddressBook
@@ -19,42 +11,48 @@ const components = {
 export default class AddressBook extends Component {
   render() {
     const {
-      account, currentView, data, thisAddress, countryOptions, onCheckboxChange,
-      onBlur, onSubmit
+      addressBook, currentView, thisAddress, countryOptions, onCheckboxChange,
+      onChange, onBlur, onAddSubmit, onEditSubmit, onCancelClick,
+      onAddAddressClick, onEditAddressClick, onRemoveAddressClick,
+      onSelectShippingAddressChange, onSelectBillingAddressChange
     } = this.props;
-    const CurrentComponent = components[capitalize(currentView)];
+
     console.log('AddressBook...');
-    // todo maybe switch will be better here instead of `CurrentComponent`
-    //return (
-    //  <CurrentComponent
-    //    account={ account }
-    //    data={ data }
-    //    countryOptions={ countryOptions }
-    //    isBillingDefault={ isBillingDefault }
-    //    isShippingDefault={ isShippingDefault }
-    //  />
-    //);
     switch (currentView) {
       case 'addressBookEdit':
         return (
-          <AddressBookEdit />
+          <AddressBookEdit
+            thisAddress={ thisAddress }
+            countryOptions={ countryOptions }
+            onCheckboxChange={ onCheckboxChange }
+            onChange={ onChange }
+            onBlur={ onBlur }
+            onSubmit={ onEditSubmit }
+            onCancelClick={ onCancelClick }
+          />
         );
       case 'addressBookGrid':
         return (
           <AddressBookGrid
-            account={ account }
+            addressBook={ addressBook }
+            onAddAddressClick={ onAddAddressClick }
+            onEditAddressClick={ onEditAddressClick }
+            onRemoveAddressClick={ onRemoveAddressClick }
+            onSelectShippingAddressChange={ onSelectShippingAddressChange }
+            onSelectBillingAddressChange={ onSelectBillingAddressChange }
           />
         );
       default:
         return (
           <AddressBookAdd
-            account={ account }
-            data={ data }
+            addressBook={ addressBook }
             thisAddress={ thisAddress }
             countryOptions={ countryOptions }
             onCheckboxChange={ onCheckboxChange }
+            onChange={ onChange }
             onBlur={ onBlur }
-            onSubmit={ onSubmit }
+            onSubmit={ onAddSubmit }
+            onCancelClick={ onCancelClick }
           />
         );
     }
@@ -62,12 +60,19 @@ export default class AddressBook extends Component {
 }
 
 AddressBook.propTypes = {
-  account: PropTypes.object.isRequired,
+  addressBook: PropTypes.array.isRequired,
   currentView: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
   thisAddress: PropTypes.object.isRequired, // todo describe each field in address
   countryOptions: PropTypes.func.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onAddSubmit: PropTypes.func.isRequired,
+  onEditSubmit: PropTypes.func.isRequired,
+  onCancelClick: PropTypes.func.isRequired,
+  onAddAddressClick: PropTypes.func.isRequired,
+  onEditAddressClick: PropTypes.func.isRequired,
+  onRemoveAddressClick: PropTypes.func.isRequired,
+  onSelectShippingAddressChange: PropTypes.func.isRequired,
+  onSelectBillingAddressChange: PropTypes.func.isRequired
 };

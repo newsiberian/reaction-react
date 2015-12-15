@@ -11,6 +11,8 @@ import {
 import Unauthorized from '../../layout/components/notice/Unauthorized';
 import ProductNotFound from '../../layout/components/ProductNotFound';
 
+const { Products, Tags } = ReactionCore.Collections;
+
 export default React.createClass({
   displayName: 'ProductDetailContainer',
   propTypes: {

@@ -9,7 +9,8 @@ const T = i18n.createComponent('reaction.core.address');
  */
 export default class AddressBookForm extends Component {
   render() {
-    const { thisAddress, countryOptions, onCheckboxChange, onBlur } = this.props;
+    const { thisAddress, countryOptions, onCheckboxChange,
+      onChange, onBlur } = this.props;
     return (
       <div className="field">
         <div className="eight wide field">
@@ -17,7 +18,8 @@ export default class AddressBookForm extends Component {
           <select
             className="ui dropdown"
             name="country"
-            onChange={ event => onBlur(event) }
+            value={ thisAddress.country || 'def' }
+            onChange={ event => onChange(event) }
           >
             <option value="def">
               { i18n.__('reaction.core.address.selectOne') }
@@ -40,6 +42,8 @@ export default class AddressBookForm extends Component {
             type="text"
             name="fullName"
             placeholder={ i18n.__('reaction.core.address.fullName') }
+            value={ thisAddress.fullName }
+            onChange={ event => onChange(event) }
             onBlur={ event => onBlur(event) }
           />
         </div>
@@ -50,6 +54,8 @@ export default class AddressBookForm extends Component {
               type="text"
               name="address1"
               placeholder={ i18n.__('reaction.core.address.address1') }
+              value={ thisAddress.address1 }
+              onChange={ event => onChange(event) }
               onBlur={ event => onBlur(event) }
             />
           </div>
@@ -59,6 +65,8 @@ export default class AddressBookForm extends Component {
               type="text"
               name="address2"
               placeholder={ i18n.__('reaction.core.address.address2') }
+              value={ thisAddress.address2 }
+              onChange={ event => onChange(event) }
               onBlur={ event => onBlur(event) }
             />
           </div>
@@ -70,6 +78,8 @@ export default class AddressBookForm extends Component {
               type="text"
               name="postal"
               placeholder={ i18n.__('reaction.core.address.postal') }
+              value={ thisAddress.postal }
+              onChange={ event => onChange(event) }
               onBlur={ event => onBlur(event) }
             />
           </div>
@@ -79,6 +89,8 @@ export default class AddressBookForm extends Component {
               type="text"
               name="city"
               placeholder={ i18n.__('reaction.core.address.city') }
+              value={ thisAddress.city }
+              onChange={ event => onChange(event) }
               onBlur={ event => onBlur(event) }
             />
           </div>
@@ -88,6 +100,8 @@ export default class AddressBookForm extends Component {
               type="text"
               name="region"
               placeholder={ i18n.__('reaction.core.address.region') }
+              value={ thisAddress.region }
+              onChange={ event => onChange(event) }
               onBlur={ event => onBlur(event) }
             />
           </div>
@@ -98,6 +112,8 @@ export default class AddressBookForm extends Component {
             type="text"
             name="phone"
             placeholder={ i18n.__('reaction.core.address.phone') }
+            value={ thisAddress.phone }
+            onChange={ event => onChange(event) }
             onBlur={ event => onBlur(event) }
           />
         </div>
@@ -151,5 +167,6 @@ AddressBookForm.propTypes = {
   thisAddress: PropTypes.object.isRequired,
   countryOptions: PropTypes.func.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 };

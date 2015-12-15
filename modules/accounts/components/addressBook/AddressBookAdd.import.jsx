@@ -12,11 +12,11 @@ const T2 = i18n.createComponent('reaction.core.app');
 export default class AddressBookAdd extends Component {
   render() {
     const {
-      account, thisAddress, countryOptions,
-      onCheckboxChange, onBlur, onSubmit
+      addressBook, thisAddress, countryOptions, onCheckboxChange, onChange,
+      onBlur, onSubmit, onCancelClick
     } = this.props;
-    const hasAddressBookEntries = account.profile &&
-      account.profile.addressBook && account.profile.addressBook.length > 0;
+    const hasAddressBookEntries = addressBook.length > 0;
+
     console.log('AddressBookAdd...');
     return (
       <div className="ui attached segment">
@@ -28,14 +28,18 @@ export default class AddressBookAdd extends Component {
             thisAddress={ thisAddress }
             countryOptions={ countryOptions }
             onCheckboxChange={ onCheckboxChange }
+            onChange={ onChange }
             onBlur={ onBlur }
           />
           <div className="field">
-            <button type="submit" className="ui button">
+            <button type="submit" className="ui primary button">
               <T2>saveAndContinue</T2>
             </button>
             { hasAddressBookEntries &&
-              <button type="reset" className="ui button">
+              <button
+                className="ui button"
+                onClick={ (event) => onCancelClick(event) }
+              >
                 <T2>cancel</T2>
               </button>
             }
@@ -47,11 +51,12 @@ export default class AddressBookAdd extends Component {
 }
 
 AddressBookAdd.propTypes = {
-  account: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  addressBook: PropTypes.array.isRequired,
   thisAddress: PropTypes.object.isRequired,
   countryOptions: PropTypes.func.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onCancelClick: PropTypes.func.isRequired
 };

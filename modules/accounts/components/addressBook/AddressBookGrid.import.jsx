@@ -10,14 +10,20 @@ const T = i18n.createComponent('reaction.core.addressBookGrid');
  */
 export default class AddressBookGrid extends Component {
   render() {
-    const { account } = this.props;
-    const { addressBook } = account.profile;
+    const {
+      addressBook, onAddAddressClick, onEditAddressClick,
+      onRemoveAddressClick, onSelectShippingAddressChange,
+      onSelectBillingAddressChange
+    } = this.props;
 
     console.log('AddressBookGrid...');
     return (
       <div className="ui attached segment">
         <div>
-          <button className="ui basic icon button">
+          <button
+            className="ui basic icon button"
+            onClick={ () => onAddAddressClick() }
+          >
             <i className="plus icon"></i>
             <T>addAddress</T>
           </button>
@@ -31,19 +37,25 @@ export default class AddressBookGrid extends Component {
             <T>selectBillingAddress</T>
           </h4>
         </div>
-        { addressBook.map(address => {
+        { addressBook.map((address, i) => {
           return (
-            <div className="ui segments">
+            <div key={ i } className="ui segments">
               <div className="ui segment">
                 <div
                   className="ui small right floated vertical basic icon buttons"
                   style={ buttonStyles }
                 >
-                  <div className="ui button">
-                    <i className="big edit icon"></i>
+                  <div
+                    className="ui button"
+                    onClick={ () => onEditAddressClick(i) }
+                  >
+                    <i className="large edit icon"></i>
                   </div>
-                  <div className="ui button">
-                    <i className="big trash icon"></i>
+                  <div
+                    className="ui button"
+                    onClick={ () => onRemoveAddressClick(address._id) }
+                  >
+                    <i className="large trash icon"></i>
                   </div>
                 </div>
                 <strong>{ address.fullName }</strong>
@@ -56,13 +68,19 @@ export default class AddressBookGrid extends Component {
               </div>
               <div className="ui horizontal segments">
                 <div className="ui center aligned green segment">
-                  <div className="ui toggle checkbox">
+                  <div
+                    className="ui toggle checkbox"
+                    onChange={ onSelectShippingAddressChange }
+                  >
                     <input name="public" type="checkbox" />
                     <label></label>
                   </div>
                 </div>
                 <div className="ui center aligned blue segment">
-                  <div className="ui toggle checkbox">
+                  <div
+                    className="ui toggle checkbox"
+                    onChange={ onSelectBillingAddressChange }
+                  >
                     <input name="public" type="checkbox" />
                     <label></label>
                   </div>
@@ -81,5 +99,10 @@ export default class AddressBookGrid extends Component {
 }
 
 AddressBookGrid.propTypes = {
-  account: PropTypes.object.isRequired
+  addressBook: PropTypes.array.isRequired,
+  onAddAddressClick: PropTypes.func.isRequired,
+  onEditAddressClick: PropTypes.func.isRequired,
+  onRemoveAddressClick: PropTypes.func.isRequired,
+  onSelectShippingAddressChange: PropTypes.func.isRequired,
+  onSelectBillingAddressChange: PropTypes.func.isRequired
 };
