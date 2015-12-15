@@ -347,7 +347,7 @@ export default React.createClass({
    * @function handleMetaBlurred
    * @description onBlur event handler for meta input fields
    * @param {string|int} id - metafield DOM element id
-   * @fires Meteor.call#products/updateMetaFields
+   * @fires "products/updateMetaFields" Method
    */
   handleMetaBlurred(/*event, */id, type) {
     // we will take latest changes of meta from selectedProduct state, not from

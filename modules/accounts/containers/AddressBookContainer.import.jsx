@@ -26,6 +26,10 @@ export default React.createClass({
     };
   },
 
+  /**
+   * autorun
+   * @description this need to make `this.state.addressBook` reactive
+   */
   autorun() {
     const account = ReactionCore.Collections.Accounts.findOne({
       userId: this.props.accountId
@@ -63,11 +67,22 @@ export default React.createClass({
     return options;
   },
 
+  /**
+   * validateField
+   * @description validation happens here
+   * @return {*} - validation result
+   */
   validateField() {
     return check(this.state.thisAddress, ReactionCore.Schemas.Address);
   },
 
-  handleCheckboxChange(event, value) {
+  /**
+   * handleCheckboxChange
+   * @description form checkboxes change handler
+   * @param {String} value - name of checkbox field
+   * @return {undefined}
+   */
+  handleCheckboxChange(value) {
     const { thisAddress } = this.state;
     this.setState(update(this.state, {
       thisAddress: { [value]: { $set: !thisAddress[value] }}
@@ -76,6 +91,12 @@ export default React.createClass({
     // todo add validation
   },
 
+  /**
+   * handleChange
+   * @description form fields change handler
+   * @param {SyntheticEvent} event - react events object
+   * @return {undefined}
+   */
   handleChange(event) {
     const { thisAddress } = this.state;
     this.setState(update(this.state, {
@@ -86,8 +107,8 @@ export default React.createClass({
   /**
    * handleBlur
    * @description this used for validation
-   * @param event
-   * @return {*}
+   * @param {SyntheticEvent} event - react events object
+   * @return {*} - validation method result
    */
   handleBlur(event) {
     //const { thisAddress } = this.state;
@@ -102,7 +123,7 @@ export default React.createClass({
   /**
    * handleAddSubmit
    * @description add new address submit handler
-   * @param event
+   * @param {SyntheticEvent} event - react events object
    * @fires "accounts/addressBookAdd"
    * @return {undefined}
    */
@@ -125,6 +146,12 @@ export default React.createClass({
     );
   },
 
+  /**
+   * handleEditSubmit
+   * @description "Edit form" submit handler
+   * @param {SyntheticEvent} event - react events object
+   * @return {undefined}
+   */
   handleEditSubmit(event) {
     event.preventDefault();
 
@@ -144,6 +171,12 @@ export default React.createClass({
     );
   },
 
+  /**
+   * handleCancelClick
+   * @description form "cancel" button click handler
+   * @param {SyntheticEvent} event - react events object
+   * @return {undefined}
+   */
   handleCancelClick(event) {
     event.preventDefault();
     this.setState(update(this.state, {
@@ -151,12 +184,23 @@ export default React.createClass({
     }));
   },
 
+  /**
+   * handleAddAddressClick
+   * @description "add new address" button click handler
+   * @return {undefined}
+   */
   handleAddAddressClick() {
     this.setState(update(this.state, {
       currentView: { $set: 'addressBookAdd' }
     }));
   },
 
+  /**
+   * handleEditAddressClick
+   * @description "edit address" button click handler
+   * @param {Number} index - index of address in addressBook array
+   * @return {undefined}
+   */
   handleEditAddressClick(index) {
     const { addressBook } = this.state;
     this.setState(update(this.state, {
@@ -165,6 +209,13 @@ export default React.createClass({
     }));
   },
 
+  /**
+   * handleRemoveAddressClick
+   * @description remove address handler
+   * @param {String} addressId - address _id
+   * @fires "accounts/addressBookRemove" Method
+   * @return {undefined}
+   */
   handleRemoveAddressClick(addressId) {
     const { accountId } = this.props;
     Meteor.call('accounts/addressBookRemove', addressId, accountId,

@@ -126,9 +126,11 @@ export default class AddressBookForm extends Component {
                 tabIndex="0"
                 type="checkbox"
                 checked={ thisAddress.isShippingDefault }
-                onChange={ event => onCheckboxChange(event, 'isShippingDefault') }
+                onChange={ () => onCheckboxChange('isShippingDefault') }
               />
-                <label htmlFor="isShippingDefault"><T>isShippingDefault</T></label>
+                <label htmlFor="isShippingDefault">
+                  <T>isShippingDefault</T>
+                </label>
             </div>
           </div>
           <div className="inline field">
@@ -139,7 +141,7 @@ export default class AddressBookForm extends Component {
                 tabIndex="1"
                 type="checkbox"
                 checked={ thisAddress.isBillingDefault }
-                onChange={ event => onCheckboxChange(event, 'isBillingDefault') }
+                onChange={ () => onCheckboxChange('isBillingDefault') }
               />
               <label htmlFor="isBillingDefault"><T>isBillingDefault</T></label>
             </div>
@@ -152,7 +154,7 @@ export default class AddressBookForm extends Component {
                 tabIndex="2"
                 type="checkbox"
                 checked={ thisAddress.isCommercial }
-                onChange={ event => onCheckboxChange(event, 'isCommercial') }
+                onChange={ () => onCheckboxChange('isCommercial') }
               />
               <label htmlFor="isCommercial"><T>isCommercial</T></label>
             </div>
