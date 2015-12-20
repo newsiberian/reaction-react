@@ -29,11 +29,12 @@ export default React.createClass({
       newMetafield: {   // this one for handling a new metafield inputs
         key: '',
         value: ''
-      }//,
+      },
       //title : '',
       //pageTitle: '',
       //vendor: '',
       //description: ''
+      addToCartQuantity: 1
     };
   },
 
@@ -408,6 +409,54 @@ export default React.createClass({
     });
   },
 
+  handleAddToCartClick(event) {
+    //event.preventDefault();
+    const { addToCartQuantity } = this.state;
+    const { target } = event;
+
+    // we allow to set quantity lower than 1
+    if (+event.target.value === 0) return;
+
+    switch (target.dataset.name) {
+      case 'minus':
+        if (addToCartQuantity > 1) {
+          this.setState(update(this.state, {
+              addToCartQuantity: { $set: addToCartQuantity - 1 }
+            }
+          ));
+        }
+        return;
+      case 'plus':
+        this.setState(update(this.state, {
+          addToCartQuantity: { $set: addToCartQuantity + 1 }}
+        ));
+        return;
+      case 'numberPicker':
+        // if this is an input action, we pass it
+        return;
+      default:
+        console.log(event);
+    }
+  },
+
+  /**
+   * handleAddToCartQuantityChange
+   * @description number picker input change handler
+   * @param event
+   * @return {undefined}
+   */
+  handleAddToCartQuantityChange(event) {
+    // we allow to set quantity lower than 1
+    if (+event.target.value === 0) return;
+
+    const { addToCartQuantity } = this.state;
+
+    // if sign undefined - we need took number from input value
+    this.setState(update(this.state, {
+      addToCartQuantity: { $set: +event.target.value }}
+    ));
+  },
+
   /**
    * @private
    * @function render
@@ -415,7 +464,7 @@ export default React.createClass({
    * @return {*} ProductDetail "stateless" component.
    */
   render() {
-    const selectedProduct = this.state.selectedProduct;
+    const { selectedProduct, addToCartQuantity } = this.state;
 
     // const { variant, _id } = this.props.params;
 
@@ -476,6 +525,9 @@ export default React.createClass({
         actualPrice={ this.actualPrice }
         onInputChange={ this.handleInputChange }
         onInputBlur={ this.handleInputBlur }
+        addToCartQuantity={ addToCartQuantity }
+        onAddToCartClick={ this.handleAddToCartClick }
+        onAddToCartQuantityChange={ this.handleAddToCartQuantityChange }
         tagsBundle={ tagsBundle }
         metaBundle={ metaBundle }
       />

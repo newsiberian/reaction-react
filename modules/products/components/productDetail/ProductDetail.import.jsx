@@ -13,6 +13,7 @@ import ProductDetailTags from './tags/ProductDetailTags';
 import ProductMetaFieldForm from './attributes/ProductMetaFieldForm';
 import ProductMetaField from './attributes/ProductMetaField';
 import ProductSocial from './ProductSocial';
+import CartAddButton from './CartAddButton';
 import VariantList from './variants/VariantList';
 import { formatPrice } from '/common/helpers/i18n';
 import {
@@ -170,7 +171,10 @@ export default class ProductDetail extends Component {
   }
 
   render() {
-    const { selectedProduct, selectedVariant, permissions, actualPrice } = this.props;
+    const {
+      selectedProduct, selectedVariant, permissions, actualPrice,
+      addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
+    } = this.props;
     const titleOptions = {
       field: 'title',
       value: selectedProduct.title,
@@ -247,13 +251,11 @@ export default class ProductDetail extends Component {
 
               { /* Cart Add Block */ }
               <div className="ui basic segment">
-                <div className="ui fluid big green button">
-                  {/*<NumberPicker
-                    defaultValue={ 1 }
-                    min={ 1 }
-                  />*/}
-                  <T>addToCart</T>
-                </div>
+                <CartAddButton
+                  addToCartQuantity={ addToCartQuantity }
+                  onAddToCartClick={ onAddToCartClick }
+                  onAddToCartQuantityChange={ onAddToCartQuantityChange }
+                />
               </div>
             </div>
           </div>
@@ -273,6 +275,9 @@ ProductDetail.propTypes = {
   actualPrice: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onInputBlur: PropTypes.func.isRequired,
+  addToCartQuantity: PropTypes.number.isRequired,
+  onAddToCartClick: PropTypes.func.isRequired,
+  onAddToCartQuantityChange: PropTypes.func.isRequired,
   tagsBundle: PropTypes.shape({
     tags: PropTypes.object,
     tagValue: PropTypes.string,

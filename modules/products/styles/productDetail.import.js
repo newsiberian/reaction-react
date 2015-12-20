@@ -14,6 +14,23 @@ export const inputStyle = {
   borderStyle: 'solid'
 };
 
+export const numberPickerButtonsStyle = {
+  marginRight: '2rem',
+  fontSize: '1em'
+};
+
+export const numberPickerStyle = {
+  width: '4rem',
+  borderRadius: 0,
+  borderColor: '#ffffff',
+  fontSize: '1em',
+  color: 'rgba(0, 0, 0, 0.87)',
+  paddingRight: 2,
+  paddingLeft: 5,
+  paddingTop: 5,
+  paddingBottom: 5
+};
+
 export const titleStyle = {
   fontSize: '3.5rem'
 };
