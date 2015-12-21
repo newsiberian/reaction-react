@@ -14,15 +14,30 @@ export const inputStyle = {
   borderStyle: 'solid'
 };
 
+export const addToCartStyle = {
+  display: 'inline-flex',
+  justifyContent: 'center',
+  alignItems: 'baseline',
+  position: 'relative'
+};
+
 export const numberPickerButtonsStyle = {
-  marginRight: '2rem',
+  // marginRight: '2rem',
+
+  position: 'absolute',
+  top: 5,
+  left: 10,
+  // float: 'left',
   fontSize: '1em'
 };
 
 export const numberPickerStyle = {
   width: '4rem',
   borderRadius: 0,
-  borderColor: '#ffffff',
+  // borderColor: '#ffffff',
+  boxShadow: 'inset 0 0px 6px 0px rgba(0,0,0,.3), inset 0 0 0 30px rgba(255,255,255,.3), 0 0px rgba(255,255,255,.08)',
+  // boxShadow: 'inset 0 2px 10px 1px rgba(0,0,0,.3), inset 0 0 0 60px rgba(0,0,0,.3), 0 1px rgba(255,255,255,.08)',
+  backgroundColor: 'aliceblue',
   fontSize: '1em',
   color: 'rgba(0, 0, 0, 0.87)',
   paddingRight: 2,

@@ -1,6 +1,6 @@
 import i18n from '{universe:i18n}';
 import {
-  numberPickerButtonsStyle, numberPickerStyle
+  addToCartStyle, numberPickerButtonsStyle, numberPickerStyle
 } from '../../styles/productDetail';
 
 const { Component, PropTypes } = React;
@@ -20,6 +20,7 @@ export default class CartAddButton extends Component {
       <div
         className="ui fluid big green button"
         onClick={ event => onAddToCartClick(event) }
+        style={ addToCartStyle }
       >
         <div className="ui olive buttons" style={ numberPickerButtonsStyle }>
           <button data-name="minus" className="ui icon button">

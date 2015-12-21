@@ -177,10 +177,155 @@ export default React.createClass({
    * @todo don't know how to make this work... We can't get access to ref from
    * another component to clear it value. Maybe we can extend the lib and add
    * clean method to it later
+   * @return {undefined}
    */
   clearField(state) {
     //this.setState({ state: '' });
     this.setState(state);
+  },
+
+  addToCart() {
+    // fixme: stub
+    let { selectedProduct, selectedVariant } = this.state;
+    //const { selectedProduct, selectedVariant } = this.state;
+    let options;
+
+    if (selectedVariant) {
+      if (typeof selectedVariant.parentId !== "string") {
+        // todo redo this function
+        options = (function () {
+          let _results = [];
+          for (let variant of selectedProduct.variants) {
+            if (variant.parentId === selectedVariant._id) {
+              _results.push(variant);
+            }
+          }
+          return _results;
+        })();
+        //if (options.length > 0) {
+        //  // todo add alert
+        //
+        //  //Alerts.add("Please choose options before adding to cart", "danger", {
+        //  //  placement: "productDetail",
+        //  //  i18nKey: "productDetail.chooseOptions",
+        //  //  autoHide: 10000
+        //  //});
+        //  return;
+        //}
+        // fixme: stub
+        selectedVariant = options[0];
+        // fixme: stub
+      }
+      if (selectedVariant.inventoryPolicy &&
+        typeof selectedVariant.inventoryQuantity === "number" &&
+        selectedVariant.inventoryQuantity < 1) {
+        // todo add alert
+
+        //Alerts.add("Sorry, this item is out of stock!", "danger", {
+        //  placement: "productDetail",
+        //  i18nKey: "productDetail.outOfStock",
+        //  autoHide: 10000
+        //});
+        return;
+      }
+
+      const quantity = this.state.addToCartQuantity;
+
+      if (!selectedProduct.isVisible) {
+        // todo add alert
+
+        //Alerts.add("Publish product before adding to cart.", "danger", {
+        //  placement: "productDetail",
+        //  i18nKey: "productDetail.publishFirst",
+        //  autoHide: 10000
+        //});
+      } else {
+        const cart = ReactionCore.Collections.Cart.findOne();
+        if (typeof cart === "object") {
+          // get number of items in cart
+          const count = cart.cartCount() || 0;
+
+          Meteor.call("cart/addToCart", cart._id, selectedProduct._id,
+            selectedVariant, quantity, (error, result) => {
+              let address;
+              if (result && count === 0) {
+                // todo understand that's going on here
+                //address = Session.get("address");
+                //if (!address) {
+                //  return locateUser();
+                //}
+              } else if (error) {
+                ReactionCore.Log.error("Failed to add to cart.", error);
+                // todo add alert
+                return error;
+              }
+
+              // reseting numberPicker
+              this.setState({ addToCartQuantity: 1 });
+              // todo reset selectedVariant ???
+              // todo add animation
+            }
+          );
+        }
+      }
+    } else {
+      // todo add alert
+
+      //Alerts.add("Select an option before adding to cart", "danger", {
+      //  placement: "productDetail",
+      //  i18nKey: "productDetail.selectOption",
+      //  autoHide: 8000
+      //});
+    }
+  },
+
+  /**
+   * addToCartQuantity
+   * @description We need to be sure that product quantity is allowed for our
+   * stock
+   * @summary some quantity validation
+   * @param {String} type - element name, which was call event
+   * @param {Number} [number] - represents quantity of product which customer
+   * want to buy
+   * @return {undefined}
+   */
+  addToCartQuantity(type, number) {
+    const { selectedVariant, addToCartQuantity } = this.state;
+    let wantedQty;
+
+    if (typeof selectedVariant.inventoryPolicy === 'boolean' &&
+      selectedVariant.inventoryPolicy &&
+      typeof selectedVariant.inventoryQuantity === 'number') {
+
+      switch (type) {
+        case 'plus':
+          wantedQty = addToCartQuantity + 1;
+          // if customer want buy more than have in stock, we give em all
+          if (selectedVariant.inventoryQuantity < wantedQty) {
+            wantedQty = selectedVariant.inventoryQuantity;
+          }
+          this.setState(update(this.state, {
+            addToCartQuantity: { $set: wantedQty }}
+          ));
+          break;
+        case 'minus':
+          if (addToCartQuantity > 1) {
+            this.setState(update(this.state, {
+              addToCartQuantity: { $set: addToCartQuantity - 1 }}
+            ));
+          }
+          break;
+        default:
+          // if customer want buy more than have in stock, we give em all
+          if (selectedVariant.inventoryQuantity < number) {
+            number = selectedVariant.inventoryQuantity;
+          }
+          // just in case we round a number
+          this.setState(update(this.state, {
+            addToCartQuantity: { $set: ~~number }}
+          ));
+      }
+    }
   },
 
   /**
@@ -188,7 +333,8 @@ export default React.createClass({
    * @description onChange handler for title, titlePage, description, vendor, etc
    * @param {Object|String} event - SyntheticEvent or markdown value
    * @param {String} field - name of property
-   * @fires context#setState
+   * @fires `context#setState`
+   * @return {undefined}
    */
   handleInputChange(event, field) {
     const text = typeof event === 'string' ? event : event.target.value;
@@ -205,7 +351,8 @@ export default React.createClass({
    * @description onBlur handler for title, titlePage, description, vendor, etc
    * @param {Object|String} event - SyntheticEvent or markdown value
    * @param {String} field - name of property
-   * @fires context#setState
+   * @fires `context#setState`
+   * @return {undefined}
    */
   handleInputBlur(event, field) {
     const product = this.state.selectedProduct;
@@ -240,7 +387,8 @@ export default React.createClass({
    * @description OnChange handler for a tags input field
    * @param {object} event - SyntheticEvent
    * @param {string} _id - tag cursor _id
-   * @fires context#setState
+   * @fires `context#setState`
+   * @return {undefined}
    */
   handleTagChange(event, _id) {
     const { tags } = this.state;
@@ -253,7 +401,8 @@ export default React.createClass({
    * @function handleNewTagChange
    * @description OnChange handler for a new tag input field
    * @param {string|int} value - input value attribute
-   * @fires context#setState
+   * @fires `context#setState`
+   * @return {undefined}
    */
   handleNewTagChange(value) {
     this.setState({ newTagValue: value });
@@ -410,7 +559,6 @@ export default React.createClass({
   },
 
   handleAddToCartClick(event) {
-    //event.preventDefault();
     const { addToCartQuantity } = this.state;
     const { target } = event;
 
@@ -420,22 +568,17 @@ export default React.createClass({
     switch (target.dataset.name) {
       case 'minus':
         if (addToCartQuantity > 1) {
-          this.setState(update(this.state, {
-              addToCartQuantity: { $set: addToCartQuantity - 1 }
-            }
-          ));
+          this.addToCartQuantity('minus');
         }
-        return;
+        break;
       case 'plus':
-        this.setState(update(this.state, {
-          addToCartQuantity: { $set: addToCartQuantity + 1 }}
-        ));
-        return;
+        this.addToCartQuantity('plus');
+        break;
       case 'numberPicker':
         // if this is an input action, we pass it
-        return;
+        break;
       default:
-        console.log(event);
+        this.addToCart();
     }
   },
 
@@ -449,12 +592,7 @@ export default React.createClass({
     // we allow to set quantity lower than 1
     if (+event.target.value === 0) return;
 
-    const { addToCartQuantity } = this.state;
-
-    // if sign undefined - we need took number from input value
-    this.setState(update(this.state, {
-      addToCartQuantity: { $set: +event.target.value }}
-    ));
+    this.addToCartQuantity('numberPicker', +event.target.value);
   },
 
   /**
