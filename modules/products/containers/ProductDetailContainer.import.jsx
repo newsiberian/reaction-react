@@ -1,20 +1,20 @@
 /* global getSlug, Tags, ReactionCore, selectedProduct */
-import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}';
-import update from 'react/lib/update';
-import Loading from '../../layout/components/Loading';
-import ProductDetail from '../components/productDetail/ProductDetail';
+import { AutorunMixin, SubscriptionMixin } from "{universe:utilities-react}";
+import update from "react/lib/update";
+import Loading from "../../layout/components/Loading";
+import ProductDetail from "../components/productDetail/ProductDetail";
 import {
   // selectedProduct as selectedProductReact,
   // selectedVariant,
   getProductPriceRange
-} from '/common/helpers/products';
-import Unauthorized from '../../layout/components/notice/Unauthorized';
-import ProductNotFound from '../../layout/components/ProductNotFound';
+} from "/common/helpers/products";
+import Unauthorized from "../../layout/components/notice/Unauthorized";
+import ProductNotFound from "../../layout/components/ProductNotFound";
 
 const { Products, Tags } = ReactionCore.Collections;
 
 export default React.createClass({
-  displayName: 'ProductDetailContainer',
+  displayName: "ProductDetailContainer",
   propTypes: {
     params: React.PropTypes.object.isRequired
   },
@@ -25,21 +25,21 @@ export default React.createClass({
       selectedVariant: false,
       tags: {},
       metafields: [],
-      newTagValue: '',  // https://github.com/moroshko/react-autosuggest#valueOption
+      newTagValue: "",  // https://github.com/moroshko/react-autosuggest#valueOption
       newMetafield: {   // this one for handling a new metafield inputs
-        key: '',
-        value: ''
+        key: "",
+        value: ""
       },
-      //title : '',
-      //pageTitle: '',
-      //vendor: '',
-      //description: ''
+      //title : "",
+      //pageTitle: "",
+      //vendor: "",
+      //description: ""
       addToCartQuantity: 1
     };
   },
 
   autorun() {
-    this.subscribe('Product', this.props.params._id);
+    this.subscribe("Product", this.props.params._id);
   },
 
   autorunProduct() {
@@ -49,9 +49,9 @@ export default React.createClass({
     this.setState(update(this.state, {
       selectedProduct: { $set: product }
     })); // todo pass only needed fields to state
-    // this.dualLink().setRemote('product', selectedProduct());
+    // this.dualLink().setRemote("product", selectedProduct());
 
-    if (typeof product === 'object') {
+    if (typeof product === "object") {
       const { selectedProduct } = this.state;
       // todo add selectedVariant here
       this.setState(update(this.state, {
@@ -90,7 +90,7 @@ export default React.createClass({
       childVariants = (function () {
         let _results = [];
         for (let variant of product.variants) {
-          if ((typeof variant === 'object' && variant.parentId) === current._id) {
+          if ((typeof variant === "object" && variant.parentId) === current._id) {
             _results.push(variant);
           }
         }
@@ -113,8 +113,8 @@ export default React.createClass({
     tags.splice(dragIndex, 1);
     tags.splice(hoverIndex, 0, dragTags);
 
-    Meteor.call('products/updateProductField',
-      this.state.selectedProduct._id, 'hashtags', _.uniq(tags));
+    Meteor.call("products/updateProductField",
+      this.state.selectedProduct._id, "hashtags", _.uniq(tags));
   },
 
   // method for autocomplete
@@ -122,7 +122,7 @@ export default React.createClass({
     let suggestions = [];
     const slug = getSlug(input);
     Tags.find({
-      slug: new RegExp(slug, 'i')
+      slug: new RegExp(slug, "i")
     }).forEach(function (tag) {
       return suggestions.push(tag.name);
     });
@@ -164,10 +164,10 @@ export default React.createClass({
       if (product.handle) {
         if (tag.handle === product.handle.toLowerCase()
           || getSlug(product.handle) === tag.slug) {
-          return 'bookmark';
+          return "bookmark";
         }
       }
-      return 'remove bookmark';
+      return "remove bookmark";
     }
   },
 
@@ -180,7 +180,7 @@ export default React.createClass({
    * @return {undefined}
    */
   clearField(state) {
-    //this.setState({ state: '' });
+    //this.setState({ state: "" });
     this.setState(state);
   },
 
@@ -293,12 +293,12 @@ export default React.createClass({
     const { selectedVariant, addToCartQuantity } = this.state;
     let wantedQty;
 
-    if (typeof selectedVariant.inventoryPolicy === 'boolean' &&
+    if (typeof selectedVariant.inventoryPolicy === "boolean" &&
       selectedVariant.inventoryPolicy &&
-      typeof selectedVariant.inventoryQuantity === 'number') {
+      typeof selectedVariant.inventoryQuantity === "number") {
 
       switch (type) {
-        case 'plus':
+        case "plus":
           wantedQty = addToCartQuantity + 1;
           // if customer want buy more than have in stock, we give em all
           if (selectedVariant.inventoryQuantity < wantedQty) {
@@ -308,7 +308,7 @@ export default React.createClass({
             addToCartQuantity: { $set: wantedQty }}
           ));
           break;
-        case 'minus':
+        case "minus":
           if (addToCartQuantity > 1) {
             this.setState(update(this.state, {
               addToCartQuantity: { $set: addToCartQuantity - 1 }}
@@ -337,7 +337,7 @@ export default React.createClass({
    * @return {undefined}
    */
   handleInputChange(event, field) {
-    const text = typeof event === 'string' ? event : event.target.value;
+    const text = typeof event === "string" ? event : event.target.value;
 
     this.setState(update(this.state, {
       selectedProduct: {
@@ -356,9 +356,9 @@ export default React.createClass({
    */
   handleInputBlur(event, field) {
     const product = this.state.selectedProduct;
-    const text = typeof event === 'string' ? event : event.target.value;
+    const text = typeof event === "string" ? event : event.target.value;
 
-    Meteor.call('products/updateProductField', product._id, field,
+    Meteor.call("products/updateProductField", product._id, field,
       text, error => {
         if (error) {
           // todo update on Semantic Alert
@@ -369,11 +369,11 @@ export default React.createClass({
             id: this._id
           });*/
         }
-        if (field === 'title') {
-          Meteor.call('products/setHandle', product._id, (error, result) => {
+        if (field === "title") {
+          Meteor.call("products/setHandle", product._id, (error, result) => {
             if (result) {
               // todo update on ReactRouter
-              return FlowRouter.go('product', {
+              return FlowRouter.go("product", {
                 _id: result
               });
             }
@@ -418,12 +418,12 @@ export default React.createClass({
   handleTagBlurred(event, _id) {
     if (event.target.value) {
       const clear = this.clearField;
-      Meteor.call('products/updateProductTags', this.state.selectedProduct._id,
-        event.target.value, typeof _id === 'string' ? _id : null,
+      Meteor.call("products/updateProductTags", this.state.selectedProduct._id,
+        event.target.value, typeof _id === "string" ? _id : null,
         (error) => {
           // todo надо очищать input value после удачного или неудачного ответа
-          if (event.target.id === 'tags-submit-new') {
-            clear({ newTagValue: '' });
+          if (event.target.id === "tags-submit-new") {
+            clear({ newTagValue: "" });
           }
 
           if (error) {
@@ -448,11 +448,11 @@ export default React.createClass({
    * @return {function} Meteor Method "products/setHandleTag"
    */
   handleHashtagClick(_id) {
-    Meteor.call('products/setHandleTag', this.state.selectedProduct._id, _id,
+    Meteor.call("products/setHandleTag", this.state.selectedProduct._id, _id,
       function (error, result) {
         if (result) {
           // todo update on ReactRouter
-          return FlowRouter.go('product', {
+          return FlowRouter.go("product", {
             _id: result
           });
         }
@@ -467,7 +467,7 @@ export default React.createClass({
    * @return {function} Meteor Method "products/removeProductTag"
    */
   handleTagGroupRemove(_id) {
-    return Meteor.call('products/removeProductTag',
+    return Meteor.call("products/removeProductTag",
       this.state.selectedProduct._id, _id);
   },
 
@@ -480,7 +480,7 @@ export default React.createClass({
    * @fires context#setState
    */
   handleMetaChange(event, id, type) {
-    if (id !== 'new') {
+    if (id !== "new") {
       const { metafields } = this.state;
       this.setState(update(this.state, {
         metafields: { [id]: { [type]: { $set: event.target.value }}}
@@ -506,7 +506,7 @@ export default React.createClass({
     const productId = selectedProduct._id;
     let updateMeta;
 
-    if (id !== 'new') {
+    if (id !== "new") {
       const { metafields } = this.state;
       updateMeta = {
         key: metafields[id].key,
@@ -514,7 +514,7 @@ export default React.createClass({
       };
       const meta = selectedProduct.metafields[id];
 
-      Meteor.call('products/updateMetaFields', productId, updateMeta, meta);
+      Meteor.call("products/updateMetaFields", productId, updateMeta, meta);
 
       return Tracker.flush();
     }
@@ -530,11 +530,11 @@ export default React.createClass({
         key: newMetafield.key,
         value: newMetafield.value
       };
-      Meteor.call('products/updateMetaFields', productId, updateMeta);
+      Meteor.call("products/updateMetaFields", productId, updateMeta);
       Tracker.flush();
       this.clearField(update(this.state, { newMetafield: {
-        key: { $set: '' },
-        value: { $set: '' }
+        key: { $set: "" },
+        value: { $set: "" }
       }}));
     }
   },
@@ -566,15 +566,15 @@ export default React.createClass({
     if (+event.target.value === 0) return;
 
     switch (target.dataset.name) {
-      case 'minus':
+      case "minus":
         if (addToCartQuantity > 1) {
-          this.addToCartQuantity('minus');
+          this.addToCartQuantity("minus");
         }
         break;
-      case 'plus':
-        this.addToCartQuantity('plus');
+      case "plus":
+        this.addToCartQuantity("plus");
         break;
-      case 'numberPicker':
+      case "numberPicker":
         // if this is an input action, we pass it
         break;
       default:
@@ -592,7 +592,7 @@ export default React.createClass({
     // we allow to set quantity lower than 1
     if (+event.target.value === 0) return;
 
-    this.addToCartQuantity('numberPicker', +event.target.value);
+    this.addToCartQuantity("numberPicker", +event.target.value);
   },
 
   /**
@@ -616,7 +616,7 @@ export default React.createClass({
     }
 
     // we need to send permission down to children, so we put one in object
-    let permissions = { createProduct: ReactionCore.hasPermission('createProduct') };
+    let permissions = { createProduct: ReactionCore.hasPermission("createProduct") };
 
     if (selectedProduct && ! selectedProduct.isVisible) {
       // todo постестить реактивность с парой браузеров на этом участке
@@ -653,7 +653,7 @@ export default React.createClass({
     // I don't know how to handle better in this case.
     const selectedVariant = this.state.selectedVariant;
 
-    console.log('ProductDetailContainer: rendering...');
+    console.log("ProductDetailContainer: rendering...");
     // we can't pass permissions down to children, I think... because of reactivity
     return (
       <ProductDetail

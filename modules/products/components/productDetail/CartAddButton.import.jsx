@@ -1,21 +1,25 @@
-import i18n from '{universe:i18n}';
+import i18n from "{universe:i18n}";
 import {
   addToCartStyle, numberPickerButtonsStyle, numberPickerStyle
-} from '../../styles/productDetail';
+} from "../../styles/productDetail";
 
 const { Component, PropTypes } = React;
-const T = i18n.createComponent('reaction.core.productDetail');
+const T = i18n.createComponent("reaction.core.productDetail");
 
 /**
  * @class CartAddButton
  * @classdesc
  */
 export default class CartAddButton extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.addToCartQuantity !== this.props.addToCartQuantity;
+  }
+
   render() {
     const {
       addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
     } = this.props;
-    console.log('CartAddButton: rendering...');
+    console.log("CartAddButton: rendering...");
     return (
       <div
         className="ui fluid big green button"

@@ -1,11 +1,11 @@
-import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}';
-import update from 'react/lib/update';
-import LayoutHeader from '../components/header/LayoutHeader';
+import { AutorunMixin, SubscriptionMixin } from "{universe:utilities-react}";
+import update from "react/lib/update";
+import LayoutHeader from "../components/header/LayoutHeader";
 
 const { PropTypes } = React;
 
 export default React.createClass({
-  displayName: 'LayoutHeaderContainer',
+  displayName: "LayoutHeaderContainer",
   propTypes: {
     location: PropTypes.object.isRequired
   },
@@ -15,27 +15,45 @@ export default React.createClass({
       languages: [],
       cart: {},
       cartCount: 0,
-      displayCart: false
+      displayCart: false,
+      siteName: ""
     };
   },
 
-  autorunLanguages() {
+  autorun() {
+    this.subscribe("Shops");
+  },
+
+  autorunShop() {
     let languages = [];
-    // this.subscribe('Shops');
-    // subscription to 'Shops' moved to ProductsMain container
+    // subscription to "Shops" moved to ProductsMain container
     // todo Придумать что-нибудь по этому моменту. Подписываемся в другом
     // контроллере, тут нужно знать подписаны ли мы.
-    if (this.subscriptionReady('Shops')) {
-      const shop = ReactionCore.Collections.Shops.findOne();
-      if (typeof shop === 'object' && shop.languages) {
+    if (this.subscriptionReady("Shops")) {
+      const shop = ReactionCore.Collections.Shops.findOne({}, {
+        fields: {
+          languages: 1,
+          name: 1
+        }
+      });
+
+      // get languages
+      if (typeof shop === "object" && shop.languages) {
         for (let language of shop.languages) {
           if (language.enabled === true) {
-            language.translation = 'languages.' + language.label.toLowercase;
+            language.translation = "languages." + language.label.toLowercase;
             languages.push(language);
           }
         }
         this.setState({ languages: languages });
         // return languages;
+      }
+
+      // set siteName
+      if (shop && typeof shop.name) {
+        this.setState(update(this.state, {
+          siteName: { $set: shop.name }}
+        ));
       }
     }
   },
@@ -43,7 +61,7 @@ export default React.createClass({
   autorunCart() {
     const { cart, cartCount } = this.state;
     const cartCollection = ReactionCore.Collections.Cart.findOne();
-    if (typeof cartCollection === 'object') {
+    if (typeof cartCollection === "object") {
       this.setState(update(this.state, {
         cart: { $set: cartCollection },
         cartCount: { $set: cartCollection.cartCount() }
@@ -60,8 +78,8 @@ export default React.createClass({
   },
 
   render() {
-    const { languages, cart, cartCount, displayCart } = this.state;
-    console.log('LayoutHeaderContainer rendering...');
+    const { languages, cart, cartCount, displayCart, siteName } = this.state;
+    console.log("LayoutHeaderContainer rendering...");
     return (
       <LayoutHeader
         languages={ languages }
@@ -69,6 +87,7 @@ export default React.createClass({
         cart={ cart }
         cartCount={ cartCount }
         displayCart={ displayCart }
+        siteName={ siteName }
         onCartIconClick={ this.handleCartIconClick }
       />
     );

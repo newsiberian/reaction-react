@@ -14,13 +14,13 @@ const { Component, PropTypes } = React;
 export default class LayoutHeader extends Component {
   render() {
     const {
-      languages, pathname, cartCount, displayCart, onCartIconClick
+      languages, pathname, cartCount, displayCart, onCartIconClick, siteName
     } = this.props;
     const menuProps = { languages, pathname, cartCount, displayCart, onCartIconClick };
     return (
       <header>
         <header className="ui text menu" style={ styles }>
-          <HeaderBrand />
+          <HeaderBrand siteName={ siteName } />
           <UserMenu { ...menuProps } />
         </header>
         { displayCart &&
@@ -39,5 +39,6 @@ LayoutHeader.propTypes = {
   pathname: PropTypes.string.isRequired,
   cartCount: PropTypes.number.isRequired,
   displayCart: PropTypes.bool.isRequired,
+  siteName: PropTypes.string.isRequired,
   onCartIconClick: PropTypes.func.isRequired
 };

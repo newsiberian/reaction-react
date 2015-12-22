@@ -1,7 +1,7 @@
-import i18n from '{universe:i18n}';
-import { emptyCartStyles as styles } from '../../styles/cartDrawer';
+import i18n from "{universe:i18n}";
+import { emptyCartStyles as styles } from "../../styles/cartDrawer";
 
-const T = i18n.createComponent('reaction.core.cartDrawer');
+const T = i18n.createComponent("reaction.core.cartDrawer");
 const { Component, PropTypes } = React;
 const { Link } = ReactRouter;
 
@@ -12,12 +12,12 @@ const { Link } = ReactRouter;
 export default class EmptyCartDrawer extends Component {
   render() {
     const { displayCart, pathname, onCartIconClick } = this.props;
-    console.log('EmptyCartDrawer rendering...');
+    console.log("EmptyCartDrawer rendering...");
     return (
       <div>
         <div style={ styles }>
           <h1 className="ui center aligned icon header">
-            <i className="small frown icon" style={{ fontSize: '2em' }}></i>
+            <i className="small frown icon" style={{ fontSize: "2em" }}></i>
             <T>empty</T>
           </h1>
         </div>

@@ -1,6 +1,6 @@
-import EmptyCartDrawer from './EmptyCartDrawer';
-import OpenCartDrawer from './OpenCartDrawer';
-import { styles } from '../../styles/cartDrawer';
+import EmptyCartDrawer from "./EmptyCartDrawer";
+import OpenCartDrawer from "./OpenCartDrawer";
+import { styles } from "../../styles/cartDrawer";
 
 const { Component, PropTypes } = React;
 
@@ -11,7 +11,8 @@ const { Component, PropTypes } = React;
 export default class CartDrawer extends Component {
   render() {
     const {
-      cart, checkCartIsEmpty, displayCart, pathname, onCartIconClick, media
+      cart, checkCartIsEmpty, displayCart, pathname, onCartIconClick, media,
+      onRemoveCartItemClick
     } = this.props;
 
     if (checkCartIsEmpty() === 0) {
@@ -29,6 +30,7 @@ export default class CartDrawer extends Component {
       <OpenCartDrawer
         cart={ cart }
         media={ media }
+        onRemoveCartItemClick={ onRemoveCartItemClick }
         style={ styles }
       />
     );
@@ -41,5 +43,6 @@ CartDrawer.propTypes = {
   displayCart: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
   onCartIconClick: PropTypes.func.isRequired,
-  media: PropTypes.func.isRequired
+  media: PropTypes.func.isRequired,
+  onRemoveCartItemClick: PropTypes.func.isRequired
 };

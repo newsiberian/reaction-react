@@ -1,30 +1,22 @@
-//import { Component, PropTypes } from '{react}'
-import { siteName } from '/common/helpers/utilities'
+const { Component, PropTypes } = React;
+const { Link } = ReactRouter;
 
-export default class HeaderBrand extends React.Component {
-  /*static propTypes = {
-    siteName: PropTypes.string.isRequired
-  };*/
+export default class HeaderBrand extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.siteName !== this.props.siteName;
+  }
+  render() {
+    const { siteName } = this.props;
 
-	/*getMeteorData() {
-
-	}*/
-
-	componentWillMount() {
-		// require('./../styles/header.import.css');
-	}
-
-	render() {
-    // todo заменить a на Link
-		console.log('HeaderBrand rendering');
-		return (
-			<div className="header item">
-				<a href="#"><span>{ siteName() }</span></a>
-			</div>
-		);
-	}
+    console.log("HeaderBrand rendering...");
+    return (
+      <div className="header item">
+        <Link to={ "/shop" }>{ siteName }</Link>
+      </div>
+    );
+  }
 }
 
 HeaderBrand.propTypes = {
-  //siteName: PropTypes.string.isRequired
+  siteName: PropTypes.string.isRequired
 };

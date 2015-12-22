@@ -1,4 +1,4 @@
-import { showCartIconWarning } from '/common/helpers/cart';
+import { showCartIconWarning } from "/common/helpers/cart";
 
 const { Component, PropTypes } = React;
 const { Link } = ReactRouter;
@@ -13,7 +13,7 @@ export default class CartIcon extends Component {
   }*/
   render() {
     const { cartCount, pathname, displayCart, onCartIconClick } = this.props;
-    console.log('CartIcon rendering...');
+    console.log("CartIcon rendering...");
     // todo any better way for override this: location.pathname?
     // todo because of location.pathname Link should rerender for every path
     // change... could we change this?

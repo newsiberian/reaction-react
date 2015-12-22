@@ -59,11 +59,12 @@ export default class ProductDetail extends Component {
     );
   }
 
-  renderFieldComponent(options) {
+  renderFieldComponent(options, index) {
     const { selectedProduct, onInputChange, onInputBlur } = this.props;
     if (this.props.permissions.createProduct) {
       return (
         <ProductDetailEdit
+          key={ index }
           selectedProduct={ selectedProduct }
           onInputChange={ onInputChange }
           onInputBlur={ onInputBlur }
@@ -73,6 +74,7 @@ export default class ProductDetail extends Component {
     // todo add markdown support here:
     return (
       <div
+        key={ index }
         className={ options.className && options.className }
         style={ options.styles ? options.styles : {} }
       >
@@ -161,9 +163,9 @@ export default class ProductDetail extends Component {
           );
         }) }
         <div>
-          { social.map((options) => {
-            // todo fix this
-            this.renderFieldComponent(options);
+          { social.map((options, index) => {
+            { /* todo fix this */ }
+            return this.renderFieldComponent(options, index);
           }) }
         </div>
       </div>

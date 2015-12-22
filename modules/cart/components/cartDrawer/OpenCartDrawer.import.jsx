@@ -1,10 +1,10 @@
-import i18n from '{universe:i18n}';
-import CartSubTotals from './CartSubTotals';
-import CartDrawerItem from './CartDrawerItem';
-import Slider from '{universe:carousel}';
-import { openCartStyles as styles, cardStyles } from '../../styles/cartDrawer';
+import i18n from "{universe:i18n}";
+import CartSubTotals from "./CartSubTotals";
+import CartDrawerItem from "./CartDrawerItem";
+import Slider from "{universe:carousel}";
+import { openCartStyles as styles, cardStyles } from "../../styles/cartDrawer";
 
-const T = i18n.createComponent('reaction.core.cartDrawer');
+const T = i18n.createComponent("reaction.core.cartDrawer");
 const { Component, PropTypes } = React;
 const { Link } = ReactRouter;
 
@@ -14,15 +14,15 @@ const { Link } = ReactRouter;
  */
 export default class OpenCartDrawer extends Component {
   componentDidMount() {
-    const elem = document.getElementsByClassName('slick-track');
+    const elem = document.getElementsByClassName("slick-track");
     if (elem[0] instanceof HTMLDivElement) {
-      elem[0].classList.add('ui');
-      elem[0].classList.add('cards');
+      elem[0].classList.add("ui");
+      elem[0].classList.add("cards");
     }
   }
 
   render() {
-    const { cart, media } = this.props;
+    const { cart, media, onRemoveCartItemClick } = this.props;
     const slidesToShow = Math.floor(window.innerWidth / cardStyles.width);
     const settings = {
       adaptiveHeight: false,
@@ -36,7 +36,7 @@ export default class OpenCartDrawer extends Component {
       swipeToSlide: true,
       vertical: false
     };
-    console.log('OpenCartDrawer rendering...');
+    console.log("OpenCartDrawer rendering...");
     return (
       <div>
         <Slider { ...settings } style={ styles }>
@@ -47,6 +47,7 @@ export default class OpenCartDrawer extends Component {
                 key={ item._id }
                 item={ item }
                 media={ media }
+                onRemoveCartItemClick={ onRemoveCartItemClick }
               />
             );
           }) }
@@ -61,5 +62,6 @@ export default class OpenCartDrawer extends Component {
 
 OpenCartDrawer.propTypes = {
   cart: PropTypes.object.isRequired,
-  media: PropTypes.func.isRequired
+  media: PropTypes.func.isRequired,
+  onRemoveCartItemClick: PropTypes.func.isRequired
 };

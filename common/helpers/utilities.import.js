@@ -4,13 +4,8 @@
  * @return {String} returns site name
  */
 export function siteName() {
-  let shop = ReactionCore.Collections.Shops.findOne();
-  if (shop) {
-    if (shop.name) {
-      return shop.name;
-    }
-  }
-  return '';
+  const shop = ReactionCore.Collections.Shops.findOne();
+  return shop && typeof shop.name === "string" ? shop.name : "";
 }
 
 /**
@@ -20,7 +15,7 @@ export function siteName() {
  * @return {boolean}
  */
 export function checkObjectFitSupported() {
-  return 'objectFit' in document.documentElement.style;
+  return "objectFit" in document.documentElement.style;
 }
 
 /**
