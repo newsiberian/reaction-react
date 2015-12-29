@@ -60,18 +60,9 @@ check
 underscore
 oauth-encryption
 audit-argument-checks
-# spiderable
-
-# alanning:roles
-# amplify
-# accounts-base
-# reactive-var
-# ongoworks:security
-# service-configuration
-# momentjs:moment
 
 # without this FS is not defined
 cfs:standard-packages@0.5.9
 
 # do we need this?
-ongoworks:bunyan-logger
+# ongoworks:bunyan-logger
