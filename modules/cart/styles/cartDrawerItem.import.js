@@ -15,7 +15,7 @@ export const fakeImage = {
   backgroundPosition: "center center"
 };
 
-export const primatyImage = {
+export const primaryImage = {
   width: "auto",
   height: "100%",
   minWidth: "80%",

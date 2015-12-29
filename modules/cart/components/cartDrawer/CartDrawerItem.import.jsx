@@ -1,6 +1,6 @@
 import { checkObjectFitSupported } from "/common/helpers/utilities";
 import {
-  fakeImage, primatyImage, realImage, titleStyles, removeButtonStyle,
+  fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
   removeButtonIconStyle
 } from "../../styles/cartDrawerItem";
 import { cardStyles } from "../../styles/cartDrawer";
@@ -45,11 +45,11 @@ export default class CartDrawerItem extends Component {
     console.log("CartDrawerItem rendering...");
     return (
       <div className="ui card" style={ cardStyles }>
-        <div className="image" style={ primatyImage }>
+        <div className="image" style={ primaryImage }>
           { image }
         </div>
         <button
-          className="ui brown circular icon button"
+          className="ui basic brown circular icon button"
           onClick={ () => onRemoveCartItemClick(item._id) }
           style={ removeButtonStyle }
         >

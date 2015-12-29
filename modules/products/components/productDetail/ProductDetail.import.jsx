@@ -1,29 +1,29 @@
 /**
  * @classdesc ProductDetail
  */
-import i18n from '{universe:i18n}';
-import { DragDropContext } from '/myPackages/react-dnd';
-import HTML5Backend from '/myPackages/react-dnd-html5-backend';
-// import { NumberPicker } from '{universe:react-widgets}';
-import { hasAdminAccess } from '/common/helpers/permissions';
-import ProductImageGalleryContainer from '../../containers/ProductImageGalleryContainer';
-import ProductDetailEdit from './edit/ProductDetailEdit';
-import ProductTagInputForm from './tags/ProductTagInputForm';
-import ProductDetailTags from './tags/ProductDetailTags';
-import ProductMetaFieldForm from './attributes/ProductMetaFieldForm';
-import ProductMetaField from './attributes/ProductMetaField';
-import ProductSocial from './ProductSocial';
-import CartAddButton from './CartAddButton';
-import VariantList from './variants/VariantList';
-import { formatPrice } from '/common/helpers/i18n';
+import i18n from "{universe:i18n}";
+import { DragDropContext } from "/myPackages/react-dnd";
+import HTML5Backend from "/myPackages/react-dnd-html5-backend";
+// import { NumberPicker } from "{universe:react-widgets}";
+import { hasAdminAccess } from "/common/helpers/permissions";
+import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
+import ProductDetailEdit from "./edit/ProductDetailEdit";
+import ProductTagInputForm from "./tags/ProductTagInputForm";
+import ProductDetailTags from "./tags/ProductDetailTags";
+import ProductMetaFieldForm from "./attributes/ProductMetaFieldForm";
+import ProductMetaField from "./attributes/ProductMetaField";
+import ProductSocial from "./ProductSocial";
+import CartAddButton from "./CartAddButton";
+import VariantList from "./variants/VariantList";
+import { formatPrice } from "/common/helpers/i18n";
 import {
   titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
   inputHoverStyle, inputStyle
-} from '../../styles/productDetail';
+} from "../../styles/productDetail";
 
 const { Component, PropTypes } = React;
-const T = i18n.createComponent('reaction.core.productDetail');
-const T2 = i18n.createComponent('reaction.core.app');
+const T = i18n.createComponent("reaction.core.productDetail");
+const T2 = i18n.createComponent("reaction.core.app");
 
 @DragDropContext(HTML5Backend)
 export default class ProductDetail extends Component {
@@ -133,23 +133,23 @@ export default class ProductDetail extends Component {
     const { selectedProduct } = this.props;
     const social = [
       {
-        name: 'facebook', // name goes from Semantic UI icon name
-        field: 'facebookMsg',
+        name: "facebook", // name goes from Semantic UI icon name
+        field: "facebookMsg",
         value: selectedProduct.facebookMsg
       },
       {
-        name: 'twitter',
-        field: 'twitterMsg',
+        name: "twitter",
+        field: "twitterMsg",
         value: selectedProduct.facebookMsg
       },
       {
-        name: 'pinterest',
-        field: 'pinterestMsg',
+        name: "pinterest",
+        field: "pinterestMsg",
         value: selectedProduct.pinterestMsg
       },
       {
-        name: 'google-plus',
-        field: 'googleplusMsg',
+        name: "google-plus",
+        field: "googleplusMsg",
         value: selectedProduct.googleplusMsg
       }
     ];
@@ -178,32 +178,32 @@ export default class ProductDetail extends Component {
       addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
     } = this.props;
     const titleOptions = {
-      field: 'title',
+      field: "title",
       value: selectedProduct.title,
-      type: 'input',
+      type: "input",
       styles: [titleStyle, inputHoverStyle, inputStyle]
     };
     const pageTitleOptions = {
-      field: 'pageTitle',
+      field: "pageTitle",
       value: selectedProduct.pageTitle,
-      type: 'input',
+      type: "input",
       styles: [pageTitleStyle, inputHoverStyle, inputStyle]
     };
     const vendorOptions = {
-      field: 'vendor',
+      field: "vendor",
       value: selectedProduct.vendor,
-      type: 'input',
+      type: "input",
       styles: [vendorStyle, inputHoverStyle]
     };
     const descriptionOptions = {
-      field: 'description',
+      field: "description",
       value: selectedProduct.description,
-      type: 'textarea',
+      type: "textarea",
       styles: [descriptionStyle, inputHoverStyle],
-      className: 'ui basic segment'
+      className: "ui basic segment"
     };
 
-    console.log('ProductDetail: rendering...');
+    console.log("ProductDetail: rendering...");
     return (
       <section className="ui fluid container basic segment">
         { permissions.createProduct && this.renderProductVisibilityAdminBlock() }
@@ -216,7 +216,7 @@ export default class ProductDetail extends Component {
               { this.renderFieldComponent(pageTitleOptions) }
             </h2>
           </div>
-          <div className="ui grid">
+          <div className="ui stackable grid">
             <div className="seven wide column">
               <ProductImageGalleryContainer
                 product={ selectedProduct }

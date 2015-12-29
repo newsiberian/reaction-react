@@ -1,11 +1,10 @@
-import i18n from '{universe:i18n}';
-// import Dropzone from '/myPackages/react-dropzone';
-import Dropzone from '{den:react-dropzone}/dropzone';
-import shallowCompare from '/myPackages/react-addons-shallow-compare';
-import ImageDetail from './ImageDetail';
+import i18n from "{universe:i18n}";
+import Dropzone from "/myPackages/react-dropzone";
+import shallowCompare from "/myPackages/react-addons-shallow-compare";
+import ImageDetail from "./ImageDetail";
 
 const { Component, PropTypes } = React;
-const T = i18n.createComponent('reaction.core.productDetail');
+const T = i18n.createComponent("reaction.core.productDetail");
 
 /**
  * @classdesc ProductImageGallery
@@ -14,14 +13,14 @@ export default class ProductImageGallery extends Component {
 
   shouldComponentUpdate(nextProps) {
     // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-    //return !shallowCompare(this, nextProps.media);
+    // return !shallowCompare(this, nextProps.media);
     return !_.isEqual(nextProps.media, this.props.media);
   }
   render() {
     const { media, permissions, onDrop, onDropMedia, onRemoveClick,
       moveMedia
     } = this.props;
-    console.log('ProductImageGallery: rendering...');
+    console.log("ProductImageGallery: rendering...");
     return (
       <div>
         <div className="ui images">
