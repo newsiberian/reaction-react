@@ -1,7 +1,8 @@
-import { showCartIconWarning } from "/common/helpers/cart";
+// fixme
+// import { showCartIconWarning } from "/common/helpers/cart";
 
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
 
 /**
  * @classdesc This is "cartIcon" Reaction template ported to React

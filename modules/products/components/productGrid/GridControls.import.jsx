@@ -4,7 +4,7 @@
 
 import { styles, leftButton, rightButton } from '../../styles/gridControls'
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 export default class GridControls extends Component {
   // todo do we really need this check here?

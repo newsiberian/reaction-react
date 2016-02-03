@@ -2,7 +2,7 @@
  * @classdesc ProductSettings
  */
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 export default class ProductSettings extends Component {
   constructor(props) {

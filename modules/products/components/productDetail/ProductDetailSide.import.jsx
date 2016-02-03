@@ -3,9 +3,10 @@ import ReactMixin from '/myPackages/react-mixin'
 import Radium from '/myPackages/radium'
 import { styles } from '../../styles/productDetailSide'
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
-@Radium
+// TODO babel @deco not supported in 1.3
+// @Radium
 export default class ProductDetailSide extends Component {
 	render() {
     console.log('ProductDetailSide: rendering...');

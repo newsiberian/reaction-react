@@ -1,5 +1,6 @@
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
+// import { Link } from "react-router";
 
 export default class HeaderBrand extends Component {
   shouldComponentUpdate(nextProps) {

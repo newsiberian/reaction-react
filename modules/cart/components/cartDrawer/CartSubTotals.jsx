@@ -1,10 +1,10 @@
-import i18n from "{universe:i18n}";
-import { formatPrice } from "/common/helpers/i18n";
+import { _i18n } from "meteor/universe:i18n";
+import { formatPrice } from "../../../../common/helpers/i18n.jsx";
 import { tableStyles } from "../../styles/cartSubTotals";
 import { cardStyles } from "../../styles/cartDrawer";
 
-const T = i18n.createComponent("reaction.core.cartSubTotals");
-const { Component, PropTypes } = React;
+const T = _i18n.createComponent("reaction.core.cartSubTotals");
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CartSubTotals

@@ -1,7 +1,7 @@
 /**
  * @classdesc ProductDetail
  */
-import i18n from "{universe:i18n}";
+import { _i18n } from "meteor/universe:i18n";
 import { DragDropContext } from "/myPackages/react-dnd";
 import HTML5Backend from "/myPackages/react-dnd-html5-backend";
 // import { NumberPicker } from "{universe:react-widgets}";
@@ -21,11 +21,12 @@ import {
   inputHoverStyle, inputStyle
 } from "../../styles/productDetail";
 
-const { Component, PropTypes } = React;
-const T = i18n.createComponent("reaction.core.productDetail");
-const T2 = i18n.createComponent("reaction.core.app");
+import React, { Component, PropTypes } from "react";
+const T = _i18n.createComponent("reaction.core.productDetail");
+const T2 = _i18n.createComponent("reaction.core.app");
 
-@DragDropContext(HTML5Backend)
+// TODO babel @deco not supported in 1.3
+// @DragDropContext(HTML5Backend)
 export default class ProductDetail extends Component {
   renderProductVisibilityAdminBlock() {
     const { selectedProduct } = this.props;

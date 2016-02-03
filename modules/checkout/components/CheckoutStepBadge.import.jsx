@@ -1,5 +1,5 @@
 import { iconStyles } from '../styles/checkoutStep';
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CheckoutStepBadge

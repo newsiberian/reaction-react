@@ -1,7 +1,7 @@
 import { DragSource, DropTarget } from '/myPackages/react-dnd';
 import { removeButtonStyle } from '../../../styles/imageDetail';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 const { findDOMNode } = ReactDOM;
 const Types = {
   MEDIA: 'media'
@@ -82,14 +82,15 @@ const imageTarget = {
   }
 };
 
-@DropTarget(Types.MEDIA, imageTarget, connect => ({
-  connectDropTarget: connect.dropTarget()
-}))
-@DragSource(Types.MEDIA, imageSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview(),
-  isDragging: monitor.isDragging()
-}))
+// TODO babel @deco not supported in 1.3
+//@DropTarget(Types.MEDIA, imageTarget, connect => ({
+//  connectDropTarget: connect.dropTarget()
+//}))
+//@DragSource(Types.MEDIA, imageSource, (connect, monitor) => ({
+//  connectDragSource: connect.dragSource(),
+//  connectDragPreview: connect.dragPreview(),
+//  isDragging: monitor.isDragging()
+//}))
 export default class ImageDetail extends Component {
   componentDidMount() {
     const { media } = this.props;

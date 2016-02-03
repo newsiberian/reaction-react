@@ -3,7 +3,7 @@
  */
 import ReactionApps from '/common/helpers/ReactionApps';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 export default class ProductSocial extends Component {
   render() {

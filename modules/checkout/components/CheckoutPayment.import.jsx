@@ -1,4 +1,4 @@
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CheckoutPayment

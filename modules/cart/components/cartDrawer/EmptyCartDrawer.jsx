@@ -1,9 +1,9 @@
-import i18n from "{universe:i18n}";
+import { _i18n } from "meteor/universe:i18n";
 import { emptyCartStyles as styles } from "../../styles/cartDrawer";
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
 
-const T = i18n.createComponent("reaction.core.cartDrawer");
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+const T = _i18n.createComponent("reaction.core.cartDrawer");
 
 /**
  * @class EmptyCartDrawer

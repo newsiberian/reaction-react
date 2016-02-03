@@ -1,6 +1,6 @@
-// import i18n from '{universe:i18n}';
+// import { _i18n } from "meteor/universe:i18n";
 
-// const T = i18n.createComponent();
+// const T = _i18n.createComponent();
 
 export default class NotFound extends React.Component {
 	render() {

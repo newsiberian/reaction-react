@@ -2,13 +2,13 @@
  * @classdesc ProductTagInputForm
  */
 
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 //import { DragDropContext } from '/myPackages/react-dnd';
 //import HTML5Backend from '/myPackages/react-dnd-html5-backend';
 import Autosuggest from '/myPackages/react-autosuggest';
 import Tag from './Tag';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 const theme = {
   root: 'ui search input',
   suggestions: 'results transition visible',

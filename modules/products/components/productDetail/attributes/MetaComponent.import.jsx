@@ -1,6 +1,6 @@
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class MetaComponent

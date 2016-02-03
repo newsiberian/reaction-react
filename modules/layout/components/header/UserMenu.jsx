@@ -1,10 +1,10 @@
-import { styles } from '../../styles/userMenu';
-// import { LoginBox } from '{universe:accounts-ui}'
-import I18nChooser from './I18nChooser';
-import CartIcon from '../../../cart/components/CartIcon';
+import { styles } from "../../styles/userMenu";
+// import { LoginBox } from "{universe:accounts-ui}"
+import I18nChooser from "./I18nChooser.jsx";
+import CartIcon from "../../../cart/components/CartIcon.jsx";
 
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
 
 /**
  * @class UserMenu
@@ -15,7 +15,7 @@ export default class UserMenu extends Component {
       languages, pathname, cartCount, displayCart, onCartIconClick
     } = this.props;
     // className="ui fluid three item menu"
-    // <a className="item" href={ FlowRouter.path('login') }>Войти</a>
+    // <a className="item" href={ FlowRouter.path("login") }>Войти</a>
     return (
       <nav className="ui right text menu" style={ styles }>
         <I18nChooser languages={ languages } />

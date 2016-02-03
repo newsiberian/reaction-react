@@ -3,7 +3,7 @@ import CheckoutProgressBar from './CheckoutProgressBar';
 import CheckoutStep from './CheckoutStep';
 import EmptyCheckoutCart from './EmptyCheckoutCart';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CartCheckout

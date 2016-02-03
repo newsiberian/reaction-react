@@ -12,7 +12,7 @@ const components = {
   [CheckoutReview.name]: CheckoutReview,
   [CheckoutPayment.name]: CheckoutPayment
 };
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CheckoutStep

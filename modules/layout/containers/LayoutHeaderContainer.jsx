@@ -1,15 +1,14 @@
-import { AutorunMixin, SubscriptionMixin } from "{universe:utilities-react}";
+// import { AutorunMixin, SubscriptionMixin } from "{universe:utilities-react}";
 import update from "react/lib/update";
-import LayoutHeader from "../components/header/LayoutHeader";
-
-const { PropTypes } = React;
+import React, { PropTypes } from "react";
+import LayoutHeader from "../components/header/LayoutHeader.jsx";
 
 export default React.createClass({
   displayName: "LayoutHeaderContainer",
   propTypes: {
     location: PropTypes.object.isRequired
   },
-  mixins: [SubscriptionMixin, AutorunMixin],
+  // mixins: [SubscriptionMixin, AutorunMixin],
   getInitialState() {
     return {
       languages: [],

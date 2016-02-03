@@ -3,11 +3,13 @@ import ReactMixin from '/myPackages/react-mixin'
 import Radium from '/myPackages/radium'
 import { styles } from '../../styles/gridNotice'
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 // todo do we need Radium here?
 // todo prevent to rerendering from GridControl changes?
-@Radium
+
+// TODO babel @deco not supported in 1.3
+// @Radium
 export default class GridNotice extends Component {
   render() {
     const { isSoldOut, isBackorder, isLowQuantity } = this.props;

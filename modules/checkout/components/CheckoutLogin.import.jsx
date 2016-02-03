@@ -1,11 +1,11 @@
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 import { InlineLoginBox } from '{universe:accounts-ui}';
 import CheckoutStepBadge from './CheckoutStepBadge';
 import CheckoutLoggedIn from './CheckoutLoggedIn';
 
-const { Component, PropTypes } = React;
-const T = i18n.createComponent('reaction.core.checkoutLogin');
-const T2 = i18n.createComponent('reaction.core.accountsUI');
+import React, { Component, PropTypes } from "react";
+const T = _i18n.createComponent('reaction.core.checkoutLogin');
+const T2 = _i18n.createComponent('reaction.core.accountsUI');
 
 /**
  * @class CheckoutLogin

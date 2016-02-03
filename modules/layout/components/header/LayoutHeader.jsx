@@ -1,12 +1,13 @@
-import Radium from '/myPackages/radium';
-import { styles } from '../../styles/layoutHeader';
-import HeaderBrand from './HeaderBrand';
-import UserMenu from './UserMenu';
-import CartDrawerContainer from '/modules/cart/containers/CartDrawerContainer';
+// import Radium from "/myPackages/radium";
+import { styles } from "../../styles/layoutHeader";
+import HeaderBrand from "./HeaderBrand.jsx";
+import UserMenu from "./UserMenu.jsx";
+import CartDrawerContainer from
+  "../../../cart/containers/CartDrawerContainer.jsx";
+import React, { Component, PropTypes } from "react";
 
-const { Component, PropTypes } = React;
-
-@Radium
+// TODO babel @deco not supported in 1.3
+// @Radium
 /**
  * @class LayoutHeader
  * @classdesc

@@ -1,12 +1,11 @@
-import { checkObjectFitSupported } from "/common/helpers/utilities";
+import { checkObjectFitSupported } from "../../../../common/helpers/utilities";
 import {
   fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
   removeButtonIconStyle
 } from "../../styles/cartDrawerItem";
 import { cardStyles } from "../../styles/cartDrawer";
-
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
 
 /**
  * @class CartDrawerItems

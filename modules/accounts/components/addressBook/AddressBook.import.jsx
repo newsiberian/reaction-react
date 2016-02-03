@@ -2,7 +2,7 @@ import AddressBookAdd from './AddressBookAdd';
 import AddressBookEdit from './AddressBookEdit';
 import AddressBookGrid from './AddressBookGrid';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class AddressBook

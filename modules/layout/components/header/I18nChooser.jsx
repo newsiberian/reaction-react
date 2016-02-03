@@ -1,4 +1,4 @@
-//import { Component, PropTypes } from '{react}'
+import  React, { Component, PropTypes } from "react";
 // import ReactMixin from 'react-mixin'
 // import ReactMixin from '/myPackages/react-mixin'
 // import { ReactMeteorData } from '{react-meteor-data}!exports'

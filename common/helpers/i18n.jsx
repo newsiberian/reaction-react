@@ -1,4 +1,4 @@
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 
 /**
  * formatPrice
@@ -87,7 +87,7 @@ export function getLang() {
 
 Meteor.startup(function () {
   if (Meteor.isClient) {
-    i18n.setLocale(getLang());
+    _i18n.setLocale(getLang());
     Session.set('language', getLang());
   } else {
     // todo for SSR

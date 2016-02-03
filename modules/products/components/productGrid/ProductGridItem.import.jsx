@@ -23,10 +23,11 @@ import GridNotice from './GridNotice';
 import { getProductPriceRange } from '/common/helpers/products';
 import { checkObjectFitSupported } from '/common/helpers/utilities';
 
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
 
-@Radium
+// TODO babel @deco not supported in 1.3
+// @Radium
 /**
  * @class ProductGridItem
  */

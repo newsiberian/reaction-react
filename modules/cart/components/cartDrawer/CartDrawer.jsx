@@ -1,8 +1,8 @@
-import EmptyCartDrawer from "./EmptyCartDrawer";
-import OpenCartDrawer from "./OpenCartDrawer";
+import EmptyCartDrawer from "./EmptyCartDrawer.jsx";
+import OpenCartDrawer from "./OpenCartDrawer.jsx";
 import { styles } from "../../styles/cartDrawer";
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CartDrawer

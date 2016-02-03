@@ -2,7 +2,7 @@
  * @classdesc VariantList
  */
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 export default class VariantList extends Component {
   constructor(props) {

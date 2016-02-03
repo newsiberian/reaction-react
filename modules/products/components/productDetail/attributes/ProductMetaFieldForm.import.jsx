@@ -1,6 +1,6 @@
 import MetaComponent from './MetaComponent';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class ProductMetaFieldForm

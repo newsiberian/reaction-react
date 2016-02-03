@@ -1,8 +1,8 @@
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 
 export default class ProductNotFound extends React.Component {
   render() {
-    const T = i18n.createComponent('reaction.core.app');
+    const T = _i18n.createComponent("reaction.core.app");
     // todo add styles here
     return (
       <div className="ui text container not-found">

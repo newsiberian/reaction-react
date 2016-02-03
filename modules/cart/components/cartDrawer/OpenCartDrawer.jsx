@@ -1,12 +1,14 @@
-import i18n from "{universe:i18n}";
-import CartSubTotals from "./CartSubTotals";
-import CartDrawerItem from "./CartDrawerItem";
-import Slider from "{universe:carousel}";
+// import { _i18n } from "meteor/universe:i18n";
+import { _i18n } from "meteor/universe:i18n";
+import CartSubTotals from "./CartSubTotals.jsx";
+import CartDrawerItem from "./CartDrawerItem.jsx";
+// fixme
+// import Slider from "meteor/universe:carousel";
 import { openCartStyles as styles, cardStyles } from "../../styles/cartDrawer";
 
-const T = i18n.createComponent("reaction.core.cartDrawer");
-const { Component, PropTypes } = React;
-const { Link } = ReactRouter;
+const T = _i18n.createComponent("reaction.core.cartDrawer");
+import React, { Component, PropTypes } from "react";
+import { Link } from "react-router";
 
 /**
  * @class OpenCartDrawer

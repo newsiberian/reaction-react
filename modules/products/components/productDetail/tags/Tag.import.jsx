@@ -2,10 +2,10 @@
  * @classdesc Tag
  */
 
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 import { DragSource, DropTarget } from '/myPackages/react-dnd';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 const { findDOMNode } = ReactDOM;
 
 const style = {
@@ -74,14 +74,16 @@ const tagTarget = {
   }
 };
 
-@DropTarget('tag', tagTarget, connect => ({
-  connectDropTarget: connect.dropTarget()
-}))
-@DragSource('tag', tagSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview(),
-  isDragging: monitor.isDragging()
-}))
+
+// TODO babel @deco not supported in 1.3
+//@DropTarget('tag', tagTarget, connect => ({
+//  connectDropTarget: connect.dropTarget()
+//}))
+//@DragSource('tag', tagSource, (connect, monitor) => ({
+//  connectDragSource: connect.dragSource(),
+//  connectDragPreview: connect.dragPreview(),
+//  isDragging: monitor.isDragging()
+//}))
 /**
  * @class Tag
  */

@@ -1,8 +1,8 @@
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 import { reactionTemplate } from '/common/helpers/layout';
 
-const T = i18n.createComponent('reaction.core.checkoutProgressBar');
-const { Component, PropTypes } = React;
+const T = _i18n.createComponent('reaction.core.checkoutProgressBar');
+import React, { Component, PropTypes } from "react";
 
 /**
  * @class CheckoutProgressBar

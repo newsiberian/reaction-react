@@ -1,4 +1,4 @@
-const { Link } = ReactRouter;
+import { Link } from "react-router";
 
 /**
  * @function ProductDetailTags

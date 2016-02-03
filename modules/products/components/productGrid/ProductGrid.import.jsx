@@ -7,7 +7,7 @@
 // import { styles } from '../../styles/productGrid'
 import ProductGridItem from './ProductGridItem';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 const { Products } = ReactionCore.Collections;
 
 // We can't use Radium in combo with ResponsiveReactGridLayout

@@ -1,7 +1,7 @@
 /**
  * @classdesc ProductDetailEdit
  */
-import i18n from '{universe:i18n}';
+import { _i18n } from "meteor/universe:i18n";
 import Radium from '/myPackages/radium';
 import shallowCompare from '/myPackages/react-addons-shallow-compare';
 import ReactMarkdownMediumEditor from '{universe:react-markdown-wysiwyg}/ReactMarkdownMediumEditor';
@@ -9,9 +9,10 @@ import {
   //mediumHoverStyle, inputStyle
 } from '../../../styles/productDetailEdit';
 
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 
-@Radium
+// TODO babel @deco not supported in 1.3
+// @Radium
 export default class ProductDetailEdit extends Component {
   shouldComponentUpdate(nextProps) {
     // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.

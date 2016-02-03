@@ -1,8 +1,8 @@
-import ProductsContainer from './containers/ProductsContainer';
+import ProductsContainer from "./containers/ProductsContainer.jsx";
 
 /*
-FlowRouter.route('/shop', {
-    name: 'shop',
+FlowRouter.route("/shop", {
+    name: "shop",
     action() {
         ReactLayout.render(Layout, {
             content: <ProductsContainer content={ AdminControls } />
@@ -11,8 +11,8 @@ FlowRouter.route('/shop', {
     }
 });
 
-FlowRouter.route('/shop/product/:_id/:variant?', {
-    name: 'product',
+FlowRouter.route("/shop/product/:_id/:variant?", {
+    name: "product",
     action(params) {
         ReactLayout.render(Layout, {
             // todo: we can use FlowRouter.getParam(FlowRouter.current()) instead of
@@ -28,12 +28,13 @@ FlowRouter.notFound = {
     }
 };*/
 
-export default {
-  path: '/shop',
-  component: ProductsContainer,
-  // indexRoute: { component: ProductsContainer },
-  childRoutes: [
-    // { path: 'tag/:_id', component: ProductsContainer },
-    // { path: 'product/:_id', component: ProductDetailContainer }
-  ]
-};
+// fixme
+//export default {
+//  path: "/shop",
+//  component: ProductsContainer,
+//  // indexRoute: { component: ProductsContainer },
+//  childRoutes: [
+//    // { path: "tag/:_id", component: ProductsContainer },
+//    // { path: "product/:_id", component: ProductDetailContainer }
+//  ]
+//};

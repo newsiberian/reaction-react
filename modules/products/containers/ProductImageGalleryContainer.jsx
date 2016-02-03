@@ -1,7 +1,7 @@
 /* global FS, ReactionCore */
 import update from 'react/lib/update';
 import ProductImageGallery from '../components/productDetail/images/ProductImageGallery';
-const { Component, PropTypes } = React;
+import React, { Component, PropTypes } from "react";
 const Media = ReactionCore.Collections.Media;
 
 /**
