@@ -2,8 +2,7 @@
  * @classdesc GridControls
  */
 
-import { styles, leftButton, rightButton } from '../../styles/gridControls'
-
+import { styles, leftButton, rightButton } from "../../styles/gridControls";
 import React, { Component, PropTypes } from "react";
 
 export default class GridControls extends Component {
@@ -13,9 +12,9 @@ export default class GridControls extends Component {
   }
   render() {
     const { isVisible, onPublishProductClick, onShowProductSettings } = this.props;
-    const className = isVisible ? 'unhide icon' : 'hide icon';
+    const className = isVisible ? "unhide icon" : "hide icon";
 
-    console.log('GridControls: rendering...');
+    console.log("GridControls: rendering...");
     // todo добавить недостающие свойства кнопкам
     return (
       <div className="ui small grey icon buttons" style={ styles }>

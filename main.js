@@ -8,7 +8,13 @@
 //  }
 //});
 
+//Meteor.startup(() => {
+//  const root = document.createElement("div");
+//  root.setAttribute("id", "root");
+//  document.body.appendChild(root);
+//});
+
 //import "./routes.jsx";
-import "./common/routes.jsx";
+import "./common/init.jsx";
 //import "/common/helpers/i18n";
 //import "/client/main";
