@@ -24,7 +24,6 @@ import Layout from "../modules/layout/routes";
 export default {
   childRoutes: [
     Layout
-    // Accounts
   ]
 };
 

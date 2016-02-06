@@ -20,6 +20,8 @@ Package.onUse(function (api) {
 
   //api.use("check");
   //api.use("random");
+  api.use("ddp-rate-limiter");
+  api.use("underscore");
   api.use("service-configuration");
   api.use("amplify@1.0.0");
   api.use("universe:i18n@1.3.4");
