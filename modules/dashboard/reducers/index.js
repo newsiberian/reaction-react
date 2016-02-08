@@ -8,11 +8,8 @@ if (ReactionCore.hasDashboardAccess()) {
     packages
   });
 } else {
-  // dashboardReducer = {};
-  // todo remove this after adding login functionality
-  dashboardReducer = combineReducers({
-    packages
-  });
+  // we don't need to add dashboard reducers for non admin
+  dashboardReducer = {};
 }
 
 export default dashboardReducer;

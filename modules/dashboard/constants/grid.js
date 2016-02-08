@@ -1,1 +1,2 @@
 export const GET_PACKAGES = "GET_PACKAGES";
+export const TOGGLE_PACKAGE = "TOGGLE_PACKAGE";

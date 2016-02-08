@@ -1,13 +1,12 @@
+import { _i18n } from "meteor/universe:i18n";
 import { Component, PropTypes } from "react";
-import Avatar from "material-ui/lib/avatar";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
-import CardTitle from "material-ui/lib/card/card-title";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
-import IconButton from "material-ui/lib/icon-button";
+import { hasPermission } from "../../../../client/helpers/permissions";
 
 const styles = {
   base: {
@@ -25,14 +24,10 @@ const styles = {
     verticalAlign: "bottom"
   },
   actions: {
-    //flex: "1 1 auto"
-    //position: "absolute",
-    //top: 0,
-    //right: 0,
-    //height: "100%"
+
   },
   buttons: {
-    //display: "block"
+
   }
 };
 
@@ -56,28 +51,60 @@ const getType = (pkg) => {
  * @classdesc
  */
 export default class Package extends Component {
+  handleToggleClick(pkg) {
+    if (pkg.enabled) {
+      if (confirm("Are you sure you want to disable " + pkg.label)) {
+        console.log(`${pkg.id} ${pkg.enabled}`);
+      }
+    }
+  }
+
+  renderToggle() {
+    let label;
+    const { pkg } = this.props;
+    if (pkg.enabled) {
+      label = _i18n.__("reaction.core.app.disable");
+    } else {
+      label = _i18n.__("reaction.core.app.enable");
+    }
+    return (
+      <FlatButton
+        label={label}
+        onClick={() => this.handleToggleClick(pkg)}
+      />
+    );
+  }
+
+  renderSettings() {
+    const { pkg } = this.props;
+    return ReactionCore.Apps({
+      provides: "settings", name: pkg.name, container: pkg.container
+    }).map((setting, index) => {
+      if (hasPermission(pkg.route)) {
+        return (
+          <FlatButton
+            key={index}
+            label={_i18n.__("reaction.core.app.settings")}
+          />
+        );
+      }
+    });
+  }
+
   render() {
     const { pkg } = this.props;
     return (
       <Card style={styles.base}>
         <CardHeader style={styles.header}
-          avatar={ <FontIcon className={pkg.icon} style={styles.avatar} /> }
+          avatar={<FontIcon className={pkg.icon} style={styles.avatar} />}
           //subtitle={getType(pkg)}
           title={pkg.label}
           titleStyle={styles.title}
         />
         <CardText>{pkg.description}</CardText>
-        <CardActions style={styles.actions}>
-          <FlatButton label="Action1" />
-          <FlatButton label="Action2" />
-          <IconButton
-            iconClassName="fa fa-cog fa-fw"
-            style={styles.buttons}
-          />
-          <IconButton
-            iconClassName="fa fa-check-square fa-fw"
-            style={styles.buttons}
-          />
+        <CardActions>
+          {this.renderToggle()}
+          {pkg.enabled && this.renderSettings()}
         </CardActions>
       </Card>
     );
@@ -85,6 +112,7 @@ export default class Package extends Component {
 }
 
 Package.propTypes = {
+  actions: PropTypes.object.isRequired,
   pkg: PropTypes.shape({
     container: PropTypes.string,
     cycle: PropTypes.number,

@@ -1,4 +1,4 @@
-import { checkObjectFitSupported } from "../../../../common/helpers/utilities";
+import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import {
   fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
   removeButtonIconStyle
