@@ -20,11 +20,17 @@ class DashboardGridContainer extends Component {
   }
 }
 
-DashboardGridContainer.propTypes = {};
+DashboardGridContainer.propTypes = {
+  actions: PropTypes.shape({
+    getPackages: PropTypes.func,
+    togglePackage: PropTypes.func
+  }).isRequired,
+  packages: PropTypes.array.isRequired
+};
 
 function mapStateToProps(state) {
   return {
-    packages: state.packages
+    packages: state.dashboard.packages
   };
 }
 
