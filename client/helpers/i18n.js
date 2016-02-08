@@ -79,7 +79,7 @@ function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
 }
 
 export function getLang() {
-  if (navigator.languages != undefined)  {
+  if (typeof navigator.languages !== "undefined")  {
     return navigator.languages[0];
   }
   return navigator.language || navigator.browserLanguage;
@@ -88,7 +88,7 @@ export function getLang() {
 Meteor.startup(function () {
   if (Meteor.isClient) {
     _i18n.setLocale(getLang());
-    Session.set('language', getLang());
+    Session.set("language", getLang());
   } else {
     // todo for SSR
   }

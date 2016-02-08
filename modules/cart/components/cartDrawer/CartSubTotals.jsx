@@ -1,5 +1,5 @@
 import { _i18n } from "meteor/universe:i18n";
-import { formatPrice } from "../../../../common/helpers/i18n.jsx";
+import { formatPrice } from "../../../../client/helpers/i18n";
 import { tableStyles } from "../../styles/cartSubTotals";
 import { cardStyles } from "../../styles/cartDrawer";
 
