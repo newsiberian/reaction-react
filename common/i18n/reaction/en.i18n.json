@@ -19,8 +19,6 @@
       "settings": "Settings",
       "loading": "Loading",
       "toggle": "Toggle",
-      "enable": "Enable",
-      "disable": "Disable",
       "warning": "Oops!",
       "unauthorizedMessage": "You don't have permission to view this content.",
       "monthOptions": "Choose month",
@@ -106,6 +104,10 @@
       "createVariant": "Create Variant"
     },
     "gridPackage": {
+      "enable": "Enable",
+      "details": "Details",
+      "disable": "Disable",
+      "disableConfirm": "Are you sure you want to disable ",
       "pkgEnabled": " is now enabled.",
       "pkgDisabled": " is now disabled."
     },

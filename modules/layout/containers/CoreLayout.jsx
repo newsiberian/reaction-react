@@ -1,18 +1,21 @@
 // import { composeWithTracker } from "react-komposer";
 import { Component, PropTypes } from "react";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
+import Snackbar from "material-ui/lib/snackbar";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
 // import { LightRawTheme } from "material-ui/src/styles";
 import LayoutHeaderContainer from "./LayoutHeaderContainer.jsx";
 import LayoutFooter from "../components/footer/LayoutFooter.jsx";
 import { styles } from "../styles/coreLayout";
+import * as alertActions from "../actions/alert";
 // import "../styles/styles.css";
 
 /**
  *
  */
-
 function modifyRawTheme(muiTheme, newFontFamily) {
   const {
     baseTheme,
@@ -32,7 +35,11 @@ function modifyRawTheme(muiTheme, newFontFamily) {
   };
 }
 
-export default class CoreLayout extends Component {
+class CoreLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.handleAlertClose = this.handleAlertClose.bind(this);
+  }
   static get childContextTypes() {
     return {
       muiTheme: React.PropTypes.object
@@ -45,8 +52,12 @@ export default class CoreLayout extends Component {
     };
   }
 
+  handleAlertClose() {
+    this.props.alertActions.closeAlert();
+  };
+
   render() {
-    const { children, location } = this.props;
+    const { alert, children, location } = this.props;
     console.log("CoreLayout rendering...");
     return (
 			<div>
@@ -55,6 +66,14 @@ export default class CoreLayout extends Component {
           {children}
         </main>
 				<LayoutFooter />
+        <Snackbar
+          open={alert.open}
+          message={alert.message}
+          //action="undo"
+          autoHideDuration={alert.autoHideDuration}
+          //onActionTouchTap={this.handleActionTouchTap}
+          onRequestClose={this.handleAlertClose}
+        />
 			</div>
 		);
   }
@@ -75,9 +94,26 @@ export default class CoreLayout extends Component {
 //};
 
 CoreLayout.propTypes = {
+  alertActions: PropTypes.shape({
+    displayAlert: PropTypes.func,
+    closeAlert: PropTypes.func
+  }).isRequired,
+  alert: PropTypes.object,
   children: PropTypes.node,
   location: PropTypes.object.isRequired
 };
+
+function mapStateToProps(state) {
+  return {
+    alert: state.layout.alert
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    alertActions: bindActionCreators(alertActions, dispatch)
+  };
+}
 
 //function composer(props, onData) {
 //  const handle = Meteor.subscribe("shops");
@@ -88,4 +124,7 @@ CoreLayout.propTypes = {
 //}
 
 //export default composeWithTracker(composer)(CoreLayout);
-export default CoreLayout;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CoreLayout);

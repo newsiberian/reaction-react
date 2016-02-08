@@ -19,8 +19,6 @@
       "settings": "Настройки",
       "loading": "Загрузка",
       "toggle": "Переключить",
-      "enable": "Подключить",
-      "disable": "Отключить",
       "warning": "Ой!",
       "unauthorizedMessage": "У вас недостаточно прав для просмотра содержимого.",
       "monthOptions": "Выберите месяц",
@@ -119,6 +117,10 @@
       "createVariant": "Создать вариант"
     },
     "gridPackage": {
+      "enable": "Подключить",
+      "details": "Подробнее",
+      "disable": "Отключить",
+      "disableConfirm": "Вы уверенны в том, что хотите отключить ",
       "pkgEnabled": " подключен.",
       "pkgDisabled": " отключен."
     },
