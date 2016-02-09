@@ -105,6 +105,8 @@
     },
     "gridPackage": {
       "enable": "Enable",
+      "errorDisabling": "Error disabling package: ",
+      "errorEnabling": "Error enabling package: ",
       "details": "Details",
       "disable": "Disable",
       "disableConfirm": "Are you sure you want to disable ",

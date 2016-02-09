@@ -56,14 +56,17 @@ export default class Package extends Component {
     const { alertActions } = this.props;
     let toggle = false;
     let message;
+    let errorMessage;
     if (pkg.enabled) {
       if (confirm(_i18n.__("reaction.core.gridPackage.disable") + pkg.label)) {
         toggle = true;
         message = _i18n.__("reaction.core.gridPackage.pkgDisabled");
+        errorMessage = _i18n.__("reaction.core.gridPackage.errorDisabling");
       }
     } else {
       toggle = true;
       message = _i18n.__("reaction.core.gridPackage.pkgEnabled");
+      errorMessage = _i18n.__("reaction.core.gridPackage.errorEnabling");
     }
     if (toggle) {
       return ReactionCore.Collections.Packages.update(pkg.packageId, {
@@ -73,22 +76,12 @@ export default class Package extends Component {
       }, function (error, result) {
         if (result === 1) {
           alertActions.displayAlert({
-            message: message
+            message: pkg.name + message
           });
-          //Alerts.add(self.label + i18n.t("gridPackage.pkgEnabled"),
-          //  "success", {
-          //    type: "pkg-enabled-" + self.name,
-          //    autoHide: true
-          //  });
-          //if (self.route) {
-          //  return Router.go(self.route);
-          //}
         } else if (error) {
-          //return Alerts.add(self.label + i18n.t(
-          //    "gridPackage.pkgDisabled"), "warning", {
-          //  type: "pkg-enabled-" + self.name,
-          //  autoHide: true
-          //});
+          alertActions.displayAlert({
+            message: errorMessage + error.message
+          });
         }
       });
     }
