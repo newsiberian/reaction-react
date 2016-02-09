@@ -1,5 +1,6 @@
 import { _i18n } from "meteor/universe:i18n";
 import { Component, PropTypes } from "react";
+import { Link } from "react-router";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
@@ -91,6 +92,21 @@ export default class Package extends Component {
     });
   }
 
+  renderManagement() {
+    const { pkg } = this.props;
+    // TODO check if such route exists
+    if (hasPermission(pkg.route) ) {
+      // TODO check if we really need to wrap Button in Link
+      return (
+        <Link to={`/${pkg.route}`}>
+          <FlatButton
+            label={_i18n.__("reaction.core.gridPackage.details")}
+          />
+        </Link>
+      );
+    }
+  }
+
   render() {
     const { pkg } = this.props;
     return (
@@ -105,6 +121,7 @@ export default class Package extends Component {
         <CardActions>
           {this.renderToggle()}
           {pkg.enabled && this.renderSettings()}
+          {pkg.enabled && this.renderManagement()}
         </CardActions>
       </Card>
     );

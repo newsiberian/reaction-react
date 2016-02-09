@@ -107,7 +107,8 @@
     },
     "gridPackage": {
       "pkgEnabled": " is now enabled.",
-      "pkgDisabled": " is now disabled."
+      "pkgDisabled": " is now disabled.",
+      "details": "Details"
     },
     "cartDrawer": {
       "empty": "We're sad. Your cart is empty.",

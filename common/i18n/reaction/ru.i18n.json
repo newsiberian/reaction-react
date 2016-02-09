@@ -120,7 +120,8 @@
     },
     "gridPackage": {
       "pkgEnabled": " подключен.",
-      "pkgDisabled": " отключен."
+      "pkgDisabled": " отключен.",
+      "details": "Подробнее"
     },
     "cartDrawer": {
       "empty": "Очень жаль, Ваша корзина пуста",
