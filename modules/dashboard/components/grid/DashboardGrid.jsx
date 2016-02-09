@@ -31,7 +31,7 @@ const pkgPermissions = pkg => {
  */
 export default class DashboardGrid extends Component {
   render() {
-    const { actions, packages } = this.props;
+    const { alertActions } = this.props;
     console.log("DashboardGrid rendering...");
     return (
       <div className="container-fluid" style={styles.base}>
@@ -40,14 +40,13 @@ export default class DashboardGrid extends Component {
             provides: "dashboard", shopId: ReactionCore.getShopId()
           }).map((pkg, index) => {
             if (pkgPermissions(pkg)) {
-
               return (
                 <div
                   className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
                   key={index}
                   style={styles.cal}
                 >
-                  <Package actions={actions} pkg={pkg} />
+                  <Package alertActions={alertActions} pkg={pkg} />
                 </div>
               );
             }
@@ -59,9 +58,7 @@ export default class DashboardGrid extends Component {
 }
 
 DashboardGrid.propTypes = {
-  actions: PropTypes.shape({
-    getPackages: PropTypes.func,
-    togglePackage: PropTypes.func
-  }).isRequired,
-  packages: PropTypes.array.isRequired
+  alertActions: PropTypes.shape({
+    displayAlert: PropTypes.func
+  }).isRequired
 };

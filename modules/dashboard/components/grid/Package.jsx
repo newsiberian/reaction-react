@@ -8,6 +8,7 @@ import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
 import { hasPermission } from "../../../../client/helpers/permissions";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 
 const styles = {
   base: {
@@ -53,10 +54,37 @@ const getType = (pkg) => {
  */
 export default class Package extends Component {
   handleToggleClick(pkg) {
+    const { alertActions } = this.props;
+    let toggle = false;
+    let message;
+    let errorMessage;
     if (pkg.enabled) {
-      if (confirm("Are you sure you want to disable " + pkg.label)) {
-        console.log(`${pkg.id} ${pkg.enabled}`);
+      if (confirm(_i18n.__("reaction.core.gridPackage.disable") + pkg.label)) {
+        toggle = true;
+        message = _i18n.__("reaction.core.gridPackage.pkgDisabled");
+        errorMessage = _i18n.__("reaction.core.gridPackage.errorDisabling");
       }
+    } else {
+      toggle = true;
+      message = _i18n.__("reaction.core.gridPackage.pkgEnabled");
+      errorMessage = _i18n.__("reaction.core.gridPackage.errorEnabling");
+    }
+    if (toggle) {
+      return ReactionCore.Collections.Packages.update(pkg.packageId, {
+        $set: {
+          enabled: !pkg.enabled
+        }
+      }, function (error, result) {
+        if (result === 1) {
+          alertActions.displayAlert({
+            message: pkg.name + message
+          });
+        } else if (error) {
+          alertActions.displayAlert({
+            message: errorMessage + error.message
+          });
+        }
+      });
     }
   }
 
@@ -64,9 +92,9 @@ export default class Package extends Component {
     let label;
     const { pkg } = this.props;
     if (pkg.enabled) {
-      label = _i18n.__("reaction.core.app.disable");
+      label = _i18n.__("reaction.core.gridPackage.disable");
     } else {
-      label = _i18n.__("reaction.core.app.enable");
+      label = _i18n.__("reaction.core.gridPackage.enable");
     }
     return (
       <FlatButton
@@ -129,7 +157,9 @@ export default class Package extends Component {
 }
 
 Package.propTypes = {
-  actions: PropTypes.object.isRequired,
+  alertActions: PropTypes.shape({
+    displayAlert: PropTypes.func
+  }).isRequired,
   pkg: PropTypes.shape({
     container: PropTypes.string,
     cycle: PropTypes.number,
