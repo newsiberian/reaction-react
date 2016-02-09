@@ -1,8 +1,9 @@
 import { Component, PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as packagesActions from "../actions/packages";
 import * as alertActions from "../../layout/actions/alert";
+import * as packagesActions from "../actions/packages";
+import * as settingsActions from "../actions/settings";
 import DashboardGrid from "../components/grid/DashboardGrid.jsx";
 
 /**
@@ -13,10 +14,11 @@ const DashboardGridContainer = props => {
 //class DashboardGridContainer extends Component {
 //  render() {
   console.log("DashboardGridContainer rendering...");
-  const { alertActions } = props;
+  const { alertActions, settingsActions } = props;
   return (
     <DashboardGrid
       alertActions={alertActions}
+      settingsActions={settingsActions}
     />
   );
 //  }
@@ -29,6 +31,10 @@ DashboardGridContainer.propTypes = {
   packagesActions: PropTypes.shape({
     getPackages: PropTypes.func,
     togglePackage: PropTypes.func
+  }).isRequired,
+  settingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
   }).isRequired
 };
 
@@ -41,7 +47,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     alertActions: bindActionCreators(alertActions, dispatch),
-    packagesActions: bindActionCreators(packagesActions, dispatch)
+    packagesActions: bindActionCreators(packagesActions, dispatch),
+    settingsActions: bindActionCreators(settingsActions, dispatch)
   };
 }
 

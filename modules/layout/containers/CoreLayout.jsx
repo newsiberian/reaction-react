@@ -57,7 +57,7 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { alert, children, location } = this.props;
+    const { alert, children } = this.props;
     console.log("CoreLayout rendering...");
     return (
 			<div>
