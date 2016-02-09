@@ -31,7 +31,7 @@ const pkgPermissions = pkg => {
  */
 export default class DashboardGrid extends Component {
   render() {
-    const { alertActions } = this.props;
+    const { alertActions, settingsActions } = this.props;
     console.log("DashboardGrid rendering...");
     return (
       <div className="container-fluid" style={styles.base}>
@@ -46,7 +46,11 @@ export default class DashboardGrid extends Component {
                   key={index}
                   style={styles.cal}
                 >
-                  <Package alertActions={alertActions} pkg={pkg} />
+                  <Package
+                    alertActions={alertActions}
+                    settingsActions={settingsActions}
+                    pkg={pkg}
+                  />
                 </div>
               );
             }
@@ -60,5 +64,9 @@ export default class DashboardGrid extends Component {
 DashboardGrid.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
+  }).isRequired,
+  settingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
   }).isRequired
 };

@@ -113,6 +113,8 @@ export default class Package extends Component {
           <FlatButton
             key={index}
             label={_i18n.__("reaction.core.app.settings")}
+            linkButton={true}
+            href={`${setting.name}?settings=true`}
           />
         );
       }
@@ -142,6 +144,10 @@ export default class Package extends Component {
 Package.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
+  }).isRequired,
+  settingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
   }).isRequired,
   pkg: PropTypes.shape({
     container: PropTypes.string,
