@@ -124,16 +124,13 @@ export default class Package extends Component {
   }
 
   renderManagement() {
-    const { pkg } = this.props;
-    // TODO check if such route exists
+    const { pkg, routeActions } = this.props;
     if (hasPermission(pkg.route) ) {
-      // TODO check if we really need to wrap Button in Link
       return (
-        <Link to={`/${pkg.route}`}>
-          <FlatButton
-            label={_i18n.__("reaction.core.gridPackage.details")}
-          />
-        </Link>
+        <FlatButton
+          label={_i18n.__("reaction.core.gridPackage.details")}
+          onClick={() => routeActions.push(`/${pkg.route}`)}
+         />
       );
     }
   }
