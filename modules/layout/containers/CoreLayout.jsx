@@ -1,17 +1,18 @@
-// import { composeWithTracker } from "react-komposer";
+import { composeWithTracker } from "react-komposer";
 import { Component, PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-// import { ReactionCore } from "meteor/reactioncommerce:core";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
 import Snackbar from "material-ui/lib/snackbar";
+import LinearProgress from "material-ui/lib/linear-progress";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
 // import { LightRawTheme } from "material-ui/src/styles";
 import LayoutHeaderContainer from "./LayoutHeaderContainer.jsx";
 import LayoutFooter from "../components/footer/LayoutFooter.jsx";
 import { styles } from "../styles/coreLayout";
 import * as alertActions from "../actions/alert";
-// import "../styles/styles.css";
+import "../styles/styles.css";
 
 /**
  *
@@ -57,11 +58,11 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { alert, children } = this.props;
+    const { alert, cart, children } = this.props;
     console.log("CoreLayout rendering...");
     return (
 			<div>
-        {/*<LayoutHeaderContainer location={ location } />*/}
+        <LayoutHeaderContainer cart={cart} location={location} />
         <main role="main" style={styles}>
           {children}
         </main>
@@ -99,6 +100,10 @@ CoreLayout.propTypes = {
     closeAlert: PropTypes.func
   }).isRequired,
   alert: PropTypes.object,
+  cart: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    items: PropTypes.array
+  }),
   children: PropTypes.node,
   location: PropTypes.object.isRequired
 };
@@ -115,16 +120,32 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-//function composer(props, onData) {
-//  const handle = Meteor.subscribe("shops");
-//  if (handle.ready()) {
-//    //const posts = Posts.find({}, {sort: {_id: 1}}).fetch();
-//    onData(null, "asdad");
-//  }
-//}
+function composer(props, onData) {
+  // @see http://guide.meteor.com/data-loading.html#changing-arguments
+  Tracker.autorun(() => {
+    let sessionId;
+    // we really don't need to track the sessionId here
+    Tracker.nonreactive(() => {
+      sessionId = Session.get("sessionId");
+    });
+    ReactionCore.Subscriptions.Cart = Meteor.subscribe("Cart",
+      sessionId,
+      Meteor.userId()
+    );
+  });
+  if (ReactionCore.Subscriptions.Cart.ready()) {
+    const cart = ReactionCore.Collections.Cart.findOne({}, { fields: { items: 1 } });
+    onData(null, { cart: cart });
+  }
+}
 
-//export default composeWithTracker(composer)(CoreLayout);
+const loading = () => <LinearProgress mode="indeterminate"/>;
+const coreLayoutSubscribed = composeWithTracker(
+  composer,
+  loading
+)(CoreLayout);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CoreLayout);
+)(coreLayoutSubscribed);
