@@ -87,14 +87,17 @@ const LayoutHeaderContainer = props => {
     console.log("LayoutHeaderContainer rendering...");
     return (
       <LayoutHeader
-        alertActions={alertActions}
-        cart={cart}
-        cartActions={cartActions}
+        {...props}
+        //alertActions={alertActions}
+        //cart={cart}
+        //cartActions={cartActions}
+        //displayCart={displayCart}
+
         //languages={ languages }
         //pathname={ this.props.location.pathname }
         //cart={ cart }
         //cartCount={ cartCount }
-        displayCart={displayCart}
+
         //siteName={siteName}
         //onCartIconClick={this.handleCartIconClick}
       />

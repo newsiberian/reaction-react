@@ -94,6 +94,7 @@ export default class LayoutHeader extends Component {
         />
         { displayCart &&
           <CartDrawerContainer
+            cart={cart}
             //displayCart={ displayCart }
             //pathname={ pathname }
             //onCartIconClick={ onCartIconClick }

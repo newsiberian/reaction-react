@@ -104,7 +104,7 @@ export default class Package extends Component {
   }
 
   renderSettings() {
-    const { pkg } = this.props;
+    const { pkg, routeActions } = this.props;
     return ReactionCore.Apps({
       provides: "settings", name: pkg.name, container: pkg.container
     }).map((setting, index) => {
@@ -113,8 +113,9 @@ export default class Package extends Component {
           <FlatButton
             key={index}
             label={_i18n.__("reaction.core.app.settings")}
-            linkButton={true}
-            href={`${setting.name}?settings=true`}
+            //linkButton={true}
+            //href={`dashboard/packages/${setting.name}`}
+            onClick={() => routeActions.push(`dashboard/packages/${setting.name}`)}
           />
         );
       }
