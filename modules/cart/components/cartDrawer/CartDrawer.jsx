@@ -9,29 +9,38 @@ import React, { Component, PropTypes } from "react";
  * @classdesc
  */
 export default class CartDrawer extends Component {
-  render() {
-    const {
-      cart, checkCartIsEmpty, displayCart, pathname, onCartIconClick, media,
-      onRemoveCartItemClick
-    } = this.props;
+  checkCartIsEmpty() {
+    const { cart } = this.props;
+    let count = 0;
+    if (cart.items) {
+      cart.items.map(item => count += item.quantity);
+    }
+    return count;
+  }
 
-    if (checkCartIsEmpty() === 0) {
+  render() {
+    //const {
+    //  cart, checkCartIsEmpty, displayCart, pathname, onCartIconClick, media,
+    //  onRemoveCartItemClick
+    //} = this.props;
+
+    if (this.checkCartIsEmpty() === 0) {
       return (
         <EmptyCartDrawer
-          displayCart={ displayCart }
-          pathname={ pathname }
-          onCartIconClick={ onCartIconClick }
-          style={ styles }
+          //displayCart={ displayCart }
+          //pathname={ pathname }
+          //onCartIconClick={ onCartIconClick }
+          //style={ styles }
         />
       );
     }
 
     return (
       <OpenCartDrawer
-        cart={ cart }
-        media={ media }
-        onRemoveCartItemClick={ onRemoveCartItemClick }
-        style={ styles }
+        //cart={ cart }
+        //media={ media }
+        //onRemoveCartItemClick={ onRemoveCartItemClick }
+        //style={ styles }
       />
     );
   }
@@ -39,10 +48,10 @@ export default class CartDrawer extends Component {
 
 CartDrawer.propTypes = {
   cart: PropTypes.object.isRequired,
-  checkCartIsEmpty: PropTypes.func.isRequired,
-  displayCart: PropTypes.bool.isRequired,
-  pathname: PropTypes.string.isRequired,
-  onCartIconClick: PropTypes.func.isRequired,
-  media: PropTypes.func.isRequired,
-  onRemoveCartItemClick: PropTypes.func.isRequired
+  //checkCartIsEmpty: PropTypes.func.isRequired,
+  //displayCart: PropTypes.bool.isRequired,
+  //pathname: PropTypes.string.isRequired,
+  //onCartIconClick: PropTypes.func.isRequired,
+  //media: PropTypes.func.isRequired,
+  //onRemoveCartItemClick: PropTypes.func.isRequired
 };

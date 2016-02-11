@@ -13,12 +13,15 @@ Package.onUse(function (api) {
   api.use("mongo");
   api.use("ecmascript");
   api.use("es5-shim");
+  // I guess this is temporary here for sessionId holding
+  api.use("session");
   api.use("tracker");
   api.use("modules");
   // temporary
   api.use("react");
 
   //api.use("check");
+  //api.use("aldeed:simple-schema");
   //api.use("random");
   api.use("ddp-rate-limiter");
   api.use("underscore");

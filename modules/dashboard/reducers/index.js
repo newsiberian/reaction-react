@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+//import { hasDashboardAccess } from "../../../client/main";
 import packages from "./packages";
 import settings from "./settings";
 
