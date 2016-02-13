@@ -1,10 +1,12 @@
 import { Component, PropTypes } from "react";
+import { ActionBarWrapper } from
+  "../../../layout/components/ActionBarWrapper.jsx";
 
 /**
  * @class Settings
  * @classdesc
  */
-export default class Settings extends Component {
+class Settings extends Component {
   constructor(props) {
     super(props);
   }
@@ -17,3 +19,5 @@ export default class Settings extends Component {
 }
 
 Settings.propTypes = {};
+
+export default ActionBarWrapper(Settings);

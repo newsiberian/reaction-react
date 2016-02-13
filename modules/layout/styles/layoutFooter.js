@@ -1,4 +1,4 @@
 export const styles = {
-	backgroundColor: 'brown',
-	height: 200
+  backgroundColor: "brown",
+  height: 200
 };

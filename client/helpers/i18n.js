@@ -1,5 +1,17 @@
 import { _i18n } from "meteor/universe:i18n";
 
+export function translate(i18nKey) {
+  if (typeof i18nKey !== "string") {
+    ReactionCore.Log.info("i18n key string required to translate", i18nKey);
+    return "";
+  }
+
+  return i18n.t(i18nKey);
+}
+
+
+
+
 /**
  * formatPrice
  * @summary return shop /locale specific formatted price

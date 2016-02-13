@@ -61,7 +61,7 @@ class CoreLayout extends Component {
     const { alert, cart, children } = this.props;
     console.log("CoreLayout rendering...");
     return (
-			<div>
+			<div style={{height: "100%"}}>
         <LayoutHeaderContainer cart={cart} location={location} />
         <main role="main" style={styles}>
           {children}

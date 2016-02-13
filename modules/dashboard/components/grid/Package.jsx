@@ -8,6 +8,8 @@ import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
 import { hasPermission } from "../../../../client/helpers/permissions";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { translate } from "../../../../client/helpers/i18n";
+
 
 const styles = {
   base: {
@@ -60,12 +62,14 @@ export default class Package extends Component {
     if (pkg.enabled) {
       if (confirm(_i18n.__("reaction.core.gridPackage.disable") + pkg.label)) {
         toggle = true;
-        message = _i18n.__("reaction.core.gridPackage.pkgDisabled");
+        //message = _i18n.__("reaction.core.gridPackage.pkgDisabled");
+        message = translate("core.gridPackage.pkgDisabled");
         errorMessage = _i18n.__("reaction.core.gridPackage.errorDisabling");
       }
     } else {
       toggle = true;
-      message = _i18n.__("reaction.core.gridPackage.pkgEnabled");
+      message = translate("core.gridPackage.pkgEnabled");
+      //message = _i18n.__("reaction.core.gridPackage.pkgEnabled");
       errorMessage = _i18n.__("reaction.core.gridPackage.errorEnabling");
     }
     if (toggle) {
@@ -115,7 +119,7 @@ export default class Package extends Component {
             label={_i18n.__("reaction.core.app.settings")}
             //linkButton={true}
             //href={`dashboard/packages/${setting.name}`}
-            onClick={() => routeActions.push(`dashboard/packages/${setting.name}`)}
+            onClick={() => routeActions.push(`/dashboard/packages/${setting.name}`)}
           />
         );
       }

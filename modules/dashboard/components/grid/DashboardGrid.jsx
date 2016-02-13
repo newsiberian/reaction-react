@@ -5,6 +5,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import "../../styles/flexboxgrid.css";
 import Package from "./Package.jsx";
 import DashboardHeader from "../DashboardHeader.jsx";
+import { layoutStyles } from "../../../layout/styles/layout";
 
 const styles = {
   base: {
@@ -36,44 +37,50 @@ export default class DashboardGrid extends Component {
     const { alertActions, routeActions, settingsActions, children } = this.props;
     console.log("DashboardGrid rendering...");
     return (
-      <div>
-        { /* header section */ }
-        <DashboardHeader title={"Settings"} />
-        { /* main section */ }
-        <section className="container-fluid" style={styles.base}>
-          <div className="row">
-            {ReactionCore.Apps({
-              provides: "dashboard", shopId: ReactionCore.getShopId()
-            }).map((pkg, index) => {
-              if (pkgPermissions(pkg)) {
-                return (
-                  <div
-                    className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-                    key={index}
-                    style={styles.cal}
-                  >
-                    <Package
-                      alertActions={alertActions}
-                      routeActions={routeActions}
-                      settingsActions={settingsActions}
-                      pkg={pkg}
-                    />
-                  </div>
-                );
-              }
-            })}
+      <div style={layoutStyles.parent}>
+        <section style={layoutStyles.section}>
+          { /* header section */ }
+          <DashboardHeader title={"Settings"} />
+          { /* main section */ }
+          <div className="container-fluid" style={styles.base}>
+            <div className="row">
+              {ReactionCore.Apps({
+                provides: "dashboard", shopId: ReactionCore.getShopId()
+              }).map((pkg, index) => {
+                if (pkgPermissions(pkg)) {
+                  return (
+                    <div
+                      className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                      key={index}
+                      style={styles.cal}
+                    >
+                      <Package
+                        alertActions={alertActions}
+                        routeActions={routeActions}
+                        settingsActions={settingsActions}
+                        pkg={pkg}
+                      />
+                    </div>
+                  );
+                }
+              })}
+            </div>
           </div>
         </section>
         { /* action bar section */ }
         {children &&
-           <LeftNav
-             docked={true}
-             width={300}
-             open={true}
-             //onRequestChange={open => this.setState({open})}
-           >
+          <LeftNav
+            disableSwipeToOpen={true}
+            docked={true}
+            width={300}
+            open={true}
+            openRight={true}
+            overlayStyle={{height: "100%"}}
+            style={layoutStyles.actionBar}
+            //onRequestChange={open => this.setState({open})}
+          >
             {children}
-           </LeftNav>}
+          </LeftNav>}
       </div>
     );
   }
@@ -82,6 +89,10 @@ export default class DashboardGrid extends Component {
 DashboardGrid.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
+  }).isRequired,
+  children: PropTypes.node,
+  routeActions: PropTypes.shape({
+    push: PropTypes.func
   }).isRequired,
   settingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
