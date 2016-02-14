@@ -1,8 +1,6 @@
 import { Component, PropTypes } from "react";
-// import { _i18n } from "meteor/universe:i18n";
 import { translate } from "react-i18next/lib";
-import { Card, CardTitle, CardText, CardActions } from "material-ui/lib/card";
-import FlatButton from "material-ui/lib/flat-button";
+import { Card, CardTitle, CardText } from "material-ui/lib/card";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 // todo uncomment after 1.3 release
@@ -36,24 +34,26 @@ class Settings extends Component {
     });
   }
 
+  handleExpandChange(expanded) {
+    console.log(expanded);
+    console.log(event);
+  }
+
   render() {
     const { t } = this.props;
     return (
-      <div
-        id={"shopSettingsAccordion"}
-        role={"tablist"}
-      >
+      <div id={"shopSettingsAccordion"} role={"tablist"}>
         { /* General */ }
         <Card
+          //expanded={this.state.expanded}
           initiallyExpanded={true}
+          onExpandChange={this.handleExpandChange}
         >
           <CardTitle
             aria-controls="general"
             aria-expanded="true"
             role="button"
             title={t("shopSettings.general")}
-            //title={_i18n.__("reaction.core.shopSettings.general")}
-            //subtitle="Subtitle"
             actAsExpander={true}
             showExpandableButton={true}
             titleStyle={styles.title}
@@ -67,12 +67,6 @@ class Settings extends Component {
           >
             <GuestCheckoutForm />
             <GeneralForm />
-            {/*<MRF.Form
-              collection={ReactionCore.Collections.Packages}
-              type="update"
-              ref="form"
-              doc={this.getPackageData()}
-            />*/}
           </CardText>
         </Card>
         { /* Address */ }
@@ -82,8 +76,6 @@ class Settings extends Component {
             aria-expanded="true"
             role="button"
             title={t("shopSettings.address")}
-            //title={_i18n.__("reaction.core.shopSettings.address")}
-            //subtitle="Subtitle"
             actAsExpander={true}
             showExpandableButton={true}
             titleStyle={styles.title}

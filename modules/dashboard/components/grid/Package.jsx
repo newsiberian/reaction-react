@@ -128,13 +128,13 @@ class Package extends Component {
   }
 
   renderManagement() {
-    const { pkg, routeActions } = this.props;
-    if (hasPermission(pkg.route) ) {
+    const { pkg, routeActions, t } = this.props;
+    if (hasPermission(pkg.route)) {
       return (
         <FlatButton
-          label={_i18n.__("reaction.core.gridPackage.details")}
+          label={t("gridPackage.details")}
           onClick={() => routeActions.push(`/${pkg.route}`)}
-         />
+        />
       );
     }
   }

@@ -111,14 +111,12 @@
       "details": "Details",
       "disable": "Disable",
       "disableConfirm": "Are you sure you want to disable ",
-      "pkgEnabled": " is now enabled.",
-      "pkgDisabled": " is now disabled.",
-      "details": "Details"
+      "pkgEnabled": " is now enabled",
+      "pkgDisabled": " is now disabled"
     },
     "packages": {
       "accounts" : "Accounts",
-      "accountsD" : "Manage how members sign into your shop.",
-      "accountsSettings" : "Account Settings",
+      "accountsD" : "Manage how members sign into your shop",
       "addProduct" : "Add Product",
       "authorizeNet": "Authorize.net",
       "authorizeNetD": "Authorize.net Payment for Reaction Commerce",
@@ -128,7 +126,7 @@
       "coreD": "Reaction Commerce Core",
       "dashboard": "Dashboard",
       "import" : "Import",
-      "importD" : "Support for imports and migrations.",
+      "importD" : "Support for imports and migrations",
       "genericPayment": "Generic Payment",
       "genericPaymentD": "Generic Payment Method",
       "launchdock": "Launchdock Connect",
