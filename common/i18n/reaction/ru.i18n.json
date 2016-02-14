@@ -126,7 +126,8 @@
       "disable": "Отключить",
       "disableConfirm": "Вы уверенны в том, что хотите отключить ",
       "pkgEnabled": " подключен.",
-      "pkgDisabled": " отключен."
+      "pkgDisabled": " отключен.",
+      "details": "Подробнее"
     },
     "packages": {
       "accounts" : "Accounts",

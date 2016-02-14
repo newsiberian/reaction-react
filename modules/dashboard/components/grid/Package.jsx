@@ -1,5 +1,6 @@
 //import { _i18n } from "meteor/universe:i18n";
 import { Component, PropTypes } from "react";
+import { Link } from "react-router";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
@@ -126,6 +127,18 @@ class Package extends Component {
     });
   }
 
+  renderManagement() {
+    const { pkg, routeActions } = this.props;
+    if (hasPermission(pkg.route) ) {
+      return (
+        <FlatButton
+          label={_i18n.__("reaction.core.gridPackage.details")}
+          onClick={() => routeActions.push(`/${pkg.route}`)}
+         />
+      );
+    }
+  }
+
   render() {
     const { pkg } = this.props;
     return (
@@ -140,6 +153,7 @@ class Package extends Component {
         <CardActions>
           {this.renderToggle()}
           {pkg.enabled && this.renderSettings()}
+          {pkg.enabled && this.renderManagement()}
         </CardActions>
       </Card>
     );

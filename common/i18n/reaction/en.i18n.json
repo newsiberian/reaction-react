@@ -112,7 +112,8 @@
       "disable": "Disable",
       "disableConfirm": "Are you sure you want to disable ",
       "pkgEnabled": " is now enabled.",
-      "pkgDisabled": " is now disabled."
+      "pkgDisabled": " is now disabled.",
+      "details": "Details"
     },
     "packages": {
       "accounts" : "Accounts",
