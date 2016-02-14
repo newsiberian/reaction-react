@@ -1,11 +1,13 @@
 import { Component, PropTypes } from "react";
-import { _i18n } from "meteor/universe:i18n";
-import { Card, CardHeader, CardText, CardActions } from "material-ui/lib/card";
+// import { _i18n } from "meteor/universe:i18n";
+import { translate } from "react-i18next/lib";
+import { Card, CardTitle, CardText, CardActions } from "material-ui/lib/card";
 import FlatButton from "material-ui/lib/flat-button";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 // todo uncomment after 1.3 release
 //import MRF from "meteor/nicolaslopezj:mrf";
+import GuestCheckoutForm from "./GuestCheckoutForm.jsx";
 import GeneralForm from "./GenaralForm.jsx";
 
 
@@ -14,6 +16,9 @@ const styles = {
   cardText: {
     paddingLeft: 20,
     paddingRight: 20
+  },
+  title: {
+    fontSize: 18 // title size
   }
 };
 
@@ -29,17 +34,21 @@ class Settings extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         { /* General */ }
         <Card initiallyExpanded={true}>
-          <CardHeader
-            title={_i18n.__("reaction.core.shopSettings.general")}
+          <CardTitle
+            title={t("shopSettings.general")}
+            //title={_i18n.__("reaction.core.shopSettings.general")}
             //subtitle="Subtitle"
             actAsExpander={true}
             showExpandableButton={true}
+            titleStyle={styles.title}
           />
           <CardText expandable={true} style={styles.cardText}>
+            <GuestCheckoutForm />
             <GeneralForm />
             {/*<MRF.Form
               collection={ReactionCore.Collections.Packages}
@@ -51,11 +60,13 @@ class Settings extends Component {
         </Card>
         { /* Address */ }
         <Card>
-          <CardHeader
-            title={_i18n.__("reaction.core.shopSettings.address")}
+          <CardTitle
+            title={t("shopSettings.address")}
+            //title={_i18n.__("reaction.core.shopSettings.address")}
             //subtitle="Subtitle"
             actAsExpander={true}
             showExpandableButton={true}
+            titleStyle={styles.title}
           />
           <CardText expandable={true} style={styles.cardText}>
             {`Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -75,4 +86,4 @@ class Settings extends Component {
 
 Settings.propTypes = {};
 
-export default ActionBarWrapper(Settings);
+export default ActionBarWrapper(translate("core")(Settings));

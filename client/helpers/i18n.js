@@ -1,4 +1,9 @@
-import { _i18n } from "meteor/universe:i18n";
+// import { _i18n } from "meteor/universe:i18n";
+import i18next from "i18next";
+//import XHR from "i18next-xhr-backend/lib";
+//import Backend from "i18next-node-fs-backend/lib";
+import LanguageDetector from "i18next-browser-languagedetector/lib";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 
 export function translate(i18nKey) {
   if (typeof i18nKey !== "string") {
@@ -9,8 +14,89 @@ export function translate(i18nKey) {
   return i18n.t(i18nKey);
 }
 
+/**
+ * getLang
+ * @summary detects device default language
+ * @return {*}
+ */
+const getLang = () => {
+  if (typeof navigator.languages !== "undefined")  {
+    if (~navigator.languages[0].indexOf("-")) {
+      return navigator.languages[0].split("-")[0];
+    } else if (~navigator.languages[0].indexOf("_")) {
+      return navigator.languages[0].split("_")[0];
+    }
+    return navigator.languages[0];
+  }
+  return navigator.language || navigator.browserLanguage;
+};
 
+/**
+ * getResources
+ * @summary fetch all translations from DB to minimongo
+ * @return {*}
+ */
+const getResources = () => {
+  if (ReactionCore.Subscriptions.Translations.ready()) {
+    // fetch reaction translations
+    const reactionTranslations = ReactionCore.Collections.Translations
+      .find({}, {
+        fields: {
+          _id: 0
+        },
+        reactive: false
+      }).fetch();
+    // map reduce translations into i18next formatting
+    return reactionTranslations.reduce(function (x, y) {
+      x[y.i18n] = y.translation;
+      return x;
+    }, {});
+  }
+};
 
+Meteor.startup(function () {
+  // todo getLang should be called then DOM ready?
+  Session.set("language", getLang());
+
+  Meteor.call("shop/getLocale", function (error, result) {
+    if (result) {
+      ReactionCore.Locale = result;
+      ReactionCore.Locale.language = Session.get("language");
+      // moment.locale(ReactionCore.Locale.language);
+    }
+  });
+
+  Tracker.autorun(function () {
+    ReactionCore.Subscriptions.Translations = Meteor.subscribe("Translations",
+      Session.get("language"), () => {
+        i18next
+        // .use(XHR)
+        // .use(Backend)
+          .use(LanguageDetector)
+          .init({
+            // lng: ReactionCore.Locale.language,
+            fallbackLng: "en",
+
+            // have a common namespace used around the full app
+            ns: ["core"],
+            defaultNS: "core",
+            resources: getResources(),
+
+            debug: true,
+
+            interpolation: {
+              escapeValue: false // not needed for react!!
+            },
+            //backend: {
+            //  // path where resources get loaded from
+            //  loadPath: "/common/locales/{{lng}}.js"
+            //}
+          });
+      });
+  });
+});
+
+export default i18next;
 
 /**
  * formatPrice
@@ -90,21 +176,12 @@ function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
     price.replace(originalPrice, formattedPrice));
 }
 
-export function getLang() {
-  if (typeof navigator.languages !== "undefined")  {
-    return navigator.languages[0];
-  }
-  return navigator.language || navigator.browserLanguage;
-}
-
-Meteor.startup(function () {
-  if (Meteor.isClient) {
-    _i18n.setLocale(getLang());
-    Session.set("language", getLang());
-  } else {
-    // todo for SSR
-  }
-
-  // todo i18n for admin & client-restriced areas?
-
-});
+//Meteor.startup(function () {
+//  if (Meteor.isClient) {
+//    _i18n.setLocale(getLang());
+//    Session.set("language", getLang());
+//  } else {
+//    // todo for SSR
+//  }
+//  // todo i18n for admin & client-restriced areas?
+//});

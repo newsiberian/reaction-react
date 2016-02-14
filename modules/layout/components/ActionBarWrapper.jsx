@@ -30,7 +30,7 @@ export const ActionBarWrapper = ComposedComponent => class extends Component {
     return (
       <div style={styles.base}>
         <Toolbar style={styles.toolbar}>
-          <ToolbarTitle text="Options"/>
+          <ToolbarTitle text={"TEST"} />
           <ToolbarGroup float="right" style={styles.toolbarGroup}>
             <IconButton
               onClick={(e) => console.log(e)}
@@ -45,3 +45,4 @@ export const ActionBarWrapper = ComposedComponent => class extends Component {
     );
   }
 };
+

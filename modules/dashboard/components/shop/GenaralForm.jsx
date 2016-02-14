@@ -1,6 +1,8 @@
 import { Component, PropTypes } from "react";
 import Formsy from "formsy-react";
 import { FormsyText } from "formsy-material-ui/lib";
+import FlatButton from "material-ui/lib/flat-button";
+import { _i18n } from "meteor/universe:i18n";
 
 /**
  * @class GenaralForm
@@ -49,11 +51,12 @@ export default class GenaralForm extends Component {
           validations="isWords"
           //validationError={}
           required
-          hintText="Keywords for SEO"
+          hintText="Meta keywords for SEO"
           floatingLabelText="Keywords" // let it be 256 chars max
           multiLine={true}
           rowsMax={3}
         />
+        <FlatButton label={_i18n.__("reaction.core.app.saveChanges")} primary={true} />
       </Formsy.Form>
     );
   }

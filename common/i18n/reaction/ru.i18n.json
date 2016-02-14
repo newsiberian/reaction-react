@@ -33,7 +33,8 @@
       "address": "Адрес",
       "mail": "Почта",
       "localization": "Локализация",
-      "options": "Настройки"
+      "options": "Настройки",
+      "paymentMethods": "Payment Methods"
     },
     "header": {
       "tagsAdd": "Добавить метку",
@@ -214,21 +215,6 @@
     "addressBookEdit": {
       "editAddress": "Редактирование адреса"
     },
-    "shop": {
-      "addressBook": {
-        "country": "Страна",
-        "fullName": "Ф.И.О.",
-        "address1": "Адрес",
-        "address2": "Адрес (доп.)",
-        "postal": "Почтовый индекс",
-        "city": "Город",
-        "region": "Область/Край",
-        "phone": "Телефон",
-        "isShippingDefault": "Сделать вашим адресом доставки по умолчанию?",
-        "isBillingDefault": "Сделать вашим платёжным адресом по умолчанию?",
-        "isCommercial": "Это юридический адрес."
-      }
-    },
     "address": {
       "country": "Страна",
       "selectOne": "(Выберите Страну)",
@@ -267,8 +253,15 @@
       "shipping": "Доставка"
     },
     "shopEditForm": {
-      "name": "Имя",
-      "email": "Email"
+      "allowGuestCheckout": "Разрешить заказывать незарегистрированным пользователям",
+      "name": "Название",
+      "namePlaceholder": "Название магазина",
+      "email": "Email",
+      "emailPlaceholder": "Основной Email магазина",
+      "description": "Описание",
+      "descrPlaceholder": "Опишите свой магазин для SEO",
+      "keywords": "Ключевые слова",
+      "keywordsPlaceholder": "Ключевые слова для SEO"
     },
     "shopEditAdressForm": {
       "company": "Компания",

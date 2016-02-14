@@ -240,8 +240,15 @@
       "shipping": "Shipping"
     },
     "shopEditForm": {
+      "allowGuestCheckout": "Allow Guest Checkout",
       "name": "Name",
-      "email": "Email"
+      "namePlaceholder": "Shop Name",
+      "email": "Email",
+      "emailPlaceholder": "Primary Contact Email",
+      "description": "Description",
+      "descrPlaceholder": "Describe your shop for SEO",
+      "keywords": "Keywords",
+      "keywordsPlaceholder": "Meta keywords for SEO"
     },
     "shopEditAdressForm": {
       "company": "Company",
