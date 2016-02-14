@@ -8,7 +8,7 @@ import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
 import { hasPermission } from "../../../../client/helpers/permissions";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { translate } from "../../../../client/helpers/i18n";
+import { translate } from "react-i18next/lib";
 
 
 const styles = {
@@ -53,6 +53,7 @@ const getType = (pkg) => {
  * @class Package
  * @classdesc
  */
+@translate("core")
 export default class Package extends Component {
   handleToggleClick(pkg) {
     const { alertActions } = this.props;

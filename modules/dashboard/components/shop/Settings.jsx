@@ -1,5 +1,7 @@
 import { Component, PropTypes } from "react";
 // import { _i18n } from "meteor/universe:i18n";
+// we need this only for send translations to HOC
+import i18next from "i18next";
 import { translate } from "react-i18next/lib";
 import { Card, CardTitle, CardText, CardActions } from "material-ui/lib/card";
 import FlatButton from "material-ui/lib/flat-button";
@@ -86,4 +88,9 @@ class Settings extends Component {
 
 Settings.propTypes = {};
 
-export default ActionBarWrapper(translate("core")(Settings));
+const options = {
+  title: "shopSettings.options"
+};
+
+// We need to send t() to HOC to translate title
+export default translate("core")(ActionBarWrapper(Settings, options));

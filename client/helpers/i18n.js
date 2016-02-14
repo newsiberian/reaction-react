@@ -5,19 +5,10 @@ import i18next from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 
-export function translate(i18nKey) {
-  if (typeof i18nKey !== "string") {
-    ReactionCore.Log.info("i18n key string required to translate", i18nKey);
-    return "";
-  }
-
-  return i18n.t(i18nKey);
-}
-
 /**
  * getLang
  * @summary detects device default language
- * @return {*}
+ * @return {String} language code
  */
 const getLang = () => {
   if (typeof navigator.languages !== "undefined")  {
@@ -34,7 +25,7 @@ const getLang = () => {
 /**
  * getResources
  * @summary fetch all translations from DB to minimongo
- * @return {*}
+ * @return {Array} list of translations
  */
 const getResources = () => {
   if (ReactionCore.Subscriptions.Translations.ready()) {
@@ -61,20 +52,25 @@ Meteor.startup(function () {
   Meteor.call("shop/getLocale", function (error, result) {
     if (result) {
       ReactionCore.Locale = result;
-      ReactionCore.Locale.language = Session.get("language");
+      // this is need to make language changing reactive.
+      Tracker.autorun(() => {
+        ReactionCore.Locale.language = Session.get("language");
+      });
       // moment.locale(ReactionCore.Locale.language);
     }
   });
 
-  Tracker.autorun(function () {
+  Tracker.autorun(() => {
     ReactionCore.Subscriptions.Translations = Meteor.subscribe("Translations",
       Session.get("language"), () => {
         i18next
         // .use(XHR)
         // .use(Backend)
-          .use(LanguageDetector)
+        // .use(LanguageDetector) // we don't need this here, because
+          // we want to manually change language sometimes by reactive
+          // way
           .init({
-            // lng: ReactionCore.Locale.language,
+            lng: ReactionCore.Locale.language,
             fallbackLng: "en",
 
             // have a common namespace used around the full app
