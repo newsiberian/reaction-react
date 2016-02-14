@@ -34,7 +34,8 @@
       "mail": "Почта",
       "localization": "Локализация",
       "options": "Настройки",
-      "paymentMethods": "Payment Methods"
+      "paymentMethods": "Платёжные системы",
+      "externalServices": "Сторонние Сервисы"
     },
     "header": {
       "tagsAdd": "Добавить метку",
@@ -126,6 +127,33 @@
       "disableConfirm": "Вы уверенны в том, что хотите отключить ",
       "pkgEnabled": " подключен.",
       "pkgDisabled": " отключен."
+    },
+    "packages": {
+      "accounts" : "Accounts",
+      "accountsD" : "Manage how members sign into your shop.",
+      "accountsSettings" : "Account Settings",
+      "addProduct" : "Add Product",
+      "authorizeNet": "Authorize.net",
+      "authorizeNetD": "Authorize.net Payment for Reaction Commerce",
+      "braintree": "Braintree",
+      "braintreeD": "Braintree Payment for Reaction Commerce",
+      "core": "Core",
+      "coreD": "Reaction Commerce Core",
+      "dashboard": "Dashboard",
+      "import" : "Import",
+      "importD" : "Support for imports and migrations.",
+      "genericPayment": "Generic Payment",
+      "genericPaymentD": "Generic Payment Method",
+      "launchdock": "Launchdock Connect",
+      "launchdockD": "Launchdock integration for Reaction Commerce",
+      "orders" : "Orders",
+      "ordersD" : "Fulfill your orders",
+      "paypal": "PayPal",
+      "paypalD": "PayPal Payment for Reaction Commerce",
+      "profile" : "Profile",
+      "shopSettings": "Shop Settings",
+      "stripe": "Stripe",
+      "stripeD": "Stripe Payment for Reaction Commerce"
     },
     "cartDrawer": {
       "empty": "Очень жаль, Ваша корзина пуста",
@@ -227,7 +255,7 @@
       "phone": "Телефон",
       "isShippingDefault": "Сделать вашим адресом доставки по умолчанию?",
       "isBillingDefault": "Сделать вашим платёжным адресом по умолчанию?",
-      "isCommercial": "Это юридический адрес."
+      "isCommercial": "Это юридический адрес"
     },
     "checkoutProgressBar": {
       "login": "Вход в Учётную Запись",
@@ -259,14 +287,20 @@
       "email": "Email",
       "emailPlaceholder": "Основной Email магазина",
       "description": "Описание",
-      "descrPlaceholder": "Опишите свой магазин для SEO",
+      "descriptionPlaceholder": "Опишите свой магазин для SEO",
+      "descriptionTooltip": "This field used by meta description tag. It is allow to search engines to describe your shop",
       "keywords": "Ключевые слова",
       "keywordsPlaceholder": "Ключевые слова для SEO"
     },
     "shopEditAdressForm": {
       "company": "Компания",
-      "fullname": "Полное имя",
-      "address1": "Адрес"
+      "companyPlaceholder": "Название компании",
+      "fullname": "Полное название",
+      "fullnamePlaceholder": "Название вашей организации",
+      "address1": "Адрес",
+      "address1Placeholder": "Адрес вашей организации",
+      "address1Tooltip": "Этот адрес будет виден посетителям",
+      "address2Placeholder": "Например, номер офиса"
     },
     "consoleIcon": {
       "iconTitle": "Показать панель",

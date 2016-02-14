@@ -1,4 +1,5 @@
-import { Component, PropTypes } from "react";
+import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 import LeftNav from "material-ui/lib/left-nav";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import { Grid, Row, Col } from "react-flexbox-grid";
@@ -32,15 +33,15 @@ const pkgPermissions = pkg => {
  * @class Packages
  * @classdesc Dashboard packages
  */
-export default class DashboardGrid extends Component {
+class DashboardGrid extends Component {
   render() {
-    const { alertActions, routeActions, settingsActions, children } = this.props;
+    const { alertActions, routeActions, settingsActions, children, t } = this.props;
     console.log("DashboardGrid rendering...");
     return (
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
           { /* header section */ }
-          <DashboardHeader title={"Settings"} />
+          <DashboardHeader title={t("app.settings")} />
           { /* main section */ }
           <div className="container-fluid" style={styles.base}>
             <div className="row">
@@ -77,9 +78,9 @@ export default class DashboardGrid extends Component {
             openRight={true}
             overlayStyle={{height: "100%"}}
             style={layoutStyles.actionBar}
-            //onRequestChange={open => this.setState({open})}
+            // onRequestChange={open => this.setState({open})}
           >
-            {children}
+            {React.cloneElement(children, { routeActions: routeActions })}
           </LeftNav>}
       </div>
     );
@@ -99,3 +100,5 @@ DashboardGrid.propTypes = {
     closeSettings: PropTypes.func
   }).isRequired
 };
+
+export default translate("core")(DashboardGrid);

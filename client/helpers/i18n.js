@@ -45,6 +45,30 @@ const getResources = () => {
   }
 };
 
+/**
+ * getLabelsFor
+ * get Labels for simple.schema keys
+ * @param  {Object} schema - schema
+ * @param  {String} name - name
+ * @return {Object} return schema label object
+ */
+export function getLabelsFor(schema, name) {
+  let labels = {};
+  // loop through all the rendered form fields and generate i18n keys
+  for (let fieldName of schema._schemaKeys) {
+    let i18nKey = name.charAt(0).toLowerCase() + name.slice(1) + "." +
+      fieldName
+        .split(".$").join("");
+    // translate autoform label
+    let translation = i18next.t(i18nKey);
+    if (new RegExp("string").test(translation) !== true && translation !==
+      i18nKey) {
+      if (translation) labels[fieldName] = translation;
+    }
+  }
+  return labels;
+}
+
 Meteor.startup(function () {
   // todo getLang should be called then DOM ready?
   Session.set("language", getLang());
@@ -70,7 +94,7 @@ Meteor.startup(function () {
           // we want to manually change language sometimes by reactive
           // way
           .init({
-            lng: ReactionCore.Locale.language,
+            lng: Session.get("language"),
             fallbackLng: "en",
 
             // have a common namespace used around the full app

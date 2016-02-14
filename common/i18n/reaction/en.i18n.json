@@ -34,7 +34,8 @@
       "mail": "Mail",
       "localization": "Localization",
       "options": "Options",
-      "paymentMethods": "Payment Methods"
+      "paymentMethods": "Payment Methods",
+      "externalServices": "External Services"
     },
     "header": {
       "tagsAdd": "Add tag",
@@ -112,6 +113,33 @@
       "disableConfirm": "Are you sure you want to disable ",
       "pkgEnabled": " is now enabled.",
       "pkgDisabled": " is now disabled."
+    },
+    "packages": {
+      "accounts" : "Accounts",
+      "accountsD" : "Manage how members sign into your shop.",
+      "accountsSettings" : "Account Settings",
+      "addProduct" : "Add Product",
+      "authorizeNet": "Authorize.net",
+      "authorizeNetD": "Authorize.net Payment for Reaction Commerce",
+      "braintree": "Braintree",
+      "braintreeD": "Braintree Payment for Reaction Commerce",
+      "core": "Core",
+      "coreD": "Reaction Commerce Core",
+      "dashboard": "Dashboard",
+      "import" : "Import",
+      "importD" : "Support for imports and migrations.",
+      "genericPayment": "Generic Payment",
+      "genericPaymentD": "Generic Payment Method",
+      "launchdock": "Launchdock Connect",
+      "launchdockD": "Launchdock integration for Reaction Commerce",
+      "orders" : "Orders",
+      "ordersD" : "Fulfill your orders",
+      "paypal": "PayPal",
+      "paypalD": "PayPal Payment for Reaction Commerce",
+      "profile" : "Profile",
+      "shopSettings": "Shop Settings",
+      "stripe": "Stripe",
+      "stripeD": "Stripe Payment for Reaction Commerce"
     },
     "cartDrawer": {
       "empty": "We're sad. Your cart is empty.",
@@ -214,7 +242,7 @@
       "phone": "Phone",
       "isShippingDefault": "Make this your default shipping address?",
       "isBillingDefault": "Make this your default billing address?",
-      "isCommercial": "This is a commercial address."
+      "isCommercial": "This is a commercial address"
     },
     "checkoutProgressBar": {
       "login": "Account",
@@ -246,14 +274,20 @@
       "email": "Email",
       "emailPlaceholder": "Primary Contact Email",
       "description": "Description",
-      "descrPlaceholder": "Describe your shop for SEO",
+      "descriptionPlaceholder": "Describe your shop for SEO",
+      "descriptionTooltip": "This field used by meta description tag. It is allow to search engines to describe your shop",
       "keywords": "Keywords",
       "keywordsPlaceholder": "Meta keywords for SEO"
     },
-    "shopEditAdressForm": {
+    "shopEditAddressForm": {
       "company": "Company",
+      "companyPlaceholder": "This business name",
       "fullname": "Full name",
-      "address1": "Address 1"
+      "fullnamePlaceholder": "Your organization name",
+      "address1": "Address",
+      "address1Placeholder": "Your organization address",
+      "address1Tooltip": "This address will be visible to visitors",
+      "address2Placeholder": "Additional address"
     },
     "consoleIcon": {
       "iconTitle": "View Console",

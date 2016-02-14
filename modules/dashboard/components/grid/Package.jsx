@@ -1,4 +1,4 @@
-import { _i18n } from "meteor/universe:i18n";
+//import { _i18n } from "meteor/universe:i18n";
 import { Component, PropTypes } from "react";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
@@ -7,9 +7,9 @@ import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
 import { hasPermission } from "../../../../client/helpers/permissions";
+// import { getLabelsFor } from "../../../../client/helpers/i18n";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { translate } from "react-i18next/lib";
-
 
 const styles = {
   base: {
@@ -53,25 +53,24 @@ const getType = (pkg) => {
  * @class Package
  * @classdesc
  */
-@translate("core")
-export default class Package extends Component {
+class Package extends Component {
   handleToggleClick(pkg) {
-    const { alertActions } = this.props;
+    const { alertActions, t } = this.props;
     let toggle = false;
     let message;
     let errorMessage;
     if (pkg.enabled) {
-      if (confirm(_i18n.__("reaction.core.gridPackage.disable") + pkg.label)) {
+      if (confirm(t("gridPackage.disable") + pkg.label)) {
         toggle = true;
         //message = _i18n.__("reaction.core.gridPackage.pkgDisabled");
-        message = translate("core.gridPackage.pkgDisabled");
-        errorMessage = _i18n.__("reaction.core.gridPackage.errorDisabling");
+        message = t("gridPackage.pkgDisabled");
+        errorMessage = t("gridPackage.errorDisabling");
       }
     } else {
       toggle = true;
-      message = translate("core.gridPackage.pkgEnabled");
+      message = t("gridPackage.pkgEnabled");
       //message = _i18n.__("reaction.core.gridPackage.pkgEnabled");
-      errorMessage = _i18n.__("reaction.core.gridPackage.errorEnabling");
+      errorMessage = t("gridPackage.errorEnabling");
     }
     if (toggle) {
       return ReactionCore.Collections.Packages.update(pkg.packageId, {
@@ -94,11 +93,11 @@ export default class Package extends Component {
 
   renderToggle() {
     let label;
-    const { pkg } = this.props;
+    const { pkg, t } = this.props;
     if (pkg.enabled) {
-      label = _i18n.__("reaction.core.gridPackage.disable");
+      label = t("gridPackage.disable");
     } else {
-      label = _i18n.__("reaction.core.gridPackage.enable");
+      label = t("gridPackage.enable");
     }
     return (
       <FlatButton
@@ -109,7 +108,7 @@ export default class Package extends Component {
   }
 
   renderSettings() {
-    const { pkg, routeActions } = this.props;
+    const { pkg, routeActions, t } = this.props;
     return ReactionCore.Apps({
       provides: "settings", name: pkg.name, container: pkg.container
     }).map((setting, index) => {
@@ -117,7 +116,7 @@ export default class Package extends Component {
         return (
           <FlatButton
             key={index}
-            label={_i18n.__("reaction.core.app.settings")}
+            label={t("app.settings")}
             //linkButton={true}
             //href={`dashboard/packages/${setting.name}`}
             onClick={() => routeActions.push(`/dashboard/packages/${setting.name}`)}
@@ -151,10 +150,6 @@ Package.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
   }).isRequired,
-  settingsActions: PropTypes.shape({
-    openSettings: PropTypes.func,
-    closeSettings: PropTypes.func
-  }).isRequired,
   pkg: PropTypes.shape({
     container: PropTypes.string,
     cycle: PropTypes.number,
@@ -168,5 +163,11 @@ Package.propTypes = {
     priority: PropTypes.string,
     provides: PropTypes.string,
     route: PropTypes.string
+  }).isRequired,
+  settingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
   }).isRequired
 };
+
+export default translate("core")(Package);

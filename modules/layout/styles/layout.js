@@ -4,7 +4,7 @@ export const layoutStyles = {
     height: "100%"
   },
   section: {
-
+    flexGrow: "1"
   },
   actionBar: {
     height: "100%",
@@ -13,6 +13,6 @@ export const layoutStyles = {
     overlayX: "hidden",
     overlayY: "auto",
     position: "static",
-    zIndex: 1
+    zIndex: "1"
   }
 };

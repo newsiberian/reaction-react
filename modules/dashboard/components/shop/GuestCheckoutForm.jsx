@@ -1,7 +1,7 @@
 import { Component, PropTypes } from "react";
-import Divider from 'material-ui/lib/divider';
+import Divider from "material-ui/lib/divider";
 import Toggle from "material-ui/lib/toggle";
-import { _i18n } from "meteor/universe:i18n";
+import { translate } from "react-i18next/lib";
 
 const styles = {
   block: {
@@ -21,16 +21,17 @@ const styles = {
  * @class GuestCheckoutForm
  * @classdesc
  */
-export default class GuestCheckoutForm extends Component {
+class GuestCheckoutForm extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <Toggle
-          label={_i18n.__("reaction.core.shopEditForm.allowGuestCheckout")}
+          label={t("shopEditForm.allowGuestCheckout")}
           style={styles.toggle}
         />
         <Divider />
@@ -40,3 +41,5 @@ export default class GuestCheckoutForm extends Component {
 }
 
 GuestCheckoutForm.propTypes = {};
+
+export default translate("core")(GuestCheckoutForm);
