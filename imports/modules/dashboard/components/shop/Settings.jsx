@@ -92,7 +92,7 @@ class Settings extends Component {
                 description: shopData.description,
                 keywords: shopData.keywords
               }}
-              onSubmit={values => formsActions.submitForm(values, "General")}
+              onSubmit={values => formsActions.submitForm("General", values)}
             />
           </CardText>
         </Card>
@@ -127,7 +127,7 @@ class Settings extends Component {
                 country: shopData.addressBook[0].country,
                 phone: shopData.addressBook[0].phone
               }}
-              onSubmit={values => formsActions.submitForm(values, "Address")}
+              onSubmit={values => formsActions.submitForm("Address", values)}
             />
           </CardText>
         </Card>
@@ -151,7 +151,14 @@ class Settings extends Component {
             style={styles.cardText}
           >
             <EmailForm
-
+              initialValues={{
+                user: corePackageData.settings.mail.user,
+                password: corePackageData.settings.mail.password,
+                host: corePackageData.settings.mail.host,
+                port: corePackageData.settings.mail.port
+              }}
+              onSubmit={values =>
+               formsActions.submitForm("Mail", values, corePackageData._id)}
             />
           </CardText>
         </Card>

@@ -40,6 +40,13 @@ export function integer(value) {
   }
 }
 
+//export function isNumeric(value) {
+//  let bool = isNaN(+value);
+//  bool = bool || (value.indexOf(".") !== -1);
+//  bool = bool || (value.indexOf(",") !== -1);
+//  return !bool;
+//}
+
 export function oneOf(enumeration) {
   return value => {
     if (!~enumeration.indexOf(value)) {

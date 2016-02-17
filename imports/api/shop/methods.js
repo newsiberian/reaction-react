@@ -2,6 +2,33 @@ import { ValidatedMethod } from "meteor/mdg:validated-method";
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 
+const generalValues = new SimpleSchema({
+  description: { type: String, optional: true },
+  email: { type: String, regEx: SimpleSchema.RegEx.Email },
+  keywords: { type: String, optional: true },
+  name: { type: String }
+});
+
+const addressValues = new SimpleSchema({
+  company: { type: String, optional: true },
+  fullName: { type: String },
+  address1: { type: String },
+  address2: { type: String, optional: true },
+  city: { type: String },
+  region: { type: String },
+  postal: { type: String },
+  country: { type: String },
+  phone: { type: String }
+});
+
+const mailValues = new SimpleSchema({
+  user: { type: String },
+  password: { type: String },
+  host: { type: String },
+  // todo update to number
+  port: { type: String }
+});
+
 /**
  * submitGeneral
  * @summary onSubmit shop general settings form method
@@ -10,12 +37,10 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 export const submitGeneral = new ValidatedMethod({
   name: "submitGeneral",
   validate: new SimpleSchema({
-    description: { type: String, optional: true },
-    email: { type: String, regEx: SimpleSchema.RegEx.Email },
-    keywords: { type: String, optional: true },
-    name: { type: String }
+    values: { type: generalValues },
+    _id: { type: SimpleSchema.RegEx.Id, optional: true }
   }).validator(),
-  run(values) {
+  run({ values }) {
     // must have core permissions
     if (!ReactionCore.hasPermission("core")) {
       throw new Meteor.Error(403, "Access Denied");
@@ -37,17 +62,10 @@ export const submitGeneral = new ValidatedMethod({
 export const submitAddress = new ValidatedMethod({
   name: "submitAddress",
   validate: new SimpleSchema({
-    company: { type: String, optional: true },
-    fullName: { type: String },
-    address1: { type: String },
-    address2: { type: String, optional: true },
-    city: { type: String },
-    region: { type: String },
-    postal: { type: String },
-    country: { type: String },
-    phone: { type: String }
+    values: { type: addressValues },
+    _id: { type: SimpleSchema.RegEx.Id, optional: true }
   }).validator(),
-  run(values) {
+  run({ values }) {
     // must have core permissions
     if (!ReactionCore.hasPermission("core")) {
       throw new Meteor.Error(403, "Access Denied");
@@ -66,6 +84,30 @@ export const submitAddress = new ValidatedMethod({
         "addressBook.0.postal": values.postal,
         "addressBook.0.country": values.country,
         "addressBook.0.phone": values.phone
+      }
+    });
+  }
+});
+
+export const submitMail = new ValidatedMethod({
+  name: "submitMail",
+  validate: new SimpleSchema({
+    values: { type: mailValues },
+    _id: { type: SimpleSchema.RegEx.Id }
+  }).validator(),
+  run({ values, _id }) {
+    // must have core permissions
+    if (!ReactionCore.hasPermission("core")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    return ReactionCore.Collections.Packages.update({
+      _id: _id
+    }, {
+      $set: {
+        "settings.mail.user": values.user,
+        "settings.mail.password": values.password,
+        "settings.mail.host": values.host,
+        "settings.mail.port": values.port
       }
     });
   }
