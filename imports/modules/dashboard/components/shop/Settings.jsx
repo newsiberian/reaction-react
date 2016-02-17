@@ -229,7 +229,20 @@ class Settings extends Component {
             expandable={true}
             style={styles.cardText}
           >
-            <ExternalServicesForm corePackageData={corePackageData} />
+            <ExternalServicesForm
+              initialValues={{
+                OXRAppId: corePackageData.settings.openexchangerates.appId,
+                OXRRefreshPeriod: corePackageData.settings.openexchangerates.
+                  refreshPeriod,
+                googleClientId: corePackageData.settings.google &&
+                 corePackageData.settings.google.clientId,
+                googleApiKey: corePackageData.settings.google &&
+                 corePackageData.settings.google.apiKey
+              }}
+              onSubmit={values => formsActions.submitForm(
+                "ExternalServices", values, corePackageData._id
+              )}
+            />
           </CardText>
         </Card>
       </div>

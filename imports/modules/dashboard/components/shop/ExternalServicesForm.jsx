@@ -1,40 +1,106 @@
 import React, { Component, PropTypes } from "react";
-import Formsy from "formsy-react";
-import { FormsyText } from "formsy-material-ui/lib";
-import FlatButton from "material-ui/lib/flat-button";
 import { translate } from "react-i18next/lib";
+import { reduxForm } from "redux-form";
+import FlatButton from "material-ui/lib/flat-button";
+import TextField from "material-ui/lib/text-field";
+import i18next from "i18next";
+export const fields = [
+  "OXRAppId",
+  "OXRRefreshPeriod",
+  "googleClientId",
+  "googleApiKey"
+];
+
+const validate = values => {
+  const errors = {};
+
+  if (!values.OXRAppId) {
+    errors.OXRAppId = i18next.t("error.isRequired", {
+      field: i18next.t("shopEditExternalServicesForm.openexchangeratesAppId")
+    });
+  }
+  if (!values.OXRRefreshPeriod) {
+    errors.OXRRefreshPeriod = i18next.t("error.isRequired", {
+      field: i18next.t("shopEditExternalServicesForm.openexchangeratesRefresh")
+    });
+  }
+  if (!values.googleClientId) {
+    errors.googleClientId = i18next.t("error.isRequired", {
+      field: i18next.t("shopEditExternalServicesForm.googleClientId")
+    });
+  }
+  if (!values.googleApiKey) {
+    errors.googleApiKey = i18next.t("error.isRequired", {
+      field: i18next.t("shopEditExternalServicesForm.googleApiKey")
+    });
+  }
+
+  return errors;
+};
 
 /**
  * @class ExternalServicesForm
  * @classdesc
  */
 class ExternalServicesForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { t } = this.props;
+    const {
+      fields: { OXRAppId, OXRRefreshPeriod, googleClientId, googleApiKey },
+      handleSubmit, submitting, t
+    } = this.props;
     return (
-      <Formsy.Form
-        //onValid={this.enableButton}
-        //onInvalid={this.disableButton}
-        //onValidSubmit={this.submitForm}
-      >
-        <FormsyText
-          name="addressBook.0.company"
-          validations="isWords"
-          //validationError={}
-          required
-          hintText={t("shopEditAdressForm.companyPlaceholder")}
-          floatingLabelText={t("shopEditAdressForm.company")} // 60 chars max
+      <form onSubmit={handleSubmit}>
+        <TextField
+          {...OXRAppId}
+          floatingLabelText={t(
+            "shopEditExternalServicesForm.openexchangeratesAppId"
+          )}
+          errorText={OXRAppId.error}
         />
-        <FlatButton label={t("app.saveChanges")} primary={true} />
-      </Formsy.Form>
+        <TextField
+          {...OXRRefreshPeriod}
+          floatingLabelText={t(
+            "shopEditExternalServicesForm.openexchangeratesRefresh"
+          )}
+          hintText={t(
+            "shopEditExternalServicesForm.openexchangeratesRefreshPlaceholder"
+          )}
+          errorText={OXRRefreshPeriod.error}
+        />
+        <TextField
+          {...googleClientId}
+          floatingLabelText={t(
+            "shopEditExternalServicesForm.googleClientId"
+          )}
+          errorText={googleClientId.error}
+        />
+        <TextField
+          {...googleApiKey}
+          floatingLabelText={t(
+            "shopEditExternalServicesForm.googleApiKey"
+          )}
+          errorText={googleApiKey.error}
+        />
+        <FlatButton
+          label={t("app.saveChanges")}
+          primary={true}
+          type="submit"
+          disabled={submitting}
+        />
+      </form>
     );
   }
 }
 
-ExternalServicesForm.propTypes = {};
+ExternalServicesForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
+};
 
-export default translate("core")(ExternalServicesForm);
+export default translate("core")(reduxForm({
+  form: "shopExternalServicesForm",
+  fields,
+  validate
+})(ExternalServicesForm));

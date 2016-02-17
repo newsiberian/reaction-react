@@ -100,6 +100,7 @@ class AddressForm extends Component {
           hintText={t("shopEditAddressForm.address2Placeholder")}
           floatingLabelText={t("address.address2")}
           errorText={address2.error}
+          maxLength={10}
         />
         <TextField
           {...city}
@@ -126,6 +127,7 @@ class AddressForm extends Component {
           {...phone}
           floatingLabelText={t("address.phone")}
           errorText={phone.error}
+          type="tel"
         />
         <FlatButton
           label={t("app.saveChanges")}

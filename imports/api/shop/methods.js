@@ -29,6 +29,13 @@ const mailValues = new SimpleSchema({
   port: { type: String }
 });
 
+const externalServicesValues = new SimpleSchema({
+  OXRAppId: { type: String },
+  OXRRefreshPeriod: { type: String },
+  googleClientId: { type: String },
+  googleApiKey: { type: String }
+});
+
 /**
  * submitGeneral
  * @summary onSubmit shop general settings form method
@@ -108,6 +115,30 @@ export const submitMail = new ValidatedMethod({
         "settings.mail.password": values.password,
         "settings.mail.host": values.host,
         "settings.mail.port": values.port
+      }
+    });
+  }
+});
+
+export const submitExternalServices = new ValidatedMethod({
+  name: "submitExternalServices",
+  validate: new SimpleSchema({
+    values: { type: externalServicesValues },
+    _id: { type: SimpleSchema.RegEx.Id }
+  }).validator(),
+  run({ values, _id }) {
+    // must have core permissions
+    if (!ReactionCore.hasPermission("core")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    return ReactionCore.Collections.Packages.update({
+      _id: _id
+    }, {
+      $set: {
+        "settings.openexchangerates.appId": values.OXRAppId,
+        "settings.openexchangerates.refreshPeriod": values.OXRRefreshPeriod,
+        "settings.google.clientId": values.googleClientId,
+        "settings.google.apiKey": values.googleApiKey
       }
     });
   }

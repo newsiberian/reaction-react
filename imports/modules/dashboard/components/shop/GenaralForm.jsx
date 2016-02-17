@@ -13,30 +13,16 @@ export const fields = [
 
 const validate = values => {
   const errors = {};
-  const nameLength = 35;
-  const descriptionLength = 160;
-  const keywordsLength = 256;
+
   if (!values.name) {
     errors.name = i18next.t("error.nameRequired");
-  } else if (values.name && values.name.length > nameLength) {
-    errors.name = i18next.t("error.mustBeXorLess", { number: nameLength });
   }
   if (!values.email) {
     errors.email = i18next.t("accountsUI.error.emailRequired");
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
   }
-  if (values.description &&
-    values.description.length > descriptionLength) {
-    errors.description = i18next.t("error.mustBeXorLess", {
-      number: descriptionLength
-    });
-  }
-  if (values.keywords && values.keywords.length > keywordsLength) {
-    errors.keywords = i18next.t("error.mustBeXorLess", {
-      number: keywordsLength
-    });
-  }
+
   return errors;
 };
 
@@ -57,17 +43,20 @@ class GenaralForm extends Component {
           hintText={t("shopEditForm.namePlaceholder")}
           floatingLabelText={t("shopEditForm.name")}
           errorText={name.error}
+          maxLength={35}
         />
         <TextField
           {...email}
           hintText={t("shopEditForm.emailPlaceholder")}
           floatingLabelText={t("shopEditForm.email")}
           errorText={email.error}
+          type="email"
         />
         <TextField
           {...description}
           hintText={t("shopEditForm.descriptionPlaceholder")}
           floatingLabelText={t("shopEditForm.description")}
+          maxLength={160}
           multiLine={true}
           rows={3}
           rowsMax={3}
@@ -77,6 +66,7 @@ class GenaralForm extends Component {
           {...keywords}
           hintText={t("shopEditForm.keywordsPlaceholder")}
           floatingLabelText={t("shopEditForm.keywords")}
+          maxLength={256}
           multiLine={true}
           rows={3}
           rowsMax={3}

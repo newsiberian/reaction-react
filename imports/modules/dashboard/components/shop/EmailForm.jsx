@@ -74,6 +74,7 @@ class EmailForm extends Component {
           {...port}
           floatingLabelText={t("shopEditMailForm.port")}
           errorText={port.error}
+          maxLength={6}
         />
         <FlatButton
           label={t("app.saveChanges")}
