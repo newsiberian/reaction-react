@@ -98,7 +98,7 @@ DashboardGrid.propTypes = {
   }).isRequired,
   children: PropTypes.node,
   formsActions: PropTypes.shape({
-    submitGeneralForm: PropTypes.func
+    submitForm: PropTypes.func
   }).isRequired,
   routeActions: PropTypes.shape({
     push: PropTypes.func

@@ -47,7 +47,7 @@ const validate = values => {
 class GenaralForm extends Component {
   render() {
     const {
-      fields: { name, email, description, keywords }, t,  handleSubmit,
+      fields: { name, email, description, keywords }, t, handleSubmit,
       submitting
     } = this.props;
     return (
@@ -80,13 +80,13 @@ class GenaralForm extends Component {
           multiLine={true}
           rows={3}
           rowsMax={3}
+          errorText={keywords.error}
         />
         <FlatButton
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
           disabled={submitting}
-          errorText={keywords.error}
         />
       </form>
     );

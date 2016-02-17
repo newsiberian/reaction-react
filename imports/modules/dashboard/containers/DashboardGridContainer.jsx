@@ -37,7 +37,7 @@ DashboardGridContainer.propTypes = {
     displayAlert: PropTypes.func
   }).isRequired,
   formsActions: PropTypes.shape({
-    submitGeneralForm: PropTypes.func
+    submitForm: PropTypes.func
   }).isRequired,
   packagesActions: PropTypes.shape({
     getPackages: PropTypes.func,

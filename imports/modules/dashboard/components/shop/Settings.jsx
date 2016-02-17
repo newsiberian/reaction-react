@@ -92,10 +92,11 @@ class Settings extends Component {
                 description: shopData.description,
                 keywords: shopData.keywords
               }}
-              onSubmit={values => formsActions.submitGeneralForm(values)}
+              onSubmit={values => formsActions.submitForm(values, "General")}
             />
           </CardText>
         </Card>
+
         { /* Address */ }
         <Card>
           <CardTitle
@@ -114,9 +115,23 @@ class Settings extends Component {
             expandable={true}
             style={styles.cardText}
           >
-            <AddressForm address={shopData.addressBook[0]} />
+            <AddressForm
+              initialValues={{
+                company: shopData.addressBook[0].company,
+                fullName: shopData.addressBook[0].fullName,
+                address1: shopData.addressBook[0].address1,
+                address2: shopData.addressBook[0].address2,
+                city: shopData.addressBook[0].city,
+                region: shopData.addressBook[0].region,
+                postal: shopData.addressBook[0].postal,
+                country: shopData.addressBook[0].country,
+                phone: shopData.addressBook[0].phone
+              }}
+              onSubmit={values => formsActions.submitForm(values, "Address")}
+            />
           </CardText>
         </Card>
+
         { /* Email */ }
         <Card>
           <CardTitle
@@ -135,9 +150,12 @@ class Settings extends Component {
             expandable={true}
             style={styles.cardText}
           >
-            <EmailForm corePackageData={corePackageData} />
+            <EmailForm
+
+            />
           </CardText>
         </Card>
+
         { /* Localization */ }
         <Card>
           <CardTitle
@@ -163,6 +181,7 @@ class Settings extends Component {
             />
           </CardText>
         </Card>
+
         { /* Payment Methods */ }
         <Card>
           <CardTitle
@@ -184,6 +203,7 @@ class Settings extends Component {
             <PaymentMethodsForm shopData={shopData} />
           </CardText>
         </Card>
+
         { /* External Services */ }
         <Card>
           <CardTitle
@@ -213,7 +233,7 @@ class Settings extends Component {
 Settings.propTypes = {
   corePackageData: PropTypes.object.isRequired,
   formsActions: PropTypes.shape({
-    submitGeneralForm: PropTypes.func
+    submitForm: PropTypes.func
   }).isRequired,
   shopData: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired

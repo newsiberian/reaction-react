@@ -1,26 +1,67 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
-import Formsy from "formsy-react";
-import { FormsyText, FormsyToggle } from "formsy-material-ui/lib";
+import TextField from "material-ui/lib/text-field";
 import FlatButton from "material-ui/lib/flat-button";
-
-const fields = [
-  "addressBook.0.company",
-  "addressBook.0.fullName",
-  "addressBook.0.address1",
-  "addressBook.0.address2",
-  "addressBook.0.city",
-  "addressBook.0.region",
-  "addressBook.0.postal",
-  "addressBook.0.country",
-  "addressBook.0.phone"
+import i18next from "i18next";
+export const fields = [
+  "company",
+  "fullName",
+  "address1",
+  "address2",
+  "city",
+  "region",
+  "postal",
+  "country",
+  "phone"
 ];
 
-const errorMessages = {
-  wordsError: "Please only use letters",
-  numericError: "Please provide a number",
-  urlError: "Please provide a valid URL"
+const validate = values => {
+  const errors = {};
+
+  // TODO now it is optional
+  //if (!values.company) {
+  //  errors.company = i18next.t("error.nameRequired");
+  //} else if (values.company && values.company.length > nameLength) {
+  //  errors.company = i18next.t("error.mustBeXorLess", { number: nameLength });
+  //}
+  if (!values.fullName) {
+    errors.fullName = i18next.t("error.isRequired", {
+      field: i18next.t("shopEditAddressForm.fullname")
+    });
+  }
+  if (!values.address1) {
+    errors.address1 = i18next.t("error.isRequired", {
+      field: i18next.t("shopEditAddressForm.address1")
+    });
+  }
+  if (!values.city) {
+    errors.city = i18next.t("error.isRequired", {
+      field: i18next.t("address.city")
+    });
+  }
+  if (!values.region) {
+    errors.region = i18next.t("error.isRequired", {
+      field: i18next.t("address.region")
+    });
+  }
+  if (!values.postal) {
+    errors.postal = i18next.t("error.isRequired", {
+      field: i18next.t("address.postal")
+    });
+  }
+  if (!values.country) {
+    errors.country = i18next.t("error.isRequired", {
+      field: i18next.t("address.country")
+    });
+  }
+  if (!values.phone) {
+    errors.phone = i18next.t("error.isRequired", {
+      field: i18next.t("address.phone")
+    });
+  }
+
+  return errors;
 };
 
 /**
@@ -28,129 +69,84 @@ const errorMessages = {
  * @classdesc
  */
 class AddressForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { t, address } = this.props;
+    const {
+      fields: { company, fullName, address1, address2, city, region,
+      postal, country, phone }, t, handleSubmit, submitting
+    } = this.props;
     return (
-      <Formsy.Form
-        //onValid={this.enableButton}
-        //onInvalid={this.disableButton}
-        //onValidSubmit={this.submitForm}
-      >
-        <FormsyText
-          name="addressBook.0.company"
-          //validations="maxLength:60"
-          //validationError={}
-          value={address.company}
-          hintText={t("shopEditAdressForm.companyPH")}
-          floatingLabelText={t("shopEditAdressForm.company")}
+      <form onSubmit={handleSubmit}>
+        <TextField
+          {...company}
+          hintText={t("shopEditAddressForm.companyPlaceholder")}
+          floatingLabelText={t("shopEditAddressForm.company")}
+          errorText={company.error}
         />
-        <FormsyText
-          name="addressBook.0.fullName"
-          //validations="maxLength:256"
-          //validationError={}
-          value={address.fullName}
-          required
-          hintText={t("shopEditAdressForm.fullnamePH")}
-          floatingLabelText={t("shopEditAdressForm.fullname")}
+        <TextField
+          {...fullName}
+          hintText={t("shopEditAddressForm.fullnamePlaceholder")}
+          floatingLabelText={t("shopEditAddressForm.fullname")}
+          errorText={fullName.error}
         />
-        <FormsyText
-          name="addressBook.0.address1"
-          //validations="maxLength:256"
-          //validationError={}
-          value={address.address1}
-          required
-          hintText={t("shopEditAdressForm.address1PH")}
-          floatingLabelText={t("shopEditAdressForm.address1")}
-          tooltip={t("shopEditAdressForm.address1Tooltip")}
+        <TextField
+          {...address1}
+          hintText={t("shopEditAddressForm.address1Placeholder")}
+          floatingLabelText={t("shopEditAddressForm.address1")}
+          tooltip={t("shopEditAddressForm.address1Tooltip")}
+          errorText={address1.error}
         />
-        <FormsyText
-          name="addressBook.0.address2"
-          //validations="maxLength:20"
-          //validationError={}
-          value={address.address2}
-          hintText={t("shopEditAdressForm.address2PH")}
-          floatingLabelText={t("address.address2")} // 60 chars max
+        <TextField
+          {...address2}
+          hintText={t("shopEditAddressForm.address2Placeholder")}
+          floatingLabelText={t("address.address2")}
+          errorText={address2.error}
         />
-        <FormsyText
-          name="addressBook.0.city"
-          validations="isWords"
-          //validationError={}
-          value={address.city}
-          required
-          //hintText={t("shopEditAdressForm.address2PH")}
+        <TextField
+          {...city}
           floatingLabelText={t("address.city")}
+          errorText={city.error}
         />
-        <FormsyText
-          name="addressBook.0.region"
-          validations="isWords"
-          //validationError={}
-          value={address.region}
-          required
-          //hintText={t("shopEditAdressForm.address2PH")}
+        <TextField
+          {...region}
           floatingLabelText={t("address.region")}
+          errorText={region.error}
         />
-        <FormsyText
-          name="addressBook.0.postal"
-          validations="isAlphanumeric"
-          //validationError={}
-          value={address.postal}
-          required
-          //hintText={t("shopEditAdressForm.address2PH")}
+        <TextField
+          {...postal}
           floatingLabelText={t("address.postal")}
+          errorText={postal.error}
         />
-        <FormsyText
+        <TextField
           // TODO add country selection here
-          name="addressBook.0.country"
-          //validations="isWords"
-          //validationError={}
-          value={address.country}
-          required
-          //hintText={t("shopEditAdressForm.address2PH")}
+          {...country}
           floatingLabelText={t("address.country")}
+          errorText={country.error}
         />
-        <FormsyText
-          // TODO add validation rule
-          name="addressBook.0.phone"
-          //validations="isWords"
-          //validationError={}
-          value={address.phone}
-          required
-          //hintText={t("shopEditAdressForm.address2PH")}
+        <TextField
+          {...phone}
           floatingLabelText={t("address.phone")}
+          errorText={phone.error}
         />
-        {/*<FormsyToggle
-          name="addressBook.0.isCommercial"
-          label={t("address.isCommercial")}
-        />
-        <FormsyToggle
-          name="addressBook.0.isShippingDefault"
-          label={t("address.isShippingDefault")}
-        />
-        <FormsyToggle
-          name="addressBook.0.isBillingDefault"
-          label={t("address.isBillingDefault")}
-        />*/}
         <FlatButton
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
+          disabled={submitting}
         />
-      </Formsy.Form>
+      </form>
     );
   }
 }
 
 AddressForm.propTypes = {
-  address: PropTypes.shape({
-
-  })
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 export default translate("core")(reduxForm({
-  form: "shopAddress",
-  fields
+  form: "shopAddressForm",
+  fields,
+  validate
 })(AddressForm));
