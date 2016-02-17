@@ -55,7 +55,7 @@ class ExternalServicesForm extends Component {
           floatingLabelText={t(
             "shopEditExternalServicesForm.openexchangeratesAppId"
           )}
-          errorText={OXRAppId.error}
+          errorText={OXRAppId.touched && OXRAppId.error}
         />
         <TextField
           {...OXRRefreshPeriod}
@@ -65,21 +65,21 @@ class ExternalServicesForm extends Component {
           hintText={t(
             "shopEditExternalServicesForm.openexchangeratesRefreshPlaceholder"
           )}
-          errorText={OXRRefreshPeriod.error}
+          errorText={OXRRefreshPeriod.touched && OXRRefreshPeriod.error}
         />
         <TextField
           {...googleClientId}
           floatingLabelText={t(
             "shopEditExternalServicesForm.googleClientId"
           )}
-          errorText={googleClientId.error}
+          errorText={googleClientId.touched && googleClientId.error}
         />
         <TextField
           {...googleApiKey}
           floatingLabelText={t(
             "shopEditExternalServicesForm.googleApiKey"
           )}
-          errorText={googleApiKey.error}
+          errorText={googleApiKey.touched && googleApiKey.error}
         />
         <FlatButton
           label={t("app.saveChanges")}

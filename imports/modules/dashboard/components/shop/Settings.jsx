@@ -3,7 +3,7 @@ import { translate } from "react-i18next/lib";
 import { Card, CardTitle, CardText } from "material-ui/lib/card";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
-import GuestCheckoutForm from "./GuestCheckoutForm.jsx";
+import OptionsForm from "./OptionsForm.jsx";
 import GeneralForm from "./GenaralForm.jsx";
 import AddressForm from "./AddressForm.jsx";
 import EmailForm from "./EmailForm.jsx";
@@ -84,7 +84,17 @@ class Settings extends Component {
             expandable={true}
             style={styles.cardText}
           >
-            <GuestCheckoutForm corePackageData={corePackageData} />
+            <OptionsForm
+              formsActions={formsActions}
+              packageId={corePackageData._id}
+              allowGuestCheckout={corePackageData.settings.public.
+              allowGuestCheckout}
+              //initialValues={{
+              //  allowGuestCheckout: corePackageData.settings.public.
+              //    allowGuestCheckout
+              //}}
+              //onSubmit={values => formsActions.submitForm("General", values)}
+            />
             <GeneralForm
               initialValues={{
                 name: shopData.name,

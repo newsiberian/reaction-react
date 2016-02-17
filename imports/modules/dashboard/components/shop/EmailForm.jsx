@@ -56,24 +56,24 @@ class EmailForm extends Component {
         <TextField
           {...user}
           floatingLabelText={t("shopEditMailForm.user")}
-          errorText={user.error}
+          errorText={user.touched && user.error}
         />
         <TextField
           {...password}
           floatingLabelText={t("shopEditMailForm.password")}
-          errorText={password.error}
+          errorText={password.touched && password.error}
           type="password"
         />
         <TextField
           {...host}
           hintText="https://"
           floatingLabelText={t("shopEditMailForm.host")}
-          errorText={host.error}
+          errorText={host.touched && host.error}
         />
         <TextField
           {...port}
           floatingLabelText={t("shopEditMailForm.port")}
-          errorText={port.error}
+          errorText={port.touched && port.error}
           maxLength={6}
         />
         <FlatButton

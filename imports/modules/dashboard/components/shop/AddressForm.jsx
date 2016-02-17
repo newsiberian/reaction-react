@@ -80,53 +80,53 @@ class AddressForm extends Component {
           {...company}
           hintText={t("shopEditAddressForm.companyPlaceholder")}
           floatingLabelText={t("shopEditAddressForm.company")}
-          errorText={company.error}
+          errorText={company.touched && company.error}
         />
         <TextField
           {...fullName}
           hintText={t("shopEditAddressForm.fullnamePlaceholder")}
           floatingLabelText={t("shopEditAddressForm.fullname")}
-          errorText={fullName.error}
+          errorText={fullName.touched && fullName.error}
         />
         <TextField
           {...address1}
           hintText={t("shopEditAddressForm.address1Placeholder")}
           floatingLabelText={t("shopEditAddressForm.address1")}
           tooltip={t("shopEditAddressForm.address1Tooltip")}
-          errorText={address1.error}
+          errorText={address1.touched && address1.error}
         />
         <TextField
           {...address2}
           hintText={t("shopEditAddressForm.address2Placeholder")}
           floatingLabelText={t("address.address2")}
-          errorText={address2.error}
+          errorText={address2.touched && address2.error}
           maxLength={10}
         />
         <TextField
           {...city}
           floatingLabelText={t("address.city")}
-          errorText={city.error}
+          errorText={city.touched && city.error}
         />
         <TextField
           {...region}
           floatingLabelText={t("address.region")}
-          errorText={region.error}
+          errorText={region.touched && region.error}
         />
         <TextField
           {...postal}
           floatingLabelText={t("address.postal")}
-          errorText={postal.error}
+          errorText={postal.touched && postal.error}
         />
         <TextField
           // TODO add country selection here
           {...country}
           floatingLabelText={t("address.country")}
-          errorText={country.error}
+          errorText={country.touched && country.error}
         />
         <TextField
           {...phone}
           floatingLabelText={t("address.phone")}
-          errorText={phone.error}
+          errorText={phone.touched && phone.error}
           type="tel"
         />
         <FlatButton

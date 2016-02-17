@@ -36,6 +36,10 @@ const externalServicesValues = new SimpleSchema({
   googleApiKey: { type: String }
 });
 
+const optionsValues = new SimpleSchema({
+  allowGuestCheckout: { type: Boolean }
+});
+
 /**
  * submitGeneral
  * @summary onSubmit shop general settings form method
@@ -139,6 +143,27 @@ export const submitExternalServices = new ValidatedMethod({
         "settings.openexchangerates.refreshPeriod": values.OXRRefreshPeriod,
         "settings.google.clientId": values.googleClientId,
         "settings.google.apiKey": values.googleApiKey
+      }
+    });
+  }
+});
+
+export const submitOptions = new ValidatedMethod({
+  name: "submitOptions",
+  validate: new SimpleSchema({
+    values: { type: optionsValues },
+    _id: { type: SimpleSchema.RegEx.Id }
+  }).validator(),
+  run({ values, _id }) {
+    // must have core permissions
+    if (!ReactionCore.hasPermission("core")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    return ReactionCore.Collections.Packages.update({
+      _id: _id
+    }, {
+      $set: {
+        "settings.public.allowGuestCheckout": values.allowGuestCheckout
       }
     });
   }

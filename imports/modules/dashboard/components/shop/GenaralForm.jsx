@@ -42,14 +42,14 @@ class GenaralForm extends Component {
           {...name}
           hintText={t("shopEditForm.namePlaceholder")}
           floatingLabelText={t("shopEditForm.name")}
-          errorText={name.error}
+          errorText={name.touched && name.error}
           maxLength={35}
         />
         <TextField
           {...email}
           hintText={t("shopEditForm.emailPlaceholder")}
           floatingLabelText={t("shopEditForm.email")}
-          errorText={email.error}
+          errorText={email.touched && email.error}
           type="email"
         />
         <TextField
@@ -60,7 +60,8 @@ class GenaralForm extends Component {
           multiLine={true}
           rows={3}
           rowsMax={3}
-          errorText={description.error}
+          // we don't need to validate this field
+          // errorText={description.touched && description.error}
         />
         <TextField
           {...keywords}
@@ -70,7 +71,7 @@ class GenaralForm extends Component {
           multiLine={true}
           rows={3}
           rowsMax={3}
-          errorText={keywords.error}
+          // errorText={keywords.touched && keywords.error}
         />
         <FlatButton
           label={t("app.saveChanges")}
