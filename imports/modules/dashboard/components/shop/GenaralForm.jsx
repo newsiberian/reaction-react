@@ -40,33 +40,34 @@ class GenaralForm extends Component {
       <form onSubmit={handleSubmit}>
         <TextField
           {...name}
-          hintText={t("shopEditForm.namePlaceholder")}
-          floatingLabelText={t("shopEditForm.name")}
+          floatingLabelText={t("shop.name")}
+          hintText={t("shop.namePlaceholder")}
           errorText={name.touched && name.error}
           maxLength={35}
         />
         <TextField
           {...email}
-          hintText={t("shopEditForm.emailPlaceholder")}
-          floatingLabelText={t("shopEditForm.email")}
+          floatingLabelText={t("shop.email")}
+          hintText={t("shop.emailPlaceholder")}
           errorText={email.touched && email.error}
           type="email"
         />
         <TextField
           {...description}
-          hintText={t("shopEditForm.descriptionPlaceholder")}
-          floatingLabelText={t("shopEditForm.description")}
+          floatingLabelText={t("shop.description")}
+          hintText={t("shop.descriptionPlaceholder")}
           maxLength={160}
           multiLine={true}
           rows={3}
           rowsMax={3}
+          title={t("shop.descriptionTooltip")}
           // we don't need to validate this field
           // errorText={description.touched && description.error}
         />
         <TextField
           {...keywords}
-          hintText={t("shopEditForm.keywordsPlaceholder")}
-          floatingLabelText={t("shopEditForm.keywords")}
+          floatingLabelText={t("shop.keywords")}
+          hintText={t("shop.keywordsPlaceholder")}
           maxLength={256}
           multiLine={true}
           rows={3}

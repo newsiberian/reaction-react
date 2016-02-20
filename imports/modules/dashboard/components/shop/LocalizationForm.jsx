@@ -1,9 +1,15 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import Formsy from "formsy-react";
-import { FormsySelect, FormsyText } from "formsy-material-ui/lib";
-import MenuItem from "material-ui/lib/menus/menu-item";
+import { reduxForm } from "redux-form";
 import FlatButton from "material-ui/lib/flat-button";
+import SelectFieldWrapper from
+  "../../../layout/components/SelectFieldWrapper.jsx";
+import MenuItem from "material-ui/lib/menus/menu-item";
+export const fields = [
+  "timezone",
+  "currency",
+  "baseUOM"
+];
 
 /**
  * @class LocalizationForm
@@ -38,22 +44,56 @@ class LocalizationForm extends Component {
   }
 
   render() {
-    const { baseUOM, currency, timezone, t } = this.props;
+    const {
+      fields: { baseUOM, currency, timezone }, handleSubmit, submitting, t
+      } = this.props;
     return (
-      <Formsy.Form
-        //onValid={this.enableButton}
-        //onInvalid={this.disableButton}
-        //onValidSubmit={this.submitForm}
-      >
-        <FormsySelect
-          name="timezone"
-          required
-          value={timezone}
-          hintText={t("shopEditLocalizationForm.timezoneOptions")}
-          floatingLabelText={t("shopEditLocalizationForm.timezone")}
+      <form onSubmit={handleSubmit}>
+        <SelectFieldWrapper
+          {...timezone}
+          floatingLabelText={t("shop.timezone")}
+          hintText={t("shop.timezoneOptions")}
         >
           { /* TODO for now we are using meteor:momentjs, maybe it's better to
            use version from NPM after 1.3 */ }
+          {moment.tz.names()
+            .map((tz, i) => <MenuItem key={i} value={tz} primaryText={tz} />)}
+        </SelectFieldWrapper>
+        <SelectFieldWrapper
+          {...currency}
+          floatingLabelText={t("shop.currency")}
+          title={t("shop.currencyTooltip")}
+        >
+          {this.getCurrencies().map((cur, i) => {
+            return (
+              <MenuItem key={i} value={cur.value} primaryText={cur.label} />
+            );
+          })}
+        </SelectFieldWrapper>
+        <SelectFieldWrapper
+          {...baseUOM}
+          floatingLabelText={t("shop.baseUOM")}
+        >
+          {this.getUOM().map((uom, i) => {
+            return (
+              <MenuItem
+                key={i}
+                value={uom.value}
+                primaryText={t(`uom.${uom.value}`)}
+              />
+            );
+          })}
+        </SelectFieldWrapper>
+
+        {/*<FormsySelect
+          name="timezone"
+          required
+          value={timezone}
+          floatingLabelText={t("shopEditLocalizationForm.timezone")}
+          hintText={t("shopEditLocalizationForm.timezoneOptions")}
+        >
+          { /!* TODO for now we are using meteor:momentjs, maybe it's better to
+           use version from NPM after 1.3 *!/ }
           {moment.tz.names()
             .map((tz, i) => <MenuItem key={i} value={tz} primaryText={tz} />)}
         </FormsySelect>
@@ -84,17 +124,26 @@ class LocalizationForm extends Component {
               />
             );
           })}
-        </FormsySelect>
-      </Formsy.Form>
+        </FormsySelect>*/}
+        <FlatButton
+          label={t("app.saveChanges")}
+          primary={true}
+          type="submit"
+          disabled={submitting}
+        />
+      </form>
     );
   }
 }
 
 LocalizationForm.propTypes = {
-  baseUOM: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
-  timezone: PropTypes.string.isRequired,
-  t: PropTypes.func
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default translate("core")(LocalizationForm);
+export default translate("core")(reduxForm({
+  form: "shopLocalizationForm",
+  fields
+})(LocalizationForm));

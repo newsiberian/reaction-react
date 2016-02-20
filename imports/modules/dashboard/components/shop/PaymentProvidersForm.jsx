@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
 import FlatButton from "material-ui/lib/flat-button";
-import SelectField from "material-ui/lib/select-field";
+import SelectFieldWrapper from
+  "../../../layout/components/SelectFieldWrapper.jsx";
 import MenuItem from "material-ui/lib/menus/menu-item";
 import getReactionApps from "../../../../client/helpers/apps";
 import i18next from "i18next";
@@ -37,21 +38,20 @@ class PaymentProvidersForm extends Component {
     } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-        <SelectField
+        <SelectFieldWrapper
           {...defaultPaymentMethod}
           hintText={t("app.selectOne")}
         >
           {paymentProviders().map((provider, index) => {
-              return (
-                <MenuItem
-                  key={index}
-                  value={provider.value}
-                  primaryText={provider.label}
-                />
-              );
-            })
-          }
-        </SelectField>
+            return (
+              <MenuItem
+                key={index}
+                value={provider.value}
+                primaryText={provider.label}
+              />
+            );
+          })}
+        </SelectFieldWrapper>
         <FlatButton
           label={t("app.saveChanges")}
           primary={true}
@@ -71,6 +71,6 @@ PaymentProvidersForm.propTypes = {
 };
 
 export default translate("core")(reduxForm({
-  form: "paymentProvidersForm",
+  form: "shopPaymentProvidersForm",
   fields
 })(PaymentProvidersForm));

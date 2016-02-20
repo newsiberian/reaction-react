@@ -192,9 +192,14 @@ class Settings extends Component {
             style={styles.cardText}
           >
             <LocalizationForm
-              timezone={shopData.timezone}
-              currency={shopData.currency}
-              baseUOM={shopData.baseUOM}
+              initialValues={{
+                timezone: shopData.timezone,
+                currency: shopData.currency,
+                baseUOM: shopData.baseUOM
+              }}
+              onSubmit={values => formsActions.submitForm(
+                "Localization", values
+              )}
             />
           </CardText>
         </Card>
@@ -219,10 +224,10 @@ class Settings extends Component {
           >
             <PaymentProvidersForm
               initialValues={{
-                defaultPaymentMethod: corePackageData.defaultPaymentMethod
+                defaultPaymentMethod: shopData.defaultPaymentMethod
               }}
               onSubmit={values => formsActions.submitForm(
-                "PaymentProviders", values, corePackageData._id
+                "PaymentProviders", values
               )}
             />
           </CardText>

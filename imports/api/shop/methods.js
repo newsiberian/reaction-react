@@ -40,6 +40,12 @@ const optionsValues = new SimpleSchema({
   allowGuestCheckout: { type: Boolean }
 });
 
+const localizationValues = new SimpleSchema({
+  timezone: { type: String },
+  currency: { type: String },
+  baseUOM: { type: String }
+});
+
 const paymentProvidersValues = new SimpleSchema({
   defaultPaymentMethod: { type: String }
 });
@@ -173,19 +179,44 @@ export const submitOptions = new ValidatedMethod({
   }
 });
 
-export const submitPaymentProviders = new ValidatedMethod({
-  name: "submitPaymentProviders",
+export const submitLocalization = new ValidatedMethod({
+  name: "submitLocalization",
   validate: new SimpleSchema({
-    values: { type: paymentProvidersValues },
-    _id: { type: SimpleSchema.RegEx.Id }
+    values: { type: localizationValues },
+    _id: { type: SimpleSchema.RegEx.Id, optional: true }
   }).validator(),
-  run({ values, _id }) {
+  run({ values }) {
     // must have core permissions
     if (!ReactionCore.hasPermission("core")) {
       throw new Meteor.Error(403, "Access Denied");
     }
-    return ReactionCore.Collections.Packages.update({
-      _id: _id
+    const shopId = ReactionCore.getShopId();
+    return ReactionCore.Collections.Shops.update({
+      _id: shopId
+    }, {
+      $set: {
+        currency: values.currency,
+        timezone: values.timezone,
+        baseUOM: values.baseUOM
+      }
+    });
+  }
+});
+
+export const submitPaymentProviders = new ValidatedMethod({
+  name: "submitPaymentProviders",
+  validate: new SimpleSchema({
+    values: { type: paymentProvidersValues },
+    _id: { type: SimpleSchema.RegEx.Id, optional: true }
+  }).validator(),
+  run({ values }) {
+    // must have core permissions
+    if (!ReactionCore.hasPermission("core")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    const shopId = ReactionCore.getShopId();
+    return ReactionCore.Collections.Shops.update({
+      _id: shopId
     }, {
       $set: {
         defaultPaymentMethod: values.defaultPaymentMethod

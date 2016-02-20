@@ -27,37 +27,37 @@ const validate = values => {
   //}
   if (!values.fullName) {
     errors.fullName = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditAddressForm.fullname")
+      field: i18next.t("shop.addressBook.fullName")
     });
   }
   if (!values.address1) {
     errors.address1 = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditAddressForm.address1")
+      field: i18next.t("shop.addressBook.address1")
     });
   }
   if (!values.city) {
     errors.city = i18next.t("error.isRequired", {
-      field: i18next.t("address.city")
+      field: i18next.t("shop.addressBook.city")
     });
   }
   if (!values.region) {
     errors.region = i18next.t("error.isRequired", {
-      field: i18next.t("address.region")
+      field: i18next.t("shop.addressBook.region")
     });
   }
   if (!values.postal) {
     errors.postal = i18next.t("error.isRequired", {
-      field: i18next.t("address.postal")
+      field: i18next.t("shop.addressBook.postal")
     });
   }
   if (!values.country) {
     errors.country = i18next.t("error.isRequired", {
-      field: i18next.t("address.country")
+      field: i18next.t("shop.addressBook.country")
     });
   }
   if (!values.phone) {
     errors.phone = i18next.t("error.isRequired", {
-      field: i18next.t("address.phone")
+      field: i18next.t("shop.addressBook.phone")
     });
   }
 
@@ -78,54 +78,54 @@ class AddressForm extends Component {
       <form onSubmit={handleSubmit}>
         <TextField
           {...company}
-          hintText={t("shopEditAddressForm.companyPlaceholder")}
-          floatingLabelText={t("shopEditAddressForm.company")}
+          floatingLabelText={t("shop.addressBook.company")}
+          hintText={t("shop.addressBook.companyPlaceholder")}
           errorText={company.touched && company.error}
         />
         <TextField
           {...fullName}
-          hintText={t("shopEditAddressForm.fullnamePlaceholder")}
-          floatingLabelText={t("shopEditAddressForm.fullname")}
+          floatingLabelText={t("shop.addressBook.fullName")}
+          hintText={t("shop.addressBook.fullNamePlaceholder")}
           errorText={fullName.touched && fullName.error}
         />
         <TextField
           {...address1}
-          hintText={t("shopEditAddressForm.address1Placeholder")}
-          floatingLabelText={t("shopEditAddressForm.address1")}
-          tooltip={t("shopEditAddressForm.address1Tooltip")}
+          floatingLabelText={t("shop.addressBook.address1")}
+          hintText={t("shop.addressBook.address1Placeholder")}
+          title={t("shop.addressBook.address1Tooltip")}
           errorText={address1.touched && address1.error}
         />
         <TextField
           {...address2}
-          hintText={t("shopEditAddressForm.address2Placeholder")}
-          floatingLabelText={t("address.address2")}
+          floatingLabelText={t("shop.addressBook.address2")}
+          hintText={t("shop.addressBook.address2Placeholder")}
           errorText={address2.touched && address2.error}
           maxLength={10}
         />
         <TextField
           {...city}
-          floatingLabelText={t("address.city")}
+          floatingLabelText={t("shop.addressBook.city")}
           errorText={city.touched && city.error}
         />
         <TextField
           {...region}
-          floatingLabelText={t("address.region")}
+          floatingLabelText={t("shop.addressBook.region")}
           errorText={region.touched && region.error}
         />
         <TextField
           {...postal}
-          floatingLabelText={t("address.postal")}
+          floatingLabelText={t("shop.addressBook.postal")}
           errorText={postal.touched && postal.error}
         />
         <TextField
           // TODO add country selection here
           {...country}
-          floatingLabelText={t("address.country")}
+          floatingLabelText={t("shop.addressBook.country")}
           errorText={country.touched && country.error}
         />
         <TextField
           {...phone}
-          floatingLabelText={t("address.phone")}
+          floatingLabelText={t("shop.addressBook.phone")}
           errorText={phone.touched && phone.error}
           type="tel"
         />

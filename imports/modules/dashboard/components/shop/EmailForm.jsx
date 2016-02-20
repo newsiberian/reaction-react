@@ -16,26 +16,26 @@ const validate = values => {
 
   if (!values.user) {
     errors.user = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditMailForm.user")
+      field: i18next.t("corePackageConfig.settings.mail.user")
     });
   }
   if (!values.password) {
     errors.password = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditMailForm.password")
+      field: i18next.t("corePackageConfig.settings.mail.password")
     });
   }
   if (!values.host) {
     errors.host = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditMailForm.host")
+      field: i18next.t("corePackageConfig.settings.mail.host")
     });
   }
   if (!values.port) {
     errors.port = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditMailForm.port")
+      field: i18next.t("corePackageConfig.settings.mail.port")
     });
   } else if (!Number.isInteger(+values.port)) {
     errors.port = i18next.t("error.mustBeNumber", {
-      field: i18next.t("shopEditMailForm.port")
+      field: i18next.t("corePackageConfig.settings.mail.port")
     });
   }
 
@@ -55,24 +55,24 @@ class EmailForm extends Component {
       <form onSubmit={handleSubmit}>
         <TextField
           {...user}
-          floatingLabelText={t("shopEditMailForm.user")}
+          floatingLabelText={t("corePackageConfig.settings.mail.user")}
           errorText={user.touched && user.error}
         />
         <TextField
           {...password}
-          floatingLabelText={t("shopEditMailForm.password")}
+          floatingLabelText={t("corePackageConfig.settings.mail.password")}
           errorText={password.touched && password.error}
           type="password"
         />
         <TextField
           {...host}
+          floatingLabelText={t("corePackageConfig.settings.mail.host")}
           hintText="https://"
-          floatingLabelText={t("shopEditMailForm.host")}
           errorText={host.touched && host.error}
         />
         <TextField
           {...port}
-          floatingLabelText={t("shopEditMailForm.port")}
+          floatingLabelText={t("corePackageConfig.settings.mail.port")}
           errorText={port.touched && port.error}
           maxLength={6}
         />

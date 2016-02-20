@@ -16,22 +16,28 @@ const validate = values => {
 
   if (!values.OXRAppId) {
     errors.OXRAppId = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditExternalServicesForm.openexchangeratesAppId")
+      field: i18next.t(
+        "corePackageConfig.settings.openexchangerates.appId"
+      )
     });
   }
   if (!values.OXRRefreshPeriod) {
     errors.OXRRefreshPeriod = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditExternalServicesForm.openexchangeratesRefresh")
+      field: i18next.t(
+        "corePackageConfig.settings.openexchangerates.refreshPeriod"
+      )
     });
   }
   if (!values.googleClientId) {
     errors.googleClientId = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditExternalServicesForm.googleClientId")
+      field: i18next.t(
+        "corePackageConfig.settings.google.clientId"
+      )
     });
   }
   if (!values.googleApiKey) {
     errors.googleApiKey = i18next.t("error.isRequired", {
-      field: i18next.t("shopEditExternalServicesForm.googleApiKey")
+      field: i18next.t("corePackageConfig.settings.google.apiKey")
     });
   }
 
@@ -53,31 +59,31 @@ class ExternalServicesForm extends Component {
         <TextField
           {...OXRAppId}
           floatingLabelText={t(
-            "shopEditExternalServicesForm.openexchangeratesAppId"
+            "corePackageConfig.settings.openexchangerates.appId"
           )}
           errorText={OXRAppId.touched && OXRAppId.error}
         />
         <TextField
           {...OXRRefreshPeriod}
           floatingLabelText={t(
-            "shopEditExternalServicesForm.openexchangeratesRefresh"
+            "corePackageConfig.settings.openexchangerates.refreshPeriod"
           )}
           hintText={t(
-            "shopEditExternalServicesForm.openexchangeratesRefreshPlaceholder"
+            "corePackageConfig.settings.openexchangerates.refreshPeriodPlaceholder"
           )}
           errorText={OXRRefreshPeriod.touched && OXRRefreshPeriod.error}
         />
         <TextField
           {...googleClientId}
           floatingLabelText={t(
-            "shopEditExternalServicesForm.googleClientId"
+            "corePackageConfig.settings.google.clientId"
           )}
           errorText={googleClientId.touched && googleClientId.error}
         />
         <TextField
           {...googleApiKey}
           floatingLabelText={t(
-            "shopEditExternalServicesForm.googleApiKey"
+            "corePackageConfig.settings.google.apiKey"
           )}
           errorText={googleApiKey.touched && googleApiKey.error}
         />

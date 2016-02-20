@@ -43,7 +43,7 @@ class OptionsForm extends Component {
     const { allowGuestCheckout, t } = this.props;
     return (
       <Toggle
-        label={t("shopEditForm.allowGuestCheckout")}
+        label={t("corePackageConfig.settings.public.allowGuestCheckout")}
         style={styles.toggle}
         onToggle={() => this.handleValueChange()}
         toggled={allowGuestCheckout}
