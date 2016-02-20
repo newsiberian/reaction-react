@@ -6,6 +6,7 @@ import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
 import { hasPermission } from "../../../../client/helpers/permissions";
+import getReactionApps from "../../../../client/helpers/apps";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { translate } from "react-i18next/lib";
 
@@ -29,6 +30,9 @@ const styles = {
   },
   buttons: {
 
+  },
+  text: {
+    minHeight: 50
   }
 };
 
@@ -91,22 +95,30 @@ class Package extends Component {
     let label;
     const { pkg, t } = this.props;
     if (pkg.enabled) {
-      label = t("gridPackage.disable");
+      if (pkg.priority > 1) {
+        label = t("gridPackage.disable");
+        return (
+          <FlatButton
+            label={label}
+            onClick={() => this.handleToggleClick(pkg)}
+          />
+        );
+      }
     } else {
       label = t("gridPackage.enable");
+      return (
+        <FlatButton
+          label={label}
+          onClick={() => this.handleToggleClick(pkg)}
+        />
+      );
     }
-    return (
-      <FlatButton
-        label={label}
-        onClick={() => this.handleToggleClick(pkg)}
-      />
-    );
   }
 
   renderSettings() {
     const { pkg, routeActions, t } = this.props;
-    return ReactionCore.Apps({
-      provides: "settings", name: pkg.name, container: pkg.container
+    return getReactionApps({
+      provides: "settings", name: pkg.packageName
     }).map((setting, index) => {
       if (hasPermission(pkg.route)) {
         return (
@@ -143,7 +155,7 @@ class Package extends Component {
           title={t(pkg.i18nKeyLabel)}
           titleStyle={styles.title}
         />
-        <CardText>{t(pkg.i18nKeyDescription)}</CardText>
+        <CardText style={styles.text}>{t(pkg.i18nKeyDescription)}</CardText>
         <CardActions>
           {this.renderToggle()}
           {pkg.enabled && this.renderSettings()}
@@ -163,12 +175,15 @@ Package.propTypes = {
     cycle: PropTypes.number,
     description: PropTypes.string,
     enabled: PropTypes.bool,
+    i18nKeyDescription: PropTypes.string,
+    i18nKeyLabel: PropTypes.string,
     icon: PropTypes.string,
     label: PropTypes.string,
     name: PropTypes.string,
     packageId: PropTypes.string,
+    packageName: PropTypes.string,
     permissions: PropTypes.array,
-    priority: PropTypes.string,
+    priority: PropTypes.number,
     provides: PropTypes.string,
     route: PropTypes.string
   }).isRequired,

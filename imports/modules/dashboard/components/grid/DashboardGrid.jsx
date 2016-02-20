@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import LeftNav from "material-ui/lib/left-nav";
+import Divider from "material-ui/lib/divider";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import { Grid, Row, Col } from "react-flexbox-grid";
 import "../../styles/flexboxgrid.css";
@@ -16,17 +17,25 @@ const styles = {
   cal: {
     paddingLeft: "0.4rem",
     paddingRight: "0.4rem"
+  },
+  group: {
+    marginBottom: 25
+  },
+  header: {
+    minHeight: "3rem",
+    fontSize: "1.5rem",
+    fontWidth: "500",
+    paddingTop: 15,
+    paddingLeft: 10,
+    textTransform: "capitalize"
   }
 };
 
-const pkgPermissions = pkg => {
-  if (ReactionCore.hasPermission("dashboard")) {
-    if (pkg.route) {
-      return ReactionCore.hasPermission(pkg.route);
-    }
-    return ReactionCore.hasPermission(pkg.name);
-  }
-  return false;
+const pkgPermissions = pkg => ReactionCore.hasPermission(pkg.name);
+
+const appsInGroup = (groupName, groupedApps) => {
+  const group = groupedApps || {};
+  return group[groupName] || false;
 };
 
 /**
@@ -36,8 +45,11 @@ const pkgPermissions = pkg => {
 class DashboardGrid extends Component {
   render() {
     const { alertActions, routeActions, settingsActions, children, t,
-      corePackageData, shopData, formsActions, pkgs
+      corePackageData, shopData, formsActions, apps
     } = this.props;
+    const groupedApps = _.groupBy(apps, (app) => app.container || "misc");
+    const groups = Object.keys(groupedApps);
+
     console.log("DashboardGrid rendering...");
     return (
       <div style={layoutStyles.parent}>
@@ -46,8 +58,36 @@ class DashboardGrid extends Component {
           <DashboardHeader title={t("app.settings")} />
           { /* main section */ }
           <div className="container-fluid" style={styles.base}>
-            <div className="row">
-              {pkgs.map((pkg, index) => {
+            {groups.map((group, i) => {
+              return (
+                <div key={i} style={styles.group}>
+                  <div style={styles.header}>{group}</div>
+                  <Divider />
+                  <div className="row">
+                    {appsInGroup(group, groupedApps).map((app, index) => {
+                      if (pkgPermissions(app)) {
+                        return (
+                          <div
+                            className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                            key={index}
+                            style={styles.cal}
+                          >
+                            <Package
+                              alertActions={alertActions}
+                              routeActions={routeActions}
+                              settingsActions={settingsActions}
+                              pkg={app}
+                            />
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+            {/*<div className="row">
+              {apps.map((pkg, index) => {
                 if (pkgPermissions(pkg)) {
                   return (
                     <div
@@ -65,7 +105,7 @@ class DashboardGrid extends Component {
                   );
                 }
               })}
-            </div>
+            </div>*/}
           </div>
         </section>
         { /* action bar section */ }
@@ -109,7 +149,8 @@ DashboardGrid.propTypes = {
   }).isRequired,
   corePackageData: PropTypes.object,
   shopData: PropTypes.object,
-  pkgs: PropTypes.array
+  apps: PropTypes.array,
+  t: PropTypes.func.isRequired
 };
 
 export default translate("core")(DashboardGrid);

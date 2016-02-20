@@ -40,6 +40,10 @@ const optionsValues = new SimpleSchema({
   allowGuestCheckout: { type: Boolean }
 });
 
+const paymentProvidersValues = new SimpleSchema({
+  defaultPaymentMethod: { type: String }
+});
+
 /**
  * submitGeneral
  * @summary onSubmit shop general settings form method
@@ -164,6 +168,27 @@ export const submitOptions = new ValidatedMethod({
     }, {
       $set: {
         "settings.public.allowGuestCheckout": values.allowGuestCheckout
+      }
+    });
+  }
+});
+
+export const submitPaymentProviders = new ValidatedMethod({
+  name: "submitPaymentProviders",
+  validate: new SimpleSchema({
+    values: { type: paymentProvidersValues },
+    _id: { type: SimpleSchema.RegEx.Id }
+  }).validator(),
+  run({ values, _id }) {
+    // must have core permissions
+    if (!ReactionCore.hasPermission("core")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    return ReactionCore.Collections.Packages.update({
+      _id: _id
+    }, {
+      $set: {
+        defaultPaymentMethod: values.defaultPaymentMethod
       }
     });
   }

@@ -19,7 +19,7 @@ export default {
           component: Settings
         },
         {
-          path: "core",
+          path: "shopSettings",
           component: ShopSettings
         }
       ]

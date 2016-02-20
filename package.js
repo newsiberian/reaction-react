@@ -20,7 +20,7 @@ Package.onUse(function (api) {
   // temporary
   //api.use("react");
 
-  //api.use("check");
+  api.use("check");
   api.use("aldeed:simple-schema");
   api.use("mdg:validated-method");
   //api.use("random");

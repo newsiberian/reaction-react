@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { reduxForm } from "redux-form";
+//import { reduxForm } from "redux-form";
 import FlatButton from "material-ui/lib/flat-button";
-import Divider from "material-ui/lib/divider";
+//import Divider from "material-ui/lib/divider";
 import Toggle from "material-ui/lib/toggle";
-export const fields = [
-  "allowGuestCheckout"
-];
+//export const fields = [
+//  "allowGuestCheckout"
+//];
 
 
 const styles = {
@@ -71,13 +71,20 @@ class OptionsForm extends Component {
 }
 
 OptionsForm.propTypes = {
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
+  //fields: PropTypes.object.isRequired,
+  //handleSubmit: PropTypes.func.isRequired,
+  //submitting: PropTypes.bool.isRequired,
+  allowGuestCheckout: PropTypes.bool.isRequired,
+  formsActions: PropTypes.shape({
+    submitForm: PropTypes.func
+  }).isRequired,
+  packageId: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(reduxForm({
-  form: "shopOptionsForm",
-  fields
-})(OptionsForm));
+//export default translate("core")(reduxForm({
+//  form: "shopOptionsForm",
+//  fields
+//})(OptionsForm));
+
+export default translate("core")(OptionsForm);

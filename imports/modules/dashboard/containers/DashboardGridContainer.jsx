@@ -9,6 +9,7 @@ import * as packagesActions from "../actions/packages";
 import * as settingsActions from "../actions/settings";
 import { routeActions } from "react-router-redux";
 import DashboardGrid from "../components/grid/DashboardGrid.jsx";
+import getReactionApps from "../../../client/helpers/apps";
 
 /**
  * @class DashboardGridContainer
@@ -49,7 +50,7 @@ DashboardGridContainer.propTypes = {
   }).isRequired,
   corePackageData: PropTypes.object, // for core settings action bar
   shopData: PropTypes.object, // for core settings action bar
-  pkgs: PropTypes.array
+  apps: PropTypes.array
 };
 
 function mapStateToProps(state) {
@@ -95,13 +96,12 @@ function composer(props, onData) {
         defaultPaymentMethod: 1
       }
     });
-    const pkgs = ReactionCore.Apps({
-      provides: "dashboard", shopId: ReactionCore.getShopId()
-    });
+    const apps = getReactionApps({ provides: "dashboard" });
+
     onData(null, {
       corePackageData: corePackageData,
       shopData: shopData,
-      pkgs: pkgs
+      apps: apps
     });
   }
 }

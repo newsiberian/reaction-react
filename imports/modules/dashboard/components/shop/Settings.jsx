@@ -8,7 +8,7 @@ import GeneralForm from "./GenaralForm.jsx";
 import AddressForm from "./AddressForm.jsx";
 import EmailForm from "./EmailForm.jsx";
 import LocalizationForm from "./LocalizationForm.jsx";
-import PaymentMethodsForm from "./PaymentMethodsForm.jsx";
+import PaymentProvidersForm from "./PaymentProvidersForm.jsx";
 import ExternalServicesForm from "./ExternalServicesForm.jsx";
 
 const styles = {
@@ -217,7 +217,14 @@ class Settings extends Component {
             expandable={true}
             style={styles.cardText}
           >
-            <PaymentMethodsForm shopData={shopData} />
+            <PaymentProvidersForm
+              initialValues={{
+                defaultPaymentMethod: corePackageData.defaultPaymentMethod
+              }}
+              onSubmit={values => formsActions.submitForm(
+                "PaymentProviders", values, corePackageData._id
+              )}
+            />
           </CardText>
         </Card>
 
