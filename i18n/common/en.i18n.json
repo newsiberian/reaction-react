@@ -2,7 +2,8 @@
   "_namespace": "common",
   "core": {
     "actions": {
-      "selectAll": "Select All"
+      "selectAll": "Select All",
+      "wrongEmailOrPassword": "Wrong email or password."
     }
   }
 }

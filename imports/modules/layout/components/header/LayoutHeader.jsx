@@ -1,14 +1,10 @@
-// import Radium from "/myPackages/radium";
 import React, { Component, PropTypes } from "react";
-import update from "react/lib/update";
 import AppBar from "material-ui/lib/app-bar";
-import Badge from "material-ui/lib/badge";
 import FontIcon from "material-ui/lib/font-icon";
-import IconButton from "material-ui/lib/icon-button";
 import { Link } from "react-router";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import { styles } from "../../styles/layoutHeader";
-import HeaderBrand from "./HeaderBrand.jsx";
+// import HeaderBrand from "./HeaderBrand.jsx";
 import UserMenu from "./UserMenu.jsx";
 import CartDrawerContainer from
   "../../../cart/containers/CartDrawerContainer.jsx";
@@ -16,10 +12,6 @@ import CartDrawerContainer from
 const styles = {
   title: {
     cursor: "pointer"
-  },
-  badge: {
-    top: 12,
-    right: 12
   }
 };
 
@@ -47,27 +39,29 @@ export default class LayoutHeader extends Component {
 
   render() {
     console.log("LayoutHeader rendering...");
-    const { cart, cartActions, displayCart } = this.props;
+    const {
+      accountsActions, cart, cartActions, displayCart, pathname, routeActions
+    } = this.props;
     //const {
     //  languages, pathname, cartCount, displayCart, onCartIconClick, siteName
     //} = this.props;
     //const title = <span style={styles.title}>{this.getSitename()}</span>;
     const title = <Link to="/" style={styles.title}>{this.getSiteName()}</Link>;
-    const cartIcon = (
-      <Badge
-        badgeContent={cart.cartCount() || 0}
-        primary={true}
-        secondary={false}
-        badgeStyle={styles.badge}
-      >
-        <IconButton
-          iconClassName="fa fa-shopping-cart"
-          onClick={() => cartActions.toggleCart()}
-          tooltip="Cart"
-          tooltipPosition="bottom-center"
-        />
-      </Badge>
-    );
+    //const cartIcon = (
+    //  <Badge
+    //    badgeContent={cart.cartCount() || 0}
+    //    primary={true}
+    //    secondary={false}
+    //    badgeStyle={styles.badge}
+    //  >
+    //    <IconButton
+    //      iconClassName="fa fa-shopping-cart"
+    //      onClick={() => cartActions.toggleCart()}
+    //      tooltip="Cart"
+    //      tooltipPosition="bottom-center"
+    //    />
+    //  </Badge>
+    //);
 
     //const menuProps = { languages, pathname, cartCount, displayCart, onCartIconClick };
     //return (
@@ -90,15 +84,25 @@ export default class LayoutHeader extends Component {
           title={title}
           //onTitleTouchTap={handleTouchTap}
           //iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-          iconElementRight={cartIcon}
+          iconElementRight={
+            <UserMenu
+              cart={cart}
+              cartActions={cartActions}
+              logout={accountsActions.logout}
+              pathname={pathname}
+              push={routeActions.push}
+            />
+          }
+          //iconElementRight={<FlatButton label="Save" />}
+          //iconElementRight={cartIcon}
         />
-        { displayCart &&
+        {displayCart &&
           <CartDrawerContainer
             cart={cart}
             //displayCart={ displayCart }
             //pathname={ pathname }
             //onCartIconClick={ onCartIconClick }
-          /> }
+          />}
       </header>
     );
   }
@@ -115,8 +119,12 @@ LayoutHeader.propTypes = {
   displayCart: PropTypes.bool.isRequired,
   //siteName: PropTypes.string.isRequired,
   //onCartIconClick: PropTypes.func.isRequired
+  accountsActions: PropTypes.shape({
+    logout: PropTypes.func
+  }).isRequired,
   cartActions: PropTypes.shape({
     getCartCount: PropTypes.func
   }).isRequired,
-  //cartCount: PropTypes.number
+  pathname: PropTypes.string.isRequired,
+  routeActions: PropTypes.object.isRequired
 };

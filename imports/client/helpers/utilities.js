@@ -1,3 +1,6 @@
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import { Accounts } from "meteor/accounts-base";
+
 // import i18next from "i18next";
 
 /**
@@ -44,3 +47,21 @@ export function timezoneOptions() {
     };
   });
 }
+
+/**
+ * isCurrentUser
+ * @return {[Boolean]} returns true/null if user has registered
+ */
+export const isCurrentUser = () => {
+  if (typeof ReactionCore === "object") {
+    const shopId = ReactionCore.getShopId();
+    const user = Accounts.user();
+    if (!shopId || typeof user !== "object") return null;
+    // shoppers should always be guests
+    const isGuest = Roles.userIsInRole(user, "guest", shopId);
+    // but if a user has never logged in then they are anonymous
+    const isAnonymous = Roles.userIsInRole(user, "anonymous", shopId);
+
+    return isGuest && !isAnonymous ? user : null;
+  }
+};

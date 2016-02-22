@@ -3,8 +3,10 @@ import React, { PropTypes } from "react";
 //import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import * as accountsActions from "../../accounts/actions/accounts";
 import * as alertActions from "../../layout/actions/alert";
 import * as cartActions from "../../layout/actions/cart";
+import { routeActions } from "react-router-redux";
 //import { ReactionCore } from "meteor/reactioncommerce:core";
 //import LinearProgress from "material-ui/lib/linear-progress";
 import LayoutHeader from "../components/header/LayoutHeader.jsx";
@@ -82,8 +84,7 @@ const LayoutHeaderContainer = props => {
   //},
 
   //render() {
-    //const { languages, cart, cartCount, displayCart, siteName } = this.state;
-    const { alertActions, cart, cartActions, displayCart } = props;
+    //const { alertActions, cart, cartActions, displayCart } = props;
     console.log("LayoutHeaderContainer rendering...");
     return (
       <LayoutHeader
@@ -92,20 +93,15 @@ const LayoutHeaderContainer = props => {
         //cart={cart}
         //cartActions={cartActions}
         //displayCart={displayCart}
-
-        //languages={ languages }
-        //pathname={ this.props.location.pathname }
-        //cart={ cart }
-        //cartCount={ cartCount }
-
-        //siteName={siteName}
-        //onCartIconClick={this.handleCartIconClick}
       />
     );
   //}
 }; //);
 
 LayoutHeaderContainer.propTypes = {
+  accountsActions: PropTypes.shape({
+    logout: PropTypes.func
+  }).isRequired,
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func,
     closeAlert: PropTypes.func
@@ -117,19 +113,24 @@ LayoutHeaderContainer.propTypes = {
   cartActions: PropTypes.shape({
     toggleCart: PropTypes.func
   }).isRequired,
-  displayCart: PropTypes.bool.isRequired
+  routeActions: PropTypes.object.isRequired,
+  displayCart: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    displayCart: state.layout.cart.visible
+    displayCart: state.layout.cart.visible,
+    pathname: state.routing.location.pathname
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    accountsActions: bindActionCreators(accountsActions, dispatch),
     alertActions: bindActionCreators(alertActions, dispatch),
-    cartActions: bindActionCreators(cartActions, dispatch)
+    cartActions: bindActionCreators(cartActions, dispatch),
+    routeActions: bindActionCreators(routeActions, dispatch)
   };
 }
 

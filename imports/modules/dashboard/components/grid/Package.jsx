@@ -62,7 +62,8 @@ class Package extends Component {
     let message;
     let errorMessage;
     if (pkg.enabled) {
-      if (confirm(t("gridPackage.disable") + pkg.label)) {
+      if (confirm(t("gridPackage.disableConfirm",
+          { app: t(pkg.i18nKeyLabel) }))) {
         toggle = true;
         message = t("gridPackage.pkgDisabled");
         errorMessage = t("gridPackage.errorDisabling");
