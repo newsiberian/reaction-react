@@ -6,7 +6,8 @@ import TextField from "material-ui/lib/text-field";
 import i18next from "i18next";
 export const fields = [
   "email",
-  "password"
+  "password",
+  "passwordAgain"
 ];
 
 const validate = values => {
@@ -30,6 +31,11 @@ const validate = values => {
       "accountsUI.error.passwordMustContainRequirements"
     );
   }
+  if (values.password && values.password !== values.passwordAgain) {
+    errors.passwordAgain = i18next.t(
+      "accountsUI.error.pwdsDontMatch"
+    );
+  }
 
   return errors;
 };
@@ -51,7 +57,7 @@ const styles = {
 class RegisterForm extends Component {
   render() {
     const {
-      fields: { email, password }, handleSubmit, submitting, t
+      fields: { email, password, passwordAgain }, handleSubmit, submitting, t
       } = this.props;
     return (
       <form onSubmit={handleSubmit} style={styles.base}>
@@ -65,6 +71,12 @@ class RegisterForm extends Component {
           {...password}
           floatingLabelText={t("accountsUI.password")}
           errorText={password.touched && password.error}
+          type="password"
+        />
+        <TextField
+          {...passwordAgain}
+          floatingLabelText={t("accountsUI.passwordAgain")}
+          errorText={passwordAgain.touched && passwordAgain.error}
           type="password"
         />
         <FlatButton

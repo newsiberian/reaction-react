@@ -15,7 +15,7 @@ const AccountsContainer = props => {
     alertActions: props.alertActions,
     accountsActions: props.accountsActions,
     routeActions: props.routeActions,
-    prevPath: props.location.state.prevPath || "/"
+    prevPath: props.location.state && props.location.state.prevPath || "/"
   });
 
   return <div>{children}</div>;
