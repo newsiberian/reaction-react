@@ -57,7 +57,8 @@ const styles = {
 class RegisterForm extends Component {
   render() {
     const {
-      fields: { email, password, passwordAgain }, handleSubmit, submitting, t
+      fields: { email, password, passwordAgain }, handleSubmit, pristine,
+      submitting, t
       } = this.props;
     return (
       <form onSubmit={handleSubmit} style={styles.base}>
@@ -83,7 +84,7 @@ class RegisterForm extends Component {
           label={t("accountsUI.signUpButton")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
           style={styles.submit}
         />
       </form>
@@ -94,6 +95,7 @@ class RegisterForm extends Component {
 RegisterForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

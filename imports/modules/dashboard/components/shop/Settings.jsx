@@ -10,17 +10,18 @@ import EmailForm from "./EmailForm.jsx";
 import LocalizationForm from "./LocalizationForm.jsx";
 import PaymentProvidersForm from "./PaymentProvidersForm.jsx";
 import ExternalServicesForm from "./ExternalServicesForm.jsx";
+import { styles } from "../../styles/settings";
 
-const styles = {
-  base: {},
-  cardText: {
-    paddingLeft: 20,
-    paddingRight: 20
-  },
-  title: {
-    fontSize: 18 // title size
-  }
-};
+//const styles = {
+//  base: {},
+//  cardText: {
+//    paddingLeft: 20,
+//    paddingRight: 20
+//  },
+//  title: {
+//    fontSize: 18 // title size
+//  }
+//};
 
 /**
  * @class Settings
@@ -54,19 +55,19 @@ class Settings extends Component {
     });
   }
 
-  handleExpandChange(expanded) {
-    console.log(expanded);
-  }
+  //handleExpandChange(expanded) {
+  //  console.log(expanded);
+  //}
 
   render() {
     const { t, corePackageData, formsActions, shopData } = this.props;
     return (
-      <div id={"shopSettingsAccordion"} role={"tablist"}>
+      <div id="shopSettingsAccordion" role="tablist">
         { /* General */ }
         <Card
           //expanded={this.state.expanded}
           initiallyExpanded={true}
-          onExpandChange={this.handleExpandChange}
+          //onExpandChange={this.handleExpandChange}
         >
           <CardTitle
             aria-controls="general"
@@ -282,7 +283,10 @@ Settings.propTypes = {
 };
 
 const options = {
-  title: "app.shopSettings"
+  title: "admin.settings.shopSettingsLabel",
+  // we can't rely on goBack() history method, because settings could be
+  // called several times from different places.
+  closeRoute: "/dashboard"
 };
 
 // We need to send t() to HOC to translate title

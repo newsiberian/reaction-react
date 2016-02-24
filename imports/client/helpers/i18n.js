@@ -1,8 +1,26 @@
-// import { _i18n } from "meteor/universe:i18n";
+/* eslint "no-extend-native": [2, {"exceptions": ["String"]}] */
+
 import i18next from "i18next";
-//import XHR from "i18next-xhr-backend/lib";
-import LanguageDetector from "i18next-browser-languagedetector/lib";
+//import LanguageDetector from "i18next-browser-languagedetector/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+
+/**
+ * String.prototype.toCamelCase
+ * @summary special toCamelCase for converting a string to camelCase for use
+ * with i18n keys
+ * @return {String} camelCased string
+ */
+String.prototype.toCamelCase = function () {
+  let s;
+  s = this.replace(/([^a-zA-Z0-9_\- ])|^[_0-9]+/g, "").trim().toLowerCase();
+  s = s.replace(/([ -]+)([a-zA-Z0-9])/g, function (a, b, c) {
+    return c.toUpperCase();
+  });
+  s = s.replace(/([0-9]+)([a-zA-Z])/g, function (a, b, c) {
+    return b + c.toUpperCase();
+  });
+  return s;
+};
 
 /**
  * getLang
@@ -126,7 +144,7 @@ export default i18next;
  */
 export function formatPrice(currentPrice) {
   const { Locale } = ReactionCore;
-  localeDep.depend();
+  // localeDep.depend();
 
   if (typeof Locale !== "object" || typeof Locale.currency !== "object") {
     // locale not yet loaded, so we don't need to return anything.

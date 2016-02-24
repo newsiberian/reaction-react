@@ -20,7 +20,7 @@ const DashboardGridContainer = props => {
 //class DashboardGridContainer extends Component {
 //  render() {
   console.log("DashboardGridContainer rendering...");
-  const { alertActions, formsActions, settingsActions, children } = props;
+  // const { alertActions, formsActions, settingsActions, children } = props;
   return (
     <DashboardGrid
       {...props}

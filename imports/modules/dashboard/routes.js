@@ -3,6 +3,9 @@ import DashboardGridContainer from "./containers/DashboardGridContainer.jsx";
 import DashboardGrid from "./components/grid/DashboardGrid.jsx";
 import Settings from "./components/grid/Settings.jsx";
 import ShopSettings from "./components/shop/Settings.jsx";
+// import AccountsSettings from "./components/accounts/Settings.jsx";
+import AccountsSettingsContainer from
+  "./containers/AccountsSettingsContainer.jsx";
 
 // TODO add auth flow to all routes
 export default {
@@ -11,7 +14,7 @@ export default {
   indexRoute: { component: DashboardGridContainer },
   childRoutes: [
     {
-      path: "packages",
+      path: "settings",
       component: DashboardGridContainer,
       childRoutes: [
         {
@@ -19,8 +22,12 @@ export default {
           component: Settings
         },
         {
-          path: "shopSettings",
+          path: "shop",
           component: ShopSettings
+        },
+        {
+          path: "accounts",
+          component: AccountsSettingsContainer
         }
       ]
     },

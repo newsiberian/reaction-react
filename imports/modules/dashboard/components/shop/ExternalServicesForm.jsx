@@ -52,7 +52,7 @@ class ExternalServicesForm extends Component {
   render() {
     const {
       fields: { OXRAppId, OXRRefreshPeriod, googleClientId, googleApiKey },
-      handleSubmit, submitting, t
+      handleSubmit, pristine, submitting, t
     } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -91,7 +91,7 @@ class ExternalServicesForm extends Component {
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
         />
       </form>
     );
@@ -101,6 +101,7 @@ class ExternalServicesForm extends Component {
 ExternalServicesForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

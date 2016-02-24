@@ -49,7 +49,8 @@ const validate = values => {
 class EmailForm extends Component {
   render() {
     const {
-      fields: { user, password, host, port }, handleSubmit, submitting, t
+      fields: { user, password, host, port }, handleSubmit, pristine,
+      submitting, t
     } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -80,7 +81,7 @@ class EmailForm extends Component {
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
         />
       </form>
     );
@@ -90,6 +91,7 @@ class EmailForm extends Component {
 EmailForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

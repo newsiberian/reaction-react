@@ -34,7 +34,7 @@ const paymentProviders = () => {
 class PaymentProvidersForm extends Component {
   render() {
     const {
-      fields: { defaultPaymentMethod }, handleSubmit, submitting, t
+      fields: { defaultPaymentMethod }, handleSubmit, pristine, submitting, t
     } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -56,7 +56,7 @@ class PaymentProvidersForm extends Component {
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
         />
       </form>
     );
@@ -66,6 +66,7 @@ class PaymentProvidersForm extends Component {
 PaymentProvidersForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

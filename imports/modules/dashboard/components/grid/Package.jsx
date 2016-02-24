@@ -36,16 +36,42 @@ const styles = {
   }
 };
 
-const getType = (pkg) => {
-  switch (pkg.cycle) {
-  case 1:
-    return "Core";
-  case 2:
-    return "Foundation";
-  case 3:
-    return "Community";
-  case 4:
-    return "Local";
+//const getType = pkg => {
+//  switch (pkg.cycle) {
+//  case 1:
+//    return "Core";
+//  case 2:
+//    return "Foundation";
+//  case 3:
+//    return "Community";
+//  case 4:
+//    return "Local";
+//  default:
+//    return "";
+//  }
+//};
+
+/**
+ * getRoute
+ * @description we need to build route somehow by getting data from reaction
+ * registry. The registry `route` is unsuitable for us.
+ * @param template
+ * @return {*}
+ */
+const getRoute = template => {
+  switch (template) {
+  case "shopSettings":
+    return "shop";
+  case "accountsSettings":
+    return "accounts";
+  case "connectSettings":
+    return "connect";
+  case "socialSettings":
+    return "social";
+  case "genericSettings":
+    return "generic";
+  //case "":
+  //  return "";
   default:
     return "";
   }
@@ -74,6 +100,7 @@ class Package extends Component {
       errorMessage = t("gridPackage.errorEnabling");
     }
     if (toggle) {
+      // TODO implement `shop/togglePackage` when it will be merged
       return ReactionCore.Collections.Packages.update(pkg.packageId, {
         $set: {
           enabled: !pkg.enabled
@@ -117,17 +144,18 @@ class Package extends Component {
   }
 
   renderSettings() {
+    // we need to fetch settings registry here
     const { pkg, routeActions, t } = this.props;
     return getReactionApps({
       provides: "settings", name: pkg.packageName
     }).map((setting, index) => {
-      if (hasPermission(pkg.route)) {
+      if (hasPermission(setting.route)) {
         return (
           <FlatButton
             key={index}
             label={t("app.settings")}
             onClick={() => routeActions.push(
-              `/dashboard/packages/${setting.name}`
+              `/dashboard/settings/${getRoute(setting.template)}`
             )}
           />
         );

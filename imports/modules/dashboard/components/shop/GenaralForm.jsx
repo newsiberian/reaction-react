@@ -34,7 +34,7 @@ class GenaralForm extends Component {
   render() {
     const {
       fields: { name, email, description, keywords }, t, handleSubmit,
-      submitting
+      pristine, submitting
     } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -78,7 +78,7 @@ class GenaralForm extends Component {
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
         />
       </form>
     );
@@ -88,6 +88,7 @@ class GenaralForm extends Component {
 GenaralForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

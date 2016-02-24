@@ -28,11 +28,12 @@ AccountsContainer.propTypes = {
     login: PropTypes.func,
     logout: PropTypes.func
   }).isRequired,
-  //alertActions: PropTypes.shape({
-  //  displayAlert: PropTypes.func
-  //}).isRequired,
-  //routeActions: PropTypes.object.isRequired,
-  children: PropTypes.node.isRequired
+  alertActions: PropTypes.shape({
+    displayAlert: PropTypes.func
+  }).isRequired,
+  routeActions: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

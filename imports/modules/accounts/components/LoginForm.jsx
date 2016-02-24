@@ -40,7 +40,7 @@ const styles = {
 class LoginForm extends Component {
   render() {
     const {
-      fields: { email, password }, handleSubmit, submitting, t
+      fields: { email, password }, handleSubmit, pristine, submitting, t
     } = this.props;
     return (
       <form onSubmit={handleSubmit} style={styles.base}>
@@ -60,7 +60,7 @@ class LoginForm extends Component {
           label={t("accountsUI.signIn")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
           style={styles.submit}
         />
       </form>
@@ -71,6 +71,7 @@ class LoginForm extends Component {
 LoginForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

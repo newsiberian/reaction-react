@@ -72,7 +72,7 @@ class AddressForm extends Component {
   render() {
     const {
       fields: { company, fullName, address1, address2, city, region,
-      postal, country, phone }, t, handleSubmit, submitting
+      postal, country, phone }, t, handleSubmit, pristine, submitting
     } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -133,7 +133,7 @@ class AddressForm extends Component {
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
         />
       </form>
     );
@@ -143,6 +143,7 @@ class AddressForm extends Component {
 AddressForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };

@@ -56,7 +56,7 @@ export const login = (type, values, prevPath) => {
   };
 };
 
-export const logout = (id) => {
+export const logout = id => {
   return dispatch => {
     Meteor.logout(error => {
       if (error) {

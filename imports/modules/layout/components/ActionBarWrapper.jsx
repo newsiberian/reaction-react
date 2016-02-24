@@ -35,7 +35,7 @@ export const ActionBarWrapper = (ComposedComponent, options) =>
           <ToolbarTitle text={t(options.title)} />
           <ToolbarGroup float="right" style={styles.toolbarGroup}>
             <IconButton
-              onClick={() => routeActions.goBack()}
+              onClick={() => routeActions.push(options.closeRoute)}
               style={styles.closeButton}
             >
               <NavigationClose />

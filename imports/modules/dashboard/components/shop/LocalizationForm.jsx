@@ -45,7 +45,8 @@ class LocalizationForm extends Component {
 
   render() {
     const {
-      fields: { baseUOM, currency, timezone }, handleSubmit, submitting, t
+      fields: { baseUOM, currency, timezone }, handleSubmit, pristine,
+      submitting, t
       } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -84,52 +85,11 @@ class LocalizationForm extends Component {
             );
           })}
         </SelectFieldWrapper>
-
-        {/*<FormsySelect
-          name="timezone"
-          required
-          value={timezone}
-          floatingLabelText={t("shopEditLocalizationForm.timezone")}
-          hintText={t("shopEditLocalizationForm.timezoneOptions")}
-        >
-          { /!* TODO for now we are using meteor:momentjs, maybe it's better to
-           use version from NPM after 1.3 *!/ }
-          {moment.tz.names()
-            .map((tz, i) => <MenuItem key={i} value={tz} primaryText={tz} />)}
-        </FormsySelect>
-        <FormsySelect
-          name="currency"
-          required
-          value={currency}
-          floatingLabelText={t("shopEditLocalizationForm.baseCurrency")}
-        >
-          {this.getCurrencies().map((cur, i) => {
-            return (
-              <MenuItem key={i} value={cur.value} primaryText={cur.label} />
-            );
-          })}
-        </FormsySelect>
-        <FormsySelect
-          name="baseUOM"
-          required
-          value={baseUOM}
-          floatingLabelText={t("shopEditLocalizationForm.baseUOM")}
-        >
-          {this.getUOM().map((uom, i) => {
-            return (
-              <MenuItem
-                key={i}
-                value={uom.value}
-                primaryText={t(`uom.${uom.value}`)}
-              />
-            );
-          })}
-        </FormsySelect>*/}
         <FlatButton
           label={t("app.saveChanges")}
           primary={true}
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
         />
       </form>
     );
@@ -139,6 +99,7 @@ class LocalizationForm extends Component {
 LocalizationForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };
