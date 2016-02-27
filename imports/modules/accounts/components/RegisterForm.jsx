@@ -81,6 +81,7 @@ class RegisterForm extends Component {
           type="password"
         />
         <FlatButton
+          fullWidth={true}
           label={t("accountsUI.signUpButton")}
           primary={true}
           type="submit"

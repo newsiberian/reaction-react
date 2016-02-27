@@ -96,6 +96,7 @@ class Settings extends Component {
                 <ServiceForm
                   initialValues={getInitialValues(service)}
                   fields={getFields(service)}
+                  formKey={service.name}
                   service={service}
                   onSubmit={values => this.handleSubmit(service.name, values)}
                 />

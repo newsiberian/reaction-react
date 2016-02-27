@@ -8,9 +8,7 @@ import { routeActions } from "react-router-redux";
 /**
  * @class AccountsContainer
  */
-//export default class AccountsContainer extends Component {
 const AccountsContainer = props => {
-  //render() {
   const children = React.cloneElement(props.children, {
     alertActions: props.alertActions,
     accountsActions: props.accountsActions,
@@ -19,13 +17,13 @@ const AccountsContainer = props => {
   });
 
   return <div>{children}</div>;
-  //}
 };
 
 AccountsContainer.propTypes = {
   accountsActions: PropTypes.shape({
     createUser: PropTypes.func,
     login: PropTypes.func,
+    loginWithService: PropTypes.func,
     logout: PropTypes.func
   }).isRequired,
   alertActions: PropTypes.shape({
@@ -50,7 +48,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-//export default AccountsContainer;
 export default connect(
   mapStateToProps,
   mapDispatchToProps

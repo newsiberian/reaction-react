@@ -47,6 +47,7 @@ class Combo extends Component {
         </header>
         <SignIn
           login={accountsActions.login}
+          loginWithService={accountsActions.loginWithService}
           prevPath={prevPath}
           styles={styles.signIn}
         />
@@ -64,6 +65,7 @@ Combo.propTypes = {
   accountsActions: PropTypes.shape({
     createUser: PropTypes.func,
     login: PropTypes.func,
+    loginWithService: PropTypes.func,
     logout: PropTypes.func
   }).isRequired,
   //alertActions: PropTypes.shape({

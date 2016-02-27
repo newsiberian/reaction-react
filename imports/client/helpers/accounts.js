@@ -3,10 +3,16 @@ import { Accounts } from "meteor/accounts-base";
 import { ReactionServiceHelper } from "./utilities";
 import Gravatar from "meteor/jparker:gravatar";
 import i18next from "i18next";
+import { capitalize } from "./utilities";
 
 export const services = () => {
   let serviceHelper = new ReactionServiceHelper();
   return serviceHelper.services();
+};
+
+export const performOAuthLogin = (service, options, callback) => {
+  const loginWithService = Meteor[`loginWith${capitalize(service)}`];
+  return loginWithService(options, callback);
 };
 
 export const hasPasswordService = () => {

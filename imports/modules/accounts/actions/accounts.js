@@ -4,6 +4,7 @@ import { displayAlert } from "../../layout/actions/alert";
 import { Accounts } from "meteor/accounts-base";
 import i18next from "i18next";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { performOAuthLogin } from "../../../client/helpers/accounts";
 
 export const createUser = (type, values, prevPath) => {
   return dispatch => {
@@ -38,7 +39,7 @@ export const login = (type, values, prevPath) => {
         if (error.reason === "User not found" ||
           error.reason === "Incorrect password") {
           // todo use this after add new namespace to translations
-          //message = i18next.t("wrongEmailOrPassword")
+          // message = i18next.t("wrongEmailOrPassword")
           message = "Неправильный email или пароль.";
         } else {
           message = error.reason;
@@ -46,12 +47,38 @@ export const login = (type, values, prevPath) => {
         dispatch(displayAlert({
           message: message
         }));
+        // dispathing before redirect
+        dispatch({ type: types.LOGIN, email: values.email, success: false });
       } else {
+        dispatch({ type: types.LOGIN, email: values.email, success: true });
         // go back to previous path. We can't rely on goBack() because we could
         // have internal route change within accounts
         dispatch(routeActions.push(prevPath));
       }
-      dispatch({ type: types.LOGIN, email: values.email });
+    });
+  };
+};
+
+export const loginWithService = (name, prevPath, options = {}) => {
+  return dispatch => {
+    performOAuthLogin(name, options, error => {
+      if (error) {
+        let message;
+        if (error.message === "No matching login attempt found") {
+          // todo use this after add new namespace to translations
+          // message = i18next.t("wrongEmailOrPassword")
+          message = "Неправильный email или пароль.";
+        } else {
+          message = error.reason;
+        }
+        dispatch(displayAlert({
+          message: message
+        }));
+        dispatch({ type: types.LOGIN_WITH_SERVICE, success: false });
+      } else {
+        dispatch({ type: types.LOGIN_WITH_SERVICE, success: true });
+        dispatch(routeActions.push(prevPath));
+      }
     });
   };
 };

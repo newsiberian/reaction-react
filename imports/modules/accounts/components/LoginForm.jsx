@@ -57,6 +57,7 @@ class LoginForm extends Component {
           type="password"
         />
         <FlatButton
+          fullWidth={true}
           label={t("accountsUI.signIn")}
           primary={true}
           type="submit"
