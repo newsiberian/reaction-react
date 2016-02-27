@@ -11,7 +11,8 @@ import styles from "../styles/signStyles";
  */
 class SignIn extends Component {
   render() {
-    const { login, loginWithService, prevPath, t } = this.props;
+    const { login, loginWithService, prevPath, showOauth, t } = this.props;
+    const displayOauth = showOauth ? showOauth : false;
     return (
       <figure style={Object.assign({}, styles.base, this.props.styles)}>
         <header style={styles.header}>{t("accountsUI.signIn")}</header>
@@ -20,10 +21,10 @@ class SignIn extends Component {
           onSubmit={values => login("Login", values, prevPath)}
         />
         {/* Oauth Services */}
-        <OauthServices
+        {displayOauth && <OauthServices
           loginWithService={loginWithService}
           prevPath={prevPath}
-        />
+        />}
       </figure>
     );
   }
@@ -31,7 +32,8 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
   login: PropTypes.func.isRequired,
-  loginWithService: PropTypes.func.isRequired,
+  loginWithService: PropTypes.func,
+  showOauth: PropTypes.bool,
   prevPath: PropTypes.string.isRequired,
   styles: PropTypes.object,
   t: PropTypes.func.isRequired

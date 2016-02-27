@@ -53,6 +53,7 @@ export const login = (type, values, prevPath) => {
         dispatch({ type: types.LOGIN, email: values.email, success: true });
         // go back to previous path. We can't rely on goBack() because we could
         // have internal route change within accounts
+        // `prevPath` could be not defined for unauthorized component
         dispatch(routeActions.push(prevPath));
       }
     });
@@ -65,9 +66,7 @@ export const loginWithService = (name, prevPath, options = {}) => {
       if (error) {
         let message;
         if (error.message === "No matching login attempt found") {
-          // todo use this after add new namespace to translations
-          // message = i18next.t("wrongEmailOrPassword")
-          message = "Неправильный email или пароль.";
+          message = i18next.t("accountsUI.error.noMatchingLoginAttemptFound");
         } else {
           message = error.reason;
         }

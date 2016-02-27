@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 import RaisedButton from "material-ui/lib/raised-button";
 import FontIcon from "material-ui/lib/font-icon";
 import Colors from "material-ui/lib/styles/colors";
@@ -58,6 +59,7 @@ class OauthServices extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div style={styles.services}>
         <div>
@@ -94,4 +96,4 @@ OauthServices.propTypes = {
   styles: PropTypes.object
 };
 
-export default OauthServices;
+export default translate("core")(OauthServices);
