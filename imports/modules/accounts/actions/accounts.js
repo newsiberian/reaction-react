@@ -53,7 +53,6 @@ export const login = (type, values, prevPath) => {
         dispatch({ type: types.LOGIN, email: values.email, success: true });
         // go back to previous path. We can't rely on goBack() because we could
         // have internal route change within accounts
-        // `prevPath` could be not defined for unauthorized component
         dispatch(routeActions.push(prevPath));
       }
     });

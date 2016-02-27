@@ -1,6 +1,5 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import SignIn from "../../accounts/components/SignIn.jsx";
 import FontIcon from "material-ui/lib/font-icon";
 
 const styles = {
@@ -13,8 +12,8 @@ const styles = {
   }
 };
 
-const Unauthorized = props => {
-  const { accountsActions, location, t } = props;
+const NotFound = props => {
+  const { t } = props;
   return (
     <section className="row center-xs">
       <h1 className="col-xs-10" style={styles.header}>
@@ -25,27 +24,14 @@ const Unauthorized = props => {
         <br />
         {t("app.warning")}
         {" "}
-        {t("app.unauthorizedMessage")}
+        {t("app.pageNotFound")}
       </h1>
-      <figure>
-        <SignIn
-          login={accountsActions.login}
-          prevPath={location.state.prevPath}
-          showOauth={false}
-        />
-      </figure>
     </section>
   );
 };
 
-Unauthorized.propTypes = {
-  accountsActions: PropTypes.shape({
-    login: PropTypes.func
-  }).isRequired,
-  location: PropTypes.shape({
-    state: PropTypes.object
-  }).isRequired,
+NotFound.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(Unauthorized);
+export default translate("core")(NotFound);

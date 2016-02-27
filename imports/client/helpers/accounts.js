@@ -1,7 +1,7 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { ReactionServiceHelper } from "./utilities";
-import Gravatar from "meteor/jparker:gravatar";
+import { Gravatar } from "meteor/jparker:gravatar";
 import i18next from "i18next";
 import { capitalize } from "./utilities";
 
@@ -47,9 +47,7 @@ export const displayName = displayUser => {
       return user.username;
     }
 
-    // todo: previous check was user.services !== "anonymous", "resume". Is this
-    // new check covers previous check?
-    if (Roles.userIsInRole(user._id, "account/profile",
+    if (Roles.userIsInRole(user._id || user.userId, "account/profile",
         ReactionCore.getShopId())) {
       return i18next.t("accountsUI.guest") || "Guest";
     }

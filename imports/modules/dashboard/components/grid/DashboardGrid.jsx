@@ -56,6 +56,7 @@ class DashboardGrid extends Component {
         <section style={layoutStyles.section}>
           { /* header section */ }
           <DashboardHeader title={t("app.settings")} />
+
           { /* main section */ }
           <div className="container-fluid" style={styles.base}>
             {groups.map((group, i) => {
@@ -86,28 +87,9 @@ class DashboardGrid extends Component {
                 </div>
               );
             })}
-            {/*<div className="row">
-              {apps.map((pkg, index) => {
-                if (pkgPermissions(pkg)) {
-                  return (
-                    <div
-                      className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-                      key={index}
-                      style={styles.cal}
-                    >
-                      <Package
-                        alertActions={alertActions}
-                        routeActions={routeActions}
-                        settingsActions={settingsActions}
-                        pkg={pkg}
-                      />
-                    </div>
-                  );
-                }
-              })}
-            </div>*/}
           </div>
         </section>
+
         { /* action bar section */ }
         {children &&
           <LeftNav
@@ -118,7 +100,6 @@ class DashboardGrid extends Component {
             openRight={true}
             overlayStyle={{height: "100%"}}
             style={layoutStyles.actionBar}
-            // onRequestChange={open => this.setState({open})}
           >
             {React.cloneElement(children, {
               formsActions: formsActions,

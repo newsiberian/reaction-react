@@ -5,7 +5,7 @@ import CardHeader from "material-ui/lib/card/card-header";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
-import { hasPermission } from "../../../../client/helpers/permissions";
+// import { hasPermission } from "../../../../client/helpers/permissions";
 import getReactionApps from "../../../../client/helpers/apps";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { translate } from "react-i18next/lib";
@@ -149,7 +149,7 @@ class Package extends Component {
     return getReactionApps({
       provides: "settings", name: pkg.packageName
     }).map((setting, index) => {
-      if (hasPermission(setting.route)) {
+      if (ReactionCore.hasPermission(setting.route)) {
         return (
           <FlatButton
             key={index}
@@ -165,11 +165,11 @@ class Package extends Component {
 
   renderManagement() {
     const { pkg, routeActions, t } = this.props;
-    if (hasPermission(pkg.route)) {
+    if (ReactionCore.hasPermission(pkg.route)) {
       return (
         <FlatButton
           label={t("gridPackage.details")}
-          onClick={() => routeActions.push(`/${pkg.route}`)}
+          onClick={() => routeActions.push(pkg.route)}
         />
       );
     }
@@ -188,7 +188,7 @@ class Package extends Component {
         <CardActions>
           {this.renderToggle()}
           {pkg.enabled && this.renderSettings()}
-          {pkg.enabled && this.renderManagement()}
+          {pkg.enabled && pkg.route && this.renderManagement()}
         </CardActions>
       </Card>
     );
@@ -216,6 +216,7 @@ Package.propTypes = {
     provides: PropTypes.string,
     route: PropTypes.string
   }).isRequired,
+  routeActions: PropTypes.object.isRequired,
   settingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
