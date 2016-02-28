@@ -1,5 +1,5 @@
-// import React, { Component, PropTypes } from "react";
-import React, { PropTypes } from "react";
+import React, { Component, PropTypes } from "react";
+//import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -7,14 +7,31 @@ import * as oauthServicesActions from "../actions/oauthServices";
 import Settings from "../components/accounts/Settings.jsx";
 import { ReactionServiceHelper } from "../../../client/helpers/utilities";
 
-const AccountsSettingsContainer = props => {
-  return (
-    <Settings
-      oauthServicesActions={props.oauthServicesActions}
-      routeActions={props.routeActions}
-      services={props.services}
-    />
-  );
+class AccountsSettingsContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  /**
+   * handleClose
+   * @summary setting bar close button click handler
+   */
+  handleClose() {
+    this.props.routeActions.push("/dashboard");
+  }
+
+  render() {
+    const { oauthServicesActions, routeActions, services } = this.props;
+    return (
+      <Settings
+        handleClose={this.handleClose}
+        oauthServicesActions={oauthServicesActions}
+        routeActions={routeActions}
+        services={services}
+      />
+    );
+  }
 };
 
 AccountsSettingsContainer.propTypes = {

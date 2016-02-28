@@ -110,6 +110,7 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
+  handleClose: PropTypes.func.isRequired,
   oauthServicesActions: PropTypes.shape({
     toggleOauthService: PropTypes.func,
     submitForm: PropTypes.func
@@ -119,8 +120,7 @@ Settings.propTypes = {
 };
 
 const options = {
-  title: "admin.settings.accountSettingsLabel",
-  closeRoute: "/dashboard"
+  title: "admin.settings.accountSettingsLabel"
 };
 
 export default translate("core")(ActionBarWrapper(Settings, options));

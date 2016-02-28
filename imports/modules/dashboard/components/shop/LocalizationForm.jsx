@@ -5,6 +5,7 @@ import FlatButton from "material-ui/lib/flat-button";
 import SelectFieldWrapper from
   "../../../layout/components/SelectFieldWrapper.jsx";
 import MenuItem from "material-ui/lib/menus/menu-item";
+import { styles } from "../../styles/settings";
 export const fields = [
   "timezone",
   "currency",
@@ -49,7 +50,7 @@ class LocalizationForm extends Component {
       submitting, t
       } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <SelectFieldWrapper
           {...timezone}
           floatingLabelText={t("shop.timezone")}

@@ -43,6 +43,19 @@ const appsInGroup = (groupName, groupedApps) => {
  * @classdesc Dashboard packages
  */
 class DashboardGrid extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  /**
+   * handleClose
+   * @summary setting bar close button click handler.
+   */
+  handleClose() {
+    this.props.routeActions.push("/dashboard");
+  }
+
   render() {
     const { alertActions, routeActions, settingsActions, children, t,
       corePackageData, shopData, formsActions, apps
@@ -95,13 +108,14 @@ class DashboardGrid extends Component {
           <LeftNav
             disableSwipeToOpen={true}
             docked={true}
-            width={300}
+            width={350}
             open={true}
             openRight={true}
             overlayStyle={{height: "100%"}}
             style={layoutStyles.actionBar}
           >
             {React.cloneElement(children, {
+              handleClose: this.handleClose,
               formsActions: formsActions,
               routeActions: routeActions,
               corePackageData: corePackageData,

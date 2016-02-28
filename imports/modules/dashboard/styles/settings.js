@@ -7,5 +7,8 @@ export const styles = {
   title: {
     fontSize: 17, // title size
     // maxWidth: 202
+  },
+  form: {
+    marginLeft: 50
   }
 };

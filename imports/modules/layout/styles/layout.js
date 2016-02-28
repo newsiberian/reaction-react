@@ -9,7 +9,7 @@ export const layoutStyles = {
   actionBar: {
     height: "100%",
     maxWidth: "100vw",
-    minWidth: 300,
+    minWidth: 350,
     overlayX: "hidden",
     overlayY: "auto",
     position: "static",

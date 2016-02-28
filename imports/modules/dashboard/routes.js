@@ -2,13 +2,12 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import Dashboard from "./containers/Dashboard.jsx";
 import DashboardGridContainer from "./containers/DashboardGridContainer.jsx";
 import DashboardGrid from "./components/grid/DashboardGrid.jsx";
-import Settings from "./components/grid/Settings.jsx";
 import ShopSettings from "./components/shop/Settings.jsx";
 import AccountsManagementContainer from
   "./containers/AccountsManagementContainer.jsx";
-// import AccountsSettings from "./components/accounts/Settings.jsx";
 import AccountsSettingsContainer from
   "./containers/AccountsSettingsContainer.jsx";
+import Permissions from "./components/accounts/Permissions.jsx";
 
 const requireAuth = (nextState, replace) => {
   if (!ReactionCore.hasPermission("dashboard", Meteor.userId())) {
@@ -31,10 +30,6 @@ export default {
       component: DashboardGridContainer,
       childRoutes: [
         {
-          path: "test",
-          component: Settings
-        },
-        {
           path: "shop",
           component: ShopSettings
         },
@@ -48,23 +43,27 @@ export default {
       path: "accounts",
       component: AccountsManagementContainer,
       childRoutes: [
-        //{
-        //  path: "manage",
-        //  component: Settings
-        //}
+        {
+          path: "permissions",
+          component: Permissions
+        },
+        {
+          //path: "add",
+          //component: AddMember
+        }
       ]
     },
-    {
-      path: "shop",
-      components: { main: DashboardGrid, actionBar: Settings }
-
-      // component: DashboardGrid,
-      //childRoutes: [
-      //  {
-      //    path: "?settings=true",
-      //    components: { main: DashboardGrid, actionBar: Settings }
-      //  }
-      //]
-    },
+    //{
+    //  path: "shop",
+    //  components: { main: DashboardGrid, actionBar: Settings }
+    //
+    //  // component: DashboardGrid,
+    //  //childRoutes: [
+    //  //  {
+    //  //    path: "?settings=true",
+    //  //    components: { main: DashboardGrid, actionBar: Settings }
+    //  //  }
+    //  //]
+    //},
   ]
 };

@@ -2,15 +2,14 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { ServiceConfiguration } from "meteor/service-configuration";
 
-// import i18next from "i18next";
-
 /**
  * @function siteName
  * @summary get the products name
  * @return {String} returns site name
  */
 export function siteName() {
-  const shop = ReactionCore.Collections.Shops.findOne();
+  const shopId = ReactionCore.getShopId();
+  const shop = ReactionCore.Collections.Shops.findOne(shopId);
   return shop && typeof shop.name === "string" ? shop.name : "";
 }
 

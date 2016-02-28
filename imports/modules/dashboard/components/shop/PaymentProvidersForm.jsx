@@ -7,6 +7,7 @@ import SelectFieldWrapper from
 import MenuItem from "material-ui/lib/menus/menu-item";
 import getReactionApps from "../../../../client/helpers/apps";
 import i18next from "i18next";
+import { styles } from "../../styles/settings";
 export const fields = [
   "defaultPaymentMethod"
 ];
@@ -37,7 +38,7 @@ class PaymentProvidersForm extends Component {
       fields: { defaultPaymentMethod }, handleSubmit, pristine, submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <SelectFieldWrapper
           {...defaultPaymentMethod}
           hintText={t("app.selectOne")}

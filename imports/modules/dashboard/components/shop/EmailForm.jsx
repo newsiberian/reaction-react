@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import FlatButton from "material-ui/lib/flat-button";
 import TextField from "material-ui/lib/text-field";
 import i18next from "i18next";
+import { styles } from "../../styles/settings";
 export const fields = [
   "user",
   "password",
@@ -53,7 +54,7 @@ class EmailForm extends Component {
       submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <TextField
           {...user}
           floatingLabelText={t("corePackageConfig.settings.mail.user")}

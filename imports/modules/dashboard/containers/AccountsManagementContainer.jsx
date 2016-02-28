@@ -3,8 +3,10 @@ import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as alertActions from "../../layout/actions/alert";
+import * as permActions from "../actions/permissions";
 import { routeActions } from "react-router-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import LinearProgress from "material-ui/lib/linear-progress";
 import Management from "../components/accounts/Management.jsx";
 
 /**
@@ -25,33 +27,57 @@ class AccountsManagementContainer extends Component {
   }
 
   render() {
-    const { guests, members } = this.props;
+    const {
+      children, guests, location, members, permActions, routeActions,
+      selectedUser
+    } = this.props;
     return (
       <Management
+        children={children}
         guests={guests}
+        location={location}
         members={members}
+        permActions={permActions}
+        routeActions={routeActions}
+        selectedUser={selectedUser}
       />
     );
   }
 }
 
 AccountsManagementContainer.propTypes = {
+  children: PropTypes.node,
   guests: PropTypes.array.isRequired,
   members: PropTypes.array.isRequired,
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
   }).isRequired,
+  permActions: PropTypes.shape({
+    togglePermission: PropTypes.func,
+    togglePermissionSettings: PropTypes.func
+  }).isRequired,
   routeActions: PropTypes.object.isRequired,
+  selectedUser: PropTypes.shape({
+    emails: PropTypes.array,
+    email: PropTypes.string,
+    userId: PropTypes.string,
+    username: PropTypes.string,
+    role: PropTypes.string
+  }).isRequired,
   location: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    // we need to pass user data to action bar to manage permissions
+    selectedUser: state.dashboard.permissions.selectedUser
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     alertActions: bindActionCreators(alertActions, dispatch),
+    permActions: bindActionCreators(permActions, dispatch),
     routeActions: bindActionCreators(routeActions, dispatch)
   };
 }
@@ -70,26 +96,24 @@ const getUsers = () => {
       member.emails = user.emails;
       member.email = user.emails[0].address;
     }
+    // this vars are not using currently , so we no need to keep them
     // member.user = user;
     member.username = user.username;
-    member.isAdmin = Roles.userIsInRole(user._id, "admin", shopId);
-    member.roles = user.roles;
-    member.services = user.services;
+    // member.isAdmin = Roles.userIsInRole(user._id, "admin", shopId);
+    // member.roles = user.roles;
+    // member.services = user.services;
 
     if (Roles.userIsInRole(member.userId, "dashboard", shopId)) {
       member.role = "dashboard";
     }
-
     if (Roles.userIsInRole(member.userId, "admin", shopId)) {
       member.role = "admin";
     }
-
     if (Roles.userIsInRole(member.userId, "owner", shopId)) {
       member.role = "owner";
     } else if (Roles.userIsInRole(member.userId, "guest", shopId)) {
       member.role = "guest";
     }
-
     if (member.role === "guest") {
       guests.push(member);
     } else if (["dashboard", "admin", "owner"].
@@ -112,8 +136,10 @@ function composer(props, onData) {
   }
 }
 
+const loading = () => <LinearProgress mode="indeterminate"/>;
 const AccountsManagementContainerWithData = composeWithTracker(
-  composer
+  composer,
+  loading
 )(AccountsManagementContainer);
 
 export default connect(

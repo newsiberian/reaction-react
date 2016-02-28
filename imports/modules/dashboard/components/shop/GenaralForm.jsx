@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import FlatButton from "material-ui/lib/flat-button";
 import TextField from "material-ui/lib/text-field";
 import i18next from "i18next";
+import { styles } from "../../styles/settings";
 export const fields = [
   "name",
   "email",
@@ -37,7 +38,7 @@ class GenaralForm extends Component {
       pristine, submitting
     } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <TextField
           {...name}
           floatingLabelText={t("shop.name")}

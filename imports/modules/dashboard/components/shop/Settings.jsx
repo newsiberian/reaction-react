@@ -12,17 +12,6 @@ import PaymentProvidersForm from "./PaymentProvidersForm.jsx";
 import ExternalServicesForm from "./ExternalServicesForm.jsx";
 import { styles } from "../../styles/settings";
 
-//const styles = {
-//  base: {},
-//  cardText: {
-//    paddingLeft: 20,
-//    paddingRight: 20
-//  },
-//  title: {
-//    fontSize: 18 // title size
-//  }
-//};
-
 /**
  * @class Settings
  * @classdesc Core Settings Action Bar
@@ -283,10 +272,7 @@ Settings.propTypes = {
 };
 
 const options = {
-  title: "admin.settings.shopSettingsLabel",
-  // we can't rely on goBack() history method, because settings could be
-  // called several times from different places.
-  closeRoute: "/dashboard"
+  title: "admin.settings.shopSettingsLabel"
 };
 
 // We need to send t() to HOC to translate title

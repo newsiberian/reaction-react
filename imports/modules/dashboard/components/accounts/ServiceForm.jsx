@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import TextField from "material-ui/lib/text-field";
 import FlatButton from "material-ui/lib/flat-button";
 import i18next from "i18next";
+import { styles } from "../../styles/settings";
 
 /**
  * @class ServiceForm
@@ -15,7 +16,7 @@ class ServiceForm extends Component {
       fields, handleSubmit, pristine, service, submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         {service.fields.map((field, index) => {
           const fieldName = fields[field.property];
           return (
