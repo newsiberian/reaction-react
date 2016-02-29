@@ -73,32 +73,34 @@ class DashboardGrid extends Component {
           { /* main section */ }
           <div className="container-fluid" style={styles.base}>
             {groups.map((group, i) => {
-              return (
-                <div key={i} style={styles.group}>
-                  <div style={styles.header}>{group}</div>
-                  <Divider />
-                  <div className="row">
-                    {appsInGroup(group, groupedApps).map((app, index) => {
-                      if (pkgPermissions(app)) {
-                        return (
-                          <div
-                            className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-                            key={index}
-                            style={styles.cal}
-                          >
-                            <Package
-                              alertActions={alertActions}
-                              routeActions={routeActions}
-                              settingsActions={settingsActions}
-                              pkg={app}
-                            />
-                          </div>
-                        );
-                      }
-                    })}
+              // we need to show header only for groups which have apps inside,
+              // so we need to filter them before render header
+              const allApps = appsInGroup(group, groupedApps);
+              const allowedApps = allApps.filter(app => pkgPermissions(app));
+              if (allowedApps.length) {
+                return (
+                  <div key={i} style={styles.group}>
+                    <div style={styles.header}>{group}</div>
+                    <Divider />
+                    <div className="row">
+                      {allowedApps.map((app, index) => (
+                        <div
+                          className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                          key={index}
+                          style={styles.cal}
+                        >
+                          <Package
+                            alertActions={alertActions}
+                            routeActions={routeActions}
+                            settingsActions={settingsActions}
+                            pkg={app}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              }
             })}
           </div>
         </section>
