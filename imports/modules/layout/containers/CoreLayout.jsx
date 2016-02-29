@@ -5,11 +5,12 @@ import { connect } from "react-redux";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
 import Snackbar from "material-ui/lib/snackbar";
 import LinearProgress from "material-ui/lib/linear-progress";
-// import { ReactionCore } from "meteor/reactioncommerce:core";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
 // import { LightRawTheme } from "material-ui/src/styles";
 import LayoutHeaderContainer from "./LayoutHeaderContainer.jsx";
 import LayoutFooter from "../components/footer/LayoutFooter.jsx";
+import AdminControlsBar from "../components/AdminControlsBar.jsx";
 import { styles } from "../styles/coreLayout";
 import * as alertActions from "../actions/alert";
 import "../styles/styles.css";
@@ -61,12 +62,15 @@ class CoreLayout extends Component {
     const { alert, cart, children } = this.props;
     console.log("CoreLayout rendering...");
     return (
-			<div style={{height: "100%"}}>
-        <LayoutHeaderContainer cart={cart} location={location} />
-        <main role="main" style={styles}>
-          {children}
-        </main>
-				<LayoutFooter />
+			<div style={styles.wrapper}>
+        <div style={styles.container}>
+          <LayoutHeaderContainer cart={cart} location={location} />
+          <main role="main" style={styles.main}>
+            {children}
+          </main>
+          <LayoutFooter />
+        </div>
+        {ReactionCore.hasDashboardAccess() && <AdminControlsBar />}
         <Snackbar
           open={alert.open}
           message={alert.message}
