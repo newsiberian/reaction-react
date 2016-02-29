@@ -60,7 +60,7 @@ class Settings extends Component {
   }
 
   render() {
-    const { oauthServicesActions, services/*, t*/ } = this.props;
+    const { oauthServicesActions, services } = this.props;
     return (
       <div id="accountsSettingsAccordion" role="tablist">
         {services.map((service, index) => {
@@ -115,8 +115,7 @@ Settings.propTypes = {
     toggleOauthService: PropTypes.func,
     submitForm: PropTypes.func
   }).isRequired,
-  services: PropTypes.array.isRequired,
-  t: PropTypes.func.isRequired
+  services: PropTypes.array.isRequired
 };
 
 const options = {

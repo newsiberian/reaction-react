@@ -8,22 +8,28 @@ import TableRow from "material-ui/lib/table/table-row";
 import TableHeader from "material-ui/lib/table/table-header";
 import TableRowColumn from "material-ui/lib/table/table-row-column";
 import TableBody from "material-ui/lib/table/table-body";
+import FlatButton from "material-ui/lib/flat-button";
 import { displayName, getGravatar } from "../../../../client/helpers/accounts";
 
 const styles = {
   base: {
     marginTop: "2rem",
     marginBottom: "2rem"
-
   },
   table: {
     maxHeight: "10rem"
   },
-  body: {
-    //textAlign: "center"
+  body: {},
+  header: {},
+  headerText: {
+    // fixme this is dirty hack to make text positioned in the middle vertically
+    position: "absolute",
+    // top: "36%",
+    top: "50%",
+    marginTop: "-0.625em"
   },
-  header: {
-    //textAlign: "center"
+  headerButton: {
+    float: "right"
   }
 };
 
@@ -33,7 +39,9 @@ const styles = {
  */
 class UsersGroup extends Component {
   render() {
-    const { groupName, t, togglePermissionSettings, usersGroup } = this.props;
+    const {
+      groupName, push, t, togglePermissionSettings, usersGroup
+    } = this.props;
     return (
       <Paper style={styles.base} zDepth={1}>
         <Table
@@ -48,20 +56,30 @@ class UsersGroup extends Component {
             "/dashboard/accounts/permissions"
           )}
         >
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableHeader
+            displaySelectAll={false}
+            adjustForCheckbox={false}
+          >
             <TableRow>
               <TableHeaderColumn
                 colSpan="3"
-                tooltip={t(`accounts.${groupName}`)}
+                // tooltip={t(`accounts.${groupName}`)}
                 style={styles.header}
               >
-                {t(`accounts.${groupName}`)}
+                <span style={styles.headerText}>{t(`accounts.${groupName}`)}</span>
+                {groupName === "shopMembers" &&
+                  <FlatButton
+                    label={t("accountsUI.addMember")}
+                    onClick={() => push("/dashboard/accounts/add")}
+                    style={styles.headerButton}
+                  />
+                }
               </TableHeaderColumn>
             </TableRow>
             <TableRow>
-              <TableHeaderColumn tooltip="The Avatar">Avatar</TableHeaderColumn>
-              <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
-              <TableHeaderColumn tooltip="The Email">
+              <TableHeaderColumn>Avatar</TableHeaderColumn>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>
                 {t("accountsUI.email")}
               </TableHeaderColumn>
             </TableRow>

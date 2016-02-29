@@ -10,7 +10,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 // import { LightRawTheme } from "material-ui/src/styles";
 import LayoutHeaderContainer from "./LayoutHeaderContainer.jsx";
 import LayoutFooter from "../components/footer/LayoutFooter.jsx";
-import AdminControlsBar from "../components/AdminControlsBar.jsx";
+import AdminControlsBarContainer from "./AdminControlsBarContainer.jsx";
 import { styles } from "../styles/coreLayout";
 import * as alertActions from "../actions/alert";
 import "../styles/styles.css";
@@ -60,7 +60,6 @@ class CoreLayout extends Component {
 
   render() {
     const { alert, cart, children } = this.props;
-    console.log("CoreLayout rendering...");
     return (
 			<div style={styles.wrapper}>
         <div style={styles.container}>
@@ -70,7 +69,7 @@ class CoreLayout extends Component {
           </main>
           <LayoutFooter />
         </div>
-        {ReactionCore.hasDashboardAccess() && <AdminControlsBar />}
+        {ReactionCore.hasDashboardAccess() && <AdminControlsBarContainer />}
         <Snackbar
           open={alert.open}
           message={alert.message}
@@ -140,12 +139,13 @@ function composer(props, onData) {
   if (ReactionCore.Subscriptions.Cart.ready()) {
     // TODO maybe this is too much to transfer cart.items to cart conteiner from
     // here? maybe we need to run another composer from there?
-    const cart = ReactionCore.Collections.Cart.findOne({}, { fields: { items: 1 } });
+    const cart = ReactionCore.Collections.Cart.findOne({},
+      { fields: { items: 1 } });
     onData(null, { cart: cart });
   }
 }
 
-const loading = () => <LinearProgress mode="indeterminate"/>;
+const loading = () => <LinearProgress mode="indeterminate" />;
 const coreLayoutSubscribed = composeWithTracker(
   composer,
   loading

@@ -185,6 +185,7 @@
 //}
 
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { translateRegistry } from "./i18n";
 
 /**
  *
@@ -352,21 +353,7 @@ export default function getReactionApps(optionHash) {
               if (match === Object.keys(registryFilter).length) {
                 if (!registry.packageName) registry.packageName = app.name;
                 if (registry.enabled !== false) {
-                  // TODO move this to a function and reuse with Template.dashboardHeader.helpers
-                  let registryLabel = "";
-                  let i18nKey;
-                  if (registry.label) {
-                    registryLabel = registry.label.toCamelCase();
-                    i18nKey = `admin.${registry.provides}.${registryLabel}`;
-                  } else if (app.registry && app.registry.length &&
-                    app.registry[0].label) {
-                    registryLabel = app.registry[0].label.toCamelCase();
-                    i18nKey = `admin.${app.registry[0].provides}.${registryLabel}`;
-                  }
-                  //const registryLabel = registry.label ? registry.label.toCamelCase() : "";
-                  //const i18nKey = `admin.${registry.provides}.${registryLabel}`;
-                  registry.i18nKeyLabel = `${i18nKey}Label`;
-                  registry.i18nKeyDescription = `${i18nKey}Description`;
+                  registry = translateRegistry(registry, app);
                   registry.enabled = registry.enabled || app.enabled;
                   registry.packageId = app._id;
                   // check permissions before pushing so that templates aren't required.

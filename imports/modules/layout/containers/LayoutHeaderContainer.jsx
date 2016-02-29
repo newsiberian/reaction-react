@@ -85,7 +85,6 @@ const LayoutHeaderContainer = props => {
 
   //render() {
     //const { alertActions, cart, cartActions, displayCart } = props;
-    console.log("LayoutHeaderContainer rendering...");
     return (
       <LayoutHeader
         {...props}
