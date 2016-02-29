@@ -51,5 +51,6 @@ export const displayName = displayUser => {
         ReactionCore.getShopId())) {
       return i18next.t("accountsUI.guest") || "Guest";
     }
+    // TODO add more checks for role like shop member
   }
 };

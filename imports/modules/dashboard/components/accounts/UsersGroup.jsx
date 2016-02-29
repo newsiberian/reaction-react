@@ -33,7 +33,7 @@ const styles = {
  */
 class UsersGroup extends Component {
   render() {
-    const { groupName, push, t, togglePermissionSettings, usersGroup } = this.props;
+    const { groupName, t, togglePermissionSettings, usersGroup } = this.props;
     return (
       <Paper style={styles.base} zDepth={1}>
         <Table
@@ -43,10 +43,6 @@ class UsersGroup extends Component {
           selectable={true}
           multiSelectable={false}
           style={styles.table}
-          //onRowSelection={(row) => push({
-          //  pathname: "/dashboard/accounts/permissions",
-          //  state: { user: usersGroup[row] }
-          //})}
           onRowSelection={(row) => togglePermissionSettings(
             usersGroup[row],
             "/dashboard/accounts/permissions"

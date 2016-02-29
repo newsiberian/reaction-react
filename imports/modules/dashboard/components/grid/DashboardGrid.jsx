@@ -45,14 +45,14 @@ const appsInGroup = (groupName, groupedApps) => {
 class DashboardGrid extends Component {
   constructor(props) {
     super(props);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleSettingsClose = this.handleSettingsClose.bind(this);
   }
 
   /**
-   * handleClose
+   * handleSettingsClose
    * @summary setting bar close button click handler.
    */
-  handleClose() {
+  handleSettingsClose() {
     this.props.routeActions.push("/dashboard");
   }
 
@@ -115,7 +115,7 @@ class DashboardGrid extends Component {
             style={layoutStyles.actionBar}
           >
             {React.cloneElement(children, {
-              handleClose: this.handleClose,
+              handleSettingsClose: this.handleSettingsClose,
               formsActions: formsActions,
               routeActions: routeActions,
               corePackageData: corePackageData,

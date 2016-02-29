@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { Roles } from "meteor/alanning:roles";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import Avatar from "material-ui/lib/avatar";
 import FontIcon from "material-ui/lib/font-icon";
 import List from "material-ui/lib/lists/list";
@@ -102,6 +103,12 @@ const permissionGroups = () => {
   return groups;
 };
 
+const hasPermissionChecked = (permission, userId) => {
+  const shopId = ReactionCore.getShopId();
+  return (userId && Roles.userIsInRole(userId, permission, shopId ||
+      Roles.userIsInRole(userId, permission, Roles.GLOBAL_GROUP)));
+};
+
 /**
  * @class Manage
  * @classdesc
@@ -156,6 +163,7 @@ class Permissions extends Component {
                       <Toggle
                         onToggle={(e, toggled) =>
                          togglePermission(toggled, perm, user)}
+                        toggled={hasPermissionChecked(perm.name, user.userId)}
                       />
                     }
                   />
@@ -173,7 +181,15 @@ class Permissions extends Component {
                             {innerPerm.label}
                           </div>
                         }
-                        rightToggle={<Toggle onToggle={(e) => console.log(e)} />}
+                        rightToggle={
+                          <Toggle
+                            onToggle={(e, toggled) =>
+                              togglePermission(toggled, innerPerm, user)}
+                            toggled={hasPermissionChecked(
+                              innerPerm.permission, user.userId
+                            )}
+                          />
+                        }
                       />
                     )
                   )}

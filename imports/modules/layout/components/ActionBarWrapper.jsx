@@ -28,15 +28,14 @@ const styles = {
 export const ActionBarWrapper = (ComposedComponent, options) =>
   class extends Component {
   render() {
-    const { handleClose, t } = this.props;
+    const { handleSettingsClose, t } = this.props;
     return (
       <div style={styles.base}>
         <Toolbar style={styles.toolbar}>
           <ToolbarTitle text={t(options.title)} />
           <ToolbarGroup float="right" style={styles.toolbarGroup}>
             <IconButton
-              //onClick={() => routeActions.push(options.closeRoute)}
-              onClick={() => handleClose()}
+              onClick={() => handleSettingsClose()}
               style={styles.closeButton}
             >
               <NavigationClose />

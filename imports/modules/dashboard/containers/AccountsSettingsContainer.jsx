@@ -10,14 +10,14 @@ import { ReactionServiceHelper } from "../../../client/helpers/utilities";
 class AccountsSettingsContainer extends Component {
   constructor(props) {
     super(props);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleSettingsClose = this.handleSettingsClose.bind(this);
   }
 
   /**
-   * handleClose
+   * handleSettingsClose
    * @summary setting bar close button click handler
    */
-  handleClose() {
+  handleSettingsClose() {
     this.props.routeActions.push("/dashboard");
   }
 
@@ -25,7 +25,7 @@ class AccountsSettingsContainer extends Component {
     const { oauthServicesActions, routeActions, services } = this.props;
     return (
       <Settings
-        handleClose={this.handleClose}
+        handleSettingsClose={this.handleSettingsClose}
         oauthServicesActions={oauthServicesActions}
         routeActions={routeActions}
         services={services}

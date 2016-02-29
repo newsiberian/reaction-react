@@ -61,7 +61,7 @@ class Management extends Component {
             style={layoutStyles.actionBar}
           >
             {React.cloneElement(children, {
-              handleClose: () => permActions.togglePermissionSettings({},
+              handleSettingsClose: () => permActions.togglePermissionSettings({},
                 "/dashboard/accounts"),
               togglePermission: permActions.togglePermission,
               selectedUser: selectedUser,
