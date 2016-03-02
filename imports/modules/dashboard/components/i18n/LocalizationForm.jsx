@@ -5,11 +5,11 @@ import FlatButton from "material-ui/lib/flat-button";
 import SelectFieldWrapper from
   "../../../layout/components/SelectFieldWrapper.jsx";
 import MenuItem from "material-ui/lib/menus/menu-item";
-import { styles } from "../../styles/settings";
 export const fields = [
   "timezone",
   "currency",
-  "baseUOM"
+  "baseUOM",
+  "language"
 ];
 
 /**
@@ -18,39 +18,52 @@ export const fields = [
  */
 class LocalizationForm extends Component {
   getCurrencies() {
-    const currencies = ReactionCore.Collections.Shops.findOne().currencies;
-    const currencyOptions = [];
-    for (let currency in currencies) {
-      if ({}.hasOwnProperty.call(currencies, currency)) {
-        let structure = currencies[currency];
-        currencyOptions.push({
-          label: currency + "  |  " + structure.symbol + "  |  " +
-          structure.format,
-          value: currency
-        });
+    const shop = ReactionCore.Collections.Shops.findOne();
+    if (typeof shop === "object" && shop.currencies) {
+      const currencies = shop.currencies;
+      const currencyOptions = [];
+      for (let currency in currencies) {
+        if ({}.hasOwnProperty.call(currencies, currency)) {
+          let structure = currencies[currency];
+          currencyOptions.push({
+            label: currency + "  |  " + structure.symbol + "  |  " +
+            structure.format,
+            value: currency
+          });
+        }
       }
+      return currencyOptions;
     }
-    return currencyOptions;
   }
 
   getUOM() {
-    const unitsOfMeasure = ReactionCore.Collections.Shops.findOne().
-      unitsOfMeasure;
-    return unitsOfMeasure.map(measure => {
-      return {
-        // label: measure.label,
-        value: measure.uom
-      };
-    });
+    const shop = ReactionCore.Collections.Shops.findOne();
+    if (typeof shop === "object" && shop.unitsOfMeasure) {
+      return shop.unitsOfMeasure.map(measure => {
+        return {
+          value: measure.uom
+        };
+      });
+    }
+  }
+
+  getLanguages() {
+    const shop = ReactionCore.Collections.Shops.findOne();
+    if (typeof shop === "object" && shop.languages) {
+      return shop.languages.filter(language => {
+        language.translation = "languages." + language.label.toLowerCase();
+        return language.enabled;
+      });
+    }
   }
 
   render() {
     const {
-      fields: { baseUOM, currency, timezone }, handleSubmit, pristine,
+      fields: { baseUOM, currency, timezone, language }, handleSubmit, pristine,
       submitting, t
-      } = this.props;
+    } = this.props;
     return (
-      <form onSubmit={handleSubmit} style={styles.form}>
+      <form onSubmit={handleSubmit}>
         <SelectFieldWrapper
           {...timezone}
           floatingLabelText={t("shop.timezone")}
@@ -82,6 +95,21 @@ class LocalizationForm extends Component {
                 key={i}
                 value={uom.value}
                 primaryText={t(`uom.${uom.value}`)}
+              />
+            );
+          })}
+        </SelectFieldWrapper>
+        <SelectFieldWrapper
+          {...language}
+          floatingLabelText={t("shop.language")}
+        >
+          {this.getLanguages().map((lang, i) => {
+            return (
+              <MenuItem
+                key={i}
+                value={lang.i18n}
+                // todo maybe this could be updated to languages.lang translation
+                primaryText={lang.label}
               />
             );
           })}

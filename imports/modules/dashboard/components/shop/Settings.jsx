@@ -7,7 +7,7 @@ import OptionsForm from "./OptionsForm.jsx";
 import GeneralForm from "./GenaralForm.jsx";
 import AddressForm from "./AddressForm.jsx";
 import EmailForm from "./EmailForm.jsx";
-import LocalizationForm from "./LocalizationForm.jsx";
+// import LocalizationForm from "./LocalizationForm.jsx";
 import PaymentProvidersForm from "./PaymentProvidersForm.jsx";
 import ExternalServicesForm from "./ExternalServicesForm.jsx";
 import { styles } from "../../styles/settings";
@@ -17,33 +17,6 @@ import { styles } from "../../styles/settings";
  * @classdesc Core Settings Action Bar
  */
 class Settings extends Component {
-  getPackageData() {
-    return ReactionCore.Collections.Packages.findOne({ name: "core" }, {
-      fields: {
-        "settings.public.allowGuestCheckout": 1,
-        "settings.mail": 1,
-        "settings.openexchangerates": 1,
-        "settings.google": 1
-      }
-    });
-  }
-
-  getShopData() {
-    return ReactionCore.Collections.Shops.findOne({}, {
-      fields: {
-        "addressBook": 1,
-        "name": 1,
-        "emails.0.address": 1,
-        "description": 1,
-        "keywords": 1,
-        "timezone": 1,
-        "currency": 1,
-        "baseUOM": 1,
-        "defaultPaymentMethod": 1
-      }
-    });
-  }
-
   //handleExpandChange(expanded) {
   //  console.log(expanded);
   //}
@@ -174,7 +147,7 @@ class Settings extends Component {
             showExpandableButton={true}
             titleStyle={styles.title}
           />
-          <CardText
+          {/*<CardText
             id="localization"
             role="tabpanel"
             aria-labelledby="localization"
@@ -191,7 +164,7 @@ class Settings extends Component {
                 "Localization", values
               )}
             />
-          </CardText>
+          </CardText>*/}
         </Card>
 
         { /* Payment Methods */ }

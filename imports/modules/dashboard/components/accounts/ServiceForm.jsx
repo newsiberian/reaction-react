@@ -3,7 +3,6 @@ import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
 import TextField from "material-ui/lib/text-field";
 import FlatButton from "material-ui/lib/flat-button";
-import i18next from "i18next";
 import { styles } from "../../styles/settings";
 
 /**
@@ -49,5 +48,5 @@ ServiceForm.propTypes = {
 };
 
 export default translate("core")(reduxForm({
-  form: `accountsOathServicesForm`
+  form: "accountsOathServicesForm"
 })(ServiceForm));

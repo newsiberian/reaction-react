@@ -21,5 +21,9 @@ export const styles = {
     flex: "0 0 auto",
     minWidth: 70,
     width: 70
+  },
+  navButton: {
+    display: "flex",
+    justifyContent: "center"
   }
 };

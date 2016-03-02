@@ -9,6 +9,7 @@ export const styles = {
     // maxWidth: 202
   },
   form: {
-    marginLeft: 50
+    //marginLeft: 50
+
   }
 };

@@ -110,7 +110,7 @@ class DashboardGrid extends Component {
           <LeftNav
             disableSwipeToOpen={true}
             docked={true}
-            width={350}
+            width={300}
             open={true}
             openRight={true}
             // overlayStyle={{height: "100vh"}}

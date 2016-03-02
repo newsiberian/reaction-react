@@ -43,7 +43,8 @@ const optionsValues = new SimpleSchema({
 const localizationValues = new SimpleSchema({
   timezone: { type: String },
   currency: { type: String },
-  baseUOM: { type: String }
+  baseUOM: { type: String },
+  language: { type: String }
 });
 
 const paymentProvidersValues = new SimpleSchema({
@@ -197,7 +198,8 @@ export const submitLocalization = new ValidatedMethod({
       $set: {
         currency: values.currency,
         timezone: values.timezone,
-        baseUOM: values.baseUOM
+        baseUOM: values.baseUOM,
+        language: values.language
       }
     });
   }

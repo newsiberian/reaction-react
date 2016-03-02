@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import { styles } from "../styles/coreLayout";
 import { Link } from "react-router";
 // import SettingsHeader from "/modules/dashboard/components/settings/SettingsHeader";
+
 // fixme fix this component. It not tracks activeLink and looks ugly
 const AdminControlsBar = props => {
   const { apps, routeActions } = props;
@@ -32,6 +33,7 @@ const AdminControlsBar = props => {
           onTouchTap={() => routeActions.push(app.route)}
           //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
           //children={<Link to={app.route} activeStyle={{color: "red"}}><FontIcon className={app.icon} /></Link>}
+          style={styles.navButton}
         />
       ))}
     </nav>

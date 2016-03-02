@@ -36,7 +36,7 @@ class AddMemberForm extends Component {
       fields: { name, email }, handleSubmit, pristine, submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit} style={{ marginLeft: 70 }}>
+      <form onSubmit={handleSubmit} style={{ marginLeft: 20 }}>
         <TextField
           {...name}
           floatingLabelText={t("accountsUI.name")}

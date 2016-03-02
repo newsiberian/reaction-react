@@ -93,6 +93,7 @@ function composer(props, onData) {
         timezone: 1,
         currency: 1,
         baseUOM: 1,
+        language: 1,
         defaultPaymentMethod: 1
       }
     });

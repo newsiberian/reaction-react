@@ -9,6 +9,7 @@ import AccountsSettingsContainer from
   "./containers/AccountsSettingsContainer.jsx";
 import Permissions from "./components/accounts/Permissions.jsx";
 import AddMember from "./components/accounts/AddMember.jsx";
+import i18nSettings from "./components/i18n/Settings.jsx";
 
 const requireAuth = (nextState, replace) => {
   if (!ReactionCore.hasPermission("dashboard", Meteor.userId())) {
@@ -37,6 +38,10 @@ export default {
         {
           path: "accounts",
           component: AccountsSettingsContainer
+        },
+        {
+          path: "i18n",
+          component: i18nSettings
         }
       ]
     },

@@ -7,6 +7,11 @@
         "dashboard": {
           "reactUiLabel": "React UI",
           "reactUiDescription": "React компоненты"
+        },
+        "accounts": {
+          "avatar": "Аватар",
+          "name": "Имя",
+          "email": "Email"
         }
       }
     }

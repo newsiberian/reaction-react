@@ -70,8 +70,8 @@ const getRoute = template => {
     return "social";
   case "genericSettings":
     return "generic";
-  //case "":
-  //  return "";
+  case "i18nSettings":
+    return "i18n";
   default:
     return "";
   }
@@ -154,6 +154,7 @@ class Package extends Component {
           <FlatButton
             key={index}
             label={t("app.settings")}
+            title={t(setting.i18nKeyLabel)}
             onClick={() => routeActions.push(
               `/dashboard/settings/${getRoute(setting.template)}`
             )}

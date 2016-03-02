@@ -18,7 +18,7 @@ const styles = {
     paddingRight: 4
   },
   title: {
-    maxWidth: 258 // this needed for cases when title is too long
+    maxWidth: 208 // this needed for cases when title is too long
   },
   group: {
     height: "100%"
@@ -35,7 +35,11 @@ export const ActionBarWrapper = (ComposedComponent, options) =>
     return (
       <div style={styles.base}>
         <Toolbar style={styles.toolbar}>
-          <ToolbarTitle text={t(options.title)} style={styles.title} />
+          <ToolbarTitle
+            text={t(options.title)}
+            title={t(options.title)}
+            style={styles.title}
+          />
           <ToolbarGroup float="right" style={styles.group}>
             <IconButton
               onClick={() => handleSettingsClose()}
