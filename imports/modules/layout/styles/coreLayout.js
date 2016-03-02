@@ -6,9 +6,11 @@ export const styles = {
   },
   container: {
     flex: "1 1 auto",
-    //height: "100%"
+    height: "100%",
+    overflow: "auto"
   },
   main: {
+    display: "flex",
     minHeight: "80vh", // todo: разобраться с этим стилем
     // height: "100%", // todo возможно без этого боковая панель не будет растягиваться
     // position: 'relative', // todo зачем здесь это?
