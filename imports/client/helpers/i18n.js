@@ -89,6 +89,16 @@ export function getLabelsFor(schema, name) {
 Meteor.startup(function () {
   // todo getLang should be called then DOM ready?
   Session.set("language", getLang());
+  // shop subscription ready?
+  const shopId = ReactionCore.getShopId();
+  const shopLanguage = ReactionCore.Collections.Shops.findOne(shopId).language;
+
+  // every package gets a namespace, fetch them
+  const packageNamespaces = ReactionCore.Collections.Packages.find({}, {
+    fields: {
+      name: 1
+    }
+  }).map(pkg => pkg.name);
 
   Meteor.call("shop/getLocale", function (error, result) {
     if (result) {
@@ -113,9 +123,9 @@ Meteor.startup(function () {
           // way
           .init({
             lng: Session.get("language"),
-            fallbackLng: "en",
+            fallbackLng: shopLanguage,
             // have a common namespace used around the full app
-            ns: ["core"],
+            ns: packageNamespaces,
             defaultNS: "core",
             resources: getResources(),
 

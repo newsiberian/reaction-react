@@ -15,7 +15,7 @@ export function siteName() {
 
 /**
  * @function checkObjectFitSupported
- * @description It checks whether the 'objectFit' css-property is supported
+ * @description It checks whether the "objectFit" css-property is supported
  * by browser
  * @return {boolean}
  */
@@ -66,6 +66,29 @@ export const isCurrentUser = () => {
   }
 };
 
+/**
+ * By default this props are hardcoded into packages template settings
+ * @see https://github.com/alexpods/meteor-accounts-vk/blob/master/lib/vk_configure.js
+ *
+ * @type {{google: *[], ok: *[], vk: *[]}}
+ */
+const serviceFields = {
+  google: [
+    { label: "Client ID", property: "clientId", type: "text" },
+    { label: "Client secret", property: "secret", type: "password" }
+  ],
+  ok: [
+    { property: "appId",  label: "App Id", type: "text" },
+    { property: "secret", label: "App Secret", type: "password" },
+    { property: "public", label: "App Public", type: "text" }
+  ],
+  vk: [
+    { property: "appId",  label: "App Id", type: "text" },
+    { property: "secret", label: "App Secret", type: "password" },
+    { property: "scope", label: "Scope", type: "text" }
+  ]
+};
+
 export class ReactionServiceHelper {
   constructor() {
 
@@ -89,24 +112,7 @@ export class ReactionServiceHelper {
   }
 
   configFieldsForService(name) {
-    let capitalizedName = this.capitalizedServiceName(name);
-    let template = Template[`configureLoginServiceDialogFor${capitalizedName}`];
-
-    if (template) {
-      let fields = template.fields();
-
-      return _.map(fields, (field) => {
-        if (!field.type) {
-          field.type = field.property === "secret" ? "password" : "text";
-        }
-
-        return _.extend(field, {
-          type: field.type
-        });
-      });
-    }
-
-    return [];
+    return serviceFields[name];
   }
 
   services(extendEach) {

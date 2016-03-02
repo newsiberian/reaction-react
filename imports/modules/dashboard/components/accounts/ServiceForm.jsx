@@ -24,7 +24,7 @@ class ServiceForm extends Component {
               key={index}
               {...fieldName}
               floatingLabelText={field.label}
-              // errorText={fieldName.touched && fieldName.error}
+              type={field.type}
             />
           );
         })}

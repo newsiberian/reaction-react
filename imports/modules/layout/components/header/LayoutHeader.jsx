@@ -38,7 +38,6 @@ export default class LayoutHeader extends Component {
   }
 
   render() {
-    console.log("LayoutHeader rendering...");
     const {
       accountsActions, cart, cartActions, displayCart, pathname, routeActions
     } = this.props;

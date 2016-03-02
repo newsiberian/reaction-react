@@ -1,11 +1,12 @@
 export const styles = {
   wrapper: {
     display: "flex",
-    height: "100%"
+    height: "100vh",
+    overflow: "hidden"
   },
   container: {
     flex: "1 1 auto",
-    height: "100%"
+    //height: "100%"
   },
   main: {
     minHeight: "80vh", // todo: разобраться с этим стилем

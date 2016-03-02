@@ -80,7 +80,7 @@ class DashboardGrid extends Component {
               if (allowedApps.length) {
                 return (
                   <div key={i} style={styles.group}>
-                    <div style={styles.header}>{group}</div>
+                    <div style={styles.header}>{t(`admin.groups.${group}`)}</div>
                     <Divider />
                     <div className="row">
                       {allowedApps.map((app, index) => (
@@ -113,8 +113,9 @@ class DashboardGrid extends Component {
             width={350}
             open={true}
             openRight={true}
-            overlayStyle={{height: "100%"}}
-            style={layoutStyles.actionBar}
+            // overlayStyle={{height: "100vh"}}
+            containerStyle={layoutStyles.actionBar}
+            style={layoutStyles.actionBarWrapper}
           >
             {React.cloneElement(children, {
               handleSettingsClose: this.handleSettingsClose,

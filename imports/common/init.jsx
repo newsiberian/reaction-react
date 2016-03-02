@@ -17,7 +17,7 @@ Meteor.startup(() => {
   const store = configureStore();
   const root = document.createElement("div");
   root.setAttribute("id", "root");
-  root.style.height = "100%"; // for actionBar stretching
+  //root.style.height = "100%"; // for actionBar stretching
   document.body.appendChild(root);
 
   render(

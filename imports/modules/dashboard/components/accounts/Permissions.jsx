@@ -7,13 +7,12 @@ import FontIcon from "material-ui/lib/font-icon";
 import List from "material-ui/lib/lists/list";
 import ListItem from "material-ui/lib/lists/list-item";
 import Divider from "material-ui/lib/divider";
-import Checkbox from "material-ui/lib/checkbox";
+import Subheader from "material-ui/lib/Subheader";
 import Toggle from "material-ui/lib/toggle";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import { displayName, getGravatar } from "../../../../client/helpers/accounts";
 import { siteName } from "../../../../client/helpers/utilities";
-import { styles } from "../../styles/settings";
 
 //const iconStyles = {
 //  fontSize: 18
@@ -144,7 +143,8 @@ class Permissions extends Component {
         </List>
         <Divider />
         {groupsForUser.map(group => (
-          <List key={group} subheader={siteName()}>
+          <List key={group}>
+            <Subheader>{siteName()}</Subheader>
             {permGroups.map((perm, index) => {
               return (
                 <div key={index}>

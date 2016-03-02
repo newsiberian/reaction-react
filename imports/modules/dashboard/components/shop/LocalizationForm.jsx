@@ -38,7 +38,7 @@ class LocalizationForm extends Component {
       unitsOfMeasure;
     return unitsOfMeasure.map(measure => {
       return {
-        label: measure.label,
+        // label: measure.label,
         value: measure.uom
       };
     });

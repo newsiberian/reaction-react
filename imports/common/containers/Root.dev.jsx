@@ -11,7 +11,7 @@ export default class Root extends Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <div style={{height: "100%"}}>
+        <div>
           <Router history={browserHistory} routes={routes} />
           <DevTools />
         </div>

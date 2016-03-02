@@ -57,8 +57,9 @@ class Management extends Component {
             width={350}
             open={true}
             openRight={true}
-            overlayStyle={{height: "100%"}}
-            style={layoutStyles.actionBar}
+            //overlayStyle={{height: "100%"}}
+            containerStyle={layoutStyles.actionBar}
+            style={layoutStyles.actionBarWrapper}
           >
             {React.cloneElement(children, {
               handleSettingsClose: () => permActions.togglePermissionSettings({},

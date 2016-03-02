@@ -124,18 +124,19 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  // @see http://guide.meteor.com/data-loading.html#changing-arguments
-  Tracker.autorun(() => {
-    let sessionId;
-    // we really don't need to track the sessionId here
-    Tracker.nonreactive(() => {
-      sessionId = Session.get("sessionId");
-    });
-    ReactionCore.Subscriptions.Cart = Meteor.subscribe("Cart",
-      sessionId,
-      Meteor.userId()
-    );
-  });
+  // fixme we already subscribe to cart within reaction-collections package
+  //// @see http://guide.meteor.com/data-loading.html#changing-arguments
+  //Tracker.autorun(() => {
+  //  let sessionId;
+  //  // we really don't need to track the sessionId here
+  //  Tracker.nonreactive(() => {
+  //    sessionId = Session.get("sessionId");
+  //  });
+  //  ReactionCore.Subscriptions.Cart = Meteor.subscribe("Cart",
+  //    sessionId,
+  //    Meteor.userId()
+  //  );
+  //});
   if (ReactionCore.Subscriptions.Cart.ready()) {
     // TODO maybe this is too much to transfer cart.items to cart conteiner from
     // here? maybe we need to run another composer from there?
