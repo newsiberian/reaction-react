@@ -25,7 +25,6 @@ export const submitForm = (service, values) => {
   return dispatch => {
     const serviceHelper = new ReactionServiceHelper();
     let fields = serviceHelper.configFieldsForService(service);
-    const niceName = serviceHelper.capitalizedServiceName(service);
 
     for (let field of fields) {
       field.value = values[field.property];

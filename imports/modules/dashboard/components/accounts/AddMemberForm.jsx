@@ -4,9 +4,6 @@ import { reduxForm } from "redux-form";
 import i18next from "i18next";
 import FlatButton from "material-ui/lib/flat-button";
 import TextField from "material-ui/lib/text-field";
-import SelectFieldWrapper from
-  "../../../layout/components/SelectFieldWrapper.jsx";
-// import { styles } from "../../styles/settings";
 export const fields = [
   "name",
   "email"
@@ -21,7 +18,7 @@ const validate = values => {
     });
   }
   if (!values.email) {
-    errors.password = i18next.t("error.isRequired", {
+    errors.email = i18next.t("error.isRequired", {
       field: i18next.t("accountsUI.email")
     });
   }
@@ -52,7 +49,7 @@ class AddMemberForm extends Component {
           type="email"
         />
         <FlatButton
-          label={t("app.saveChanges")}
+          label={t("accountsUI.info.sendInvitation")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}

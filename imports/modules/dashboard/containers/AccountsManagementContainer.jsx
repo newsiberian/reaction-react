@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as alertActions from "../../layout/actions/alert";
 import * as permActions from "../actions/permissions";
+import * as formsActions from "../actions/forms";
 import { routeActions } from "react-router-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import LinearProgress from "material-ui/lib/linear-progress";
@@ -28,8 +29,8 @@ class AccountsManagementContainer extends Component {
 
   render() {
     const {
-      children, guests, location, members, permActions, routeActions,
-      selectedUser
+      children, guests, location, members, formsActions, permActions,
+      routeActions, selectedUser
     } = this.props;
     return (
       <Management
@@ -40,6 +41,7 @@ class AccountsManagementContainer extends Component {
         permActions={permActions}
         routeActions={routeActions}
         selectedUser={selectedUser}
+        submitAddMemberForm={formsActions.submitAddMemberForm}
       />
     );
   }
@@ -52,6 +54,7 @@ AccountsManagementContainer.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
   }).isRequired,
+  formsActions: PropTypes.object.isRequired,
   permActions: PropTypes.shape({
     togglePermission: PropTypes.func,
     togglePermissionSettings: PropTypes.func
@@ -77,6 +80,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     alertActions: bindActionCreators(alertActions, dispatch),
+    formsActions: bindActionCreators(formsActions, dispatch),
     permActions: bindActionCreators(permActions, dispatch),
     routeActions: bindActionCreators(routeActions, dispatch)
   };

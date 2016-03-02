@@ -21,7 +21,7 @@ class Management extends Component {
   render() {
     const {
       children, guests, members, permActions, routeActions, t,
-      selectedUser
+      selectedUser, submitAddMemberForm
     } = this.props;
     return (
       <div style={layoutStyles.parent}>
@@ -66,7 +66,8 @@ class Management extends Component {
                 "/dashboard/accounts"),
               togglePermission: permActions.togglePermission,
               selectedUser: selectedUser,
-              routeActions: routeActions
+              routeActions: routeActions,
+              submitAddMemberForm: submitAddMemberForm
             })}
           </LeftNav>}
       </div>
@@ -90,6 +91,7 @@ Management.propTypes = {
     username: PropTypes.string,
     role: PropTypes.string
   }).isRequired,
+  submitAddMemberForm: PropTypes.func.isRequired, // actionCreator
   t: PropTypes.func.isRequired
 };
 

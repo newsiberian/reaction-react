@@ -3,29 +3,20 @@ import { translate } from "react-i18next/lib";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import AddMemberForm from "./AddMemberForm.jsx";
-import { styles } from "../../styles/settings";
 
-/**
- * @class AddMember
- * @classdesc
- */
-class AddMember extends Component {
-  render() {
-    const { t } = this.props;
-    return (
-      <AddMemberForm
-        onSubmit={values => formsActions.submitForm("General", values)}
-      />
-    );
-  }
-}
+const AddMember = props => (
+  <AddMemberForm
+    onSubmit={values => props.submitAddMemberForm(values)}
+  />
+);
 
 AddMember.propTypes = {
-  t: PropTypes.func.isRequired
+  submitAddMemberForm: PropTypes.func.isRequired // actionCreator
 };
 
 const options = {
   title: "admin.settings.addShopMemberLabel"
 };
 
+// translate needed to pass `t` to `ActionBarWrapper`
 export default translate("core")(ActionBarWrapper(AddMember, options));
