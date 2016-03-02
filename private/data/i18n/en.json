@@ -1,0 +1,14 @@
+[{
+  "language": "English",
+  "i18n": "en",
+  "translation": {
+    "reaction-react": {
+      "admin": {
+        "dashboard": {
+          "reactUiLabel": "React UI",
+          "reactUiDescription": "React Components"
+        }
+      }
+    }
+  }
+}]

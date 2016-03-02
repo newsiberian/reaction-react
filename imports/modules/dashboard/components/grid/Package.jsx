@@ -224,4 +224,4 @@ Package.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(Package);
+export default translate(["core", "reaction-react"])(Package);

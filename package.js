@@ -40,6 +40,8 @@ Package.onUse(function (api) {
   api.mainModule("main.js", "client");
   // api.export("Foo");
 
+  api.addAssets("private/data/i18n/en.json", "server");
+  api.addAssets("private/data/i18n/ru.json", "server");
   //api.addFiles("common/routes.jsx", "client");
   //api.addFiles("modules/layout/routes.jsx", "client");
 });
