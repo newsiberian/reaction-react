@@ -3,7 +3,7 @@ import * as types from "../constants";
 const initialState = {
   open: false,
   message: "",
-  autoHideDuration: 4000
+  autoHideDuration: 8000
 };
 
 export default function alert(state = initialState, action) {

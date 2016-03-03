@@ -1,10 +1,5 @@
-/**
- * @classdesc GridContent
- */
-
-import { styles } from '../../styles/gridContent';
-
 import React, { Component, PropTypes } from "react";
+import { styles } from "../../styles/gridContent";
 import { Link } from "react-router";
 
 export default class GridContent extends Component {
@@ -13,8 +8,8 @@ export default class GridContent extends Component {
     // todo добавить i18n для цены
     // todo добавить href
     // todo prevent to rerendering from GridControl changes?
-    console.log('GridContent rendering...');
-    //<a href={ FlowRouter.path('product', { _id: this.props._id }) }>
+    console.log("GridContent rendering...");
+    //<a href={ FlowRouter.path("product", { _id: this.props._id }) }>
     //  <div className="header">{ this.props.title }</div>
     //  <div className="header">{ this.props.displayPrice() }</div>
     //</a>

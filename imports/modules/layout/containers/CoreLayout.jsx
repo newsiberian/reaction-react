@@ -4,10 +4,10 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
 import Snackbar from "material-ui/lib/snackbar";
-import LinearProgress from "material-ui/lib/linear-progress";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
 // import { LightRawTheme } from "material-ui/src/styles";
+import Loading from "../components/Loading.jsx";
 import LayoutHeaderContainer from "./LayoutHeaderContainer.jsx";
 import LayoutFooter from "../components/footer/LayoutFooter.jsx";
 import AdminControlsBarContainer from "./AdminControlsBarContainer.jsx";
@@ -132,10 +132,10 @@ function composer(props, onData) {
   }
 }
 
-const loading = () => <LinearProgress mode="indeterminate" />;
+//const loading = () => <LinearProgress mode="indeterminate" />;
 const coreLayoutSubscribed = composeWithTracker(
   composer,
-  loading
+  Loading
 )(CoreLayout);
 
 export default connect(

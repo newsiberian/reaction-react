@@ -1,9 +1,5 @@
-// import { Component } from '{react}'
-import ReactMixin from '/myPackages/react-mixin'
-import Radium from '/myPackages/radium'
-import { styles } from '../../styles/gridNotice'
-
 import React, { Component, PropTypes } from "react";
+import { styles } from "../../styles/gridNotice";
 
 // todo do we need Radium here?
 // todo prevent to rerendering from GridControl changes?
@@ -17,18 +13,18 @@ export default class GridNotice extends Component {
     // todo add styles
     if (isSoldOut()) {
       if (isBackorder()) {
-        console.log('GridNotice rendering...');
+        console.log("GridNotice rendering...");
         return <span style={ styles }>Backorder</span>
       }
-      console.log('GridNotice rendering...');
+      console.log("GridNotice rendering...");
       return <span style={ styles }>Sold Out!</span>
     } else {
       if (isLowQuantity()) {
-        console.log('GridNotice rendering...');
+        console.log("GridNotice rendering...");
         return <span style={ styles }>Limited Supply</span>
       }
     }
-    console.log('GridNotice rendering...');
+    console.log("GridNotice rendering...");
     return false
   }
 }

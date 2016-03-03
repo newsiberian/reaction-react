@@ -1,9 +1,10 @@
-/**
- * This is an implementation of Reaction "productGridItems" template which is
- * renamed to "productGridItem"
- */
-
-import Radium from '/myPackages/radium';
+import React, { Component, PropTypes } from "react";
+import GridControls from "./GridControls.jsx";
+import GridContent from "./GridContent.jsx";
+import GridNotice from "./GridNotice.jsx";
+import { getProductPriceRange } from "../../../../client/helpers/products";
+import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
+import { Link } from "react-router";
 import {
   styles,
   linkStyles,
@@ -16,22 +17,14 @@ import {
   productMedium,
   productLarge,
   productSmall
-} from '../../styles/productGridItem';
-import GridControls from './GridControls';
-import GridContent from './GridContent';
-import GridNotice from './GridNotice';
-import { getProductPriceRange } from '/common/helpers/products';
-import { checkObjectFitSupported } from '/common/helpers/utilities';
-
-import React, { Component, PropTypes } from "react";
-import { Link } from "react-router";
+} from "../../styles/productGridItem";
 
 // TODO babel @deco not supported in 1.3
 // @Radium
 /**
  * @class ProductGridItem
  */
-export default class ProductGridItem extends Component {
+export default class ProductsGridItem extends Component {
   constructor(props) {
     super(props);
     this.isSoldOut = this.isSoldOut.bind(this.props.data);
@@ -202,7 +195,7 @@ export default class ProductGridItem extends Component {
 
   // moved to helpers/utilities
   //checkObjectFitSupported() {
-  //  return 'objectFit' in document.documentElement.style
+  //  return "objectFit" in document.documentElement.style
   //}
 
   /**
@@ -265,29 +258,29 @@ export default class ProductGridItem extends Component {
   renderMedia() {
     let image;
     const { data } = this.props;
-    // we use 'call' here because it is important for now to save reaction
-    // methods 'as it is' with minimum changes.
+    // we use "call" here because it is important for now to save reaction
+    // methods "as it is" with minimum changes.
     const media = this.media.call(data);
     const isObjectFitSupported = checkObjectFitSupported();
 
     if (isObjectFitSupported) {
-      if (media instanceof FS.File) { // typeof media === 'object'
+      if (media instanceof FS.File) { // typeof media === "object"
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <img style={ realImage } src={ media.url({ store: 'large' }) } alt={ media.name() } />;
+        image = <img style={ realImage } src={ media.url({ store: "large" }) } alt={ media.name() } />;
       } else {
         image = <img style={ realImage } src="resources/placeholder.gif" alt="" />;
       }
     } else {
       if (media instanceof FS.File) {
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <div style={ [fakeImage, { backgroundImage: `url(${media.url({ store: 'large' })})` }] }></div>;
+        image = <div style={ [fakeImage, { backgroundImage: `url(${media.url({ store: "large" })})` }] }></div>;
       } else {
-        image = <div style={ [fakeImage, { backgroundImage: 'url(resources/placeholder.gif)' }] }></div>;
+        image = <div style={ [fakeImage, { backgroundImage: "url(resources/placeholder.gif)" }] }></div>;
       }
     }
     //<a
     //  className="image"
-    //  href={ FlowRouter.path('product', { _id: this.props.data.handle }) }
+    //  href={ FlowRouter.path("product", { _id: this.props.data.handle }) }
     //  style={ linkStyles }
     //  >
     //  <div style={ primatyImage }>
@@ -323,7 +316,7 @@ export default class ProductGridItem extends Component {
                   <img
                     key={ i }
                     style={ realAdditionalImage }
-                    src={ media.url({ store: 'medium' }) }
+                    src={ media.url({ store: "medium" }) }
                     alt={ media.name() }
                     />
                 )
@@ -338,7 +331,7 @@ export default class ProductGridItem extends Component {
                   <div
                     key={ i }
                     style={ [additianalImage, fakeImage,
-                      { backgroundImage: `url(${media.url({ store: 'medium' })})` }
+                      { backgroundImage: `url(${media.url({ store: "medium" })})` }
                     ] }
                   >
                   </div>);
@@ -364,7 +357,7 @@ export default class ProductGridItem extends Component {
         />
     }
 
-		console.log('ProductGridItem: rendering...');
+		console.log("ProductGridItem: rendering...");
     // todo do we really need data-tags here?
     // style={ this.weightClass.call(data) }
 		return (
@@ -384,6 +377,6 @@ export default class ProductGridItem extends Component {
 	}
 }
 
-ProductGridItem.propTypes = {
+ProductsGridItem.propTypes = {
   data: PropTypes.object.isRequired
 };

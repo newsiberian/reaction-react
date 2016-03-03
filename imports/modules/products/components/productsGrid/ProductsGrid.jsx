@@ -1,21 +1,22 @@
-// import { Component } from '{react}'
-// import ReactMixin from '/myPackages/react-mixin'
-// import { ResponsiveReactGridLayout } from '{universe:react-grid-layout}'
-// import {ReactGridLayout} from '{universe:react-grid-layout}'
-// import { Responsive as ResponsiveReactGridLayout } from '/myPackages/react-grid-layout'
-// import Radium from '/myPackages/radium'
-// import { styles } from '../../styles/productGrid'
-import ProductGridItem from './ProductGridItem';
-
+// import { Component } from "{react}"
+// import ReactMixin from "/myPackages/react-mixin"
+// import { ResponsiveReactGridLayout } from "{universe:react-grid-layout}"
+// import {ReactGridLayout} from "{universe:react-grid-layout}"
+// import { Responsive as ResponsiveReactGridLayout } from "/myPackages/react-grid-layout"
+// import Radium from "/myPackages/radium"
+// import { styles } from "../../styles/productGrid"
 import React, { Component, PropTypes } from "react";
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import ProductsGridItem from "./ProductsGridItem.jsx";
+
 const { Products } = ReactionCore.Collections;
 
-// We can't use Radium in combo with ResponsiveReactGridLayout
+// We can"t use Radium in combo with ResponsiveReactGridLayout
 // @Radium
 /**
  * @class ProductGrid
  */
-export default class ProductGrid extends Component {
+export default class ProductsGrid extends Component {
 	/**
 	 * @summary this method is a clean copy from Template.productGrid.helpers
 	 * @return {Array}
@@ -119,9 +120,9 @@ export default class ProductGrid extends Component {
     const products = this.products();
     const layouts = this.generateLayouts(products);
 
-    // const name = classNames('item', {'active': true});
+    // const name = classNames("item", {"active": true});
     // todo добавить sortable для админа
-    console.log('ProductGrid: rendering...'); // layouts={ layouts } _grid={ layouts.lg[index] }
+    console.log("ProductGrid: rendering..."); // layouts={ layouts } _grid={ layouts.lg[index] }
     /*return (
       <Responsive className="layout"
        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -155,22 +156,22 @@ export default class ProductGrid extends Component {
       // class="product-grid-list list-unstyled"
       <div className={ `ui ${ productsInLine } cards` }>
         { products.map((product) => {
-          return <ProductGridItem key={ product._id } data={ product } />;
+          return <ProductsGridItem key={ product._id } data={ product } />;
         }) }
       </div>
     );
   }
 }
 
-ProductGrid.propTypes = {
+ProductsGrid.propTypes = {
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired
 };
 
 const NUMBERS = {
-  2: 'two',
-  3: 'three',
-  4: 'four',
-  5: 'five',
-  6: 'six'
+  2: "two",
+  3: "three",
+  4: "four",
+  5: "five",
+  6: "six"
 };

@@ -1,9 +1,5 @@
-/**
- * @classdesc GridControls
- */
-
-import { styles, leftButton, rightButton } from "../../styles/gridControls";
 import React, { Component, PropTypes } from "react";
+import { styles, leftButton, rightButton } from "../../styles/gridControls";
 
 export default class GridControls extends Component {
   // todo do we really need this check here?
