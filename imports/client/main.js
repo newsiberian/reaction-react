@@ -78,3 +78,5 @@ export function hasDashboardAccess() {
 export function getShopId() {
   return globalShopId;
 }
+
+export const getCurrentTag = () => {};

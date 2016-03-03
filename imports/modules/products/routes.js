@@ -1,9 +1,8 @@
-import ProductsContainer from "./containers/ProductsContainer.jsx";
+import ProductsGridContainer from "./containers/ProductsGridContainer.jsx";
 
-// fixme
 export default {
   path: "/shop",
-  component: ProductsContainer,
+  component: ProductsGridContainer,
   // indexRoute: { component: ProductsContainer },
   childRoutes: [
     // { path: "tag/:_id", component: ProductsContainer },
