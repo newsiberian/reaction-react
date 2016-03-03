@@ -5,6 +5,10 @@ import * as alertActions from "../../layout/actions/alert";
 import * as accountsActions from "../actions/accounts";
 import { routeActions } from "react-router-redux";
 
+const styles = {
+  flex: "1 1 auto"
+};
+
 /**
  * @class AccountsContainer
  */
@@ -16,7 +20,7 @@ const AccountsContainer = props => {
     prevPath: props.location.state && props.location.state.prevPath || "/"
   });
 
-  return <div>{children}</div>;
+  return <div style={styles}>{children}</div>;
 };
 
 AccountsContainer.propTypes = {

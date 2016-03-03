@@ -138,7 +138,7 @@ function composer(props, onData) {
   //  );
   //});
   if (ReactionCore.Subscriptions.Cart.ready()) {
-    // TODO maybe this is too much to transfer cart.items to cart conteiner from
+    // TODO maybe this is too much to transfer cart.items to cart container from
     // here? maybe we need to run another composer from there?
     const cart = ReactionCore.Collections.Cart.findOne({},
       { fields: { items: 1 } });

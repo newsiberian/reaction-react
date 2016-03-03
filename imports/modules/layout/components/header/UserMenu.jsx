@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 import Badge from "material-ui/lib/badge";
 import IconButton from "material-ui/lib/icon-button";
 import FlatButton from "material-ui/lib/flat-button";
 import { Accounts } from "meteor/accounts-base";
-import i18next from "i18next";
 import { isCurrentUser } from "../../../../client/helpers/utilities";
-// import CartIcon from "../../../cart/components/CartIcon.jsx";
 
 const styles = {
   badge: {
@@ -14,31 +13,16 @@ const styles = {
   }
 };
 
-//const isLoggedIn = () => {
-//  if (Accounts.user()) {
-//    return {
-//      loggedIn: true,
-//      label: i18next.t("accountsUI.signOut"),
-//
-//    };
-//  }
-//  return {
-//    loggedIn: false,
-//    label: i18next.t("accountsUI.signIn")
-//  };
-//};
-
-
 /**
  * @class UserMenu
  */
-export default class UserMenu extends Component {
+class UserMenu extends Component {
   isLoggedIn() {
-    const { logout, pathname, push } = this.props;
+    const { logout, pathname, push, t } = this.props;
     if (isCurrentUser()) {
       return {
         loggedIn: true,
-        label: i18next.t("accountsUI.signOut"),
+        label: t("accountsUI.signOut"),
         handleClick: () => logout(Accounts.userId())
       };
     }
@@ -46,7 +30,7 @@ export default class UserMenu extends Component {
     // interaction with UI. We need it to go back after success login
     return {
       loggedIn: false,
-      label: i18next.t("accountsUI.signIn"),
+      label: t("accountsUI.signIn"),
       handleClick: () => push({
         pathname: "/login",
         state: { prevPath: pathname }
@@ -64,7 +48,7 @@ export default class UserMenu extends Component {
           onClick={userState.handleClick}
         />
         <Badge
-          badgeContent={cart.cartCount() || 0}
+          badgeContent={cart && cart.cartCount() || 0}
           primary={true}
           secondary={false}
           badgeStyle={styles.badge}
@@ -79,41 +63,24 @@ export default class UserMenu extends Component {
       </div>
     );
   }
-
-  //render() {
-  //  const {
-  //    languages, pathname, cartCount, displayCart, onCartIconClick
-  //  } = this.props;
-  //  // className="ui fluid three item menu"
-  //  // <a className="item" href={ FlowRouter.path("login") }>Войти</a>
-  //  return (
-  //    <nav className="ui right text menu" style={ styles }>
-  //      <I18nChooser languages={ languages } />
-  //      <Link className="item" to="/login">Войти</Link>
-  //      <CartIcon
-  //        cartCount={ cartCount }
-  //        pathname={ pathname }
-  //        displayCart={ displayCart }
-  //        onCartIconClick={ onCartIconClick }
-  //      />
-  //    </nav>
-  //  );
-  //}
 }
 
 UserMenu.propTypes = {
   cart: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     items: PropTypes.array
-  }),
+  }).isRequired,
   cartActions: PropTypes.shape({
     getCartCount: PropTypes.func
   }).isRequired,
   logout: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
-  push: PropTypes.func.isRequired
+  push: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
   //languages: PropTypes.array,
   //cartCount: PropTypes.number.isRequired,
   //displayCart: PropTypes.bool.isRequired,
   //onCartIconClick: PropTypes.func.isRequired
 };
+
+export default translate("core")(UserMenu);

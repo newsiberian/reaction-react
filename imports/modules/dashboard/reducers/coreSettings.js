@@ -1,23 +1,5 @@
 import * as types from "../constants";
 
-//const initialState = {
-//  general: {
-//    expanded: true
-//  },
-//  address: {
-//    expanded: false
-//  },
-//  email: {
-//    expanded: false
-//  },
-//  paymentMethods: {
-//    expanded: false
-//  },
-//  externalServices: {
-//    expanded: false
-//  }
-//};
-
 const initialState = {
   active: "general"
 };

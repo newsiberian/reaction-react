@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import AppBar from "material-ui/lib/app-bar";
-import FontIcon from "material-ui/lib/font-icon";
+// import FontIcon from "material-ui/lib/font-icon";
 import { Link } from "react-router";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import { styles } from "../../styles/layoutHeader";
