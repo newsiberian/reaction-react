@@ -83,20 +83,6 @@ class CoreLayout extends Component {
   }
 }
 
-//const CoreLayout = (props) => {
-//  const { children, location } = props;
-//  console.log("CoreLayout rendering...");
-//  return (
-//    <div>
-//      {/*<LayoutHeaderContainer location={ location } />*/}
-//      <main role="main" style={styles}>
-//        {children}
-//      </main>
-//      <LayoutFooter />
-//    </div>
-//  );
-//};
-
 CoreLayout.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func,
