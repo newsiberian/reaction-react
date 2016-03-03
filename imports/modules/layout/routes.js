@@ -1,5 +1,5 @@
 import Layout from "./containers/CoreLayout.jsx";
-// import Shop from "../products/routes";
+import Shop from "../products/routes";
 import Accounts from "../accounts/routes";
 import Dashboard from "../dashboard/routes";
 import NotFound from "./components/NotFound.jsx";
@@ -13,7 +13,7 @@ export default {
   childRoutes: [
     Dashboard,
     Accounts,
-    // Shop,
+    Shop,
     // ProductDetail,
     // Checkout,
     {

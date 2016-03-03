@@ -1,11 +1,9 @@
-// import ReactMixin from '/myPackages/react-mixin'
-import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}';
-import Radium from '/myPackages/radium';
-import { styles } from '../styles/products';
-import ProductGrid from '../components/productGrid/ProductGrid';
-import Loading from '../../layout/components/Loading';
+import React, { PropTypes } from "react";
+import { styles } from "../styles/products";
+import ProductGrid from "../components/productGrid/ProductGrid";
+import Loading from "../../layout/components/Loading";
 
-const { PropTypes } = React;
+
 
 // mixins: [AutorunMixin],
 // @Radium
@@ -14,7 +12,7 @@ const { PropTypes } = React;
 // @ReactMixin.decorate(SubscriptionMixin)
 // export default class ProductsMain extends Component {
 const ProductsContainer = React.createClass({
-  displayName: 'ProductsContainer',
+  displayName: "ProductsContainer",
   propTypes: {
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired
@@ -43,9 +41,9 @@ const ProductsContainer = React.createClass({
    *
    */
   autorun() {
-    this.subscribe('Shops');
-    this.subscribe('Packages');
-    this.subscribe('Products', Session.get('productScrollLimit'));
+    this.subscribe("Shops");
+    this.subscribe("Packages");
+    this.subscribe("Products", Session.get("productScrollLimit"));
 
     if (this.subscriptionsReady()) {
       this.setState({ isSubscribed: true });
@@ -53,7 +51,7 @@ const ProductsContainer = React.createClass({
   },
 
 	componentDidMount() {
-		window.addEventListener('resize', this.handleResize/*.bind(this)*/);
+		window.addEventListener("resize", this.handleResize/*.bind(this)*/);
 	},
 
   /*shouldComponentUpdate(nextProps, nextState) {
@@ -67,7 +65,7 @@ const ProductsContainer = React.createClass({
   },*/
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener("resize", this.handleResize);
   },
 
   handleResize(e) {
@@ -96,17 +94,17 @@ const ProductsContainer = React.createClass({
     let columns;
 
     // for the wide-screens we split viewport on two parts. This part is not
-    // coming from Reaction. It's our own.
+    // coming from Reaction. It"s our own.
     if (this.state.windowWidth < 1024) {
-      columns = 'sixteen wide column';
+      columns = "sixteen wide column";
     } else {
-      columns = 'twelve wide column';
+      columns = "twelve wide column";
     }
     // todo do we need container class here?
     const { location, params } = this.props;
     const props = { location, params };
 
-    console.log('ProductsContainer: rendering...');
+    console.log("ProductsContainer: rendering...");
     return (
       <div className="ui celled grid" style={ styles }>
         <section className={ columns }>
