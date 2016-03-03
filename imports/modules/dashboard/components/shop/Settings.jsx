@@ -22,14 +22,16 @@ class Settings extends Component {
   //}
 
   render() {
-    const { t, corePackageData, formsActions, shopData } = this.props;
+    const {
+      t, corePackageData, formsActions, shopData, toggleCard, activeCard
+    } = this.props;
     return (
       <div id="shopSettingsAccordion" role="tablist">
         { /* General */ }
         <Card
-          //expanded={this.state.expanded}
+          expanded={activeCard === "general"}
           initiallyExpanded={true}
-          //onExpandChange={this.handleExpandChange}
+          onExpandChange={() => toggleCard("general")}
         >
           <CardTitle
             aria-controls="general"
@@ -51,12 +53,7 @@ class Settings extends Component {
               formsActions={formsActions}
               packageId={corePackageData._id}
               allowGuestCheckout={corePackageData.settings.public.
-              allowGuestCheckout}
-              //initialValues={{
-              //  allowGuestCheckout: corePackageData.settings.public.
-              //    allowGuestCheckout
-              //}}
-              //onSubmit={values => formsActions.submitForm("General", values)}
+                allowGuestCheckout}
             />
             <GeneralForm
               initialValues={{
@@ -71,7 +68,10 @@ class Settings extends Component {
         </Card>
 
         { /* Address */ }
-        <Card>
+        <Card
+          expanded={activeCard === "address"}
+          onExpandChange={() => toggleCard("address")}
+        >
           <CardTitle
             aria-controls="address"
             aria-expanded="true"
@@ -106,7 +106,10 @@ class Settings extends Component {
         </Card>
 
         { /* Email */ }
-        <Card>
+        <Card
+          expanded={activeCard === "email"}
+          onExpandChange={() => toggleCard("email")}
+        >
           <CardTitle
             aria-controls="email"
             aria-expanded="true"
@@ -136,39 +139,11 @@ class Settings extends Component {
           </CardText>
         </Card>
 
-        { /* Localization */ }
-        <Card>
-          <CardTitle
-            aria-controls="localization"
-            aria-expanded="true"
-            role="button"
-            title={t("shopSettings.localization")}
-            actAsExpander={true}
-            showExpandableButton={true}
-            titleStyle={styles.title}
-          />
-          {/*<CardText
-            id="localization"
-            role="tabpanel"
-            aria-labelledby="localization"
-            expandable={true}
-            style={styles.cardText}
-          >
-            <LocalizationForm
-              initialValues={{
-                timezone: shopData.timezone,
-                currency: shopData.currency,
-                baseUOM: shopData.baseUOM
-              }}
-              onSubmit={values => formsActions.submitForm(
-                "Localization", values
-              )}
-            />
-          </CardText>*/}
-        </Card>
-
         { /* Payment Methods */ }
-        <Card>
+        <Card
+          expanded={activeCard === "paymentMethods"}
+          onExpandChange={() => toggleCard("paymentMethods")}
+        >
           <CardTitle
             aria-controls="paymentMethods"
             aria-expanded="true"
@@ -197,7 +172,10 @@ class Settings extends Component {
         </Card>
 
         { /* External Services */ }
-        <Card>
+        <Card
+          expanded={activeCard === "externalServices"}
+          onExpandChange={() => toggleCard("externalServices")}
+        >
           <CardTitle
             aria-controls="externalServices"
             aria-expanded="true"
@@ -236,12 +214,14 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
+  activeCard: PropTypes.string,
   corePackageData: PropTypes.object.isRequired,
   formsActions: PropTypes.shape({
     submitForm: PropTypes.func
   }).isRequired,
   shopData: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  toggleCard: PropTypes.func.isRequired
 };
 
 const options = {

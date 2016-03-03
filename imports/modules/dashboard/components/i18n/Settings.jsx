@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-// import { Card, CardTitle, CardText } from "material-ui/lib/card";
-//import FontIcon from "material-ui/lib/font-icon";
-//import Toggle from "material-ui/lib/toggle";
+import List from "material-ui/lib/lists/list";
+import ListItem from "material-ui/lib/lists/list-item";
+import Toggle from "material-ui/lib/toggle";
+import Divider from "material-ui/lib/divider";
+import Subheader from "material-ui/lib/Subheader";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import LocalizationForm from "./LocalizationForm.jsx";
@@ -14,9 +16,9 @@ import { styles } from "../../styles/settings";
  */
 class Settings extends Component {
   render() {
-    const { formsActions, shopData } = this.props;
+    const { formsActions, i18nActions, shopData, t } = this.props;
     return (
-      <div style={styles.cardText}>
+      <div>
         <LocalizationForm
           initialValues={{
             timezone: shopData.timezone,
@@ -28,6 +30,23 @@ class Settings extends Component {
             "Localization", values
           )}
         />
+        <Divider style={{ marginTop: "1rem" }} />
+        <List style={styles.cardText}>
+          <Subheader>{t("i18nSettings.enabledLanguages")}</Subheader>
+          {shopData.languages.map(language => (
+            <ListItem
+              key={language.i18n}
+              primaryText={language.label}
+              rightToggle={
+                <Toggle
+                  onToggle={(e, toggled) =>
+                   i18nActions.toggleLanguage(toggled, language.i18n)}
+                  toggled={language.enabled}
+                />
+              }
+            />
+          ))}
+        </List>
       </div>
     );
   }
@@ -36,6 +55,9 @@ class Settings extends Component {
 Settings.propTypes = {
   formsActions: PropTypes.shape({
     submitForm: PropTypes.func
+  }).isRequired,
+  i18nActions: PropTypes.shape({
+    toggleLanguage: PropTypes.func
   }).isRequired,
   shopData: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired

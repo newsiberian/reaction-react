@@ -5,6 +5,7 @@ import FlatButton from "material-ui/lib/flat-button";
 import SelectFieldWrapper from
   "../../../layout/components/SelectFieldWrapper.jsx";
 import MenuItem from "material-ui/lib/menus/menu-item";
+import { styles } from "../../styles/settings";
 export const fields = [
   "timezone",
   "currency",
@@ -63,13 +64,13 @@ class LocalizationForm extends Component {
       submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}  style={styles.cardText}>
         <SelectFieldWrapper
           {...timezone}
           floatingLabelText={t("shop.timezone")}
           hintText={t("shop.timezoneOptions")}
         >
-          { /* TODO for now we are using meteor:momentjs, maybe it's better to
+          { /* TODO for now we are using meteor:momentjs, maybe it"s better to
            use version from NPM after 1.3 */ }
           {moment.tz.names()
             .map((tz, i) => <MenuItem key={i} value={tz} primaryText={tz} />)}

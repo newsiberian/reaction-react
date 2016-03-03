@@ -7,3 +7,7 @@ export function openSettings(pkg) {
 export function closeSettings() {
   return { type: types.CLOSE_SETTINGS, open: false, package: "" };
 }
+
+export const toggleCard = (card) => {
+  return { type: types.TOGGLE_CARD, active: card };
+};

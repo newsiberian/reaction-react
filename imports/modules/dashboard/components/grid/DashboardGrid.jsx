@@ -58,7 +58,7 @@ class DashboardGrid extends Component {
 
   render() {
     const { alertActions, routeActions, settingsActions, children, t,
-      corePackageData, shopData, formsActions, apps
+      corePackageData, shopData, formsActions, apps, i18nActions, activeCard
     } = this.props;
     const groupedApps = _.groupBy(apps, (app) => app.container || "misc");
     const groups = Object.keys(groupedApps);
@@ -118,11 +118,14 @@ class DashboardGrid extends Component {
             style={layoutStyles.actionBarWrapper}
           >
             {React.cloneElement(children, {
+              activeCard: activeCard,
               handleSettingsClose: this.handleSettingsClose,
               formsActions: formsActions,
+              i18nActions: i18nActions,
               routeActions: routeActions,
               corePackageData: corePackageData,
-              shopData: shopData
+              shopData: shopData,
+              toggleCard: settingsActions.toggleCard
             })}
           </LeftNav>}
       </div>
@@ -131,6 +134,7 @@ class DashboardGrid extends Component {
 }
 
 DashboardGrid.propTypes = {
+  activeCard: PropTypes.string,
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
   }).isRequired,
@@ -138,12 +142,16 @@ DashboardGrid.propTypes = {
   formsActions: PropTypes.shape({
     submitForm: PropTypes.func
   }).isRequired,
+  i18nActions: PropTypes.shape({
+    toggleLanguage: PropTypes.func
+  }).isRequired,
   routeActions: PropTypes.shape({
     push: PropTypes.func
   }).isRequired,
   settingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
-    closeSettings: PropTypes.func
+    closeSettings: PropTypes.func,
+    toggleCard: PropTypes.func
   }).isRequired,
   corePackageData: PropTypes.object,
   shopData: PropTypes.object,
