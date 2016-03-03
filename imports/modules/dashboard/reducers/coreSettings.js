@@ -24,9 +24,11 @@ const initialState = {
 
 export default function cards(state = initialState, action) {
   switch (action.type) {
-  //case types.CLOSE_SETTINGS:
   case types.TOGGLE_CARD:
-
+    // self-closing action
+    if (state.active === action.active) {
+      return "";
+    }
     return Object.assign({}, state, {
       active: action.active
     });
