@@ -1,22 +1,19 @@
-/**
- * @classdesc ProductTagInputForm
- */
-
-import { _i18n } from "meteor/universe:i18n";
-//import { DragDropContext } from '/myPackages/react-dnd';
-//import HTML5Backend from '/myPackages/react-dnd-html5-backend';
-import Autosuggest from '/myPackages/react-autosuggest';
-import Tag from './Tag';
-
 import React, { Component, PropTypes } from "react";
+
+//import { DragDropContext } from "/myPackages/react-dnd";
+//import HTML5Backend from "/myPackages/react-dnd-html5-backend";
+import Autosuggest from "react-autosuggest";
+import Tag from "./Tag";
+
+
 const theme = {
-  root: 'ui search input',
-  suggestions: 'results transition visible',
-  suggestion: 'result',
-  suggestionIsFocused: 'react-autosuggest__suggestion--focused',
-  section: 'react-autosuggest__suggestions-section',
-  sectionName: 'react-autosuggest__suggestions-section-name',
-  sectionSuggestions: 'react-autosuggest__suggestions-section-suggestions'
+  root: "ui search input",
+  suggestions: "results transition visible",
+  suggestion: "result",
+  suggestionIsFocused: "react-autosuggest__suggestion--focused",
+  section: "react-autosuggest__suggestions-section",
+  sectionName: "react-autosuggest__suggestions-section-name",
+  sectionSuggestions: "react-autosuggest__suggestions-section-suggestions"
 };
 
 //@DragDropContext(HTML5Backend)
@@ -26,16 +23,16 @@ export default class ProductTagInputForm extends Component {
       tags, getTagSuggestions, moveTag, hashtagMark, onHashtagClick, tagValue,
       onTagGroupRemove, onTagBlurred, onTagChange, onNewTagChange, tagsArray
     } = this.props;
-    console.log('ProductTagInputForm: rendering...');
+    console.log("ProductTagInputForm: rendering...");
     const inputAttributes = {
-      id: 'tags-submit-new',
-      type: 'search',
-      placeholder: i18n.__('reaction.core.productDetail.tagsAdd'),
+      id: "tags-submit-new",
+      type: "search",
+      placeholder: i18n.__("reaction.core.productDetail.tagsAdd"),
       onChange: value => onNewTagChange(value),
       onBlur: (event) => {
         onTagBlurred(event);
-        ReactDOM.findDOMNode(this.refs.autosuggest.refs.input).value = '';
-        this.setState({ value: '' });
+        ReactDOM.findDOMNode(this.refs.autosuggest.refs.input).value = "";
+        this.setState({ value: "" });
       }
     };
 

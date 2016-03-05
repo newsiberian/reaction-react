@@ -1,8 +1,9 @@
-/* global FS, ReactionCore */
-import update from 'react/lib/update';
-import ProductImageGallery from '../components/productDetail/images/ProductImageGallery';
 import React, { Component, PropTypes } from "react";
-const Media = ReactionCore.Collections.Media;
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import { FS } from "meteor/cfs:base-package";
+import ProductImageGallery from "../components/productDetail/images/ProductImageGallery";
+
+const { Media } = ReactionCore.Collections;
 
 /**
  * @class ProductImageGalleryContainer
@@ -39,11 +40,11 @@ export default class ProductImageGalleryContainer extends Component {
       _id: media._id,
       name: media.name(),
       url: media.url({
-        uploading: '/resources/placeholder.gif',
-        storing: '/resources/placeholder.gif',
-        store: 'large'
+        uploading: "/resources/placeholder.gif",
+        storing: "/resources/placeholder.gif",
+        store: "large"
       }),
-      thumb: media.url({ store: 'thumbnail' })
+      thumb: media.url({ store: "thumbnail" })
     } });
   }
 
@@ -59,18 +60,18 @@ export default class ProductImageGalleryContainer extends Component {
 
     if (selectedVariant) {
       mediaArray = Media.find({
-        'metadata.variantId': selectedVariant._id
+        "metadata.variantId": selectedVariant._id
       }, {
         sort: {
-          'metadata.priority': 1
+          "metadata.priority": 1
         }
       });
       if (!ReactionCore.hasAdminAccess() && mediaArray.count() < 1) {
         mediaArray = Media.find({
-          'metadata.variantId': product.variants[0]._id
+          "metadata.variantId": product.variants[0]._id
         }, {
           sort: {
-            'metadata.priority': 1
+            "metadata.priority": 1
           }
         });
       }
@@ -83,12 +84,12 @@ export default class ProductImageGalleryContainer extends Component {
           ids.push(variant._id);
         }
         mediaArray = Media.find({
-          'metadata.variantId': {
+          "metadata.variantId": {
             $in: ids
           }
         }, {
           sort: {
-            'metadata.priority': 1
+            "metadata.priority": 1
           }
         });
       }
@@ -127,7 +128,7 @@ export default class ProductImageGalleryContainer extends Component {
     for (let image of media) {
       Media.update(image._id, {
         $set: {
-          'metadata.priority': _.indexOf(media, image)
+          "metadata.priority": _.indexOf(media, image)
         }
       });
     }
@@ -147,7 +148,7 @@ export default class ProductImageGalleryContainer extends Component {
     const shopId = product.shopId || ReactionCore.getShopId();
     const userId = Meteor.userId();
     let count = Media.find({
-      'metadata.variantId': variantId
+      "metadata.variantId": variantId
     }).count();
 
     for (let i = 0, ln = files.length; i < ln; i++) {
@@ -175,7 +176,7 @@ export default class ProductImageGalleryContainer extends Component {
       return false;
     }
 
-    const _id = event.target.nodeName === 'I'
+    const _id = event.target.nodeName === "I"
       ? event.target.parentNode.dataset.id
       : event.target.dataset.id;
     const image = Media.findOne(_id);

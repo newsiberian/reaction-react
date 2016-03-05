@@ -14,6 +14,7 @@ import AdminControlsBarContainer from "./AdminControlsBarContainer.jsx";
 import { styles } from "../styles/coreLayout";
 import * as alertActions from "../actions/alert";
 import "../styles/styles.css";
+import "../styles/flexboxgrid.min.css";
 
 /**
  *

@@ -11,15 +11,15 @@ export default class GridNotice extends Component {
     const { isSoldOut, isBackorder, isLowQuantity } = this.props;
 
     // todo add styles
-    if (isSoldOut()) {
-      if (isBackorder()) {
+    if (isSoldOut) {
+      if (isBackorder) {
         console.log("GridNotice rendering...");
         return <span style={ styles }>Backorder</span>
       }
       console.log("GridNotice rendering...");
       return <span style={ styles }>Sold Out!</span>
     } else {
-      if (isLowQuantity()) {
+      if (isLowQuantity) {
         console.log("GridNotice rendering...");
         return <span style={ styles }>Limited Supply</span>
       }
@@ -30,7 +30,7 @@ export default class GridNotice extends Component {
 }
 
 GridNotice.propTypes = {
-  isSoldOut: PropTypes.func.isRequired,
-  isBackorder: PropTypes.func.isRequired,
-  isLowQuantity: PropTypes.func.isRequired
+  isSoldOut: PropTypes.bool.isRequired,
+  isBackorder: PropTypes.bool.isRequired,
+  isLowQuantity: PropTypes.bool.isRequired
 };

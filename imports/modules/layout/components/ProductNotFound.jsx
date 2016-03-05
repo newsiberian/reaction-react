@@ -1,8 +1,8 @@
-import { _i18n } from "meteor/universe:i18n";
+import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 
-export default class ProductNotFound extends React.Component {
+export default class ProductNotFound extends Component {
   render() {
-    const T = _i18n.createComponent("reaction.core.app");
     // todo add styles here
     return (
       <div className="ui text container not-found">

@@ -1,15 +1,13 @@
-/**
- * @classdesc ProductDetailEdit
- */
-import { _i18n } from "meteor/universe:i18n";
-import Radium from '/myPackages/radium';
-import shallowCompare from '/myPackages/react-addons-shallow-compare';
-import ReactMarkdownMediumEditor from '{universe:react-markdown-wysiwyg}/ReactMarkdownMediumEditor';
+import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
+//import Radium from "/myPackages/radium";
+import shallowCompare from "react-addons-shallow-compare";
+//import ReactMarkdownMediumEditor from "{universe:react-markdown-wysiwyg}/ReactMarkdownMediumEditor";
 import {
   //mediumHoverStyle, inputStyle
-} from '../../../styles/productDetailEdit';
+} from "../../../styles/productDetailEdit";
 
-import React, { Component, PropTypes } from "react";
+
 
 // TODO babel @deco not supported in 1.3
 // @Radium
@@ -22,9 +20,9 @@ export default class ProductDetailEdit extends Component {
   render() {
     const { selectedProduct, onInputChange, onInputBlur, options } = this.props;
     const { value, field, type, styles, className } = options;
-    // todo we can't use Radium on editor don't know why...
-    if (type === 'textarea') {
-      console.log('ProductDetailEdit: rendering...');
+    // todo we can"t use Radium on editor don"t know why...
+    if (type === "textarea") {
+      console.log("ProductDetailEdit: rendering...");
       // todo непонятно зачем в темплейте product-detail-message. я его пока не скопировал
       return(
         <ReactMarkdownMediumEditor
@@ -44,7 +42,7 @@ export default class ProductDetailEdit extends Component {
       );
     }
 
-    console.log('ProductDetailEdit: rendering...');
+    console.log("ProductDetailEdit: rendering...");
     return (
       <input
         type="text"

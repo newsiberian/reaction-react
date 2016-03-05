@@ -1,4 +1,3 @@
-// import React, { Component, PropTypes } from "react";
 import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
@@ -12,27 +11,7 @@ import { routeActions } from "react-router-redux";
 import DashboardGrid from "../components/grid/DashboardGrid.jsx";
 import getReactionApps from "../../../client/helpers/apps";
 
-/**
- * @class DashboardGridContainer
- * @todo control which props we really need to push down to children
- * @classdesc
- */
-const DashboardGridContainer = props => {
-//class DashboardGridContainer extends Component {
-//  render() {
-  console.log("DashboardGridContainer rendering...");
-  // const { alertActions, formsActions, settingsActions, children } = props;
-  return (
-    <DashboardGrid
-      {...props}
-      //alertActions={alertActions}
-      //formsActions={formsActions}
-      //settingsActions={settingsActions}
-      //children={children}
-    />
-  );
-//  }
-};
+const DashboardGridContainer = props => <DashboardGrid {...props} />;
 
 DashboardGridContainer.propTypes = {
   activeCard: PropTypes.string,

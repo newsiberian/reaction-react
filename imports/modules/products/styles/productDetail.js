@@ -1,3 +1,11 @@
+export default {
+  container: {
+    paddingTop: "2rem",
+    paddingBotton: "2rem",
+    paddingLeft: "3rem",
+    paddingRight: "3rem"
+  },
+};
 export const inputHoverStyle = {
   ':hover': {
     borderColor: '#cccccc',

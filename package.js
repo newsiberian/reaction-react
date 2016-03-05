@@ -8,7 +8,7 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("METEOR@1.3-beta.11");
+  api.versionsFrom("METEOR@1.3-beta.12");
   api.use("meteor-base");
   api.use("mongo");
   api.use("ecmascript");
@@ -17,8 +17,6 @@ Package.onUse(function (api) {
   api.use("session");
   api.use("tracker");
   api.use("modules");
-  // temporary
-  //api.use("react");
 
   api.use("check");
   api.use("aldeed:simple-schema");
@@ -29,9 +27,6 @@ Package.onUse(function (api) {
   api.use("service-configuration");
   api.use("amplify@1.0.0");
   api.use("fortawesome:fontawesome@4.5.0");
-  //api.use("universe:i18n@1.3.4");
-  //api.use("nicolaslopezj:mrf");
-  //api.use("nicolaslopezj:mrf-material-ui");
 
   //api.imply("mdg:validated-method");
 

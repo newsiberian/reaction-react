@@ -1,128 +1,40 @@
-// import { Component } from "{react}"
-// import ReactMixin from "/myPackages/react-mixin"
-// import { ResponsiveReactGridLayout } from "{universe:react-grid-layout}"
-// import {ReactGridLayout} from "{universe:react-grid-layout}"
-// import { Responsive as ResponsiveReactGridLayout } from "/myPackages/react-grid-layout"
-// import Radium from "/myPackages/radium"
-// import { styles } from "../../styles/productGrid"
 import React, { Component, PropTypes } from "react";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+//import { Grid, Cell } from "rgx";
 import ProductsGridItem from "./ProductsGridItem.jsx";
+//import { styles } from "../../styles/productsGrid"
 
-const { Products } = ReactionCore.Collections;
+const styles = {
+  container: {
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    marginLeft: "2rem",
+    marginRight: "2rem"
+  }
+};
 
-// We can"t use Radium in combo with ResponsiveReactGridLayout
-// @Radium
-/**
- * @class ProductGrid
- */
 export default class ProductsGrid extends Component {
-	/**
-	 * @summary this method is a clean copy from Template.productGrid.helpers
-	 * @return {Array}
-	 */
-  products() {
-    /*
-     * take natural sort, sorting by updatedAt
-     * then resort using positions.position for this tag
-     * retaining natural sort of untouched items
-     */
-    let hashtags;
-    let newRelatedTags;
-    let position;
-    let relatedTags;
-
-    // function to compare and sort position
-    function compare(a, b) {
-      if (a.position.position === b.position.position) {
-        let x = a.position.updatedAt;
-        let y = b.position.updatedAt;
-
-        if (x > y) {
-          return -1;
-        } else if (x < y) {
-          return 1;
-        }
-
-        return 0;
-      }
-      return a.position.position - b.position.position;
-    }
-
-    // todo что в данном случае будет this. разобраться с этим. this возникает,
-    // если мы заходим через маршрут /tag/
-    let tag = this.tag && this._id;
-    let selector = {};
-
-    if (tag) {
-      hashtags = [];
-      relatedTags = [tag];
-      while (relatedTags.length) {
-        newRelatedTags = [];
-        for (let relatedTag of relatedTags) {
-          if (hashtags.indexOf(relatedTag._id) === -1) {
-            hashtags.push(relatedTag._id);
-          }
-        }
-        relatedTags = newRelatedTags;
-      }
-      selector.hashtags = {
-        $in: hashtags
-      };
-    }
-
-    let gridProducts = Products.find(selector).fetch();
-
-    for (let index in gridProducts) {
-      if ({}.hasOwnProperty.call(gridProducts, index)) {
-        let gridProduct = gridProducts[index];
-        if (gridProduct.positions) {
-          let _results = [];
-          for (position of gridProduct.positions) {
-            if (position.tag === ReactionCore.getCurrentTag(
-                this.props.location,
-                this.props.params
-              )) {
-              _results.push(position);
-            }
-            gridProducts[index].position = _results[0];
-          }
-        }
-        if (!gridProduct.position) {
-          gridProducts[index].position = {
-            position: 0,
-            weight: 0,
-            pinned: false,
-            updatedAt: gridProduct.updatedAt
-          };
-        }
-      }
-    }
-
-    return gridProducts.sort(compare);
-  }
-
-  generateLayouts(products) {
-    return {
-      lg: products.map((product, i) => {
-        let y = Math.ceil(Math.random() * 4) + 1;
-        return { x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: 3, i: product._id };
-      }),
-      md: products.map((product, i) => {
-        let y = Math.ceil(Math.random() * 4) + 1;
-        return { x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: 3, i: product._id };
-      })
-    };
-  }
+  //generateLayouts(products) {
+  //  return {
+  //    lg: products.map((product, i) => {
+  //      let y = Math.ceil(Math.random() * 4) + 1;
+  //      return { x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: 3, i: product._id };
+  //    }),
+  //    md: products.map((product, i) => {
+  //      let y = Math.ceil(Math.random() * 4) + 1;
+  //      return { x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: 3, i: product._id };
+  //    })
+  //  };
+  //}
 
   render() {
-    const productsInLine = NUMBERS[4];
-    const products = this.products();
-    const layouts = this.generateLayouts(products);
+    // const productsInLine = NUMBERS[4];
+    const { products } = this.props;
+    //const products = this.products();
+    // const layouts = this.generateLayouts(products);
 
     // const name = classNames("item", {"active": true});
     // todo добавить sortable для админа
-    console.log("ProductGrid: rendering..."); // layouts={ layouts } _grid={ layouts.lg[index] }
+    //console.log("ProductGrid: rendering..."); // layouts={ layouts } _grid={ layouts.lg[index] }
     /*return (
       <Responsive className="layout"
        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -152,26 +64,52 @@ export default class ProductsGrid extends Component {
         }) }
       </ResponsiveReactGridLayout>
     );*/
+
+    //return (
+    //  <Grid gutter="2rem">
+    //    {products.map(product => (
+    //      <Cell min={256} max={256} key={product._id}>
+    //        <ProductsGridItem product={product} />
+    //      </Cell>
+    //    ))}
+    //  </Grid>
+    //);
+
     return (
-      // class="product-grid-list list-unstyled"
-      <div className={ `ui ${ productsInLine } cards` }>
-        { products.map((product) => {
-          return <ProductsGridItem key={ product._id } data={ product } />;
-        }) }
-      </div>
+      <section className="row" style={styles.container}>
+        {products.map(product => (
+            <ProductsGridItem product={product} />
+        ))}
+      </section>
     );
+
+    //return (
+    //  <AbsoluteGrid
+    //    //items={products}
+    //    //displayObject={(<ProductsGridItem />)}
+    //    items={sampleItems}
+    //    displayObject={(<SampleDisplay />)}
+    //    //keyProp="_id"
+    //    dragEnabled={true}
+    //    responsive={true}
+    //    verticalMargin={42}
+    //    itemWidth={230}
+    //    itemHeight={409}
+    //  />
+    //);
   }
 }
 
 ProductsGrid.propTypes = {
   location: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  // params: PropTypes.object.isRequired,
+  products: PropTypes.array.isRequired
 };
 
-const NUMBERS = {
-  2: "two",
-  3: "three",
-  4: "four",
-  5: "five",
-  6: "six"
-};
+//const NUMBERS = {
+//  2: "two",
+//  3: "three",
+//  4: "four",
+//  5: "five",
+//  6: "six"
+//};

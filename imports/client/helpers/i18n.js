@@ -1,5 +1,6 @@
 /* eslint "no-extend-native": [2, {"exceptions": ["String"]}] */
 
+import accounting from "accounting";
 import i18next from "i18next";
 //import LanguageDetector from "i18next-browser-languagedetector/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
@@ -143,6 +144,7 @@ Meteor.startup(function () {
   });
 });
 
+// this needed for init.js
 export default i18next;
 
 /**
@@ -154,7 +156,7 @@ export default i18next;
  */
 export function formatPrice(currentPrice) {
   const { Locale } = ReactionCore;
-  // localeDep.depend();
+  //localeDep.depend();
 
   if (typeof Locale !== "object" || typeof Locale.currency !== "object") {
     // locale not yet loaded, so we don't need to return anything.
@@ -222,16 +224,6 @@ function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
     currentPrice.replace(originalPrice, formattedPrice) :
     price.replace(originalPrice, formattedPrice));
 }
-
-//Meteor.startup(function () {
-//  if (Meteor.isClient) {
-//    _i18n.setLocale(getLang());
-//    Session.set("language", getLang());
-//  } else {
-//    // todo for SSR
-//  }
-//  // todo i18n for admin & client-restriced areas?
-//});
 
 /**
  * translateRegistry

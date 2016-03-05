@@ -1,6 +1,5 @@
-import { _i18n } from "meteor/universe:i18n";
-
 import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 
 /**
  * @class MetaComponent

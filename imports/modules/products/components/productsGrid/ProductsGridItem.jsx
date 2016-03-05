@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from "react";
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import { FS } from "meteor/cfs:base-package";
 import GridControls from "./GridControls.jsx";
 import GridContent from "./GridContent.jsx";
 import GridNotice from "./GridNotice.jsx";
-import { getProductPriceRange } from "../../../../client/helpers/products";
+import { formatPrice } from "../../../../client/helpers/i18n";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import { Link } from "react-router";
 import {
@@ -17,208 +19,121 @@ import {
   productMedium,
   productLarge,
   productSmall
-} from "../../styles/productGridItem";
+} from "../../styles/productsGridItem";
 
-// TODO babel @deco not supported in 1.3
-// @Radium
-/**
- * @class ProductGridItem
- */
-export default class ProductsGridItem extends Component {
-  constructor(props) {
-    super(props);
-    this.isSoldOut = this.isSoldOut.bind(this.props.data);
-    this.isBackorder = this.isBackorder.bind(this.props.data);
-    this.isLowQuantity = this.isLowQuantity.bind(this.props.data);
-    this.displayPrice = this.displayPrice.bind(this.props.data);
-    this.handlerPublishProductClick = this.handlerPublishProductClick.bind(this.props.data);
-    this.handlerShowProductSettings = this.handlerShowProductSettings.bind(this.props.data);
+const getMedia = _id => {
+  const media = ReactionCore.Collections.Media.findOne({
+    "metadata.productId": _id,
+    "metadata.priority": 0,
+    "metadata.toGrid": 1
+  }, { sort: { uploadedAt: 1 } });
+
+  return media instanceof FS.File ? media : false;
+};
+
+const getAdditionalMedia = _id => {
+  const mediaArray = ReactionCore.Collections.Media.find({
+    "metadata.productId": _id,
+    "metadata.priority": {
+      $gt: 0
+    },
+    "metadata.toGrid": 1
+  }, { limit: 3 });
+
+  if (mediaArray.count() > 1) {
+    return mediaArray;
   }
 
-  /*shouldComponentUpdate(nextProps) {
-    if (this.props.data.isVisible !== nextProps.data.isVisible) {
+  return false;
+};
+
+class ProductsGridItem extends Component {
+  constructor(props) {
+    super(props);
+    //this.handlerPublishProductClick =
+    //  this.handlerPublishProductClick.bind(this.props.product);
+    //this.handlerShowProductSettings =
+    //  this.handlerShowProductSettings.bind(this.props.product);
+  }
+  /*
+  shouldComponentUpdate(nextProps) {
+    if (this.props.product.isVisible !== nextProps.product.isVisible) {
       return false
     }
   }*/
 
-  /**
-   * @this this.props.data
-   */
-  media() {
-    let defaultImage;
-    let variantId;
-    let variants = [];
-    for (let variant of this.variants) {
-      if (!variant.parentId) {
-        variants.push(variant);
-      }
-    }
-    if (variants.length > 0) {
-      variantId = variants[0]._id;
-      defaultImage = ReactionCore.Collections.Media.findOne({
-        "metadata.variantId": variantId,
-        "metadata.priority": 0
-      });
-    }
-    if (defaultImage) {
-      return defaultImage;
-    }
-    return false;
-  }
-
-  /**
-   * @this this.props.data
-   */
-  additionalMedia() {
-    let mediaArray;
-    let variantId;
-    let variants = [];
-
-    for (let variant of this.variants) {
-      if (!variant.parentId) {
-        variants.push(variant);
-      }
-    }
-
-    if (variants.length > 0) {
-      variantId = variants[0]._id;
-      mediaArray = ReactionCore.Collections.Media.find({
-        "metadata.variantId": variantId,
-        "metadata.priority": {
-          $gt: 0
-        }
-      }, {
-        limit: 3
-      });
-    }
-    if (mediaArray.count() > 1) {
-      return mediaArray;
-    }
-    return false;
-  }
-
-  /**
-   * @this this.props.data
-   */
-  weightClass() {
-    let position = this.position || {};
-    let weight = position.weight || 0;
-    switch (weight) {
-      case 1:
-        return productMedium;
-      case 2:
-        return productLarge;
-      default:
-        return productSmall;
-    }
-  }
-
-  /**
-   * @this this.props.data
-   */
-  isMediumWeight() {
-    let position = this.position || {};
-    let weight = position.weight || 0;
-
-    //if (weight === 1) {
-    return weight === 1;
-    //}
-    //return false;
-  }
-
-  /**
-   * @this this.props.data
-   */
-  isSoldOut() {
-    let variants = [];
-    for (let variant of this.variants) {
-      if (!variant.parentId) {
-        variants.push(variant);
-      }
-    }
-
-    if (variants.length > 0) {
-      for (let variant of variants) {
-        if (!variant.inventoryManagement || variant.inventoryQuantity > 0) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }
-
-  /**
-   * @this this.props.data
-   */
-  isBackorder() {
-    let variants = [];
-    for (let variant of this.variants) {
-      if (!variant.parentId) {
-        variants.push(variant);
-      }
-    }
-    if (variants.length > 0) {
-      for (let variant of variants) {
-        if (!variant.inventoryManagement || variant.inventoryQuantity > 0) {
-          return false;
-        }
-      }
-      for (let variant of variants) {
-        if (!variant.inventoryPolicy) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-
-  /**
-   * @this this.props.data
-   */
-  isLowQuantity() {
-    let variants = [];
-    for (let variant of this.variants) {
-      if (!variant.parentId) {
-        variants.push(variant);
-      }
-    }
-    if (variants.length > 0) {
-      for (let variant of variants) {
-        if (variant.inventoryQuantity <= variant.lowInventoryWarningThreshold) {
-          return true;
-        }
-      }
-    } else {
-      return false;
-    }
-  }
-
-  // moved to helpers/utilities
-  //checkObjectFitSupported() {
-  //  return "objectFit" in document.documentElement.style
+  //media() {
+  //  const media = ReactionCore.Collections.Media.findOne({
+  //    "metadata.productId": this.props.product._id,
+  //    "metadata.priority": 0,
+  //    "metadata.toGrid": 1
+  //  }, { sort: { uploadedAt: 1 } });
+  //
+  //  //return media instanceof FS.File ? media : false;
   //}
 
-  /**
-   * GridContent method
-   */
-  displayPrice() {
-    if (this._id) {
-      return getProductPriceRange(this._id);
+  //additionalMedia() {
+  //  const mediaArray = ReactionCore.Collections.Media.find({
+  //    "metadata.productId": this.props.product._id,
+  //    "metadata.priority": {
+  //      $gt: 0
+  //    },
+  //    "metadata.toGrid": 1
+  //  }, { limit: 3 });
+  //
+  //  if (mediaArray.count() > 1) {
+  //    return mediaArray;
+  //  }
+  //
+  //  return false;
+  //}
+
+  weightClass() {
+    const position = this.props.product.position || {};
+    const weight = position.weight || 0;
+    switch (weight) {
+    case 1:
+      return productMedium;
+    case 2:
+      return productLarge;
+    default:
+      return productSmall;
     }
   }
 
-  /**
-   * @this this.props.data
-   */
+  isMediumWeight() {
+    const position = this.props.product.position || {};
+    const weight = position.weight || 0;
+
+    return weight === 1;
+  }
+
+  //isSoldOut() {
+  //  return this.props.product.isSoldOut;
+  //}
+  //
+  //isBackorder() {
+  //  return this.props.product.isBackorder;
+  //}
+  //
+  //isLowQuantity() {
+  //  return this.props.product.isLowQuantity;
+  //}
+  //
+  //displayPrice() {
+  //  // I don't think we need a check here
+  //  return getProductPriceRange(this.props.product.price);
+  //}
+
   handlerPublishProductClick() {
     /*let self;
     self = this;*/
     Meteor.call("products/publishProduct", this._id, (error, result) => {
       if (error) {
-        Alerts.add(error, "danger", {
-          placement: "productGridItem",
-          id: this._id
-        });
+        //Alerts.add(error, "danger", {
+        //  placement: "productGridItem",
+        //  id: this._id
+        //});
         return {};
       }
       // todo у нас нет алертов пока что.
@@ -247,20 +162,20 @@ export default class ProductsGridItem extends Component {
     //event.preventDefault();
 
     // todo Переделать этот код.
-    ReactionCore.showActionView({
-      label: "Edit Product",
-      template: "productSettings",
-      type: "product",
-      data: this
-    });
+    //ReactionCore.showActionView({
+    //  label: "Edit Product",
+    //  template: "productSettings",
+    //  type: "product",
+    //  data: this
+    //});
   }
 
   renderMedia() {
     let image;
-    const { data } = this.props;
+    const { product } = this.props;
     // we use "call" here because it is important for now to save reaction
     // methods "as it is" with minimum changes.
-    const media = this.media.call(data);
+    const media = getMedia(product._id);
     const isObjectFitSupported = checkObjectFitSupported();
 
     if (isObjectFitSupported) {
@@ -280,7 +195,7 @@ export default class ProductsGridItem extends Component {
     }
     //<a
     //  className="image"
-    //  href={ FlowRouter.path("product", { _id: this.props.data.handle }) }
+    //  href={ FlowRouter.path("product", { _id: this.props.product.handle }) }
     //  style={ linkStyles }
     //  >
     //  <div style={ primatyImage }>
@@ -291,7 +206,7 @@ export default class ProductsGridItem extends Component {
     return (
       <Link
         className="image"
-        to={ `/shop/product/${ data.handle }` }
+        to={ `/shop/product/${ product.handle }` }
         style={ linkStyles }
       >
         <div style={ primatyImage }>
@@ -303,11 +218,11 @@ export default class ProductsGridItem extends Component {
   }
 
   renderAdditionalMedia(isObjectFitSupported) {
-    const additionalMedia = this.additionalMedia.call(this.props.data);
+    const additionalMedia = getAdditionalMedia(this.props.product._id);
 
     // todo проверить эту функцию на работоспособность
     if (additionalMedia) {
-      if (this.isMediumWeight.call(this.props.data)) {
+      if (this.isMediumWeight()) {
         if (isObjectFitSupported) {
           return (
             <div style={ additionalImages }>
@@ -341,42 +256,59 @@ export default class ProductsGridItem extends Component {
         }
       }
     }
-    return false
+    return false;
   }
 
-	render() {
-    const { data } = this.props;
+  render() {
+    const {
+      _id, handle, title, isSoldOut, isBackorder, isLowQuantity, price
+    } = this.props.product;
     let gridControls = false;
+    const formatedPrice = formatPrice(price);
 
     if (ReactionCore.hasPermission("createProduct")) {
-      gridControls = <GridControls
-        //data={ data }
-        isVisible={ data.isVisible }
-        onPublishProductClick={ this.handlerPublishProductClick }
-        onShowProductSettings={ this.handlerShowProductSettings }
-        />
+      gridControls = (<GridControls
+        product={this.props.product}
+        isVisible={this.props.product.isVisible}
+        onPublishProductClick={() => this.handlerPublishProductClick()}
+        onShowProductSettings={() => this.handlerShowProductSettings()}
+      />);
     }
 
-		console.log("ProductGridItem: rendering...");
+    console.log("ProductGridItem: rendering...");
     // todo do we really need data-tags here?
-    // style={ this.weightClass.call(data) }
-		return (
-			// class="product-grid-item" card
-			<div className="card" data-id={ data._id } style={ [styles, this.weightClass.call(data)] }>
+    // style={ this.weightClass.call(product) }
+    return (
+      // class="product-grid-item" card
+      <div
+        className="col-xs-12
+                col-sm-6
+                col-md-4
+                col-lg-3"
+        //data-id={_id}
+        //style={Object.assign({}, styles, this.weightClass())}
+        style={styles}
+      >
         <GridNotice
-          isSoldOut={ this.isSoldOut }
-          isBackorder={ this.isBackorder }
-          isLowQuantity={ this.isLowQuantity }
+          isSoldOut={isSoldOut}
+          isBackorder={isBackorder}
+          isLowQuantity={isLowQuantity}
         />
         {/* todo добавить сюда product-grid-item-alerts */}
         { this.renderMedia() }
         { gridControls }
-        <GridContent handle={ data.handle } title={ data.title } displayPrice={ this.displayPrice } />
-			</div>
-		);
-	}
+        <GridContent
+          handle={handle}
+          title={title}
+          price={formatedPrice}
+        />
+      </div>
+    );
+  }
 }
 
 ProductsGridItem.propTypes = {
-  data: PropTypes.object.isRequired
+  product: PropTypes.object.isRequired
 };
+
+export default ProductsGridItem;

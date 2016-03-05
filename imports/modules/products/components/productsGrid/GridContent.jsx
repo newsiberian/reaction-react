@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export default class GridContent extends Component {
   render() {
-    const { handle, title, displayPrice } = this.props;
+    const { handle, title, price } = this.props;
     // todo добавить i18n для цены
     // todo добавить href
     // todo prevent to rerendering from GridControl changes?
@@ -17,7 +17,7 @@ export default class GridContent extends Component {
       <div className="center aligned content">
         <Link to={ `/shop/product/${ handle }` }>
           <div className="header">{ title }</div>
-          <div className="header">{ displayPrice() }</div>
+          <div className="header">{ price }</div>
         </Link>
       </div>
     );
@@ -28,5 +28,5 @@ GridContent.propTypes = {
   // todo add handle for lin
   handle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  displayPrice: PropTypes.func.isRequired
+  price: PropTypes.string.isRequired
 };

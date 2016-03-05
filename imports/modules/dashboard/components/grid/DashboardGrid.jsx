@@ -3,8 +3,6 @@ import { translate } from "react-i18next/lib";
 import LeftNav from "material-ui/lib/left-nav";
 import Divider from "material-ui/lib/divider";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-// import { Grid, Row, Col } from "react-flexbox-grid";
-import "../../styles/flexboxgrid.css";
 import Package from "./Package.jsx";
 import DashboardHeader from "../DashboardHeader.jsx";
 import { layoutStyles } from "../../../layout/styles/layout";

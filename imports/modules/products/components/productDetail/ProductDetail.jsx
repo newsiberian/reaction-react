@@ -1,11 +1,11 @@
-/**
- * @classdesc ProductDetail
- */
-import { _i18n } from "meteor/universe:i18n";
-import { DragDropContext } from "/myPackages/react-dnd";
-import HTML5Backend from "/myPackages/react-dnd-html5-backend";
-// import { NumberPicker } from "{universe:react-widgets}";
-import { hasAdminAccess } from "/common/helpers/permissions";
+import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
+import { DragDropContext } from "react-dnd";
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import HTML5Backend from "react-dnd-html5-backend";
+// import { hasAdminAccess } from "/imports/client/helpers/permissions";
+import { formatPrice } from "../../../../client/helpers/i18n";
+//import { getSelectedProduct } from "../../../../client/helpers/products";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
 import ProductTagInputForm from "./tags/ProductTagInputForm";
@@ -15,30 +15,32 @@ import ProductMetaField from "./attributes/ProductMetaField";
 import ProductSocial from "./ProductSocial";
 import CartAddButton from "./CartAddButton";
 import VariantList from "./variants/VariantList";
-import { formatPrice } from "/common/helpers/i18n";
-import {
-  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
-  inputHoverStyle, inputStyle
-} from "../../styles/productDetail";
-
-import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent("reaction.core.productDetail");
-const T2 = _i18n.createComponent("reaction.core.app");
+//import {
+//  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
+//  inputHoverStyle, inputStyle
+//} from "../../styles/productDetail";
+import styles from "../../styles/productDetail";
 
 // TODO babel @deco not supported in 1.3
 // @DragDropContext(HTML5Backend)
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
   renderProductVisibilityAdminBlock() {
-    const { selectedProduct } = this.props;
+    const { product, t } = this.props;
     return(
-      <div className="ui basic segment">
+      <div>
         <b>
           <i className="attention icon"></i>
-          <T>productManagement</T>:&nbsp;
-          { selectedProduct.isVisible
-            ? <span><a href="#" ref="toggle-product-isVisible-link"><T>makeInvisible</T></a>&nbsp;|&nbsp;</span>
-            : false
-          }
+          {`${t("productManagement")} `}
+          {product.isVisible
+            && (<span>
+              <a
+                href="#"
+                ref="toggle-product-isVisible-link"
+              >
+                {t("makeInvisible")}
+              </a>
+                {" | "}
+          </span>)}
           { hasAdminAccess()
             ? <a href="#" ref="delete-product-link"><T2>delete</T2></a>
             : false
@@ -174,131 +176,142 @@ export default class ProductDetail extends Component {
   }
 
   render() {
-    const {
-      selectedProduct, selectedVariant, permissions, actualPrice,
-      addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
-    } = this.props;
-    const titleOptions = {
-      field: "title",
-      value: selectedProduct.title,
-      type: "input",
-      styles: [titleStyle, inputHoverStyle, inputStyle]
-    };
-    const pageTitleOptions = {
-      field: "pageTitle",
-      value: selectedProduct.pageTitle,
-      type: "input",
-      styles: [pageTitleStyle, inputHoverStyle, inputStyle]
-    };
-    const vendorOptions = {
-      field: "vendor",
-      value: selectedProduct.vendor,
-      type: "input",
-      styles: [vendorStyle, inputHoverStyle]
-    };
-    const descriptionOptions = {
-      field: "description",
-      value: selectedProduct.description,
-      type: "textarea",
-      styles: [descriptionStyle, inputHoverStyle],
-      className: "ui basic segment"
-    };
+    //const {
+    //  selectedProduct, selectedVariant, permissions, actualPrice,
+    //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
+    //} = this.props;
+    //const titleOptions = {
+    //  field: "title",
+    //  value: selectedProduct.title,
+    //  type: "input",
+    //  styles: [titleStyle, inputHoverStyle, inputStyle]
+    //};
+    //const pageTitleOptions = {
+    //  field: "pageTitle",
+    //  value: selectedProduct.pageTitle,
+    //  type: "input",
+    //  styles: [pageTitleStyle, inputHoverStyle, inputStyle]
+    //};
+    //const vendorOptions = {
+    //  field: "vendor",
+    //  value: selectedProduct.vendor,
+    //  type: "input",
+    //  styles: [vendorStyle, inputHoverStyle]
+    //};
+    //const descriptionOptions = {
+    //  field: "description",
+    //  value: selectedProduct.description,
+    //  type: "textarea",
+    //  styles: [descriptionStyle, inputHoverStyle],
+    //  className: "ui basic segment"
+    //};
 
     console.log("ProductDetail: rendering...");
     return (
-      <section className="ui fluid container basic segment">
-        { permissions.createProduct && this.renderProductVisibilityAdminBlock() }
-        <div className="ui basic segment" itemScope itemType="http://schema.org/Product">
-          <div className="ui basic segment">
-            <h1 className="ui centered header" itemProp="name">
-              { this.renderFieldComponent(titleOptions) }
-            </h1>
-            <h2 className="ui centered header">
-              { this.renderFieldComponent(pageTitleOptions) }
-            </h2>
-          </div>
-          <div className="ui stackable grid">
-            <div className="seven wide column">
-              <ProductImageGalleryContainer
-                product={ selectedProduct }
-                selectedVariant={ selectedVariant }
-                permissions={ permissions }
-              />
-              <h3><T>tags</T></h3>
-              { this.renderTagsComponent() }
-              <h3><T>details</T></h3>
-              { this.renderMetaComponent() }
-            </div>
-            <div className="nine wide column">
-
-              { /* Price Fixation */ }
-              <span itemProp="price" style={ priceStyle }>{ formatPrice(actualPrice()) }</span>
-              <div>
-                { this.renderFieldComponent(vendorOptions) }
-              </div>
-
-              { /* Social Commentary */ }
-              { /* todo fix following code */ }
-              { permissions.createProduct
-                ? this.renderProductSocialManage()
-                : <ProductSocial /> }
-
-              { /* Description */ }
-              { this.renderFieldComponent(descriptionOptions) }
-
-              { /* Variants & Options */ }
-              <div className="ui basic segment">
-                <h3 className="ui header"><T>options</T></h3>
-                <VariantList />
-              </div>
-
-              { /* Cart Add Block */ }
-              <div className="ui basic segment">
-                <CartAddButton
-                  addToCartQuantity={ addToCartQuantity }
-                  onAddToCartClick={ onAddToCartClick }
-                  onAddToCartQuantityChange={ onAddToCartQuantityChange }
-                />
-              </div>
-            </div>
-          </div>
+      <section style={styles.container}>
+        <div className="grid">
+          {ReactionCore.hasPermission("createProduct") &&
+            this.renderProductVisibilityAdminBlock()}
         </div>
       </section>
     );
+
+    //return (
+    //  <section className="ui fluid container basic segment">
+    //    { permissions.createProduct && this.renderProductVisibilityAdminBlock() }
+    //    <div className="ui basic segment" itemScope itemType="http://schema.org/Product">
+    //      <div className="ui basic segment">
+    //        <h1 className="ui centered header" itemProp="name">
+    //          { this.renderFieldComponent(titleOptions) }
+    //        </h1>
+    //        <h2 className="ui centered header">
+    //          { this.renderFieldComponent(pageTitleOptions) }
+    //        </h2>
+    //      </div>
+    //      <div className="ui stackable grid">
+    //        <div className="seven wide column">
+    //          <ProductImageGalleryContainer
+    //            product={ selectedProduct }
+    //            selectedVariant={ selectedVariant }
+    //            permissions={ permissions }
+    //          />
+    //          <h3><T>tags</T></h3>
+    //          { this.renderTagsComponent() }
+    //          <h3><T>details</T></h3>
+    //          { this.renderMetaComponent() }
+    //        </div>
+    //        <div className="nine wide column">
+    //
+    //          { /* Price Fixation */ }
+    //          <span itemProp="price" style={ priceStyle }>{ formatPrice(actualPrice()) }</span>
+    //          <div>
+    //            { this.renderFieldComponent(vendorOptions) }
+    //          </div>
+    //
+    //          { /* Social Commentary */ }
+    //          { /* todo fix following code */ }
+    //          { permissions.createProduct
+    //            ? this.renderProductSocialManage()
+    //            : <ProductSocial /> }
+    //
+    //          { /* Description */ }
+    //          { this.renderFieldComponent(descriptionOptions) }
+    //
+    //          { /* Variants & Options */ }
+    //          <div className="ui basic segment">
+    //            <h3 className="ui header"><T>options</T></h3>
+    //            <VariantList />
+    //          </div>
+    //
+    //          { /* Cart Add Block */ }
+    //          <div className="ui basic segment">
+    //            <CartAddButton
+    //              addToCartQuantity={ addToCartQuantity }
+    //              onAddToCartClick={ onAddToCartClick }
+    //              onAddToCartQuantityChange={ onAddToCartQuantityChange }
+    //            />
+    //          </div>
+    //        </div>
+    //      </div>
+    //    </div>
+    //  </section>
+    //);
   }
 }
 
 ProductDetail.propTypes = {
-  selectedProduct: PropTypes.object.isRequired,
-  selectedVariant: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool
-  ]),
-  permissions: PropTypes.object.isRequired,
-  actualPrice: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  onInputBlur: PropTypes.func.isRequired,
-  addToCartQuantity: PropTypes.number.isRequired,
-  onAddToCartClick: PropTypes.func.isRequired,
-  onAddToCartQuantityChange: PropTypes.func.isRequired,
-  tagsBundle: PropTypes.shape({
-    tags: PropTypes.object,
-    tagValue: PropTypes.string,
-    tagsToArray: PropTypes.func.isRequired,
-    getTagSuggestions: PropTypes.func.isRequired,
-    onTagBlurred: PropTypes.func.isRequired,
-    onTagChange: PropTypes.func.isRequired,
-    onNewTagChange: PropTypes.func.isRequired,
-    onHashtagClick: PropTypes.func.isRequired,
-    onTagGroupRemove: PropTypes.func.isRequired,
-    moveTag: PropTypes.func.isRequired,
-    hashtagMark: PropTypes.func.isRequired
-  }),
-  metaBundle: PropTypes.shape({
-    metafields: PropTypes.array,
-    newMetafield: PropTypes.object,
-    onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func.isRequired,
-    onRemoveClick: PropTypes.func.isRequired
-  })
+  //selectedProduct: PropTypes.object.isRequired,
+  //selectedVariant: PropTypes.oneOfType([
+  //  PropTypes.object,
+  //  PropTypes.bool
+  //]),
+  //permissions: PropTypes.object.isRequired,
+  //actualPrice: PropTypes.func.isRequired,
+  //onInputChange: PropTypes.func.isRequired,
+  //onInputBlur: PropTypes.func.isRequired,
+  //addToCartQuantity: PropTypes.number.isRequired,
+  //onAddToCartClick: PropTypes.func.isRequired,
+  //onAddToCartQuantityChange: PropTypes.func.isRequired,
+  //tagsBundle: PropTypes.shape({
+  //  tags: PropTypes.object,
+  //  tagValue: PropTypes.string,
+  //  tagsToArray: PropTypes.func.isRequired,
+  //  getTagSuggestions: PropTypes.func.isRequired,
+  //  onTagBlurred: PropTypes.func.isRequired,
+  //  onTagChange: PropTypes.func.isRequired,
+  //  onNewTagChange: PropTypes.func.isRequired,
+  //  onHashtagClick: PropTypes.func.isRequired,
+  //  onTagGroupRemove: PropTypes.func.isRequired,
+  //  moveTag: PropTypes.func.isRequired,
+  //  hashtagMark: PropTypes.func.isRequired
+  //}),
+  //metaBundle: PropTypes.shape({
+  //  metafields: PropTypes.array,
+  //  newMetafield: PropTypes.object,
+  //  onChange: PropTypes.func.isRequired,
+  //  onBlur: PropTypes.func.isRequired,
+  //  onRemoveClick: PropTypes.func.isRequired
+  //})
 };
+
+export default translate(["core", "productDetail"])(ProductDetail);

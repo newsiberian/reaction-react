@@ -1,19 +1,14 @@
-/**
- * @classdesc Tag
- */
-
-import { _i18n } from "meteor/universe:i18n";
-import { DragSource, DropTarget } from '/myPackages/react-dnd';
-
 import React, { Component, PropTypes } from "react";
-const { findDOMNode } = ReactDOM;
+import { findDOMNode } from "react-dom";
+import { translate } from "react-i18next/lib";
+import { DragSource, DropTarget } from "react-dnd";
 
 const style = {
-  //border: '1px dashed gray',
-  //padding: '0.5rem 1rem',
-  //marginBottom: '.5rem',
-  //backgroundColor: 'white',
-  //cursor: 'move'
+  //border: "1px dashed gray",
+  //padding: "0.5rem 1rem",
+  //marginBottom: ".5rem",
+  //backgroundColor: "white",
+  //cursor: "move"
 };
 
 const tagSource = {
@@ -30,7 +25,7 @@ const tagTarget = {
     const dragIndex = monitor.getItem().index;
     const hoverIndex = props.index;
 
-    // Don't replace items with themselves
+    // Don"t replace items with themselves
     if (dragIndex === hoverIndex) {
       return;
     }
@@ -64,11 +59,11 @@ const tagTarget = {
     // Time to actually perform the action
     props.moveTag(dragIndex, hoverIndex);
 
-    // Note: we're mutating the monitor item here!
-    // Generally it's better to avoid mutations,
-    // but it's good here for the sake of performance
+    // Note: we"re mutating the monitor item here!
+    // Generally it"s better to avoid mutations,
+    // but it"s good here for the sake of performance
     // to avoid expensive index searches.
-    if (typeof monitor.getItem() === 'object') {
+    if (typeof monitor.getItem() === "object") {
       monitor.getItem().index = hoverIndex;
     }
   }
@@ -76,10 +71,10 @@ const tagTarget = {
 
 
 // TODO babel @deco not supported in 1.3
-//@DropTarget('tag', tagTarget, connect => ({
+//@DropTarget("tag", tagTarget, connect => ({
 //  connectDropTarget: connect.dropTarget()
 //}))
-//@DragSource('tag', tagSource, (connect, monitor) => ({
+//@DragSource("tag", tagSource, (connect, monitor) => ({
 //  connectDragSource: connect.dragSource(),
 //  connectDragPreview: connect.dragPreview(),
 //  isDragging: monitor.isDragging()
@@ -100,11 +95,11 @@ export default class Tag extends Component {
         { connectDragPreview(connectDropTarget(
           <div className="ui right action left icon input" style={{ ...style, opacity }}>
             { connectDragSource(
-              <i className="sidebar icon" style={{ cursor: 'move', pointerEvents: 'auto' }}></i>
+              <i className="sidebar icon" style={{ cursor: "move", pointerEvents: "auto" }}></i>
             ) }
             <input
               type="text"
-              placeholder={i18n.__('reaction.core.productDetail.tagsEdit')}
+              placeholder={i18n.__("reaction.core.productDetail.tagsEdit")}
               value={ name }
               onChange={ (event) => onTagChange(event, tag._id) }
               onBlur={ (event) => onTagBlurred(event, tag._id) }

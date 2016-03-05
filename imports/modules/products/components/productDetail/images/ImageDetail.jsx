@@ -1,10 +1,10 @@
-import { DragSource, DropTarget } from '/myPackages/react-dnd';
-import { removeButtonStyle } from '../../../styles/imageDetail';
-
 import React, { Component, PropTypes } from "react";
-const { findDOMNode } = ReactDOM;
+import { findDOMNode } from "react-dom";
+import { DragSource, DropTarget } from "react-dnd";
+import { removeButtonStyle } from "../../../styles/imageDetail";
+
 const Types = {
-  MEDIA: 'media'
+  MEDIA: "media"
 };
 const imageSource = {
   beginDrag(props) {
@@ -38,7 +38,7 @@ const imageTarget = {
     const dragIndex = monitor.getItem().index;
     const hoverIndex = props.index;
 
-    // Don't replace items with themselves
+    // Don"t replace items with themselves
     if (dragIndex === hoverIndex) {
       return;
     }
@@ -72,11 +72,11 @@ const imageTarget = {
     // Time to actually perform the action
     props.moveMedia(dragIndex, hoverIndex);
 
-    // Note: we're mutating the monitor item here!
-    // Generally it's better to avoid mutations,
-    // but it's good here for the sake of performance
+    // Note: we"re mutating the monitor item here!
+    // Generally it"s better to avoid mutations,
+    // but it"s good here for the sake of performance
     // to avoid expensive index searches.
-    // if (typeof monitor.getItem() === 'object') {
+    // if (typeof monitor.getItem() === "object") {
     monitor.getItem().index = hoverIndex;
     // }
   }
@@ -103,7 +103,7 @@ export default class ImageDetail extends Component {
     const { isDragging, connectDragSource, connectDropTarget,
       index, media, permissions, onRemoveClick
     } = this.props;
-    const className = index === 0 ? 'ui fluid image' : 'ui tiny image';
+    const className = index === 0 ? "ui fluid image" : "ui tiny image";
     const opacity = isDragging ? 0.4 : 1;
     console.log(`ImageGallery ${index}: rendering...`);
     return connectDragSource(connectDropTarget(

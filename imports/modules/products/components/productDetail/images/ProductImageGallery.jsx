@@ -1,10 +1,8 @@
-import { _i18n } from "meteor/universe:i18n";
-import Dropzone from "/myPackages/react-dropzone";
-import shallowCompare from "/myPackages/react-addons-shallow-compare";
-import ImageDetail from "./ImageDetail";
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent("reaction.core.productDetail");
+import { translate } from "react-i18next/lib";
+import Dropzone from "react-dropzone";
+import shallowCompare from "react-addons-shallow-compare";
+import ImageDetail from "./ImageDetail";
 
 /**
  * @classdesc ProductImageGallery
