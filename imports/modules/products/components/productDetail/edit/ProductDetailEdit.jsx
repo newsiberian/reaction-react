@@ -1,75 +1,85 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-//import Radium from "/myPackages/radium";
+//import {Editor, EditorState} from 'draft-js';
 import shallowCompare from "react-addons-shallow-compare";
-//import ReactMarkdownMediumEditor from "{universe:react-markdown-wysiwyg}/ReactMarkdownMediumEditor";
 import {
   //mediumHoverStyle, inputStyle
 } from "../../../styles/productDetailEdit";
 
-
-
-// TODO babel @deco not supported in 1.3
-// @Radium
-export default class ProductDetailEdit extends Component {
+class ProductDetailEdit extends Component {
   shouldComponentUpdate(nextProps) {
     // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-    return !shallowCompare(this, nextProps.selectedProduct.title);
-    //return !_.isEqual(nextProps.media, this.props.selectedProduct);
+    return !shallowCompare(this, nextProps.product.title);
+    //return !_.isEqual(nextProps.media, this.props.product);
   }
+
+  handleChange(event, field) {
+    const { product, productActions } = this.props;
+    productActions.changeProductField(product._id, field, event.target.value);
+  }
+
+  handleBlur(event, field) {
+    const { product, productActions } = this.props;
+    productActions.updateProductField(product._id, field, event.target.value);
+  }
+
   render() {
-    const { selectedProduct, onInputChange, onInputBlur, options } = this.props;
+    const { product, options, t } = this.props;
     const { value, field, type, styles, className } = options;
     // todo we can"t use Radium on editor don"t know why...
     if (type === "textarea") {
       console.log("ProductDetailEdit: rendering...");
       // todo непонятно зачем в темплейте product-detail-message. я его пока не скопировал
-      return(
-        <ReactMarkdownMediumEditor
-          className={ className && className }
-          markdown={ selectedProduct[field] }
-          onChange={ text => onInputChange(text, field) }
-          onBlur={ event => onInputBlur(event, field) }
-          options={{
-            disableReturn: false,
-            toolbar: true,
-            placeholder: {
-              text: i18n.__(`reaction.core.productDetailEdit.${field}`)
-            }
-          }}
-          style={ styles ? styles : {} }
-        />
-      );
+      //return(
+      //  <ReactMarkdownMediumEditor
+      //    className={className && className}
+      //    markdown={product[field]}
+      //    onChange={text => onInputChange(text, field)}
+      //    onBlur={event => onInputBlur(event, field)}
+      //    options={{
+      //      disableReturn: false,
+      //      toolbar: true,
+      //      placeholder: {text: t(`productDetailEdit.${field}`)}
+      //    }}
+      //    style={styles ? styles : {}}
+      //  />
+      //);
     }
 
     console.log("ProductDetailEdit: rendering...");
+    //return (
+    //  <Editor
+    //    editorState={product[field]}
+    //    onChange={event => this.handleChange(event, field)}
+    //  />
+    //);
     return (
       <input
         type="text"
-        className={ className && className }
-        value={ selectedProduct[field] }
-        onChange={ event => onInputChange(event, field) }
-        onBlur={ event => onInputBlur(event, field) }
-        placeholder={ i18n.__(`reaction.core.productDetailEdit.${field}`) }
-        style={ styles }
+        className={className && className}
+        //value={product[field]}
+        defaultValue={product[field]}
+        onChange={event => this.handleChange(event, field)}
+        onBlur={event => this.handleBlur(event, field)}
+        placeholder={t(`productDetailEdit.${field}`)}
+        style={styles}
       />
     );
   }
 }
 
 ProductDetailEdit.propTypes = {
-  selectedProduct: PropTypes.object.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  onInputBlur: PropTypes.func.isRequired,
   options: PropTypes.shape({
     field: PropTypes.string.isRequired,
     value: PropTypes.string, // this field is not Required because in case
     // of social messages we could not have them.
     type: PropTypes.string,
-    styles: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array
-    ]),
+    styles: PropTypes.object,
     className: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  product: PropTypes.object.isRequired,
+  productActions: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired
 };
+
+export default translate("core")(ProductDetailEdit);

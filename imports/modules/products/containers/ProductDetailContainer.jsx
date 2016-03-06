@@ -50,18 +50,21 @@ class ProductDetailContainer extends Component {
 ProductDetailContainer.propTypes = {
   productId: PropTypes.string,
   variantId: PropTypes.string,
-  alertActions: PropTypes.shape({
-    displayAlert: PropTypes.func
-  }).isRequired,
+  //alertActions: PropTypes.shape({
+  //  displayAlert: PropTypes.func
+  //}).isRequired,
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
-    setVariantId: PropTypes.func
+    setVariantId: PropTypes.func,
+    toggleVisibility: PropTypes.func,
+    changeProductField: PropTypes.func,
+    updateProductField: PropTypes.func
   }).isRequired,
   params: PropTypes.object.isRequired,
   tags: PropTypes.array
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     //alert: state.layout.alert,
     productId: state.shop.product.productId,
@@ -71,7 +74,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    alertActions: bindActionCreators(alertActions, dispatch),
+    //alertActions: bindActionCreators(alertActions, dispatch),
     productActions: bindActionCreators(productActions, dispatch)
   };
 }

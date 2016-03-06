@@ -3,9 +3,9 @@ import { translate } from "react-i18next/lib";
 import { DragDropContext } from "react-dnd";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import HTML5Backend from "react-dnd-html5-backend";
-// import { hasAdminAccess } from "/imports/client/helpers/permissions";
+import FontIcon from "material-ui/lib/font-icon";
+import Paper from "material-ui/lib/paper";
 import { formatPrice } from "../../../../client/helpers/i18n";
-//import { getSelectedProduct } from "../../../../client/helpers/products";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
 import ProductTagInputForm from "./tags/ProductTagInputForm";
@@ -19,59 +19,63 @@ import VariantList from "./variants/VariantList";
 //  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
 //  inputHoverStyle, inputStyle
 //} from "../../styles/productDetail";
-import styles from "../../styles/productDetail";
+import styles, {
+  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
+  inputHoverStyle, inputStyle
+} from "../../styles/productDetail";
 
 // TODO babel @deco not supported in 1.3
 // @DragDropContext(HTML5Backend)
 class ProductDetail extends Component {
+  handleProductVisibility(e, doVisible) {
+    e.preventDefault();
+    const { product, productActions } = this.props;
+    productActions.toggleVisibility(product, doVisible);
+  }
+
   renderProductVisibilityAdminBlock() {
     const { product, t } = this.props;
     return(
-      <div>
+      <div className="row" /*style={{ flex: "1 1 auto" }}*/>
         <b>
-          <i className="attention icon"></i>
-          {`${t("productManagement")} `}
+          <FontIcon className="fa fa-exclamation-triangle" style={styles.icon} />
+          {`${t("productDetail.productManagement")} `}
           {product.isVisible
-            && (<span>
-              <a
-                href="#"
-                ref="toggle-product-isVisible-link"
-              >
-                {t("makeInvisible")}
-              </a>
-                {" | "}
-          </span>)}
-          { hasAdminAccess()
-            ? <a href="#" ref="delete-product-link"><T2>delete</T2></a>
-            : false
-          }
+            && (<span><a href="#" onClick={(e) => this.handleProductVisibility(e, false)}>
+                {t("productDetail.makeInvisible")}
+              </a>{" | "}</span>)}
+          {ReactionCore.hasAdminAccess() &&
+            <a href="#" ref="delete-product-link">{t("app.delete")}</a>}
         </b>
-        { ! selectedProduct.isVisible ? this.renderIsNotVisibleAlert() : false }
-        {/* todo add bootstrapAlerts here */}
+        {!product.isVisible && this.renderIsNotVisibleAlert()}
       </div>
     );
   }
 
   renderIsNotVisibleAlert() {
+    const { t } = this.props;
     return(
-      <div className="ui floating info message">
-        <T>isNotVisible</T>&nbsp;
-        <a href="#" ref="toggle-product-isVisible-link"><T>makeItVisible</T></a>
-        &nbsp;<T>whenYouAreDone</T>
-      </div>
+      <Paper zDepth={2} style={styles.infoMessage}>
+        {t("productDetail.isNotVisible")}
+        &nbsp;
+        <a href="#" onClick={(e) => this.handleProductVisibility(e, true)}>
+          {t("productDetail.makeItVisible")}
+        </a>
+        &nbsp;
+        {t("productDetail.whenYouAreDone")}
+      </Paper>
     );
   }
 
-  renderFieldComponent(options, index) {
-    const { selectedProduct, onInputChange, onInputBlur } = this.props;
-    if (this.props.permissions.createProduct) {
+  renderFieldComponent(options, index = 1) {
+    const { product, productActions } = this.props;
+    if (ReactionCore.hasPermission("createProduct")) {
       return (
         <ProductDetailEdit
-          key={ index }
-          selectedProduct={ selectedProduct }
-          onInputChange={ onInputChange }
-          onInputBlur={ onInputBlur }
-          options={ options }
+          key={index}
+          options={options}
+          product={product}
+          productActions={productActions}
         />);
     }
     // todo add markdown support here:
@@ -176,43 +180,55 @@ class ProductDetail extends Component {
   }
 
   render() {
+    const { product } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
     //} = this.props;
-    //const titleOptions = {
-    //  field: "title",
-    //  value: selectedProduct.title,
-    //  type: "input",
-    //  styles: [titleStyle, inputHoverStyle, inputStyle]
-    //};
-    //const pageTitleOptions = {
-    //  field: "pageTitle",
-    //  value: selectedProduct.pageTitle,
-    //  type: "input",
-    //  styles: [pageTitleStyle, inputHoverStyle, inputStyle]
-    //};
-    //const vendorOptions = {
-    //  field: "vendor",
-    //  value: selectedProduct.vendor,
-    //  type: "input",
-    //  styles: [vendorStyle, inputHoverStyle]
-    //};
-    //const descriptionOptions = {
-    //  field: "description",
-    //  value: selectedProduct.description,
-    //  type: "textarea",
-    //  styles: [descriptionStyle, inputHoverStyle],
-    //  className: "ui basic segment"
-    //};
+    const titleOptions = {
+      field: "title",
+      value: product.title,
+      type: "input",
+      styles: Object.assign({}, titleStyle, inputHoverStyle, inputStyle)
+    };
+    const pageTitleOptions = {
+      field: "pageTitle",
+      value: product.pageTitle,
+      type: "input",
+      styles: Object.assign({}, pageTitleStyle, inputHoverStyle, inputStyle)
+    };
+    const vendorOptions = {
+      field: "vendor",
+      value: product.vendor,
+      type: "input",
+      styles: Object.assign({}, vendorStyle, inputHoverStyle)
+    };
+    const descriptionOptions = {
+      field: "description",
+      value: product.description,
+      type: "textarea",
+      styles: Object.assign({}, descriptionStyle, inputHoverStyle),
+      // className: "ui basic segment"
+    };
 
     console.log("ProductDetail: rendering...");
     return (
       <section style={styles.container}>
-        <div className="grid">
-          {ReactionCore.hasPermission("createProduct") &&
-            this.renderProductVisibilityAdminBlock()}
+        {ReactionCore.hasPermission("createProduct") &&
+          this.renderProductVisibilityAdminBlock()}
+
+        { /* Product Detail Page: BEGIN */ }
+        <div className="row" itemScope itemType="http://schema.org/Product">
+          <header style={styles.headerContainer}>
+            <h1 itemProp="name">
+              {this.renderFieldComponent(titleOptions)}
+            </h1>
+            <h2 itemProp="alternateName">
+              {this.renderFieldComponent(pageTitleOptions)}
+            </h2>
+          </header>
         </div>
+        { /* Product Detail Page: END */ }
       </section>
     );
 
@@ -280,6 +296,13 @@ class ProductDetail extends Component {
 }
 
 ProductDetail.propTypes = {
+  product: PropTypes.object.isRequired,
+  productActions: PropTypes.shape({
+    setProductId: PropTypes.func,
+    setVariantId: PropTypes.func,
+    toggleVisibility: PropTypes.func
+  }).isRequired,
+  t: PropTypes.func.isRequired
   //selectedProduct: PropTypes.object.isRequired,
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,
@@ -314,4 +337,4 @@ ProductDetail.propTypes = {
   //})
 };
 
-export default translate(["core", "productDetail"])(ProductDetail);
+export default translate("core")(ProductDetail);
