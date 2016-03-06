@@ -108,21 +108,22 @@ export const updateProductField = (productId, field, value) => {
   return dispatch => {
     Meteor.call("products/updateProductField", productId, field, value,
       (error, result) => {
-        debugger;
         if (error) {
-          dispatch(displayAlert({ message: error.reason }));
+          let message;
+          if (error.reason === "Title is required") {
+            message = i18next.t("error.isRequired", { field: i18next.t("productDetailEdit.title") });
+          } else {
+            message = error.reason;
+          }
+          dispatch(displayAlert({ message: message }));
         }
         if (result && field === "title") {
           Meteor.call("products/setHandle", productId, (err, res) => {
-            debugger;
             if (err) {
               dispatch(displayAlert({ message: err.reason }));
             }
             if (res) {
-              dispatch(routeActions.push(`/shop/${res}`));
-              //return FlowRouter.go("product", {
-              //  _id: result
-              //});
+              dispatch(routeActions.push(`/shop/product/${res}`));
             }
           });
         }

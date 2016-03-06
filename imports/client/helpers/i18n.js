@@ -92,7 +92,9 @@ Meteor.startup(function () {
   Session.set("language", getLang());
   // shop subscription ready?
   const shopId = ReactionCore.getShopId();
-  const shopLanguage = ReactionCore.Collections.Shops.findOne(shopId).language;
+  const shop = ReactionCore.Collections.Shops.findOne(shopId);
+  if (!shop) return; // sub not ready yet
+  const shopLanguage = shop.language;
 
   // every package gets a namespace, fetch them
   const packageNamespaces = ReactionCore.Collections.Packages.find({}, {
