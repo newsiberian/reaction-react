@@ -24,6 +24,13 @@ const getProduct = handle => {
   });
 };
 
+const getSelectedVariant = variantId => {
+  if (variantId) {
+    return Products.findOne({ _id: variantId });
+  }
+  return {};
+};
+
 const getTags = product => {
   if (product) {
     if (product.hashtags) {
@@ -38,6 +45,8 @@ class ProductDetailContainer extends Component {
   componentWillMount() {
     const { product, productActions } = this.props;
     const { variantId } = this.props.params;
+    // TODO maybe we don't need this logic at all. Review this Ids after pdp will
+    // be done.
     productActions.setProductId(product._id);
     productActions.setVariantId(product._id, variantId);
   }
@@ -61,10 +70,12 @@ ProductDetailContainer.propTypes = {
     updateProductField: PropTypes.func
   }).isRequired,
   params: PropTypes.object.isRequired,
+  product: PropTypes.object.isRequired,
+  selectedVariant: PropTypes.object,
   tags: PropTypes.array
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     //alert: state.layout.alert,
     productId: state.shop.product.productId,
@@ -86,9 +97,11 @@ function composer(props, onData) {
   if (productsHandle.ready() && ReactionCore.Subscriptions.Tags.ready()) {
     const product = getProduct(handle);
     const tags = getTags(product);
+    const selectedVariant = getSelectedVariant(props.variantId);
 
     onData(null, {
       product: product,
+      selectedVariant: selectedVariant,
       tags: tags
     });
   }

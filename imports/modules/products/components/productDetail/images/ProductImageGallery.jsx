@@ -1,22 +1,46 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 import shallowCompare from "react-addons-shallow-compare";
 import ImageDetail from "./ImageDetail";
 
+const { Media, Products } = ReactionCore.Collections;
+
 /**
  * @classdesc ProductImageGallery
  */
-export default class ProductImageGallery extends Component {
-
+class ProductImageGallery extends Component {
   shouldComponentUpdate(nextProps) {
     // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
     // return !shallowCompare(this, nextProps.media);
     return !_.isEqual(nextProps.media, this.props.media);
   }
+
+  /**
+   * getMedia
+   * @summary copy of "media" method from Reaction template
+   */
+  getMedia() {
+    let mediaArray = [];
+    const { selectedVariant } = this.props;
+
+    if (selectedVariant) {
+      mediaArray = Media.find({
+        "metadata.variantId": selectedVariant._id
+      }, {
+        sort: {
+          "metadata.priority": 1
+        }
+      });
+    }
+    return mediaArray;
+  }
+
   render() {
     const { media, permissions, onDrop, onDropMedia, onRemoveClick,
-      moveMedia
+      moveMedia, t
     } = this.props;
     console.log("ProductImageGallery: rendering...");
     return (
@@ -50,10 +74,21 @@ export default class ProductImageGallery extends Component {
 }
 
 ProductImageGallery.propTypes = {
-  media: PropTypes.array.isRequired,
-  permissions: PropTypes.object.isRequired,
-  onDrop: PropTypes.func.isRequired,
-  onDropMedia: PropTypes.func.isRequired,
-  onRemoveClick: PropTypes.func.isRequired,
-  moveMedia: PropTypes.func.isRequired
+  //media: PropTypes.array.isRequired,
+  //permissions: PropTypes.object.isRequired,
+  //onDrop: PropTypes.func.isRequired,
+  //onDropMedia: PropTypes.func.isRequired,
+  //onRemoveClick: PropTypes.func.isRequired,
+  //moveMedia: PropTypes.func.isRequired
+  product: PropTypes.object.isRequired,
+  productActions: PropTypes.shape({
+    setProductId: PropTypes.func,
+    setVariantId: PropTypes.func,
+    toggleVisibility: PropTypes.func,
+    changeProductField: PropTypes.func,
+    updateProductField: PropTypes.func
+  }).isRequired,
+  t: PropTypes.func.isRequired
 };
+
+export default translate("core")(ProductImageGallery);

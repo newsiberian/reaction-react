@@ -24,6 +24,46 @@ import styles, {
   inputHoverStyle, inputStyle
 } from "../../styles/productDetail";
 
+const titleOptions = {
+  field: "title",
+  type: "input",
+  styles: Object.assign({}, titleStyle, inputHoverStyle, inputStyle)
+};
+const pageTitleOptions = {
+  field: "pageTitle",
+  type: "input",
+  styles: Object.assign({}, pageTitleStyle, inputHoverStyle, inputStyle)
+};
+const vendorOptions = {
+  field: "vendor",
+  type: "input",
+  styles: Object.assign({}, vendorStyle, inputHoverStyle)
+};
+const descriptionOptions = {
+  field: "description",
+  type: "textarea",
+  styles: Object.assign({}, descriptionStyle, inputHoverStyle)
+};
+
+const social = [
+  {
+    name: "facebook", // name goes from Semantic UI icon name
+    field: "facebookMsg"
+  },
+  {
+    name: "twitter",
+    field: "twitterMsg"
+  },
+  {
+    name: "pinterest",
+    field: "pinterestMsg"
+  },
+  {
+    name: "google-plus",
+    field: "googleplusMsg"
+  }
+];
+
 // TODO babel @deco not supported in 1.3
 // @DragDropContext(HTML5Backend)
 class ProductDetail extends Component {
@@ -138,28 +178,7 @@ class ProductDetail extends Component {
   renderProductSocialManage() {
     // todo make this part work
     const { selectedProduct } = this.props;
-    const social = [
-      {
-        name: "facebook", // name goes from Semantic UI icon name
-        field: "facebookMsg",
-        value: selectedProduct.facebookMsg
-      },
-      {
-        name: "twitter",
-        field: "twitterMsg",
-        value: selectedProduct.facebookMsg
-      },
-      {
-        name: "pinterest",
-        field: "pinterestMsg",
-        value: selectedProduct.pinterestMsg
-      },
-      {
-        name: "google-plus",
-        field: "googleplusMsg",
-        value: selectedProduct.googleplusMsg
-      }
-    ];
+
     return (
       <div>
         { social.map((options, index) => {
@@ -180,46 +199,23 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { product } = this.props;
+    const { product, selectedVariant } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
     //} = this.props;
-    const titleOptions = {
-      field: "title",
-      value: product.title,
-      type: "input",
-      styles: Object.assign({}, titleStyle, inputHoverStyle, inputStyle)
-    };
-    const pageTitleOptions = {
-      field: "pageTitle",
-      value: product.pageTitle,
-      type: "input",
-      styles: Object.assign({}, pageTitleStyle, inputHoverStyle, inputStyle)
-    };
-    const vendorOptions = {
-      field: "vendor",
-      value: product.vendor,
-      type: "input",
-      styles: Object.assign({}, vendorStyle, inputHoverStyle)
-    };
-    const descriptionOptions = {
-      field: "description",
-      value: product.description,
-      type: "textarea",
-      styles: Object.assign({}, descriptionStyle, inputHoverStyle),
-      // className: "ui basic segment"
-    };
+
 
     console.log("ProductDetail: rendering...");
     return (
-      <section style={styles.container}>
+      <section className="container-fluid" style={styles.container}>
         {ReactionCore.hasPermission("createProduct") &&
           this.renderProductVisibilityAdminBlock()}
 
-        { /* Product Detail Page: BEGIN */ }
+        {/* Product Detail Page: BEGIN */}
         <div className="row" itemScope itemType="http://schema.org/Product">
-          <header style={styles.headerContainer}>
+          {/* Titles */}
+          <header className="col-xs-12">
             <h1 itemProp="name">
               {this.renderFieldComponent(titleOptions)}
             </h1>
@@ -227,8 +223,23 @@ class ProductDetail extends Component {
               {this.renderFieldComponent(pageTitleOptions)}
             </h2>
           </header>
+          {/* Product Details */}
+          <section className="col-xs-12">
+            <div className="row">
+              <div className="col-xs-12 col-sm-5">
+                {/* Image Gallery */}
+                <ProductImageGalleryContainer
+                  product={product}
+                  selectedVariant={selectedVariant}
+                />
+              </div>
+              <div className="col-xs-12 col-sm-7">
+                {/* Price Fixation */}
+              </div>
+            </div>
+          </section>
         </div>
-        { /* Product Detail Page: END */ }
+        {/* Product Detail Page: END */}
       </section>
     );
 
@@ -297,13 +308,15 @@ class ProductDetail extends Component {
 
 ProductDetail.propTypes = {
   product: PropTypes.object.isRequired,
+  selectedVariant: PropTypes.object,
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
     setVariantId: PropTypes.func,
-    toggleVisibility: PropTypes.func
+    toggleVisibility: PropTypes.func,
+    changeProductField: PropTypes.func,
+    updateProductField: PropTypes.func
   }).isRequired,
   t: PropTypes.func.isRequired
-  //selectedProduct: PropTypes.object.isRequired,
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,
   //  PropTypes.bool

@@ -1,10 +1,10 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
 
 /**
- * getSelectedProduct
- * @summary get the currently active/requested product object
- * @return {Object|undefined} currently selected product cursor
+ * getSelected
+ * @summary get the currently active/requested product/variant object
+ * @return {Object} currently selected product/variant cursor
  */
-export const getSelectedProduct = id => {
+export const getSelected = id => {
   return ReactionCore.Collections.Products.findOne(id);
 };
