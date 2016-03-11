@@ -7,7 +7,6 @@ import OptionsForm from "./OptionsForm.jsx";
 import GeneralForm from "./GenaralForm.jsx";
 import AddressForm from "./AddressForm.jsx";
 import EmailForm from "./EmailForm.jsx";
-// import LocalizationForm from "./LocalizationForm.jsx";
 import PaymentProvidersForm from "./PaymentProvidersForm.jsx";
 import ExternalServicesForm from "./ExternalServicesForm.jsx";
 import { styles } from "../../styles/settings";
@@ -17,13 +16,9 @@ import { styles } from "../../styles/settings";
  * @classdesc Core Settings Action Bar
  */
 class Settings extends Component {
-  //handleExpandChange(expanded) {
-  //  console.log(expanded);
-  //}
-
   render() {
     const {
-      t, corePackageData, formsActions, shopData, toggleCard, activeCard
+      t, corePackageData, formsActions, shopData, settingsActions, activeCard
     } = this.props;
     return (
       <div id="shopSettingsAccordion" role="tablist">
@@ -31,7 +26,7 @@ class Settings extends Component {
         <Card
           expanded={activeCard === "general"}
           initiallyExpanded={true}
-          onExpandChange={() => toggleCard("general")}
+          onExpandChange={() => settingsActions.toggleCard("general")}
         >
           <CardTitle
             aria-controls="general"
@@ -70,7 +65,7 @@ class Settings extends Component {
         { /* Address */ }
         <Card
           expanded={activeCard === "address"}
-          onExpandChange={() => toggleCard("address")}
+          onExpandChange={() => settingsActions.toggleCard("address")}
         >
           <CardTitle
             aria-controls="address"
@@ -108,7 +103,7 @@ class Settings extends Component {
         { /* Email */ }
         <Card
           expanded={activeCard === "email"}
-          onExpandChange={() => toggleCard("email")}
+          onExpandChange={() => settingsActions.toggleCard("email")}
         >
           <CardTitle
             aria-controls="email"
@@ -142,7 +137,7 @@ class Settings extends Component {
         { /* Payment Methods */ }
         <Card
           expanded={activeCard === "paymentMethods"}
-          onExpandChange={() => toggleCard("paymentMethods")}
+          onExpandChange={() => settingsActions.toggleCard("paymentMethods")}
         >
           <CardTitle
             aria-controls="paymentMethods"
@@ -174,7 +169,7 @@ class Settings extends Component {
         { /* External Services */ }
         <Card
           expanded={activeCard === "externalServices"}
-          onExpandChange={() => toggleCard("externalServices")}
+          onExpandChange={() => settingsActions.toggleCard("externalServices")}
         >
           <CardTitle
             aria-controls="externalServices"
@@ -219,9 +214,11 @@ Settings.propTypes = {
   formsActions: PropTypes.shape({
     submitForm: PropTypes.func
   }).isRequired,
+  settingsActions: PropTypes.shape({
+    toggleCard: PropTypes.func
+  }).isRequired,
   shopData: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired,
-  toggleCard: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired
 };
 
 const options = {

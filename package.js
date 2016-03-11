@@ -8,7 +8,7 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("METEOR@1.3-beta.12");
+  api.versionsFrom("METEOR@1.3-beta.16");
   api.use("meteor-base");
   api.use("mongo");
   api.use("ecmascript");
@@ -17,19 +17,25 @@ Package.onUse(function (api) {
   api.use("session");
   api.use("tracker");
   api.use("modules");
-
+  // todo do we need this?
+  // Looks like this is used by cfs
+  api.use("http");
+  // todo do we need this?
+  api.use("ejson");
+  api.use("logging");
+  //api.use("reload");
   api.use("check");
   api.use("aldeed:simple-schema");
   api.use("mdg:validated-method");
-  //api.use("random");
+  // I'm not sure, but this could be used by ValidatedMethods to insert
+  api.use("random");
   api.use("ddp-rate-limiter");
   api.use("underscore");
   api.use("service-configuration");
   api.use("amplify@1.0.0");
   api.use("fortawesome:fontawesome@4.5.0");
 
-  //api.imply("mdg:validated-method");
-
+  //api.imply("tracker");
 
   api.mainModule("server/main.js", "server");
   api.mainModule("main.js", "client");

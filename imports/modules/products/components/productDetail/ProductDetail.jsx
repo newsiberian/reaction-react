@@ -70,7 +70,7 @@ class ProductDetail extends Component {
   handleProductVisibility(e, doVisible) {
     e.preventDefault();
     const { product, productActions } = this.props;
-    productActions.toggleVisibility(product, doVisible);
+    productActions.validateBeforeToggleVisibility(product, doVisible);
   }
 
   renderProductVisibilityAdminBlock() {
@@ -199,7 +199,7 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { product, selectedVariant } = this.props;
+    const { media, product, selectedVariant } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
@@ -229,6 +229,7 @@ class ProductDetail extends Component {
               <div className="col-xs-12 col-sm-5">
                 {/* Image Gallery */}
                 <ProductImageGalleryContainer
+                  media={media}
                   product={product}
                   selectedVariant={selectedVariant}
                 />
@@ -312,9 +313,10 @@ ProductDetail.propTypes = {
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
     setVariantId: PropTypes.func,
-    toggleVisibility: PropTypes.func,
+    publishProduct: PropTypes.func,
     changeProductField: PropTypes.func,
-    updateProductField: PropTypes.func
+    updateProductField: PropTypes.func,
+    validateBeforeToggleVisibility: PropTypes.func
   }).isRequired,
   t: PropTypes.func.isRequired
   //selectedVariant: PropTypes.oneOfType([
@@ -350,4 +352,4 @@ ProductDetail.propTypes = {
   //})
 };
 
-export default translate("core")(ProductDetail);
+export default translate("core")/*(DragDropContext(HTML5Backend)*/(ProductDetail/*)*/);

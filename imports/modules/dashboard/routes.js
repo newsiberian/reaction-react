@@ -29,47 +29,35 @@ export default {
   childRoutes: [
     {
       path: "settings",
-      component: DashboardGridContainer,
-      childRoutes: [
-        {
-          path: "shop",
-          component: ShopSettings
-        },
-        {
-          path: "accounts",
-          component: AccountsSettingsContainer
-        },
-        {
-          path: "i18n",
-          component: i18nSettings
-        }
-      ]
+      component: DashboardGridContainer
+      //childRoutes: [
+      //  {
+      //    path: "shop",
+      //    component: ShopSettings
+      //  },
+      //  {
+      //    path: "accounts",
+      //    component: AccountsSettingsContainer
+      //  },
+      //  {
+      //    path: "i18n",
+      //    component: i18nSettings
+      //  }
+      //]
     },
     {
       path: "accounts",
-      component: AccountsManagementContainer,
-      childRoutes: [
-        {
-          path: "permissions",
-          component: Permissions
-        },
-        {
-          path: "add",
-          component: AddMember
-        }
-      ]
-    },
-    //{
-    //  path: "shop",
-    //  components: { main: DashboardGrid, actionBar: Settings }
-    //
-    //  // component: DashboardGrid,
-    //  //childRoutes: [
-    //  //  {
-    //  //    path: "?settings=true",
-    //  //    components: { main: DashboardGrid, actionBar: Settings }
-    //  //  }
-    //  //]
-    //},
+      component: AccountsManagementContainer
+      //childRoutes: [
+      //  {
+      //    path: "permissions",
+      //    component: Permissions
+      //  },
+      //  {
+      //    path: "add",
+      //    component: AddMember
+      //  }
+      //]
+    }
   ]
 };

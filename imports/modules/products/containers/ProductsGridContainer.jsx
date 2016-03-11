@@ -3,10 +3,11 @@ import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import * as alertActions from "../../layout/actions/alert";
+import * as productActions from "../actions/product";
+import * as layoutSettingsActions from "../../layout/actions/settings";
 import ProductsGrid from "../components/productsGrid/ProductsGrid.jsx";
 import Loading from "../../layout/components/Loading.jsx";
-import { styles } from "../styles/products";
+//import { styles } from "../styles/products";
 
 // export default class ProductsMain extends Component {
 //const ProductsContainer = React.createClass({
@@ -167,35 +168,40 @@ const loadProducts = location => {
   return gridProducts.sort(compare);
 };
 
-const ProductsContainer = props => (
-  <ProductsGrid {...props} />
-);
+const ProductsGridContainer = props => <ProductsGrid {...props} />;
 
-ProductsContainer.propTypes = {
-  //alert: PropTypes.object,
-  alertActions: PropTypes.shape({
-    displayAlert: PropTypes.func,
-    closeAlert: PropTypes.func
+ProductsGridContainer.propTypes = {
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
   }).isRequired,
+  location: PropTypes.object.isRequired,
   products: PropTypes.array,
-  productsScrollLimit: PropTypes.number.isRequired,
-  location: PropTypes.object.isRequired
+  productActions: PropTypes.shape({
+    setProductId: PropTypes.func,
+    setVariantId: PropTypes.func,
+    publishProduct: PropTypes.func,
+    changeProductField: PropTypes.func,
+    updateProductField: PropTypes.func
+  }).isRequired,
+  productsScrollLimit: PropTypes.number.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    //alert: state.layout.alert,
     productsScrollLimit: state.shop.productsGrid.productsScrollLimit
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    alertActions: bindActionCreators(alertActions, dispatch)
+    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
+    productActions: bindActionCreators(productActions, dispatch)
   };
 }
 
 function composer(props, onData) {
+  //Meteor.subscribe("Media");
   const { location, productsScrollLimit } = props;
   const { Shops, Packages } = ReactionCore.Subscriptions;
   const handle = Meteor.subscribe("Products", productsScrollLimit);
@@ -206,12 +212,12 @@ function composer(props, onData) {
   }
 }
 
-const ProductsContainerWithData = composeWithTracker(
+const ProductsGridContainerWithData = composeWithTracker(
   composer,
   Loading
-)(ProductsContainer);
+)(ProductsGridContainer);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProductsContainerWithData);
+)(ProductsGridContainerWithData);

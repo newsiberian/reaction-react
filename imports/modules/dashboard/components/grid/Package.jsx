@@ -61,9 +61,9 @@ const styles = {
 const getRoute = template => {
   switch (template) {
   case "shopSettings":
-    return "shop";
+    return "ShopSettingsContainer";
   case "accountsSettings":
-    return "accounts";
+    return "AccountsSettingsContainer";
   case "connectSettings":
     return "connect";
   case "socialSettings":
@@ -71,7 +71,7 @@ const getRoute = template => {
   case "genericSettings":
     return "generic";
   case "i18nSettings":
-    return "i18n";
+    return "I18nSettingsContainer";
   default:
     return "";
   }
@@ -82,62 +82,14 @@ const getRoute = template => {
  * @classdesc
  */
 class Package extends Component {
-  handleToggleClick(pkg) {
-    const { alertActions, t } = this.props;
-    let toggle = false;
-    let message;
-    let errorMessage;
-    if (pkg.enabled) {
-      if (confirm(t("gridPackage.disableConfirm",
-          { app: t(pkg.i18nKeyLabel) }))) {
-        toggle = true;
-        message = t("gridPackage.pkgDisabled");
-        errorMessage = t("gridPackage.errorDisabling");
-      }
-    } else {
-      toggle = true;
-      message = t("gridPackage.pkgEnabled");
-      errorMessage = t("gridPackage.errorEnabling");
-    }
-    if (toggle) {
-      // TODO implement `shop/togglePackage` when it will be merged
-      return ReactionCore.Collections.Packages.update(pkg.packageId, {
-        $set: {
-          enabled: !pkg.enabled
-        }
-      }, function (error, result) {
-        if (result === 1) {
-          alertActions.displayAlert({
-            message: pkg.name + message
-          });
-        } else if (error) {
-          alertActions.displayAlert({
-            message: errorMessage + error.message
-          });
-        }
-      });
-    }
-  }
-
   renderToggle() {
-    let label;
-    const { pkg, t } = this.props;
-    if (pkg.enabled) {
-      if (pkg.priority > 1) {
-        label = t("gridPackage.disable");
-        return (
-          <FlatButton
-            label={label}
-            onClick={() => this.handleToggleClick(pkg)}
-          />
-        );
-      }
-    } else {
-      label = t("gridPackage.enable");
+    const { pkg, packagesActions, t } = this.props;
+    if (pkg.priority > 1) {
+      const label = pkg.enabled ? t("gridPackage.disable") : t("gridPackage.enable");
       return (
         <FlatButton
           label={label}
-          onClick={() => this.handleToggleClick(pkg)}
+          onClick={() => packagesActions.togglePackage(pkg)}
         />
       );
     }
@@ -145,7 +97,7 @@ class Package extends Component {
 
   renderSettings() {
     // we need to fetch settings registry here
-    const { pkg, routeActions, t } = this.props;
+    const { pkg, layoutSettingsActions, t } = this.props;
     return getReactionApps({
       provides: "settings", name: pkg.packageName
     }).map((setting, index) => {
@@ -155,9 +107,10 @@ class Package extends Component {
             key={index}
             label={t("app.settings")}
             title={t(setting.i18nKeyLabel)}
-            onClick={() => routeActions.push(
-              `/dashboard/settings/${getRoute(setting.template)}`
-            )}
+            onClick={() => layoutSettingsActions.openSettings({
+              name: getRoute(setting.template),
+              payload: {}
+            })}
           />
         );
       }
@@ -197,9 +150,6 @@ class Package extends Component {
 }
 
 Package.propTypes = {
-  alertActions: PropTypes.shape({
-    displayAlert: PropTypes.func
-  }).isRequired,
   pkg: PropTypes.shape({
     container: PropTypes.string,
     cycle: PropTypes.number,
@@ -217,8 +167,11 @@ Package.propTypes = {
     provides: PropTypes.string,
     route: PropTypes.string
   }).isRequired,
+  packagesActions: PropTypes.shape({
+    togglePackage: PropTypes.func
+  }).isRequired,
   routeActions: PropTypes.object.isRequired,
-  settingsActions: PropTypes.shape({
+  layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
   }).isRequired,

@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
+import LeftNav from "material-ui/lib/left-nav";
 import Snackbar from "material-ui/lib/snackbar";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
@@ -11,14 +12,45 @@ import Loading from "../components/Loading.jsx";
 import LayoutHeaderContainer from "./LayoutHeaderContainer.jsx";
 import LayoutFooter from "../components/footer/LayoutFooter.jsx";
 import AdminControlsBarContainer from "./AdminControlsBarContainer.jsx";
-import { styles } from "../styles/coreLayout";
 import * as alertActions from "../actions/alert";
+import * as settingsActions from "../actions/settings";
+import { styles } from "../styles/coreLayout";
+import { layoutStyles } from "../styles/layout";
 import "../styles/styles.css";
-import "../styles/flexboxgrid.min.css";
+import "../styles/flexboxgrid.css";
 
-/**
- *
- */
+// thanks to: https://gist.github.com/SachaG/8684ab46c5ea3dbe860e
+const components = {};
+components.registerComponent = (name, component) => (components[name] = component);
+components.getComponent = (name) =>  components[name];
+
+// there is a bug with it. I'm using receipt from here:
+// https://github.com/tajo/react-portal/issues/24
+components.registerComponent(
+  "AccountsAddMemberContainer",
+  require("../../dashboard/containers/AccountsAddMemberContainer.js").default
+);
+components.registerComponent(
+  "AccountsPermissionsContainer",
+  require("../../dashboard/containers/AccountsPermissionsContainer.js").default
+);
+components.registerComponent(
+  "AccountsSettingsContainer",
+  require("../../dashboard/containers/AccountsSettingsContainer.jsx").default
+);
+components.registerComponent(
+  "ShopSettingsContainer",
+  require("../../dashboard/containers/ShopSettingsContainer.js").default
+);
+components.registerComponent(
+  "I18nSettingsContainer",
+  require("../../dashboard/containers/I18nSettingsContainer.js").default
+);
+components.registerComponent(
+  "ProductsSettingsContainer",
+  require("../../products/containers/ProductsSettingsContainer.js").default
+);
+
 function modifyRawTheme(muiTheme, newFontFamily) {
   const {
     baseTheme,
@@ -60,7 +92,8 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { alert, cart, children } = this.props;
+    const { alert, cart, children, settings } = this.props;
+    const SettingsComponent = components.getComponent(settings.name);
     return (
 			<div style={styles.wrapper}>
         <div style={styles.container}>
@@ -70,6 +103,34 @@ class CoreLayout extends Component {
           </main>
           <LayoutFooter />
         </div>
+
+        { /* action bar section */ }
+        {settings.open &&
+          <LeftNav
+            disableSwipeToOpen={true}
+            docked={true}
+            width={300}
+            open={true}
+            openRight={true}
+            //overlayStyle={{height: "100%"}}
+            containerStyle={layoutStyles.actionBar}
+            style={layoutStyles.actionBarWrapper}
+          >
+            <SettingsComponent
+              payload={settings.payload}
+            />
+            {/*React.cloneElement(children, {
+              handleSettingsClose: () => permActions.togglePermissionSettings({},
+                "/dashboard/accounts"),
+              togglePermission: permActions.togglePermission,
+              selectedUser: selectedUser,
+              routeActions: routeActions,
+              submitAddMemberForm: submitAddMemberForm
+            })*/}
+          </LeftNav>
+        }
+
+        {/* Admin Controls Bar */}
         {ReactionCore.hasDashboardAccess() && <AdminControlsBarContainer />}
         <Snackbar
           open={alert.open}
@@ -95,18 +156,25 @@ CoreLayout.propTypes = {
     items: PropTypes.array
   }),
   children: PropTypes.node,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  settings: PropTypes.shape({
+    name: PropTypes.string,
+    open: PropTypes.bool,
+    payload: PropTypes.object
+  })
 };
 
 function mapStateToProps(state) {
   return {
-    alert: state.layout.alert
+    alert: state.layout.alert,
+    settings: state.layout.settings
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    alertActions: bindActionCreators(alertActions, dispatch)
+    alertActions: bindActionCreators(alertActions, dispatch),
+    settingsActions: bindActionCreators(settingsActions, dispatch)
   };
 }
 
@@ -133,7 +201,6 @@ function composer(props, onData) {
   }
 }
 
-//const loading = () => <LinearProgress mode="indeterminate" />;
 const coreLayoutSubscribed = composeWithTracker(
   composer,
   Loading

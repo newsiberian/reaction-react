@@ -1,7 +1,10 @@
 export const styles = {
-  //borderRadius: 0,
-  //boxShadow: "none"
-  padding: "1rem"
+  card: {
+    //borderRadius: 0,
+    //boxShadow: "none"
+    padding: "1rem",
+    position: "relative"
+  }
 };
 
 export const linkStyles = {

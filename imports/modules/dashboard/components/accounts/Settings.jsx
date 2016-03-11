@@ -110,12 +110,12 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  handleSettingsClose: PropTypes.func.isRequired,
   oauthServicesActions: PropTypes.shape({
     toggleOauthService: PropTypes.func,
     submitForm: PropTypes.func
   }).isRequired,
-  services: PropTypes.array.isRequired
+  services: PropTypes.array.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const options = {

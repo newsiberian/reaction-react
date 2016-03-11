@@ -1,7 +1,8 @@
 import * as types from "../constants";
 import { displayAlert } from "../../layout/actions/alert";
 // import i18next from "i18next";
-import { routeActions } from "react-router-redux";
+import * as layoutSettingsActions from "../../layout/actions/settings";
+//import { routeActions } from "react-router-redux";
 
 export const togglePermission = (toggled, perm, user) => {
   return dispatch => {

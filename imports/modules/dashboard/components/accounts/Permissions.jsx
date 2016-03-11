@@ -14,10 +14,6 @@ import { ActionBarWrapper } from
 import { displayName, getGravatar } from "../../../../client/helpers/accounts";
 import { siteName } from "../../../../client/helpers/utilities";
 
-//const iconStyles = {
-//  fontSize: 18
-//};
-
 const localStyles = {
   header: {
     textAlign: "center"
@@ -127,7 +123,7 @@ class Permissions extends Component {
   }
 
   render() {
-    const { selectedUser, t, togglePermission } = this.props;
+    const { selectedUser, permActions } = this.props;
     const user = selectedUser;
     const groupsForUser = Roles.getGroupsForUser(user.userId);
     const permGroups = permissionGroups();
@@ -162,7 +158,7 @@ class Permissions extends Component {
                     rightToggle={
                       <Toggle
                         onToggle={(e, toggled) =>
-                         togglePermission(toggled, perm, user)}
+                         permActions.togglePermission(toggled, perm, user)}
                         toggled={hasPermissionChecked(perm.name, user.userId)}
                       />
                     }
@@ -184,7 +180,7 @@ class Permissions extends Component {
                         rightToggle={
                           <Toggle
                             onToggle={(e, toggled) =>
-                              togglePermission(toggled, innerPerm, user)}
+                              permActions.togglePermission(toggled, innerPerm, user)}
                             toggled={hasPermissionChecked(
                               innerPerm.permission, user.userId
                             )}
@@ -213,7 +209,10 @@ Permissions.propTypes = {
     username: PropTypes.string,
     role: PropTypes.string
   }).isRequired,
-  togglePermission: PropTypes.func.isRequired
+  permActions: PropTypes.shape({
+    togglePermission: PropTypes.func,
+    togglePermissionSettings: PropTypes.func
+  }).isRequired
 };
 
 const options = { title: "admin.settings.permissionsSettingsLabel" };

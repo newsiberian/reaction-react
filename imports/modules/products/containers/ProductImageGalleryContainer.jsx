@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from "react";
+import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { FS } from "meteor/cfs:base-package";
+//import { FS } from "meteor/cfs:base-package";
 import ProductImageGallery from "../components/productDetail/images/ProductImageGallery";
+import * as mediaActions from "../actions/media";
 
-const { Media } = ReactionCore.Collections;
+//const { Media } = ReactionCore.Collections;
 
 const getMedia = id => {
   const mediaArray = Media.find({
@@ -17,16 +18,19 @@ const getMedia = id => {
     }
   });
 
-  return mediaArray.map(media => ({
-    _id: media._id,
-    name: media.name(),
-    url: media.url({
-      uploading: "/resources/placeholder.gif",
-      storing: "/resources/placeholder.gif",
-      store: "large"
-    }),
-    thumb: media.url({ store: "thumbnail" })
-  }));
+  return mediaArray.fetch();
+  //return mediaArray.map(media => {
+  //  return {
+  //    _id: media._id,
+  //    name: media.name(),
+  //    url: media.url({
+  //      uploading: "/resources/placeholder.gif",
+  //      storing: "/resources/placeholder.gif",
+  //      store: "large"
+  //    }),
+  //    thumb: media.url({ store: "thumbnail" })
+  //  };
+  //});
 };
 
 const ProductImageGalleryContainer = props => {
@@ -113,42 +117,9 @@ const ProductImageGalleryContainer = props => {
   //  return mediaArray;
   //}
   //
-  ///**
-  // * @function moveMedia
-  // * @description handler on image moving
-  // * @param dragIndex
-  // * @param hoverIndex
-  // */
-  //moveMedia(dragIndex, hoverIndex) {
-  //  const { media } = this.state;
-  //  const dragMedia = media[dragIndex];
+
   //
-  //  this.setState(update(this.state, {
-  //    media: {
-  //      $splice: [
-  //        [dragIndex, 1],
-  //        [hoverIndex, 0, dragMedia]
-  //      ]
-  //    }
-  //  }));
-  //}
-  //
-  ///**
-  // * @function handleDropMedia
-  // * @description onDrop handler for images
-  // * @summary this will be called from ImageDetail component
-  // * @fires Media.update
-  // */
-  //handleDropMedia() {
-  //  const { media } = this.state;
-  //  for (let image of media) {
-  //    Media.update(image._id, {
-  //      $set: {
-  //        "metadata.priority": _.indexOf(media, image)
-  //      }
-  //    });
-  //  }
-  //}
+
   //
   ///**
   // * @function handleDrop
@@ -182,24 +153,6 @@ const ProductImageGalleryContainer = props => {
   //  }
   //}
   //
-  ///**
-  // * @function handleRemoveClick
-  // * @description onClick handler for remove Image Button
-  // * @fires FS.File.remove
-  // */
-  //handleRemoveClick(event) {
-  //  if (!this.props.permissions.createProduct) {
-  //    return false;
-  //  }
-  //
-  //  const _id = event.target.nodeName === "I"
-  //    ? event.target.parentNode.dataset.id
-  //    : event.target.dataset.id;
-  //  const image = Media.findOne(_id);
-  //
-  //  image.remove();
-  //  this.updateImagePriorities();
-  //}
 
   return (
     <ProductImageGallery {...props} />
@@ -208,6 +161,10 @@ const ProductImageGalleryContainer = props => {
 
 ProductImageGalleryContainer.propTypes = {
   media: PropTypes.array,
+  mediaActions: PropTypes.shape({
+    uploadMedia: PropTypes.func,
+    removeMedia: PropTypes.func
+  }),
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object
 };
@@ -218,29 +175,50 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-
+    mediaActions: bindActionCreators(mediaActions, dispatch)
     //productActions: bindActionCreators(productActions, dispatch)
   };
 }
 
-function composer(props, onData) {
-  // TODO: Maybe we need subscribe to product Media here.
-  //const productsHandle = Meteor.subscribe("Product", handle);
-  const { selectedVariant } = props;
-  if (selectedVariant._id && ReactionCore.Subscriptions.Media.ready()) {
-    const media = getMedia(selectedVariant._id);
+//function composer(props, onData) {
+//  // TODO: Maybe we need subscribe to product Media here.
+//  //const handle = Meteor.subscribe("Media");
+//  //if (handle.ready()) {
+//  if (ReactionCore.Subscriptions.Media.ready()) {
+//    const { selectedVariant } = props;
+//    //const media = getMedia(selectedVariant._id);
+//    if (selectedVariant._id) {
+//      const media = Media.find({
+//        "metadata.variantId": selectedVariant._id
+//      }, {
+//        sort: {
+//          "metadata.priority": 1
+//        }
+//      }).fetch();
+//
+//      onData(null, {
+//        media
+//      });
+//    }
+//  }/* else {
+//    onData(null, {
+//      media: []
+//    });
+//  }*/
+//}
 
-    onData(null, {
-      media: media
-    });
-  }
-}
+//const ProductImageGalleryContainerWithData = composeWithTracker(
+//  composer
+//)(ProductImageGalleryContainer);
 
-const ProductImageGalleryContainerWithData = composeWithTracker(
-  composer
-)(ProductImageGalleryContainer);
+//export default connect(
+//  mapStateToProps,
+//  mapDispatchToProps
+//)(ProductImageGalleryContainerWithData);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductImageGalleryContainerWithData);
+//export default connect(
+//  mapStateToProps,
+//  mapDispatchToProps
+//)(ProductImageGalleryContainer);
+
+export default ProductImageGalleryContainer

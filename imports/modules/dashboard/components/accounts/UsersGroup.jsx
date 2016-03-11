@@ -40,7 +40,7 @@ const styles = {
 class UsersGroup extends Component {
   render() {
     const {
-      groupName, push, t, togglePermissionSettings, usersGroup
+      groupName, t, usersGroup, layoutSettingsActions
     } = this.props;
     return (
       <Paper style={styles.base} zDepth={1}>
@@ -51,10 +51,12 @@ class UsersGroup extends Component {
           selectable={true}
           multiSelectable={false}
           style={styles.table}
-          onRowSelection={(row) => togglePermissionSettings(
-            usersGroup[row],
-            "/dashboard/accounts/permissions"
-          )}
+          // fixme: currently this send user data over one time (selected/unselected)
+          // maybe we don't need table here? We could switch to list in future
+          onRowSelection={row => layoutSettingsActions.openSettings({
+            name: "AccountsPermissionsContainer",
+            payload: { userId: usersGroup[row].userId }
+          })}
         >
           <TableHeader
             displaySelectAll={false}
@@ -70,7 +72,10 @@ class UsersGroup extends Component {
                 {groupName === "shopMembers" &&
                   <FlatButton
                     label={t("accountsUI.addMember")}
-                    onClick={() => push("/dashboard/accounts/add")}
+                    onClick={() => layoutSettingsActions.openSettings({
+                      name: "AccountsAddMemberContainer",
+                      payload: {}
+                    })}
                     style={styles.headerButton}
                   />
                 }
@@ -110,9 +115,10 @@ class UsersGroup extends Component {
 
 UsersGroup.propTypes = {
   groupName: PropTypes.string.isRequired,
-  push: PropTypes.func.isRequired,
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func
+  }),
   t: PropTypes.func.isRequired,
-  togglePermissionSettings: PropTypes.func.isRequired,
   usersGroup: PropTypes.array
 };
 

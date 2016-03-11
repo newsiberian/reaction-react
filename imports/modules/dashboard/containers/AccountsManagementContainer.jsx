@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as alertActions from "../../layout/actions/alert";
-import * as permActions from "../actions/permissions";
 import * as formsActions from "../actions/forms";
+import * as layoutSettingsActions from "../../layout/actions/settings";
+import * as permActions from "../actions/permissions";
 import { routeActions } from "react-router-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import LinearProgress from "material-ui/lib/linear-progress";
+import Loading from "../../layout/components/Loading.jsx";
 import Management from "../components/accounts/Management.jsx";
 
 /**
@@ -28,46 +28,19 @@ class AccountsManagementContainer extends Component {
   }
 
   render() {
-    const {
-      children, guests, location, members, formsActions, permActions,
-      routeActions, selectedUser
-    } = this.props;
     return (
-      <Management
-        children={children}
-        guests={guests}
-        location={location}
-        members={members}
-        permActions={permActions}
-        routeActions={routeActions}
-        selectedUser={selectedUser}
-        submitAddMemberForm={formsActions.submitAddMemberForm}
-      />
+      <Management {...this.props} />
     );
   }
 }
 
 AccountsManagementContainer.propTypes = {
-  children: PropTypes.node,
   guests: PropTypes.array.isRequired,
   members: PropTypes.array.isRequired,
-  alertActions: PropTypes.shape({
-    displayAlert: PropTypes.func
-  }).isRequired,
-  formsActions: PropTypes.object.isRequired,
-  permActions: PropTypes.shape({
-    togglePermission: PropTypes.func,
-    togglePermissionSettings: PropTypes.func
-  }).isRequired,
-  routeActions: PropTypes.object.isRequired,
-  selectedUser: PropTypes.shape({
-    emails: PropTypes.array,
-    email: PropTypes.string,
-    userId: PropTypes.string,
-    username: PropTypes.string,
-    role: PropTypes.string
-  }).isRequired,
-  location: PropTypes.object.isRequired
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
+  }).isRequired
 };
 
 function mapStateToProps(state) {
@@ -79,8 +52,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    alertActions: bindActionCreators(alertActions, dispatch),
     formsActions: bindActionCreators(formsActions, dispatch),
+    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
     permActions: bindActionCreators(permActions, dispatch),
     routeActions: bindActionCreators(routeActions, dispatch)
   };
@@ -140,10 +113,9 @@ function composer(props, onData) {
   }
 }
 
-const loading = () => <LinearProgress mode="indeterminate"/>;
 const AccountsManagementContainerWithData = composeWithTracker(
   composer,
-  loading
+  Loading
 )(AccountsManagementContainer);
 
 export default connect(

@@ -43,18 +43,20 @@ export const setVariantId = (productId, variantId) => {
 };
 
 /**
- * toggleVisibility
- * @summary toggle product visibility
+ * validateBeforeToggleVisibility
+ * @summary validate product document before fire toggle product visibility
  *
  * @param {Object} product - product doc
  * @param {Boolean} doVisible - new visibility state
  * @return {Function}
  */
-export const toggleVisibility = (product, doVisible) => {
+export const validateBeforeToggleVisibility = (product, doVisible) => {
   return dispatch => {
-    let message;
-    if (product.title) {
-      message += i18next.t("error.isRequired", { field: i18next.t("productDetailEdit.title") });
+    let message = "";
+    if (!product.title) {
+      message += i18next.t("error.isRequired", {
+        field: i18next.t("productDetailEdit.title")
+      });
     }
     const variants = ReactionCore.getVariants(product._id);
     for (let variant of variants) {
@@ -71,15 +73,123 @@ export const toggleVisibility = (product, doVisible) => {
     if (message.length) {
       dispatch(displayAlert({ message: message }));
     } else {
-      Meteor.call("products/publishProduct", product._id, (error, result) => {
+      dispatch(publishProduct([{ _id: product._id, doVisible: doVisible }]));
+    }
+  };
+};
+
+/**
+ * publishProduct
+ * @summary loop over products array and fires `publishProduct` method for each
+ * @param {Array} products - array with product _id and new visibility state
+ * @return {Function}
+ */
+export const publishProduct = products => {
+  return dispatch => {
+    products.forEach(product => Meteor.call("products/publishProduct", product._id,
+      (error, result) => {
         if (error) {
           dispatch(displayAlert({ message: error.reason }));
+          throw new Meteor.Error("error publishing product", error);
         }
+        const message = result ?
+          i18next.t("productDetail.publishProductVisible", { product: product.title }) :
+          i18next.t("productDetail.publishProductHidden", { product: product.title });
+        dispatch(displayAlert({ message: message }));
         dispatch({
           type: types.TOGGLE_PRODUCT_VISIBILITY,
           productId: product._id,
-          visible: result ? doVisible : !doVisible
+          visible: result
         });
+      })
+    );
+  };
+};
+
+/**
+ * cloneProduct
+ * @summary fires `cloneProduct` server method
+ * @param {array} products - array with products objects
+ * @return {Function} fires `products/cloneProduct`
+ */
+export const cloneProduct = products => {
+  return dispatch => {
+    Meteor.call("products/cloneProduct", products, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({ message: err.reason }));
+        throw new Meteor.Error("error cloning product", error);
+      }
+      // `res` contains new products ids, so we can't compare res with products
+      if (res) {
+        if (products.length === 1) {
+          dispatch(displayAlert({
+            message: i18next.t("productDetail.clonedAlert",
+              { product: products[0].title })
+          }));
+        } else {
+          dispatch(displayAlert({
+            message: i18next.t("productDetail.clonedAlert_plural",
+              { product: i18next.t("productDetail.theSelectedProducts"), count: 0 })
+          }));
+        }
+      }
+      dispatch({
+        type: types.CLONE_PRODUCTS,
+        result: res || null
+      });
+      // redirect to clone PDP if we cloning one product
+      if (products.length === 1) {
+        dispatch(routeActions.push(`/shop/product/${res[0]}`));
+      }
+    });
+  };
+};
+
+/**
+ * maybeDeleteProduct
+ * @summary fires `products/deleteProduct` method for a list of products
+ * @param {Array} products - array with products objects
+ * @return {Function}
+ */
+export const maybeDeleteProduct = products => {
+  return dispatch => {
+    const productIds = _.map(products, product => product._id);
+    let confirmTitle;
+    if (products.length === 1) {
+      confirmTitle = i18next.t("productDetailEdit.deleteThisProduct");
+    } else {
+      confirmTitle = i18next.t("productDetailEdit.deleteSelectedProducts");
+    }
+
+    if (confirm(confirmTitle)) {
+      Meteor.call("products/deleteProduct", productIds, function (err, res) {
+        let title;
+        if (err) {
+          title = products.length === 1 ?
+          products[0].title || i18next.t("productDetail.deleteErrorTheProduct") :
+            i18next.t("productDetail.theSelectedProducts");
+          dispatch(displayAlert({
+            message: i18next.t("productDetail.productDeleteError", { product: title })
+          }));
+          throw new Meteor.Error("Error deleting " + title, error);
+        }
+        if (res) {
+          // todo if we are located in product, we should be redirected to the
+          // top level. Top level not always `shop`. We could be inside tag route
+          dispatch(routeActions.push("/shop"));
+          if (products.length === 1) {
+            title = products[0].title || "productDetail.";
+            dispatch(displayAlert({
+              message: i18next.t("productDetail.deletedAlert", { product: title })
+            }));
+          } else {
+            title = i18next.t("productDetail.theSelectedProducts");
+            dispatch(displayAlert({
+              message: i18next.t("productDetail.deletedAlert_plural",
+                { product: title, count: 0 })
+            }));
+          }
+        }
       });
     }
   };

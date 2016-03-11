@@ -14,10 +14,10 @@ export default class GridContent extends Component {
     //  <div className="header">{ this.props.displayPrice() }</div>
     //</a>
     return (
-      <div className="center aligned content">
-        <Link to={ `/shop/product/${ handle }` }>
-          <div className="header">{ title }</div>
-          <div className="header">{ price }</div>
+      <div/* className="center aligned content"*/>
+        <Link to={`/shop/product/${handle}`}>
+          <div>{title}</div>
+          <div>{price}</div>
         </Link>
       </div>
     );
@@ -27,6 +27,6 @@ export default class GridContent extends Component {
 GridContent.propTypes = {
   // todo add handle for lin
   handle: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired
+  price: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 };

@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from "react";
-//import { Grid, Cell } from "rgx";
+import { translate } from "react-i18next/lib";
+import LeftNav from "material-ui/lib/left-nav";
 import ProductsGridItem from "./ProductsGridItem.jsx";
 //import { styles } from "../../styles/productsGrid"
+import { layoutStyles } from "../../../layout/styles/layout";
 
 const styles = {
   container: {
@@ -12,7 +14,7 @@ const styles = {
   }
 };
 
-export default class ProductsGrid extends Component {
+class ProductsGrid extends Component {
   //generateLayouts(products) {
   //  return {
   //    lg: products.map((product, i) => {
@@ -28,7 +30,7 @@ export default class ProductsGrid extends Component {
 
   render() {
     // const productsInLine = NUMBERS[4];
-    const { products } = this.props;
+    const { layoutSettingsActions, products, productActions } = this.props;
     //const products = this.products();
     // const layouts = this.generateLayouts(products);
 
@@ -65,51 +67,31 @@ export default class ProductsGrid extends Component {
       </ResponsiveReactGridLayout>
     );*/
 
-    //return (
-    //  <Grid gutter="2rem">
-    //    {products.map(product => (
-    //      <Cell min={256} max={256} key={product._id}>
-    //        <ProductsGridItem product={product} />
-    //      </Cell>
-    //    ))}
-    //  </Grid>
-    //);
-
     return (
-      <section className="row" style={styles.container}>
-        {products.map(product => (
-            <ProductsGridItem product={product} />
-        ))}
-      </section>
+      <div>
+        <section className="row" style={styles.container}>
+          {products.map(product => (
+              <ProductsGridItem
+                layoutSettingsActions={layoutSettingsActions}
+                product={product}
+                publishProduct={productActions.publishProduct}
+              />
+          ))}
+        </section>
+      </div>
     );
-
-    //return (
-    //  <AbsoluteGrid
-    //    //items={products}
-    //    //displayObject={(<ProductsGridItem />)}
-    //    items={sampleItems}
-    //    displayObject={(<SampleDisplay />)}
-    //    //keyProp="_id"
-    //    dragEnabled={true}
-    //    responsive={true}
-    //    verticalMargin={42}
-    //    itemWidth={230}
-    //    itemHeight={409}
-    //  />
-    //);
   }
 }
 
 ProductsGrid.propTypes = {
-  location: PropTypes.object.isRequired,
-  // params: PropTypes.object.isRequired,
-  products: PropTypes.array.isRequired
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
+  }).isRequired,
+  products: PropTypes.array.isRequired,
+  productActions: PropTypes.shape({
+    publishProduct: PropTypes.func
+  }).isRequired
 };
 
-//const NUMBERS = {
-//  2: "two",
-//  3: "three",
-//  4: "four",
-//  5: "five",
-//  6: "six"
-//};
+export default translate("core")(ProductsGrid);

@@ -19,10 +19,7 @@ const styles = {
  */
 class Management extends Component {
   render() {
-    const {
-      children, guests, members, permActions, routeActions, t,
-      selectedUser, submitAddMemberForm
-    } = this.props;
+    const { guests, members, layoutSettingsActions, t } = this.props;
     return (
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
@@ -34,64 +31,30 @@ class Management extends Component {
             {/* shop members */}
             <UsersGroup
               groupName="shopMembers"
-              togglePermissionSettings={permActions.togglePermissionSettings}
-              push={routeActions.push}
+              layoutSettingsActions={layoutSettingsActions}
               usersGroup={members}
             />
 
             {/* customers */}
             <UsersGroup
               groupName="guests"
-              togglePermissionSettings={permActions.togglePermissionSettings}
-              push={routeActions.push}
+              layoutSettingsActions={layoutSettingsActions}
               usersGroup={guests}
             />
           </div>
         </section>
-
-        { /* action bar section */ }
-        {children &&
-          <LeftNav
-            disableSwipeToOpen={true}
-            docked={true}
-            width={300}
-            open={true}
-            openRight={true}
-            //overlayStyle={{height: "100%"}}
-            containerStyle={layoutStyles.actionBar}
-            style={layoutStyles.actionBarWrapper}
-          >
-            {React.cloneElement(children, {
-              handleSettingsClose: () => permActions.togglePermissionSettings({},
-                "/dashboard/accounts"),
-              togglePermission: permActions.togglePermission,
-              selectedUser: selectedUser,
-              routeActions: routeActions,
-              submitAddMemberForm: submitAddMemberForm
-            })}
-          </LeftNav>}
       </div>
     );
   }
 }
 
 Management.propTypes = {
-  children: PropTypes.node,
   guests: PropTypes.array.isRequired,
   members: PropTypes.array.isRequired,
-  permActions: PropTypes.shape({
-    togglePermission: PropTypes.func,
-    togglePermissionSettings: PropTypes.func
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
-  selectedUser: PropTypes.shape({
-    emails: PropTypes.array,
-    email: PropTypes.string,
-    userId: PropTypes.string,
-    username: PropTypes.string,
-    role: PropTypes.string
-  }).isRequired,
-  submitAddMemberForm: PropTypes.func.isRequired, // actionCreator
   t: PropTypes.func.isRequired
 };
 

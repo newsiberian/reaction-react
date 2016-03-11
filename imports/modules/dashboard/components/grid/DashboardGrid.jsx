@@ -55,8 +55,8 @@ class DashboardGrid extends Component {
   }
 
   render() {
-    const { alertActions, routeActions, settingsActions, children, t,
-      corePackageData, shopData, formsActions, apps, i18nActions, activeCard
+    const {
+      routeActions, t, apps, layoutSettingsActions, packagesActions
     } = this.props;
     const groupedApps = _.groupBy(apps, (app) => app.container || "misc");
     const groups = Object.keys(groupedApps);
@@ -65,10 +65,10 @@ class DashboardGrid extends Component {
     return (
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
-          { /* header section */ }
+          {/* header section */}
           <DashboardHeader title={t("app.settings")} />
 
-          { /* main section */ }
+          {/* main section */}
           <div className="container-fluid" style={styles.base}>
             {groups.map((group, i) => {
               // we need to show header only for groups which have apps inside,
@@ -88,9 +88,9 @@ class DashboardGrid extends Component {
                           style={styles.cal}
                         >
                           <Package
-                            alertActions={alertActions}
                             routeActions={routeActions}
-                            settingsActions={settingsActions}
+                            packagesActions={packagesActions}
+                            layoutSettingsActions={layoutSettingsActions}
                             pkg={app}
                           />
                         </div>
@@ -102,57 +102,22 @@ class DashboardGrid extends Component {
             })}
           </div>
         </section>
-
-        { /* action bar section */ }
-        {children &&
-          <LeftNav
-            disableSwipeToOpen={true}
-            docked={true}
-            width={300}
-            open={true}
-            openRight={true}
-            // overlayStyle={{height: "100vh"}}
-            containerStyle={layoutStyles.actionBar}
-            style={layoutStyles.actionBarWrapper}
-          >
-            {React.cloneElement(children, {
-              activeCard: activeCard,
-              handleSettingsClose: this.handleSettingsClose,
-              formsActions: formsActions,
-              i18nActions: i18nActions,
-              routeActions: routeActions,
-              corePackageData: corePackageData,
-              shopData: shopData,
-              toggleCard: settingsActions.toggleCard
-            })}
-          </LeftNav>}
       </div>
     );
   }
 }
 
 DashboardGrid.propTypes = {
-  activeCard: PropTypes.string,
-  alertActions: PropTypes.shape({
-    displayAlert: PropTypes.func
-  }).isRequired,
-  children: PropTypes.node,
-  formsActions: PropTypes.shape({
-    submitForm: PropTypes.func
-  }).isRequired,
-  i18nActions: PropTypes.shape({
-    toggleLanguage: PropTypes.func
+  packagesActions: PropTypes.shape({
+    togglePackage: PropTypes.func
   }).isRequired,
   routeActions: PropTypes.shape({
     push: PropTypes.func
   }).isRequired,
-  settingsActions: PropTypes.shape({
+  layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
-    closeSettings: PropTypes.func,
-    toggleCard: PropTypes.func
+    closeSettings: PropTypes.func
   }).isRequired,
-  corePackageData: PropTypes.object,
-  shopData: PropTypes.object,
   apps: PropTypes.array,
   t: PropTypes.func.isRequired
 };

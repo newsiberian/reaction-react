@@ -1,11 +1,43 @@
 import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 import { DragSource, DropTarget } from "react-dnd";
-import { removeButtonStyle } from "../../../styles/imageDetail";
+import Paper from "material-ui/lib/paper";
+import IconButton from "material-ui/lib/icon-button";
+import FontIcon from "material-ui/lib/font-icon";
+//import FloatingActionButton from "material-ui/lib/floating-action-button";
+//import NavigationClose from "material-ui/lib/svg-icons/navigation/close";
+//import { removeButtonStyle } from "../../../styles/imageDetail";
+
+const styles = {
+  fluidImage: {
+    position: "relative",
+    verticalAlign: "middle",
+    maxWidth: "100%",
+    backgroundColor: "transparent",
+    width: "100%",
+    height: "auto"
+  },
+  tinyImage: {
+    display: "inline-block",
+    position: "relative",
+    verticalAlign: "middle",
+    maxWidth: "100%",
+    backgroundColor: "transparent",
+    width: "80px",
+    height: "auto",
+    fontSize: ".85714286rem"
+  },
+  removeButton: {
+    position: "absolute",
+    right: 0,
+    bottom: 0
+  }
+};
 
 const Types = {
   MEDIA: "media"
 };
+
 const imageSource = {
   beginDrag(props) {
     return {
@@ -91,50 +123,83 @@ const imageTarget = {
 //  connectDragPreview: connect.dragPreview(),
 //  isDragging: monitor.isDragging()
 //}))
-export default class ImageDetail extends Component {
-  componentDidMount() {
+class ImageDetail extends Component {
+  /*componentDidMount() {
     const { media } = this.props;
     const img = new Image();
     img.onload = () => this.props.connectDragPreview(img);
     img.src = media.thumb;
+  }*/
+
+  /**
+   * handleRemoveClick
+   * @summary onClick handler for remove Image Button
+   * @param {String} id - media _id
+   * @fires `removeMedia` actionCreator
+   */
+  handleRemoveClick(id) {
+    this.props.mediaActions.removeMedia(id);
   }
 
   render() {
-    const { isDragging, connectDragSource, connectDropTarget,
-      index, media, permissions, onRemoveClick
+    const { isDragging, /*connectDragSource, connectDropTarget,*/
+      index, media, productTitle
     } = this.props;
-    const className = index === 0 ? "ui fluid image" : "ui tiny image";
+    //const className = index === 0 ? "ui fluid image" : "ui tiny image";
     const opacity = isDragging ? 0.4 : 1;
+    const style = index === 0 ? Object.assign(styles.fluidImage, opacity) :
+      Object.assign(styles.tinyImage, opacity);
     console.log(`ImageGallery ${index}: rendering...`);
-    return connectDragSource(connectDropTarget(
-      <div className={ className } style={{ opacity }} data-id={ media._id }>
-        <img
-          src={ media.url }
-          alt={ media.name }
-        />
-        { permissions.createProduct &&
-          <button
-            className="ui circular icon basic button"
-            style={ removeButtonStyle }
-            data-id={ media._id }
-            onClick={ onRemoveClick }
-          >
-            <i className="remove icon"></i>
-          </button>
-        }
+    return /*connectDragSource(connectDropTarget*/(
+      <div style={style}>
+        <Paper
+          //data-id={media._id}
+          zDepth={1}
+          rounded={false}
+        >
+          <img
+            src={media.url({
+              uploading: "/resources/placeholder.gif",
+              storing: "/resources/placeholder.gif",
+              store: "large"
+            })}
+            alt={productTitle}
+            style={index === 0 ? styles.fluidImage : styles.tinyImage}
+          />
+          {ReactionCore.hasPermission("createProduct") &&
+            <IconButton
+              style={styles.removeButton}
+              onClick={() => this.handleRemoveClick(media._id)}
+            >
+              <FontIcon className="fa fa-close" />
+            </IconButton>
+          }
+        </Paper>
       </div>
-    ));
+    /*)*/);
   }
 }
 
 ImageDetail.propTypes = {
-  connectDragSource: PropTypes.func,
-  connectDragPreview: PropTypes.func,
-  isDragging: PropTypes.bool,
+  //connectDragSource: PropTypes.func,
+  //connectDragPreview: PropTypes.func,
+  //isDragging: PropTypes.bool,
   index: PropTypes.number.isRequired,
   media: PropTypes.object,
+  mediaActions: PropTypes.shape({
+    removeMedia: PropTypes.func
+  }),
   moveMedia: PropTypes.func,
-  permissions: PropTypes.object.isRequired,
-  onRemoveClick: PropTypes.func.isRequired,
-  onDropMedia: PropTypes.func.isRequired
+  onDropMedia: PropTypes.func.isRequired,
+  productTitle: PropTypes.string.isRequired
 };
+
+//export default DragSource(Types.MEDIA, imageSource, (connect, monitor) => ({
+//  connectDragSource: connect.dragSource(),
+//  connectDragPreview: connect.dragPreview(),
+//  isDragging: monitor.isDragging()
+//}))(DropTarget(Types.MEDIA, imageTarget, connect => ({
+//  connectDropTarget: connect.dropTarget()
+//}))(ImageDetail));
+
+export default ImageDetail;

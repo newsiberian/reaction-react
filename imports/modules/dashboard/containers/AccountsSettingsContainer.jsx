@@ -1,45 +1,23 @@
-import React, { Component, PropTypes } from "react";
-//import React, { PropTypes } from "react";
+import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as oauthServicesActions from "../actions/oauthServices";
+import * as layoutSettingsActions from "../../layout/actions/settings";
 import Settings from "../components/accounts/Settings.jsx";
 import { ReactionServiceHelper } from "../../../client/helpers/utilities";
 
-class AccountsSettingsContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSettingsClose = this.handleSettingsClose.bind(this);
-  }
-
-  /**
-   * handleSettingsClose
-   * @summary setting bar close button click handler
-   */
-  handleSettingsClose() {
-    this.props.routeActions.push("/dashboard");
-  }
-
-  render() {
-    const { oauthServicesActions, routeActions, services } = this.props;
-    return (
-      <Settings
-        handleSettingsClose={this.handleSettingsClose}
-        oauthServicesActions={oauthServicesActions}
-        routeActions={routeActions}
-        services={services}
-      />
-    );
-  }
-};
+const AccountsSettingsContainer = props => <Settings {...props} />;
 
 AccountsSettingsContainer.propTypes = {
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
+  }).isRequired,
   oauthServicesActions: PropTypes.shape({
     toggleOauthService: PropTypes.func,
     submitForm: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
   services: PropTypes.array.isRequired
 };
 
@@ -48,9 +26,8 @@ function composer(props, onData) {
   if (handle.ready()) {
     const serviceHelper = new ReactionServiceHelper();
     const services = serviceHelper.services();
-    onData(null, {
-      services: services
-    });
+
+    onData(null, { services });
   }
 }
 
@@ -60,6 +37,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
     oauthServicesActions: bindActionCreators(oauthServicesActions, dispatch)
   };
 }

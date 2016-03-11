@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+import { ReactionCore, ReactionSubscriptions } from "meteor/reactioncommerce:core";
 import * as alertActions from "../../layout/actions/alert";
 import * as productActions from "../actions/product";
 import Loading from "../../layout/components/Loading";
@@ -63,11 +63,7 @@ ProductDetailContainer.propTypes = {
   //  displayAlert: PropTypes.func
   //}).isRequired,
   productActions: PropTypes.shape({
-    setProductId: PropTypes.func,
-    setVariantId: PropTypes.func,
-    toggleVisibility: PropTypes.func,
-    changeProductField: PropTypes.func,
-    updateProductField: PropTypes.func
+    publishProduct: PropTypes.func
   }).isRequired,
   params: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
@@ -91,18 +87,28 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const { handle } = props.params;
-  const productsHandle = Meteor.subscribe("Product", handle);
-
-  if (productsHandle.ready() && ReactionCore.Subscriptions.Tags.ready()) {
-    const product = getProduct(handle);
+  //const mediaHandle = Meteor.subscribe("Media");
+  //const productsHandle = Meteor.subscribe("Product", props.params.handle);
+  // pass down as props
+  if (Meteor.subscribe("Product", props.params.handle).ready() &&
+    ReactionCore.Subscriptions.Tags.ready() &&
+    Meteor.subscribe("Media").ready()/*ReactionCore.Subscriptions.Media.ready()*/) {
+    const product = getProduct(props.params.handle);
     const tags = getTags(product);
     const selectedVariant = getSelectedVariant(props.variantId);
+    const media = ReactionCore.Collections.Media.find({
+      "metadata.variantId": selectedVariant._id
+    }, {
+      sort: {
+        "metadata.priority": 1
+      }
+    }).fetch();
 
     onData(null, {
-      product: product,
-      selectedVariant: selectedVariant,
-      tags: tags
+      media,
+      product,
+      selectedVariant,
+      tags
     });
   }
 }

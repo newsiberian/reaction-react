@@ -181,16 +181,16 @@ class ProductsGridItem extends Component {
     if (isObjectFitSupported) {
       if (media instanceof FS.File) { // typeof media === "object"
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <img style={ realImage } src={ media.url({ store: "large" }) } alt={ media.name() } />;
+        image = <img style={realImage} src={media.url({ store: "large" })} alt={media.name()} />;
       } else {
-        image = <img style={ realImage } src="resources/placeholder.gif" alt="" />;
+        image = <img style={realImage} src="resources/placeholder.gif" alt="" />;
       }
     } else {
       if (media instanceof FS.File) {
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <div style={ [fakeImage, { backgroundImage: `url(${media.url({ store: "large" })})` }] }></div>;
+        image = <div style={[fakeImage, { backgroundImage: `url(${media.url({ store: "large" })})`}] }></div>;
       } else {
-        image = <div style={ [fakeImage, { backgroundImage: "url(resources/placeholder.gif)" }] }></div>;
+        image = <div style={[fakeImage, { backgroundImage: "url(resources/placeholder.gif)" }]}></div>;
       }
     }
     //<a
@@ -206,13 +206,13 @@ class ProductsGridItem extends Component {
     return (
       <Link
         className="image"
-        to={ `/shop/product/${ product.handle }` }
-        style={ linkStyles }
+        to={`/shop/product/${ product.handle }`}
+        style={linkStyles}
       >
-        <div style={ primatyImage }>
-          { image }
+        <div style={primatyImage}>
+          {image}
         </div>
-        { this.renderAdditionalMedia(isObjectFitSupported) }
+        {this.renderAdditionalMedia(isObjectFitSupported)}
       </Link>
     );
   }
@@ -260,20 +260,13 @@ class ProductsGridItem extends Component {
   }
 
   render() {
+    const { product, publishProduct, layoutSettingsActions } = this.props;
     const {
       _id, handle, title, isSoldOut, isBackorder, isLowQuantity, price
-    } = this.props.product;
-    let gridControls = false;
-    const formatedPrice = formatPrice(price);
-
-    if (ReactionCore.hasPermission("createProduct")) {
-      gridControls = (<GridControls
-        product={this.props.product}
-        isVisible={this.props.product.isVisible}
-        onPublishProductClick={() => this.handlerPublishProductClick()}
-        onShowProductSettings={() => this.handlerShowProductSettings()}
-      />);
-    }
+    } = product;
+    //let gridControls = false;
+    //const priceRange = price.max ? `${price.min} - ${price.max}` : `${price.min}`;
+    const formatedPrice = formatPrice(price.range);
 
     console.log("ProductGridItem: rendering...");
     // todo do we really need data-tags here?
@@ -282,12 +275,13 @@ class ProductsGridItem extends Component {
       // class="product-grid-item" card
       <div
         className="col-xs-12
-                col-sm-6
-                col-md-4
-                col-lg-3"
+                col-xsm-6
+                col-sm-4
+                col-md-3
+                col-lg-20"
         //data-id={_id}
         //style={Object.assign({}, styles, this.weightClass())}
-        style={styles}
+        style={styles.card}
       >
         <GridNotice
           isSoldOut={isSoldOut}
@@ -295,8 +289,14 @@ class ProductsGridItem extends Component {
           isLowQuantity={isLowQuantity}
         />
         {/* todo добавить сюда product-grid-item-alerts */}
-        { this.renderMedia() }
-        { gridControls }
+        {this.renderMedia()}
+        {ReactionCore.hasPermission("createProduct") &&
+          <GridControls
+            product={product}
+            publishProduct={publishProduct}
+            layoutSettingsActions={layoutSettingsActions}
+          />
+        }
         <GridContent
           handle={handle}
           title={title}
@@ -308,7 +308,12 @@ class ProductsGridItem extends Component {
 }
 
 ProductsGridItem.propTypes = {
-  product: PropTypes.object.isRequired
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
+  }).isRequired,
+  product: PropTypes.object.isRequired,
+  publishProduct: PropTypes.func.isRequired
 };
 
 export default ProductsGridItem;

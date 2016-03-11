@@ -3,69 +3,135 @@ import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
-import shallowCompare from "react-addons-shallow-compare";
+//import shallowCompare from "react-addons-shallow-compare";
+import RaisedButton from "material-ui/lib/raised-button";
 import ImageDetail from "./ImageDetail";
 
-const { Media, Products } = ReactionCore.Collections;
-
+const styles = {
+  images: {
+    fontSize: 0,
+    margin: "0 -.25rem"
+  },
+  bigImage: {}
+};
 /**
  * @classdesc ProductImageGallery
  */
 class ProductImageGallery extends Component {
-  shouldComponentUpdate(nextProps) {
-    // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-    // return !shallowCompare(this, nextProps.media);
-    return !_.isEqual(nextProps.media, this.props.media);
+  //shouldComponentUpdate(nextProps) {
+  //  // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
+  //  // return !shallowCompare(this, nextProps.media);
+  //  return !_.isEqual(nextProps.media, this.props.media);
+  //}
+
+  /**
+   * @function handleDrop
+   * @description onDrop handler for image upload
+   * @summary this method is a copy of "uploadHandler" reaction template method
+   * @param {Array} files - list of File objects
+   */
+  handleDrop(files) {
+    const { product, selectedVariant, mediaActions } = this.props;
+    //mediaActions.uploadMedia(files, product, selectedVariant);
+    if (!ReactionCore.hasPermission("createProduct")) {
+      // todo add log message
+      return false;
+    }
+    const productId = product._id;
+    const variantId = selectedVariant._id;
+    const shopId = product.shopId || ReactionCore.getShopId();
+    const userId = Meteor.userId();
+    let count = ReactionCore.Collections.Media.find({
+      "metadata.variantId": variantId
+    }).count();
+    const toGrid = selectedVariant.ancestors.length === 1;
+
+    files.forEach(file => {
+      let fileObj;
+      fileObj = new FS.File(file);
+      fileObj.metadata = {
+        ownerId: userId,
+        productId: productId,
+        variantId: variantId,
+        shopId: shopId,
+        priority: count,
+        toGrid: +toGrid // we need number
+      };
+
+      ReactionCore.Collections.Media.insert(fileObj);
+      count++;
+    });
   }
 
   /**
-   * getMedia
-   * @summary copy of "media" method from Reaction template
+   * @function handleMoveMedia
+   * @description handler on image moving
+   * @param dragIndex
+   * @param hoverIndex
    */
-  getMedia() {
-    let mediaArray = [];
-    const { selectedVariant } = this.props;
+  handleMoveMedia(dragIndex, hoverIndex) {
+    const { media } = this.props;
+    const dragMedia = media[dragIndex];
 
-    if (selectedVariant) {
-      mediaArray = Media.find({
-        "metadata.variantId": selectedVariant._id
-      }, {
-        sort: {
-          "metadata.priority": 1
+    //this.setState(update(this.state, {
+    //  media: {
+    //    $splice: [
+    //      [dragIndex, 1],
+    //      [hoverIndex, 0, dragMedia]
+    //    ]
+    //  }
+    //}));
+  }
+
+  /**
+   * @function handleDropMedia
+   * @description onDrop handler for images
+   * @summary this will be called from ImageDetail component
+   * @fires Media.update
+   */
+  handleDropMedia() {
+    const { media } = this.state;
+    for (let image of media) {
+      Media.update(image._id, {
+        $set: {
+          "metadata.priority": _.indexOf(media, image)
         }
       });
     }
-    return mediaArray;
   }
 
   render() {
-    const { media, permissions, onDrop, onDropMedia, onRemoveClick,
-      moveMedia, t
-    } = this.props;
+    const { media, mediaActions, product, t } = this.props;
     console.log("ProductImageGallery: rendering...");
     return (
       <div>
-        <div className="ui images">
-          { media.length !== 0
-            ? media.map((image, i) => {
-              return (
-                <ImageDetail
-                  key={ image._id }
-                  index={ i }
-                  media={ image }
-                  permissions={ permissions }
-                  onRemoveClick={ onRemoveClick }
-                  moveMedia={ moveMedia }
-                  onDropMedia={ onDropMedia }
-                />
-              );
-            })
-            : <img className="ui fluid image" src="/resources/placeholder.gif" />
+        <div /*className="ui images"*/ style={styles.images}>
+          {media.length ? media.map((image, i) => {
+            return (
+              <ImageDetail
+                key={image._id}
+                index={i}
+                media={image}
+                mediaActions={mediaActions}
+                moveMedia={this.handleMoveMedia}
+                onDropMedia={this.handleDropMedia}
+                productTitle={product.title}
+              />
+            );
+            }) :
+            <img src="/resources/placeholder.gif" style={styles.bigImage} />
           }
         </div>
-        { permissions.createProduct &&
-          <Dropzone className="ui huge fluid basic button" onDrop={ onDrop }>
-            <div><T>dropFiles</T></div>
+        {ReactionCore.hasPermission("createProduct") &&
+          <Dropzone
+            //className="ui huge fluid basic button"
+            onDrop={files => this.handleDrop(files)}
+          >
+            <RaisedButton
+              label={t("productDetail.dropFiles")}
+              fullWidth={true}
+              //style={styles.button}
+            />
           </Dropzone>
         }
       </div>
@@ -74,20 +140,24 @@ class ProductImageGallery extends Component {
 }
 
 ProductImageGallery.propTypes = {
-  //media: PropTypes.array.isRequired,
-  //permissions: PropTypes.object.isRequired,
+  media: PropTypes.array.isRequired,
+  mediaActions: PropTypes.shape({
+    uploadMedia: PropTypes.func,
+    removeMedia: PropTypes.func
+  }),
   //onDrop: PropTypes.func.isRequired,
   //onDropMedia: PropTypes.func.isRequired,
   //onRemoveClick: PropTypes.func.isRequired,
   //moveMedia: PropTypes.func.isRequired
   product: PropTypes.object.isRequired,
-  productActions: PropTypes.shape({
-    setProductId: PropTypes.func,
-    setVariantId: PropTypes.func,
-    toggleVisibility: PropTypes.func,
-    changeProductField: PropTypes.func,
-    updateProductField: PropTypes.func
-  }).isRequired,
+  selectedVariant: PropTypes.object,
+  //productActions: PropTypes.shape({
+  //  setProductId: PropTypes.func,
+  //  setVariantId: PropTypes.func,
+  //  toggleVisibility: PropTypes.func,
+  //  changeProductField: PropTypes.func,
+  //  updateProductField: PropTypes.func
+  //}).isRequired,
   t: PropTypes.func.isRequired
 };
 

@@ -83,6 +83,7 @@ export default class LayoutHeader extends Component {
           title={title}
           //onTitleTouchTap={handleTouchTap}
           //iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+          iconElementLeft={<Link to="/shop">{"Shop"}</Link>}
           iconElementRight={
             <UserMenu
               cart={cart}
