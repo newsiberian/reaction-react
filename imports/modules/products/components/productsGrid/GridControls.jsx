@@ -31,8 +31,7 @@ class GridControls extends Component {
   handleSettingsClick() {
     // we need to call two actionCreators here
     this.props.layoutSettingsActions.openSettings({
-      name: "ProductsSettingsContainer",
-      payload: { productIdList: [this.props.product._id] }
+      name: "ProductsSettingsContainer"
     });
     this.props.selectProduct(this.props.product._id);
   }

@@ -98,7 +98,6 @@ const setPublishList = products => {
 
 // get styles by products `weight`
 const getWeightActive = (products, weight) => {
-  debugger;
   for (let product of products) {
     let positions = product.positions || {};
     let currentWeight = positions.weight || 0;

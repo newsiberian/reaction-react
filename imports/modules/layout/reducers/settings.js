@@ -2,8 +2,7 @@ import * as types from "../constants";
 
 const initialState = {
   open: false,
-  name: "",
-  payload: {}
+  name: ""
 };
 
 export default function packages(state = initialState, action) {
@@ -12,8 +11,7 @@ export default function packages(state = initialState, action) {
   case types.OPEN_SETTINGS:
     return Object.assign({}, state, {
       open: action.open,
-      name: action.name,
-      payload: action.payload
+      name: action.name
     });
   default:
     return state;
