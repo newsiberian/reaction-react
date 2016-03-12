@@ -9,7 +9,6 @@ import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import { Link } from "react-router";
 import {
   styles,
-  linkStyles,
   fakeImage,
   primatyImage,
   additionalImages,
@@ -108,6 +107,11 @@ class ProductsGridItem extends Component {
     return weight === 1;
   }
 
+  isSelected(id) {
+    // transform result to boolean
+    return !!~this.props.selectedProducts.indexOf(id);
+  }
+
   //isSoldOut() {
   //  return this.props.product.isSoldOut;
   //}
@@ -170,13 +174,44 @@ class ProductsGridItem extends Component {
     //});
   }
 
+  handleClick(event, productId) {
+    if (ReactionCore.hasPermission("createProduct")) {
+      if (event.metaKey || event.ctrlKey || event.shiftKey) {
+        event.preventDefault();
+
+        // if at least one product selected, we select all products between
+        // current and last
+        if (event.shiftKey && selected > 0) {
+          // todo implement this
+        } else {
+          // add/remove current product to `selectedProducts` list
+          if (~this.props.selectedProducts.indexOf(productId)) {
+            // if product in list
+            this.props.productActions.unselectProduct(productId);
+          } else {
+            // if not in list
+            this.props.productActions.selectProduct(productId);
+          }
+        }
+      }
+    }
+  }
+
   renderMedia() {
     let image;
     const { product } = this.props;
     // we use "call" here because it is important for now to save reaction
     // methods "as it is" with minimum changes.
     const media = getMedia(product._id);
+    const selected = this.isSelected(product._id);
     const isObjectFitSupported = checkObjectFitSupported();
+    const linkStyles = {
+      display: "flex",
+      height: 325,
+      boxShadow: selected ? "0px 1px 3px 1px #2FE74E, 0px 0px 0px 3px #2FE74E" :
+        "0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5",
+      transition: "box-shadow 0.1s ease, transform 0.1s ease"
+    };
 
     if (isObjectFitSupported) {
       if (media instanceof FS.File) { // typeof media === "object"
@@ -193,16 +228,6 @@ class ProductsGridItem extends Component {
         image = <div style={[fakeImage, { backgroundImage: "url(resources/placeholder.gif)" }]}></div>;
       }
     }
-    //<a
-    //  className="image"
-    //  href={ FlowRouter.path("product", { _id: this.props.product.handle }) }
-    //  style={ linkStyles }
-    //  >
-    //  <div style={ primatyImage }>
-    //    { image }
-    //  </div>
-    //  { this.renderAdditionalMedia(isObjectFitSupported) }
-    //</a>
     return (
       <Link
         className="image"
@@ -260,7 +285,7 @@ class ProductsGridItem extends Component {
   }
 
   render() {
-    const { product, publishProduct, layoutSettingsActions } = this.props;
+    const { product, productActions, layoutSettingsActions } = this.props;
     const {
       _id, handle, title, isSoldOut, isBackorder, isLowQuantity, price
     } = product;
@@ -272,7 +297,6 @@ class ProductsGridItem extends Component {
     // todo do we really need data-tags here?
     // style={ this.weightClass.call(product) }
     return (
-      // class="product-grid-item" card
       <div
         className="col-xs-12
                 col-xsm-6
@@ -282,6 +306,7 @@ class ProductsGridItem extends Component {
         //data-id={_id}
         //style={Object.assign({}, styles, this.weightClass())}
         style={styles.card}
+        onClick={(event) => this.handleClick(event, _id)}
       >
         <GridNotice
           isSoldOut={isSoldOut}
@@ -293,7 +318,8 @@ class ProductsGridItem extends Component {
         {ReactionCore.hasPermission("createProduct") &&
           <GridControls
             product={product}
-            publishProduct={publishProduct}
+            publishProduct={productActions.publishProduct}
+            selectProduct={productActions.selectProduct}
             layoutSettingsActions={layoutSettingsActions}
           />
         }
@@ -313,7 +339,13 @@ ProductsGridItem.propTypes = {
     closeSettings: PropTypes.func
   }).isRequired,
   product: PropTypes.object.isRequired,
-  publishProduct: PropTypes.func.isRequired
+  productActions: PropTypes.shape({
+    publishProduct: PropTypes.func,
+    selectProduct: PropTypes.func,
+    unselectProduct: PropTypes.func,
+    flushProductsList: PropTypes.func
+  }).isRequired,
+  selectedProducts: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default ProductsGridItem;

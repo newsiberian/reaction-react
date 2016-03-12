@@ -178,18 +178,19 @@ ProductsGridContainer.propTypes = {
   location: PropTypes.object.isRequired,
   products: PropTypes.array,
   productActions: PropTypes.shape({
-    setProductId: PropTypes.func,
-    setVariantId: PropTypes.func,
     publishProduct: PropTypes.func,
-    changeProductField: PropTypes.func,
-    updateProductField: PropTypes.func
+    selectProduct: PropTypes.func,
+    unselectProduct: PropTypes.func,
+    flushProductsList: PropTypes.func
   }).isRequired,
-  productsScrollLimit: PropTypes.number.isRequired
+  productsScrollLimit: PropTypes.number.isRequired,
+  selectedProducts: PropTypes.arrayOf(PropTypes.string)
 };
 
 function mapStateToProps(state) {
   return {
-    productsScrollLimit: state.shop.productsGrid.productsScrollLimit
+    productsScrollLimit: state.shop.productsGrid.gridSettings.productsScrollLimit,
+    selectedProducts: state.shop.productsGrid.selectedProducts
   };
 }
 

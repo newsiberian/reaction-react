@@ -14,17 +14,21 @@ ProductsSettingsContainer.propTypes = {
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
   }).isRequired,
+  location: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   products: PropTypes.array,
   productActions: PropTypes.shape({
     cloneProduct: PropTypes.func,
     maybeDeleteProduct: PropTypes.func,
-    publishProduct: PropTypes.func
+    publishProduct: PropTypes.func,
+    updateProductWeight: PropTypes.func
   }).isRequired,
   routeActions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
+    location: state.routing.location,
     productIdList: state.layout.settings.payload.productIdList
   };
 }

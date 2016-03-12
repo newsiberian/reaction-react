@@ -46,9 +46,6 @@ const styles = {
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: "#ffffff"
-    //border: "1px solid #dddddd",
-    //borderWidth: "1px 0",
-    //borderRadius: "0"
   },
   sizeControl: {
     display: "flex",
@@ -99,16 +96,12 @@ const setPublishList = products => {
   });
 };
 
+// get styles by products `weight`
 const getWeightActive = (products, weight) => {
   debugger;
-  //return products.forEach(product => {
-  //  const position = product.position || {};
-  //  const currentWeight = position.weight || 0;
-  //  return currentWeight === weight && { backgroundColor: "#666666" };
-  //});
   for (let product of products) {
-    let position = product.position || {};
-    let currentWeight = position.weight || 0;
+    let positions = product.positions || {};
+    let currentWeight = positions.weight || 0;
     if (currentWeight === weight) {
       return { backgroundColor: "#666666" };
     }
@@ -124,6 +117,7 @@ class Settings extends Component {
   render() {
     const { products, productActions, routeActions, t } = this.props;
     // todo show something else if products.length zero
+    // todo this also affect on us when product deleted
     const publishClassName = products[0].isVisible ? "fa fa-eye" : "fa fa-eye-slash";
     const publishList = setPublishList(products);
     return (
@@ -183,7 +177,7 @@ class Settings extends Component {
           <div
             style={Object.assign({}, styles.sizeItem,
              { paddingLeft: 5, paddingRight: 5 }, getWeightActive(products, 0))}
-            onClick={(e) => console.log(e)}
+            onClick={() => productActions.updateProductWeight(products, 0)}
           >
             <div style={styles.sizeControl}>
               <div style={styles.sizeMain}></div>
@@ -191,7 +185,7 @@ class Settings extends Component {
           </div>
           <div
             style={Object.assign({}, styles.sizeItem, getWeightActive(products, 1))}
-            onClick={(e) => console.log(e)}
+            onClick={() => productActions.updateProductWeight(products, 1)}
           >
             <div
               style={Object.assign({}, styles.sizeControl, {
@@ -202,15 +196,15 @@ class Settings extends Component {
             >
               <div style={styles.sizeMain}></div>
               <div style={styles.sizeSide}>
-                <i style={styles.sizeSideSmall}></i>
-                <i style={styles.sizeSideSmall}></i>
-                <i style={styles.sizeSideSmall}></i>
+                <i style={styles.sizeSideSmall} />
+                <i style={styles.sizeSideSmall} />
+                <i style={styles.sizeSideSmall} />
               </div>
             </div>
           </div>
           <div
             style={Object.assign({}, styles.sizeItem, getWeightActive(products, 2))}
-            onClick={(e) => console.log(e)}
+            onClick={() => productActions.updateProductWeight(products, 2)}
           >
             <div
               style={Object.assign({}, styles.sizeControl, {
@@ -223,18 +217,21 @@ class Settings extends Component {
             </div>
           </div>
         </Paper>
-        {/*<Divider />*/}
       </div>
     );
   }
 }
 
 Settings.propTypes = {
+  // could be helpful for `maybeDeleteProduct` actionCreator. Currently unused.
+  location: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   products: PropTypes.arrayOf(PropTypes.object),
   productActions: PropTypes.shape({
     cloneProduct: PropTypes.func,
     maybeDeleteProduct: PropTypes.func,
-    publishProduct: PropTypes.func
+    publishProduct: PropTypes.func,
+    updateProductWeight: PropTypes.func
   }).isRequired,
   routeActions: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired

@@ -30,7 +30,9 @@ class ProductsGrid extends Component {
 
   render() {
     // const productsInLine = NUMBERS[4];
-    const { layoutSettingsActions, products, productActions } = this.props;
+    const {
+      layoutSettingsActions, products, productActions, selectedProducts
+    } = this.props;
     //const products = this.products();
     // const layouts = this.generateLayouts(products);
 
@@ -74,7 +76,8 @@ class ProductsGrid extends Component {
               <ProductsGridItem
                 layoutSettingsActions={layoutSettingsActions}
                 product={product}
-                publishProduct={productActions.publishProduct}
+                productActions={productActions}
+                selectedProducts={selectedProducts}
               />
           ))}
         </section>
@@ -90,8 +93,12 @@ ProductsGrid.propTypes = {
   }).isRequired,
   products: PropTypes.array.isRequired,
   productActions: PropTypes.shape({
-    publishProduct: PropTypes.func
-  }).isRequired
+    publishProduct: PropTypes.func,
+    selectProduct: PropTypes.func,
+    unselectProduct: PropTypes.func,
+    flushProductsList: PropTypes.func
+  }).isRequired,
+  selectedProducts: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default translate("core")(ProductsGrid);

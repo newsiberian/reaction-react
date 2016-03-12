@@ -92,7 +92,7 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { alert, cart, children, settings } = this.props;
+    const { alert, cart, children, params, settings } = this.props;
     const SettingsComponent = components.getComponent(settings.name);
     return (
 			<div style={styles.wrapper}>
@@ -118,6 +118,7 @@ class CoreLayout extends Component {
           >
             <SettingsComponent
               payload={settings.payload}
+              params={params}
             />
             {/*React.cloneElement(children, {
               handleSettingsClose: () => permActions.togglePermissionSettings({},
@@ -157,6 +158,7 @@ CoreLayout.propTypes = {
   }),
   children: PropTypes.node,
   location: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   settings: PropTypes.shape({
     name: PropTypes.string,
     open: PropTypes.bool,

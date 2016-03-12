@@ -1,19 +1,17 @@
 export const styles = {
   card: {
-    //borderRadius: 0,
-    //boxShadow: "none"
     padding: "1rem",
     position: "relative"
   }
 };
 
-export const linkStyles = {
-  display: "flex",
-  height: 325,
-  boxShadow: "0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5",
-  WebkitTransition: "box-shadow 0.1s ease, -webkit-transform 0.1s ease",
-  transition: "box-shadow 0.1s ease, transform 0.1s ease"
-};
+// this was moved to component
+//export const linkStyles = {
+//  display: "flex",
+//  height: 325,
+//  boxShadow: "0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5",
+//  transition: "box-shadow 0.1s ease, transform 0.1s ease"
+//};
 
 export const fakeImage = {
   // borderTopLeftRadius: "0.28571429rem",

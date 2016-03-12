@@ -28,8 +28,17 @@ class GridControls extends Component {
   //  return this.props.isVisible !== nextProps.isVisible;
   //}
 
+  handleSettingsClick() {
+    // we need to call two actionCreators here
+    this.props.layoutSettingsActions.openSettings({
+      name: "ProductsSettingsContainer",
+      payload: { productIdList: [this.props.product._id] }
+    });
+    this.props.selectProduct(this.props.product._id);
+  }
+
   render() {
-    const { layoutSettingsActions, product, publishProduct, t } = this.props;
+    const { product, publishProduct, t } = this.props;
     const className = product.isVisible ? "fa fa-eye" : "fa fa-eye-slash";
 
     console.log("GridControls: rendering...");
@@ -52,10 +61,7 @@ class GridControls extends Component {
           backgroundColor="#cacbcd"
           icon={<FontIcon className="fa fa-gear" style={styles.icon} />}
           style={styles.button}
-          onClick={() => layoutSettingsActions.openSettings({
-            name: "ProductsSettingsContainer",
-            payload: { productIdList: [product._id] }
-          })}
+          onClick={() => this.handleSettingsClick()}
           title={t("productDetailEdit.moreOptions")}
         />
       </div>
@@ -70,6 +76,7 @@ GridControls.propTypes = {
   }).isRequired,
   product: PropTypes.object.isRequired,
   publishProduct: PropTypes.func.isRequired,
+  selectProduct: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
 };
 

@@ -151,6 +151,8 @@ export const cloneProduct = productOrArray => {
  * maybeDeleteProduct
  * @summary fires `products/deleteProduct` method for a list of products
  * @param {Array} products - array with products objects
+ * @todo we could make this actionCreator better by checking the current route
+ * and redirect accordingly to it.
  * @return {Function}
  */
 export const maybeDeleteProduct = products => {
@@ -192,8 +194,44 @@ export const maybeDeleteProduct = products => {
             }));
           }
         }
+        dispatch({
+          type: types.DELETE_PRODUCT,
+          productIds: productIds,
+          result: res ? "success" : "failed"
+        });
       });
     }
+  };
+};
+
+export const updateProductWeight = (products, weight) => {
+  return dispatch => {
+    products.forEach(product => {
+      const positions = {
+        // the realization of `ReactionCore.getCurrentTag()` method
+        // I think we don't need to set `tag` here
+        // tag: ~location.pathname.indexOf("/shop/product/tag/"),
+        weight: weight,
+        updatedAt: new Date()
+      };
+
+      Meteor.call("products/updateProductPosition", product._id, positions,
+        err => {
+          // todo I'm not sure this method even return error or result
+          if (err) {
+            dispatch(displayAlert({
+              message: i18next.t("productDetail.", { product: title })
+            }));
+            throw new Meteor.Error("Error changing weight " + product.title, error);
+          }
+          dispatch({
+            type: types.CHANGE_PRODUCT_WEIGHT,
+            productId: product._id,
+            result: err ? "failed" : "success"
+          });
+        }
+      );
+    });
   };
 };
 
@@ -243,4 +281,16 @@ export const updateProductField = (productId, field, value) => {
       }
     );
   };
+};
+
+export const selectProduct = (productId) => {
+  return { type: types.SELECT_PRODUCT, productId: productId };
+};
+
+export const unselectProduct = (productId) => {
+  return { type: types.UNSELECT_PRODUCT, productId: productId };
+};
+
+export const flushProductsList = () => {
+  return { type: types.FLUSH_SELECTED_PRODUCTS };
 };
