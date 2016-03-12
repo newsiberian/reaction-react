@@ -109,11 +109,13 @@ export const publishProduct = products => {
 /**
  * cloneProduct
  * @summary fires `cloneProduct` server method
- * @param {array} products - array with products objects
+ * @param {Array|Object} productOrArray - array if actionCreator called from
+ * productGrid, object - if from PDP
  * @return {Function} fires `products/cloneProduct`
  */
-export const cloneProduct = products => {
+export const cloneProduct = productOrArray => {
   return dispatch => {
+    const products = !Array.isArray(productOrArray) ? [productOrArray] : productOrArray;
     Meteor.call("products/cloneProduct", products, (err, res) => {
       if (err) {
         dispatch(displayAlert({ message: err.reason }));
@@ -137,8 +139,8 @@ export const cloneProduct = products => {
         type: types.CLONE_PRODUCTS,
         result: res || null
       });
-      // redirect to clone PDP if we cloning one product
-      if (products.length === 1) {
+      // redirect to clone PDP if we cloning from PDP
+      if (!Array.isArray(productOrArray)) {
         dispatch(routeActions.push(`/shop/product/${res[0]}`));
       }
     });

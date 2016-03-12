@@ -7,6 +7,7 @@ import Divider from "material-ui/lib/divider";
 import FontIcon from "material-ui/lib/font-icon";
 import List from "material-ui/lib/lists/list";
 import ListItem from "material-ui/lib/lists/list-item";
+import Paper from "material-ui/lib/paper";
 import RaisedButton from "material-ui/lib/raised-button";
 import Subheader from "material-ui/lib/Subheader";
 import { formatPrice } from "../../../../client/helpers/i18n";
@@ -15,7 +16,8 @@ import { red500 } from "material-ui/lib/styles/colors";
 const styles = {
   headerContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "#fafafa"
   },
   subHeader: {
     fontSize: 17
@@ -31,6 +33,49 @@ const styles = {
   },
   avatar: {
     borderRadius: 0
+  },
+  sizeContainer: {
+    display: "flex",
+    cursor: "pointer"
+  },
+  sizeItem: {
+    position: "relative",
+    display: "block",
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: "#ffffff"
+    //border: "1px solid #dddddd",
+    //borderWidth: "1px 0",
+    //borderRadius: "0"
+  },
+  sizeControl: {
+    display: "flex",
+    flex: "1 1 auto",
+    width: 50,
+    maxWidth: 100,
+    height: 50,
+    margin: 10
+  },
+  sizeMain: {
+    flex: "1 1 auto",
+    backgroundColor: "#cccccc",
+    border: "1px solid #ffffff"
+  },
+  sizeSide: {
+    display: "flex",
+    flexDirection: "column",
+    flex: "0 0 auto",
+    width: "33%",
+    height: "100%"
+  },
+  sizeSideSmall: {
+    flex: "1 1 auto",
+    display: "block",
+    height: "25%",
+    backgroundColor: "#cccccc",
+    border: "1px solid #ffffff"
   }
 };
 
@@ -52,6 +97,23 @@ const setPublishList = products => {
       title: product.title  // we need it to display messages
     };
   });
+};
+
+const getWeightActive = (products, weight) => {
+  debugger;
+  //return products.forEach(product => {
+  //  const position = product.position || {};
+  //  const currentWeight = position.weight || 0;
+  //  return currentWeight === weight && { backgroundColor: "#666666" };
+  //});
+  for (let product of products) {
+    let position = product.position || {};
+    let currentWeight = position.weight || 0;
+    if (currentWeight === weight) {
+      return { backgroundColor: "#666666" };
+    }
+  }
+  return {};
 };
 
 /**
@@ -92,7 +154,7 @@ class Settings extends Component {
           </div>
         </div>
         <Divider />
-        <div>
+        <List>
           {products.map(product => {
             const media = getMedia(product._id);
             let src;
@@ -111,8 +173,57 @@ class Settings extends Component {
               />
             );
           })}
+        </List>
+        <Divider />
+        <div style={styles.headerContainer}>
+          <Subheader style={styles.subHeader}>{t("productDetailEdit.size")}</Subheader>
         </div>
         <Divider />
+        <Paper style={styles.sizeContainer} zDepth={1} rounded={false}>
+          <div
+            style={Object.assign({}, styles.sizeItem,
+             { paddingLeft: 5, paddingRight: 5 }, getWeightActive(products, 0))}
+            onClick={(e) => console.log(e)}
+          >
+            <div style={styles.sizeControl}>
+              <div style={styles.sizeMain}></div>
+            </div>
+          </div>
+          <div
+            style={Object.assign({}, styles.sizeItem, getWeightActive(products, 1))}
+            onClick={(e) => console.log(e)}
+          >
+            <div
+              style={Object.assign({}, styles.sizeControl, {
+                width: 75,
+                marginLeft: 0,
+                marginRight: 0
+              })}
+            >
+              <div style={styles.sizeMain}></div>
+              <div style={styles.sizeSide}>
+                <i style={styles.sizeSideSmall}></i>
+                <i style={styles.sizeSideSmall}></i>
+                <i style={styles.sizeSideSmall}></i>
+              </div>
+            </div>
+          </div>
+          <div
+            style={Object.assign({}, styles.sizeItem, getWeightActive(products, 2))}
+            onClick={(e) => console.log(e)}
+          >
+            <div
+              style={Object.assign({}, styles.sizeControl, {
+                width: 100,
+                marginLeft: 0,
+                marginRight: 0
+              })}
+            >
+              <div style={styles.sizeMain}></div>
+            </div>
+          </div>
+        </Paper>
+        {/*<Divider />*/}
       </div>
     );
   }
