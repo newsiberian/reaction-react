@@ -22,11 +22,11 @@ const styles = {
     position: "relative",
     verticalAlign: "middle",
     maxWidth: "100%",
-    margin: 2,
+    //margin: 2,
     backgroundColor: "transparent",
     width: "80px",
     height: "auto",
-    fontSize: ".85714286rem"
+    //fontSize: ".85714286rem"
   },
   removeButton: {
     position: "absolute",
@@ -157,7 +157,7 @@ class ImageDetail extends Component {
           //data-id={media._id}
           zDepth={1}
           rounded={false}
-          style={{ padding: 2 }}
+          style={{ padding: 2, margin: "3px 3px 0 0" }}
         >
           <img
             src={media.url({

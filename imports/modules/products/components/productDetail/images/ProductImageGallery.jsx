@@ -1,23 +1,48 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import look, { StyleSheet } from "react-look";
 import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 //import shallowCompare from "react-addons-shallow-compare";
-//import RaisedButton from "material-ui/lib/raised-button";
 import ImageDetail from "./ImageDetail";
 
-const styles = {
+const styles = StyleSheet.create({
   images: {
-    fontSize: 0,
-    margin: "0 -.25rem",
+    //fontSize: 0,
+    //margin: "0 -.25rem",
     textAlign: "center"
   },
   bigImage: {},
-  dropzone: {
-
+  dropzone: { // taken from SUI "ui basic button"
+    display: "inline-block",
+    cursor: "pointer",
+    minHeight: "1em",
+    borderRadius: ".28571429rem",
+    outline: 0,
+    border: "none",
+    verticalAlign: "baseline",
+    margin: "1rem 0 1rem 0",
+    padding: ".78571429em 1.5em",
+    textAlign: "center",
+    textDecoration: "none",
+    transition: "opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease",
+    background: "0 0",
+    color: "rgba(0,0,0,.6)",
+    fontWeight: "400",
+    boxShadow: "0 0 0 1px rgba(34,36,38,.15) inset",
+    ":hover": {
+      backgroundColor: "#fff",
+      color: "rgba(0,0,0,.8)",
+      boxShadow: "0 0 0 1px rgba(34,36,38,.35) inset,0 0 0 0 rgba(34,36,38,.15) inset"
+    },
+    ":active": {
+      background: "#f8f8f8",
+      color: "rgba(0,0,0,.9)",
+      boxShadow: "0 0 0 1px rgba(0,0,0,.15) inset,0 1px 4px 0 rgba(34,36,38,.15) inset"
+    }
   }
-};
+});
 /**
  * @classdesc ProductImageGallery
  */
@@ -117,7 +142,7 @@ class ProductImageGallery extends Component {
     console.log("ProductImageGallery: rendering...");
     return (
       <div>
-        <div /*className="ui images"*/ style={styles.images}>
+        <div /*className="ui images"*/ className={styles.images}>
           {media.length ? media.map((image, i) => {
             return (
               <ImageDetail
@@ -131,15 +156,15 @@ class ProductImageGallery extends Component {
               />
             );
           }) :
-            <img src="/resources/placeholder.gif" style={styles.bigImage} />
+            <img src="/resources/placeholder.gif" className={styles.bigImage} />
           }
         </div>
         {ReactionCore.hasPermission("createProduct") &&
           <Dropzone
+            className={styles.dropzone}
             //className="ui huge fluid basic button"
             onDrop={files => this.handleDrop(files)}
             accept="image/*"
-            style={styles.dropzone}
           >
             {t("productDetail.dropFiles")}
           </Dropzone>
@@ -171,4 +196,4 @@ ProductImageGallery.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(ProductImageGallery);
+export default translate("core")(look(ProductImageGallery));
