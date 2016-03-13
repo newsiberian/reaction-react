@@ -20,12 +20,15 @@ class ProductDetailEdit extends Component {
 
   handleBlur(event, field) {
     const { product, productActions } = this.props;
-    productActions.updateProductField(product._id, field, event.target.value);
+    // ignore fake interactions
+    if (product[field] !== event.target.value) {
+      productActions.updateProductField(product._id, field, event.target.value);
+    }
   }
 
   render() {
     const { product, options, t } = this.props;
-    const { value, field, type, styles, className } = options;
+    const { field, type, styles, className } = options;
     // todo we can"t use Radium on editor don"t know why...
     if (type === "textarea") {
       console.log("ProductDetailEdit: rendering...");

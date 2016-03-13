@@ -14,14 +14,14 @@ export default class GridNotice extends Component {
     if (isSoldOut) {
       if (isBackorder) {
         console.log("GridNotice rendering...");
-        return <span style={ styles }>Backorder</span>
+        return <span style={styles}>Backorder</span>
       }
       console.log("GridNotice rendering...");
-      return <span style={ styles }>Sold Out!</span>
+      return <span style={styles}>Sold Out!</span>
     } else {
       if (isLowQuantity) {
         console.log("GridNotice rendering...");
-        return <span style={ styles }>Limited Supply</span>
+        return <span style={styles}>Limited Supply</span>
       }
     }
     console.log("GridNotice rendering...");

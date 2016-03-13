@@ -183,9 +183,12 @@ function composer(props, onData) {
   //const handle = Meteor.subscribe("Media");
   //if (handle.ready()) {
   if (ReactionCore.Subscriptions.Media.ready()) {
-    const media = getMedia(props.selectedVariant._id);
+    // sometimes `selectedVariant` is not ready to this moment
+    if (props.selectedVariant) {
+      const media = getMedia(props.selectedVariant._id);
 
-    onData(null, { media });
+      onData(null, { media });
+    }
   }
 }
 

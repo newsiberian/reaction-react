@@ -74,11 +74,13 @@ export const numberPickerStyle = {
 };
 
 export const titleStyle = {
-  fontSize: "3.5rem"
+  //fontSize: "3.5rem"
+  fontSize: "5vmin"
 };
 
 export const pageTitleStyle = {
-  fontSize: "2rem"
+  //fontSize: "2rem"
+  fontSize: "4vmin"
 };
 
 export const vendorStyle = {

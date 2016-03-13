@@ -77,7 +77,7 @@ class ProductDetail extends Component {
     const { product, t } = this.props;
     return(
       <div className="row" /*style={{ flex: "1 1 auto" }}*/>
-        <b>
+        <b style={{ flex: "1 1 100%" }}>
           <FontIcon className="fa fa-exclamation-triangle" style={styles.icon} />
           {`${t("productDetail.productManagement")} `}
           {product.isVisible
@@ -118,14 +118,15 @@ class ProductDetail extends Component {
           productActions={productActions}
         />);
     }
+
     // todo add markdown support here:
     return (
       <div
-        key={ index }
-        className={ options.className && options.className }
-        style={ options.styles ? options.styles : {} }
+        key={index}
+        //className={options.className && options.className}
+        style={options.styles ? options.styles : {}}
       >
-        { options.value }
+        {options.value}
       </div>
     );
   }
