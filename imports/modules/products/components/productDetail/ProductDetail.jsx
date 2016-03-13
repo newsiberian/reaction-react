@@ -199,7 +199,7 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { media, product, selectedVariant } = this.props;
+    const { product, selectedVariant } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
@@ -229,7 +229,6 @@ class ProductDetail extends Component {
               <div className="col-xs-12 col-sm-5">
                 {/* Image Gallery */}
                 <ProductImageGalleryContainer
-                  media={media}
                   product={product}
                   selectedVariant={selectedVariant}
                 />
@@ -352,4 +351,4 @@ ProductDetail.propTypes = {
   //})
 };
 
-export default translate("core")/*(DragDropContext(HTML5Backend)*/(ProductDetail/*)*/);
+export default translate("core")(DragDropContext(HTML5Backend)(ProductDetail));

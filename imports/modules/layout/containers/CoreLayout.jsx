@@ -100,8 +100,8 @@ class CoreLayout extends Component {
           <LayoutHeaderContainer cart={cart} location={location} />
           <main role="main" style={styles.main}>
             {children}
+            <LayoutFooter />
           </main>
-          <LayoutFooter />
         </div>
 
         { /* action bar section */ }

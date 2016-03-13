@@ -10,9 +10,13 @@ import ImageDetail from "./ImageDetail";
 const styles = {
   images: {
     fontSize: 0,
-    margin: "0 -.25rem"
+    margin: "0 -.25rem",
+    textAlign: "center"
   },
-  bigImage: {}
+  bigImage: {},
+  dropzone: {
+
+  }
 };
 /**
  * @classdesc ProductImageGallery
@@ -118,7 +122,7 @@ class ProductImageGallery extends Component {
                 productTitle={product.title}
               />
             );
-            }) :
+          }) :
             <img src="/resources/placeholder.gif" style={styles.bigImage} />
           }
         </div>
@@ -126,12 +130,10 @@ class ProductImageGallery extends Component {
           <Dropzone
             //className="ui huge fluid basic button"
             onDrop={files => this.handleDrop(files)}
+            accept="image/*"
+            style={styles.dropzone}
           >
-            <RaisedButton
-              label={t("productDetail.dropFiles")}
-              fullWidth={true}
-              //style={styles.button}
-            />
+            {t("productDetail.dropFiles")}
           </Dropzone>
         }
       </div>

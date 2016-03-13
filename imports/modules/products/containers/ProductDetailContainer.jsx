@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { ReactionCore, ReactionSubscriptions } from "meteor/reactioncommerce:core";
-import * as alertActions from "../../layout/actions/alert";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import * as productActions from "../actions/product";
 import Loading from "../../layout/components/Loading";
 import ProductDetail from "../components/productDetail/ProductDetail";
@@ -59,13 +58,10 @@ class ProductDetailContainer extends Component {
 ProductDetailContainer.propTypes = {
   productId: PropTypes.string,
   variantId: PropTypes.string,
-  //alertActions: PropTypes.shape({
-  //  displayAlert: PropTypes.func
-  //}).isRequired,
   productActions: PropTypes.shape({
     publishProduct: PropTypes.func
   }).isRequired,
-  params: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired, // TODO why it is here?
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object,
   tags: PropTypes.array
@@ -73,7 +69,6 @@ ProductDetailContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    //alert: state.layout.alert,
     productId: state.shop.product.productId,
     variantId: state.shop.product.variantId
   };
@@ -81,7 +76,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //alertActions: bindActionCreators(alertActions, dispatch),
     productActions: bindActionCreators(productActions, dispatch)
   };
 }
@@ -91,21 +85,12 @@ function composer(props, onData) {
   //const productsHandle = Meteor.subscribe("Product", props.params.handle);
   // pass down as props
   if (Meteor.subscribe("Product", props.params.handle).ready() &&
-    ReactionCore.Subscriptions.Tags.ready() &&
-    Meteor.subscribe("Media").ready()/*ReactionCore.Subscriptions.Media.ready()*/) {
+    ReactionCore.Subscriptions.Tags.ready()) {
     const product = getProduct(props.params.handle);
     const tags = getTags(product);
     const selectedVariant = getSelectedVariant(props.variantId);
-    const media = ReactionCore.Collections.Media.find({
-      "metadata.variantId": selectedVariant._id
-    }, {
-      sort: {
-        "metadata.priority": 1
-      }
-    }).fetch();
 
     onData(null, {
-      media,
       product,
       selectedVariant,
       tags

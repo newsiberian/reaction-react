@@ -5,12 +5,13 @@ export const styles = {
     overflow: "hidden"
   },
   container: {
+    display: "flex",
     flex: "1 1 auto",
     flexDirection: "column",
     height: "100vh"
   },
   main: {
-    display: "flex",
+    // display: "flex",
     overflow: "auto",
     minHeight: "80vh", // todo: разобраться с этим стилем
     height: "100%", // todo возможно без этого боковая панель не будет растягиваться

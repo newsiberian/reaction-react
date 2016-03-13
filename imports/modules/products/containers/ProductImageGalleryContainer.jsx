@@ -7,10 +7,8 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import ProductImageGallery from "../components/productDetail/images/ProductImageGallery";
 import * as mediaActions from "../actions/media";
 
-//const { Media } = ReactionCore.Collections;
-
 const getMedia = id => {
-  const mediaArray = Media.find({
+  const mediaArray = ReactionCore.Collections.Media.find({
     "metadata.variantId": id
   }, {
     sort: {
@@ -180,45 +178,22 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-//function composer(props, onData) {
-//  // TODO: Maybe we need subscribe to product Media here.
-//  //const handle = Meteor.subscribe("Media");
-//  //if (handle.ready()) {
-//  if (ReactionCore.Subscriptions.Media.ready()) {
-//    const { selectedVariant } = props;
-//    //const media = getMedia(selectedVariant._id);
-//    if (selectedVariant._id) {
-//      const media = Media.find({
-//        "metadata.variantId": selectedVariant._id
-//      }, {
-//        sort: {
-//          "metadata.priority": 1
-//        }
-//      }).fetch();
-//
-//      onData(null, {
-//        media
-//      });
-//    }
-//  }/* else {
-//    onData(null, {
-//      media: []
-//    });
-//  }*/
-//}
+function composer(props, onData) {
+  // TODO: Maybe we need subscribe to product Media here.
+  //const handle = Meteor.subscribe("Media");
+  //if (handle.ready()) {
+  if (ReactionCore.Subscriptions.Media.ready()) {
+    const media = getMedia(props.selectedVariant._id);
 
-//const ProductImageGalleryContainerWithData = composeWithTracker(
-//  composer
-//)(ProductImageGalleryContainer);
+    onData(null, { media });
+  }
+}
 
-//export default connect(
-//  mapStateToProps,
-//  mapDispatchToProps
-//)(ProductImageGalleryContainerWithData);
+const ProductImageGalleryContainerWithData = composeWithTracker(
+  composer
+)(ProductImageGalleryContainer);
 
-//export default connect(
-//  mapStateToProps,
-//  mapDispatchToProps
-//)(ProductImageGalleryContainer);
-
-export default ProductImageGalleryContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductImageGalleryContainerWithData);

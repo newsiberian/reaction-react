@@ -4,6 +4,9 @@ import SignIn from "../../accounts/components/SignIn.jsx";
 import FontIcon from "material-ui/lib/font-icon";
 
 const styles = {
+  container: {
+    minHeight: "80vh"
+  },
   header: {
     fontSize: "2rem",
     marginTop: "2rem"
@@ -13,30 +16,28 @@ const styles = {
   }
 };
 
-const Unauthorized = props => {
-  const { accountsActions, location, t } = props;
-  return (
-    <section className="row center-xs">
-      <h1 className="col-xs-10" style={styles.header}>
-        <FontIcon
-          className="fa fa-exclamation-triangle"
-          style={styles.icon}
-        />
-        <br />
-        {t("app.warning")}
-        {" "}
-        {t("app.unauthorizedMessage")}
-      </h1>
-      <figure>
-        <SignIn
-          login={accountsActions.login}
-          prevPath={location.state.prevPath}
-          showOauth={false}
-        />
-      </figure>
-    </section>
-  );
-};
+const Unauthorized = props => (
+  <section className="row center-xs" style={styles.container}>
+    <h1 className="col-xs-10" style={styles.header}>
+      <FontIcon
+        className="fa fa-exclamation-triangle"
+        style={styles.icon}
+      />
+      <br />
+      {props.t("app.warning")}
+      {" "}
+      {props.t("app.unauthorizedMessage")}
+    </h1>
+    <figure>
+      <SignIn
+        login={props.accountsActions.login}
+        prevPath={props.location.state.prevPath}
+        showOauth={false}
+      />
+    </figure>
+  </section>
+);
+
 
 Unauthorized.propTypes = {
   accountsActions: PropTypes.shape({

@@ -22,6 +22,7 @@ const styles = {
     position: "relative",
     verticalAlign: "middle",
     maxWidth: "100%",
+    margin: 2,
     backgroundColor: "transparent",
     width: "80px",
     height: "auto",
@@ -124,12 +125,12 @@ const imageTarget = {
 //  isDragging: monitor.isDragging()
 //}))
 class ImageDetail extends Component {
-  /*componentDidMount() {
+  componentDidMount() {
     const { media } = this.props;
     const img = new Image();
     img.onload = () => this.props.connectDragPreview(img);
     img.src = media.thumb;
-  }*/
+  }
 
   /**
    * handleRemoveClick
@@ -142,7 +143,7 @@ class ImageDetail extends Component {
   }
 
   render() {
-    const { isDragging, /*connectDragSource, connectDropTarget,*/
+    const { isDragging, connectDragSource, connectDropTarget,
       index, media, productTitle
     } = this.props;
     //const className = index === 0 ? "ui fluid image" : "ui tiny image";
@@ -156,6 +157,7 @@ class ImageDetail extends Component {
           //data-id={media._id}
           zDepth={1}
           rounded={false}
+          style={{ padding: 2 }}
         >
           <img
             src={media.url({
@@ -181,9 +183,9 @@ class ImageDetail extends Component {
 }
 
 ImageDetail.propTypes = {
-  //connectDragSource: PropTypes.func,
-  //connectDragPreview: PropTypes.func,
-  //isDragging: PropTypes.bool,
+  connectDragSource: PropTypes.func,
+  connectDragPreview: PropTypes.func,
+  isDragging: PropTypes.bool,
   index: PropTypes.number.isRequired,
   media: PropTypes.object,
   mediaActions: PropTypes.shape({
@@ -194,12 +196,10 @@ ImageDetail.propTypes = {
   productTitle: PropTypes.string.isRequired
 };
 
-//export default DragSource(Types.MEDIA, imageSource, (connect, monitor) => ({
-//  connectDragSource: connect.dragSource(),
-//  connectDragPreview: connect.dragPreview(),
-//  isDragging: monitor.isDragging()
-//}))(DropTarget(Types.MEDIA, imageTarget, connect => ({
-//  connectDropTarget: connect.dropTarget()
-//}))(ImageDetail));
-
-export default ImageDetail;
+export default DragSource(Types.MEDIA, imageSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging()
+}))(DropTarget(Types.MEDIA, imageTarget, connect => ({
+  connectDropTarget: connect.dropTarget()
+}))(ImageDetail));
