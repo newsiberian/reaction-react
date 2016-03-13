@@ -115,8 +115,17 @@ const getWeightActive = (products, weight) => {
 class Settings extends Component {
   render() {
     const { products, productActions, routeActions, t } = this.props;
-    // todo show something else if products.length zero
-    // todo this also affect on us when product deleted
+
+    if (!products.length) {
+      return (
+        <div style={{ margin: "1rem" }}>
+          {t("productDetailEdit.noSelectedProducts")}
+          <i className="fa fa-gear" />
+          {t("productDetailEdit.orShiftCtrlCmd")}
+        </div>
+      );
+    }
+
     const publishClassName = products[0].isVisible ? "fa fa-eye" : "fa fa-eye-slash";
     const publishList = setPublishList(products);
     return (
