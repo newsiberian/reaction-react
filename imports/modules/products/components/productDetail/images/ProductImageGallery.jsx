@@ -4,7 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 //import shallowCompare from "react-addons-shallow-compare";
-import RaisedButton from "material-ui/lib/raised-button";
+//import RaisedButton from "material-ui/lib/raised-button";
 import ImageDetail from "./ImageDetail";
 
 const styles = {
@@ -22,6 +22,12 @@ const styles = {
  * @classdesc ProductImageGallery
  */
 class ProductImageGallery extends Component {
+  constructor(props) {
+    super(props);
+    this.handleMoveMedia = this.handleMoveMedia.bind(this);
+    this.handleDropMedia = this.handleDropMedia.bind(this);
+  }
+
   //shouldComponentUpdate(nextProps) {
   //  // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
   //  // return !shallowCompare(this, nextProps.media);
@@ -74,6 +80,7 @@ class ProductImageGallery extends Component {
    * @param hoverIndex
    */
   handleMoveMedia(dragIndex, hoverIndex) {
+    debugger;
     const { media } = this.props;
     const dragMedia = media[dragIndex];
 
@@ -94,8 +101,9 @@ class ProductImageGallery extends Component {
    * @fires Media.update
    */
   handleDropMedia() {
-    const { media } = this.state;
+    const { media } = this.props;
     for (let image of media) {
+      // todo create method for it?
       Media.update(image._id, {
         $set: {
           "metadata.priority": _.indexOf(media, image)

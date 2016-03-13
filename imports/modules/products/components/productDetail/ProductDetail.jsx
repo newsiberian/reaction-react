@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
+import look, { StyleSheet } from "react-look";
 import { DragDropContext } from "react-dnd";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import HTML5Backend from "react-dnd-html5-backend";
 import FontIcon from "material-ui/lib/font-icon";
 import Paper from "material-ui/lib/paper";
-import { formatPrice } from "../../../../client/helpers/i18n";
+//import { formatPrice } from "../../../../client/helpers/i18n";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
 import ProductTagInputForm from "./tags/ProductTagInputForm";
@@ -19,31 +20,72 @@ import VariantList from "./variants/VariantList";
 //  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
 //  inputHoverStyle, inputStyle
 //} from "../../styles/productDetail";
-import styles, {
-  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
-  inputHoverStyle, inputStyle
+import styles, { editStyles, priceStyle
+  /*titleStyle, pageTitleStyle, descriptionStyle, vendorStyle,*/
+  /*inputHoverStyle, inputStyle*/
 } from "../../styles/productDetail";
 
-const titleOptions = {
-  field: "title",
-  type: "input",
-  styles: Object.assign({}, titleStyle, inputHoverStyle, inputStyle)
+const c = StyleSheet.combineStyles;
+
+const getOptions = (field, product) => {
+  const isAdmin = ReactionCore.hasPermission("createProduct");
+  switch(field) {
+  case "title":
+    return {
+      field: "title",
+      type: "input",
+      value: product[field],
+      className: isAdmin ? c(editStyles.input, editStyles.title, editStyles.hover) :
+        c(editStyles.title)
+    };
+  case "pageTitle":
+    return {
+      field: "pageTitle",
+      type: "input",
+      value: product[field],
+      className: isAdmin ? c(editStyles.pageTitle, editStyles.input, editStyles.hover) :
+        c(editStyles.pageTitle)
+    };
+  case "vendor":
+    return {
+      field: "vendor",
+      type: "input",
+      value: product[field],
+      className: c(editStyles.vendor, editStyles.hover)
+    };
+    case "description":
+      return {
+        field: "description",
+        type: "textarea",
+        value: product[field],
+        className: c(editStyles.description, editStyles.hover)
+      };
+  default:
+    return {}; // should not fires
+  }
 };
-const pageTitleOptions = {
-  field: "pageTitle",
-  type: "input",
-  styles: Object.assign({}, pageTitleStyle, inputHoverStyle, inputStyle)
-};
-const vendorOptions = {
-  field: "vendor",
-  type: "input",
-  styles: Object.assign({}, vendorStyle, inputHoverStyle)
-};
-const descriptionOptions = {
-  field: "description",
-  type: "textarea",
-  styles: Object.assign({}, descriptionStyle, inputHoverStyle)
-};
+//
+//const titleOptions = {
+//  field: "title",
+//  type: "input",
+//  //className: c(styles.input, styles.title, styles.hover)
+//  className: c(titleStyle, inputHoverStyle, inputStyle)
+//};
+//const pageTitleOptions = {
+//  field: "pageTitle",
+//  type: "input",
+//  className: c(pageTitleStyle, inputHoverStyle, inputStyle)
+//};
+//const vendorOptions = {
+//  field: "vendor",
+//  type: "input",
+//  className: c(vendorStyle, inputHoverStyle)
+//};
+//const descriptionOptions = {
+//  field: "description",
+//  type: "textarea",
+//  className: c(descriptionStyle, inputHoverStyle)
+//};
 
 const social = [
   {
@@ -113,6 +155,7 @@ class ProductDetail extends Component {
       return (
         <ProductDetailEdit
           key={index}
+          //field={field}
           options={options}
           product={product}
           productActions={productActions}
@@ -123,8 +166,8 @@ class ProductDetail extends Component {
     return (
       <div
         key={index}
-        //className={options.className && options.className}
-        style={options.styles ? options.styles : {}}
+        className={options.className}
+        //style={options.styles ? options.styles : {}}
       >
         {options.value}
       </div>
@@ -217,11 +260,11 @@ class ProductDetail extends Component {
         <div className="row" itemScope itemType="http://schema.org/Product">
           {/* Titles */}
           <header className="col-xs-12">
-            <h1 itemProp="name">
-              {this.renderFieldComponent(titleOptions)}
+            <h1 itemProp="name" style={styles.titleHeader}>
+              {this.renderFieldComponent(getOptions("title", product))}
             </h1>
-            <h2 itemProp="alternateName">
-              {this.renderFieldComponent(pageTitleOptions)}
+            <h2 itemProp="alternateName" style={styles.pageTitleHeader}>
+              {this.renderFieldComponent(getOptions("pageTitle", product))}
             </h2>
           </header>
           {/* Product Details */}
@@ -352,4 +395,4 @@ ProductDetail.propTypes = {
   //})
 };
 
-export default translate("core")(DragDropContext(HTML5Backend)(ProductDetail));
+export default translate("core")(DragDropContext(HTML5Backend)(look(ProductDetail)));

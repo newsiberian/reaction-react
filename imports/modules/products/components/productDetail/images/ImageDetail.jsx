@@ -151,7 +151,7 @@ class ImageDetail extends Component {
     const style = index === 0 ? Object.assign(styles.fluidImage, opacity) :
       Object.assign(styles.tinyImage, opacity);
     console.log(`ImageGallery ${index}: rendering...`);
-    return /*connectDragSource(connectDropTarget*/(
+    return connectDragSource(connectDropTarget(
       <div style={style}>
         <Paper
           //data-id={media._id}
@@ -178,7 +178,7 @@ class ImageDetail extends Component {
           }
         </Paper>
       </div>
-    /*)*/);
+    ));
   }
 }
 

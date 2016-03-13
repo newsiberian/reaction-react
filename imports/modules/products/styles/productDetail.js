@@ -1,3 +1,5 @@
+import { StyleSheet } from "react-look";
+
 export default {
   container: {
     paddingTop: "2rem",
@@ -23,32 +25,78 @@ export default {
   },
   header: {
 
+  },
+  titleHeader: {
+    textAlign: "center"
+  },
+  pageTitleHeader: {
+    color: "#1999dd",
+    textAlign: "center",
+    fontWeight: "400"
   }
 };
-export const inputHoverStyle = {
+
+export const editStyles = StyleSheet.create({
+  input: {
+    textAlign: "center",
+    width: "100%",
+    borderColor: "#fafafa",
+    borderWidth: 1,
+    borderStyle: "solid"
+  },
+  title: {
+    //fontSize: "3.5rem"
+    fontSize: "5vmin"
+  },
+  pageTitle: {
+    //fontSize: "2rem"
+    fontSize: "4vmin",
+    color: "inherit"
+  },
+  vendor: {
+    borderColor: "#fafafa",
+    borderWidth: 1,
+    borderStyle: "solid",
+    maxWidth: "30%",
+    marginTop: "1rem",
+    marginBottom: "1rem"
+  },
+  description: {
+
+  },
+  hover: {
+    ":hover": {
+      borderColor: "#cccccc",
+      borderWidth: 1,
+      borderStyle: "dotted"
+    }
+  }
+});
+
+export const inputHoverStyle = StyleSheet.create({
   ":hover": {
     borderColor: "#cccccc",
     borderWidth: 1,
     borderStyle: "dotted"
   }
-};
+});
 
-export const inputStyle = {
+export const inputStyle = StyleSheet.create({
   textAlign: "center",
   width: "100%",
   borderColor: "#fafafa",
   borderWidth: 1,
   borderStyle: "solid"
-};
+});
 
-export const addToCartStyle = {
+export const addToCartStyle = StyleSheet.create({
   display: "inline-flex",
   justifyContent: "center",
   alignItems: "baseline",
   position: "relative"
-};
+});
 
-export const numberPickerButtonsStyle = {
+export const numberPickerButtonsStyle = StyleSheet.create({
   // marginRight: "2rem",
 
   position: "absolute",
@@ -56,9 +104,9 @@ export const numberPickerButtonsStyle = {
   left: 10,
   // float: "left",
   fontSize: "1em"
-};
+});
 
-export const numberPickerStyle = {
+export const numberPickerStyle = StyleSheet.create({
   width: "4rem",
   borderRadius: 0,
   // borderColor: "#ffffff",
@@ -71,32 +119,32 @@ export const numberPickerStyle = {
   paddingLeft: 5,
   paddingTop: 5,
   paddingBottom: 5
-};
+});
 
-export const titleStyle = {
+export const titleStyle = StyleSheet.create({
   //fontSize: "3.5rem"
   fontSize: "5vmin"
-};
+});
 
-export const pageTitleStyle = {
+export const pageTitleStyle = StyleSheet.create({
   //fontSize: "2rem"
   fontSize: "4vmin"
-};
+});
 
-export const vendorStyle = {
+export const vendorStyle = StyleSheet.create({
   borderColor: "#fafafa",
   borderWidth: 1,
   borderStyle: "solid",
   maxWidth: "30%",
   marginTop: "1rem",
   marginBottom: "1rem"
-};
+});
 
-export const descriptionStyle = {
+export const descriptionStyle = StyleSheet.create({
 
-};
+});
 
-export const priceStyle = {
+export const priceStyle = StyleSheet.create({
   fontWeight: "bold",
   fontSize: "3.5rem"
-};
+});
