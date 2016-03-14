@@ -58,3 +58,11 @@ export const removeMedia = id => {
     dispatch({ type: types.REMOVE_MEDIA, mediaId: id });
   };
 };
+
+export const syncMedia = mediaIdsArray => {
+  return { type: types.SYNC_MEDIA, mediaIdsArray: mediaIdsArray };
+};
+
+export const moveMedia = (dragIndex, hoverIndex) => {
+  return { type: types.MOVE_MEDIA, dragIndex: dragIndex, hoverIndex: hoverIndex };
+};

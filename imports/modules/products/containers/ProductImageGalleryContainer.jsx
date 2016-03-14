@@ -161,14 +161,19 @@ ProductImageGalleryContainer.propTypes = {
   media: PropTypes.array,
   mediaActions: PropTypes.shape({
     uploadMedia: PropTypes.func,
-    removeMedia: PropTypes.func
+    removeMedia: PropTypes.func,
+    syncMedia: PropTypes.func,
+    moveMedia: PropTypes.func
   }),
+  mediaIdsArray: PropTypes.arrayOf(PropTypes.string),
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    mediaIdsArray: state.shop.product.mediaIdsArray
+  };
 }
 
 function mapDispatchToProps(dispatch) {

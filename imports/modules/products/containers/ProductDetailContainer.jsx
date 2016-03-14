@@ -84,8 +84,8 @@ ProductDetailContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     //productId: state.shop.product.productId,
-    //variantId: state.shop.product.variantId,
-    productState: state.shop.product
+    variantId: state.shop.product.ids.variantId,
+    productState: state.shop.product.fields
   };
 }
 

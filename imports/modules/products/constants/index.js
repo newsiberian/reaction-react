@@ -9,6 +9,8 @@ export const ROLLBACK_FIELD_STATE = "ROLLBACK_FIELD_STATE";
 
 export const UPLOAD_MEDIA = "UPLOAD_MEDIA";
 export const REMOVE_MEDIA = "REMOVE_MEDIA";
+export const SYNC_MEDIA = "SYNC_MEDIA"; // with minimongo
+export const MOVE_MEDIA = "MOVE_MEDIA";
 
 export const TOGGLE_PRODUCT_VISIBILITY = "TOGGLE_PRODUCT_VISIBILITY";
 export const CLONE_PRODUCTS = "CLONE_PRODUCTS";

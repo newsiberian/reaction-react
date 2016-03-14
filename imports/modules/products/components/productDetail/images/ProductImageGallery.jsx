@@ -2,15 +2,13 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import look, { StyleSheet } from "react-look";
-import { FS } from "meteor/cfs:base-package";
+//import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 //import shallowCompare from "react-addons-shallow-compare";
 import ImageDetail from "./ImageDetail";
 
 const styles = StyleSheet.create({
   images: {
-    //fontSize: 0,
-    //margin: "0 -.25rem",
     textAlign: "center"
   },
   bigImage: {},
@@ -43,6 +41,16 @@ const styles = StyleSheet.create({
     }
   }
 });
+
+const getMediaIdsArray = media => media.map(file => file._id);
+
+// @link http://stackoverflow.com/a/22395463
+// we comparing only by id
+const arrayCompare = (array1, array2) => (array1.length === array2.length) &&
+array1.every(function (element, index) {
+  return element._id === array2[index]._id;
+});
+
 /**
  * @classdesc ProductImageGallery
  */
@@ -51,6 +59,15 @@ class ProductImageGallery extends Component {
     super(props);
     this.handleMoveMedia = this.handleMoveMedia.bind(this);
     this.handleDropMedia = this.handleDropMedia.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // if we receive new media, we should extract `_id` from it and rebuild
+    // `store` `mediaIdsArray` to keep things in sync
+    if (!arrayCompare(nextProps.media, this.props.media)) {
+      const mediaIdsArray = getMediaIdsArray(nextProps.media);
+      this.props.mediaActions.syncMedia(mediaIdsArray);
+    }
   }
 
   //shouldComponentUpdate(nextProps) {
@@ -81,18 +98,7 @@ class ProductImageGallery extends Component {
    * @param hoverIndex
    */
   handleMoveMedia(dragIndex, hoverIndex) {
-    debugger;
-    const { media } = this.props;
-    const dragMedia = media[dragIndex];
-
-    //this.setState(update(this.state, {
-    //  media: {
-    //    $splice: [
-    //      [dragIndex, 1],
-    //      [hoverIndex, 0, dragMedia]
-    //    ]
-    //  }
-    //}));
+    this.props.mediaActions.moveMedia(dragIndex, hoverIndex);
   }
 
   /**
@@ -102,30 +108,36 @@ class ProductImageGallery extends Component {
    * @fires Media.update
    */
   handleDropMedia() {
-    const { media } = this.props;
-    for (let image of media) {
+    if (!ReactionCore.hasPermission("createProduct")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    const { media, mediaIdsArray } = this.props;
+    // we don't mutate `media`. Instead of this we just utilize `mediaIdsArray`
+    // as correct indexes provider
+    media.forEach(image => {
       // todo create method for it?
-      Media.update(image._id, {
+      ReactionCore.Collections.Media.update(image._id, {
         $set: {
-          "metadata.priority": _.indexOf(media, image)
+          "metadata.priority": _.indexOf(mediaIdsArray, image._id)
         }
       });
-    }
+    });
   }
 
   render() {
-    const { media, mediaActions, product, t } = this.props;
+    const { media, mediaActions, mediaIdsArray, product, t } = this.props;
     console.log("ProductImageGallery: rendering...");
     return (
       <div>
-        <div /*className="ui images"*/ className={styles.images}>
-          {media.length ? media.map((image, i) => {
+        <div className={styles.images}>
+          {mediaIdsArray.length ? mediaIdsArray.map((id, i) => {
             // TODO the same as below
+            const files = media.filter(image => image._id === id);
             return (
               <ImageDetail
-                key={image._id}
+                key={id}
                 index={i}
-                media={image}
+                media={files[0]}
                 mediaActions={mediaActions}
                 moveMedia={this.handleMoveMedia}
                 onDropMedia={this.handleDropMedia}
@@ -138,7 +150,7 @@ class ProductImageGallery extends Component {
         </div>
         {ReactionCore.hasPermission("createProduct") &&
           // TODO should we add check of existence of variant here? If yes, we will
-          // be not see this until varaint is created, but with productBundle type
+          // be not see this until variant is created, but with productBundle type
           // it could be messy
           <Dropzone
             className={styles.dropzone}
@@ -157,21 +169,13 @@ ProductImageGallery.propTypes = {
   media: PropTypes.array.isRequired,
   mediaActions: PropTypes.shape({
     uploadMedia: PropTypes.func,
-    removeMedia: PropTypes.func
+    removeMedia: PropTypes.func,
+    syncMedia: PropTypes.func,
+    moveMedia: PropTypes.func
   }),
-  //onDrop: PropTypes.func.isRequired,
-  //onDropMedia: PropTypes.func.isRequired,
-  //onRemoveClick: PropTypes.func.isRequired,
-  //moveMedia: PropTypes.func.isRequired
+  mediaIdsArray: PropTypes.arrayOf(PropTypes.string),
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object,
-  //productActions: PropTypes.shape({
-  //  setProductId: PropTypes.func,
-  //  setVariantId: PropTypes.func,
-  //  toggleVisibility: PropTypes.func,
-  //  changeProductField: PropTypes.func,
-  //  updateProductField: PropTypes.func
-  //}).isRequired,
   t: PropTypes.func.isRequired
 };
 

@@ -4,9 +4,6 @@ import { DragSource, DropTarget } from "react-dnd";
 import Paper from "material-ui/lib/paper";
 import IconButton from "material-ui/lib/icon-button";
 import FontIcon from "material-ui/lib/font-icon";
-//import FloatingActionButton from "material-ui/lib/floating-action-button";
-//import NavigationClose from "material-ui/lib/svg-icons/navigation/close";
-//import { removeButtonStyle } from "../../../styles/imageDetail";
 
 const styles = {
   fluidImage: {
@@ -129,7 +126,7 @@ class ImageDetail extends Component {
     const { media } = this.props;
     const img = new Image();
     img.onload = () => this.props.connectDragPreview(img);
-    img.src = media.thumb;
+    img.src = media.url({ store: "thumbnail" }); // media.thumb;
   }
 
   /**
@@ -143,8 +140,9 @@ class ImageDetail extends Component {
   }
 
   render() {
-    const { isDragging, connectDragSource, connectDropTarget,
-      index, media, productTitle
+    const {
+      isDragging, connectDragSource, connectDropTarget, index, media,
+      productTitle
     } = this.props;
     //const className = index === 0 ? "ui fluid image" : "ui tiny image";
     const opacity = isDragging ? 0.4 : 1;
@@ -154,7 +152,6 @@ class ImageDetail extends Component {
     return connectDragSource(connectDropTarget(
       <div style={style}>
         <Paper
-          //data-id={media._id}
           zDepth={1}
           rounded={false}
           style={{ padding: 2, margin: "3px 3px 0 0" }}
