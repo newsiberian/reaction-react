@@ -283,6 +283,11 @@ export const updateProductField = (productId, field, value) => {
   };
 };
 
+// this needed to rollback `isChanged` field state to remove animation effect
+export const rollbackFieldState = field => {
+  return { type: types.ROLLBACK_FIELD_STATE, field: field };
+};
+
 export const selectProduct = (productId) => {
   return { type: types.SELECT_PRODUCT, productId: productId };
 };

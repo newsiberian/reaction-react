@@ -56,21 +56,34 @@ class ProductDetailContainer extends Component {
 }
 
 ProductDetailContainer.propTypes = {
-  productId: PropTypes.string,
-  variantId: PropTypes.string,
+  //productId: PropTypes.string,
+  //variantId: PropTypes.string,
   productActions: PropTypes.shape({
-    publishProduct: PropTypes.func
+    setProductId: PropTypes.func,
+    setVariantId: PropTypes.func,
+    publishProduct: PropTypes.func,
+    changeProductField: PropTypes.func,
+    updateProductField: PropTypes.func,
+    rollbackFieldState: PropTypes.func,
+    validateBeforeToggleVisibility: PropTypes.func
   }).isRequired,
   params: PropTypes.object.isRequired, // TODO why it is here?
   product: PropTypes.object.isRequired,
+  productState: PropTypes.shape({ // product state from `store`
+    title: PropTypes.object,
+    pageTitle: PropTypes.object,
+    productId: PropTypes.string,
+    variantId: PropTypes.string
+  }),
   selectedVariant: PropTypes.object,
   tags: PropTypes.array
 };
 
 function mapStateToProps(state) {
   return {
-    productId: state.shop.product.productId,
-    variantId: state.shop.product.variantId
+    //productId: state.shop.product.productId,
+    //variantId: state.shop.product.variantId,
+    productState: state.shop.product
   };
 }
 
@@ -88,7 +101,7 @@ function composer(props, onData) {
     ReactionCore.Subscriptions.Tags.ready()) {
     const product = getProduct(props.params.handle);
     const tags = getTags(product);
-    const selectedVariant = getSelectedVariant(props.variantId);
+    const selectedVariant = getSelectedVariant(props.productState.variantId);
 
     onData(null, {
       product,

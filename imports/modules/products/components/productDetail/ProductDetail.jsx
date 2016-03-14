@@ -146,7 +146,7 @@ class ProductDetail extends Component {
   }
 
   renderFieldComponent(options, index = 1) {
-    const { product, productActions } = this.props;
+    const { product, productActions, productState } = this.props;
     if (ReactionCore.hasPermission("createProduct")) {
       return (
         <ProductDetailEdit
@@ -155,6 +155,7 @@ class ProductDetail extends Component {
           options={options}
           product={product}
           productActions={productActions}
+          productState={productState}
         />);
     }
 
@@ -355,8 +356,15 @@ ProductDetail.propTypes = {
     publishProduct: PropTypes.func,
     changeProductField: PropTypes.func,
     updateProductField: PropTypes.func,
+    rollbackFieldState: PropTypes.func,
     validateBeforeToggleVisibility: PropTypes.func
   }).isRequired,
+  productState: PropTypes.shape({ // product state from `store`
+    title: PropTypes.object,
+    pageTitle: PropTypes.object,
+    productId: PropTypes.string,
+    variantId: PropTypes.string
+  }),
   t: PropTypes.func.isRequired
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,

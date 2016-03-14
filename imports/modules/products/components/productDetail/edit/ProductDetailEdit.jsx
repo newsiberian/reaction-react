@@ -2,14 +2,16 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 //import {Editor, EditorState} from 'draft-js';
 import shallowCompare from "react-addons-shallow-compare";
-import look from "react-look";
+import look, { StyleSheet } from "react-look";
+
+const c = StyleSheet.combineStyles;
 
 class ProductDetailEdit extends Component {
-  shouldComponentUpdate(nextProps) {
-    // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-    return !shallowCompare(this, nextProps.product.title);
-    //return !_.isEqual(nextProps.media, this.props.product);
-  }
+  //shouldComponentUpdate(nextProps) {
+  //  // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
+  //  return !shallowCompare(this, nextProps.product.title);
+  //  //return !_.isEqual(nextProps.media, this.props.product);
+  //}
 
   handleChange(event, field) {
     const { product, productActions } = this.props;
@@ -28,7 +30,6 @@ class ProductDetailEdit extends Component {
     const { product, options, t } = this.props;
     const { field, type, className } = options;
 
-    // todo we can"t use Radium on editor don"t know why...
     if (type === "textarea") {
       console.log("ProductDetailEdit: rendering...");
       // todo непонятно зачем в темплейте product-detail-message. я его пока не скопировал
@@ -58,7 +59,7 @@ class ProductDetailEdit extends Component {
     return (
       <input
         type="text"
-        className={className}
+        className={c(className, styles.onChange)}
         //value={product[field]}
         defaultValue={product[field]}
         onChange={event => this.handleChange(event, field)}
@@ -78,8 +79,32 @@ ProductDetailEdit.propTypes = {
     className: PropTypes.string
   }).isRequired,
   product: PropTypes.object.isRequired,
-  productActions: PropTypes.object.isRequired,
+  productActions: PropTypes.shape({
+    changeProductField: PropTypes.func,
+    updateProductField: PropTypes.func,
+    rollbackFieldState: PropTypes.func
+  }).isRequired,
+  productState: PropTypes.shape({ // product state from `store`
+    title: PropTypes.object,
+    pageTitle: PropTypes.object
+  }),
   t: PropTypes.func.isRequired
 };
+
+const styles = StyleSheet.create({
+  onChange: {
+    backgroundColor: props => {
+      if (props.productState[props.options.field].isChanged) {
+        // fires effect rollback
+        setTimeout(() => {
+          props.productActions.rollbackFieldState(props.options.field);
+        }, 200);
+        return "#e2f2e2";
+      }
+      return "#fff";
+      //return props.productState[props.options.field].isChanged ? "#e2f2e2" : "#fff"
+    }
+  }
+});
 
 export default translate("core")(look(ProductDetailEdit));

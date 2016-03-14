@@ -42,7 +42,8 @@ export const editStyles = StyleSheet.create({
     width: "100%",
     borderColor: "#fafafa",
     borderWidth: 1,
-    borderStyle: "solid"
+    borderStyle: "solid",
+    transition: "background-color .1s ease-out"
   },
   title: {
     //fontSize: "3.5rem"
