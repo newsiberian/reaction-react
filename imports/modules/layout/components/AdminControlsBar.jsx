@@ -1,16 +1,16 @@
-import React, { Component, PropTypes } from "react";
-import List from "material-ui/lib/lists/list";
-import ListItem from "material-ui/lib/lists/list-item";
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import React, { PropTypes } from "react";
+//import List from "material-ui/lib/lists/list";
+//import ListItem from "material-ui/lib/lists/list-item";
+import MenuItem from "material-ui/lib/menus/menu-item";
 import FontIcon from "material-ui/lib/font-icon";
-import FlatButton from 'material-ui/lib/flat-button';
+//import FlatButton from "material-ui/lib/flat-button";
 import { styles } from "../styles/coreLayout";
-import { Link } from "react-router";
+import {/* Link,*/ browserHistory } from "react-router";
 // import SettingsHeader from "/modules/dashboard/components/settings/SettingsHeader";
 
 // fixme fix this component. It not tracks activeLink and looks ugly
 const AdminControlsBar = props => {
-  const { apps, routeActions } = props;
+  const { apps/*, routerActions*/ } = props;
   //return (
   //  <nav style={styles.nav}>
   //    <List>
@@ -30,7 +30,7 @@ const AdminControlsBar = props => {
           key={app.label}
           //primaryText={app.label}
           children={<FontIcon className={app.icon} />}
-          onTouchTap={() => routeActions.push(app.route)}
+          onTouchTap={() => browserHistory.push(app.route)}
           //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
           //children={<Link to={app.route} activeStyle={{color: "red"}}><FontIcon className={app.icon} /></Link>}
           style={styles.navButton}
@@ -42,7 +42,7 @@ const AdminControlsBar = props => {
 
 AdminControlsBar.propTypes = {
   apps: PropTypes.array.isRequired,
-  routeActions: PropTypes.object.isRequired
+  //routerActions: PropTypes.object.isRequired
 };
 
 export default AdminControlsBar;

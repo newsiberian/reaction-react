@@ -7,7 +7,7 @@ import * as packagesActions from "../actions/packages";
 import * as settingsActions from "../actions/settings";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as i18nActions from "../actions/i18n";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 import DashboardGrid from "../components/grid/DashboardGrid.jsx";
 import getReactionApps from "../../../client/helpers/apps";
 
@@ -22,7 +22,7 @@ DashboardGridContainer.propTypes = {
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
+  routerActions: PropTypes.object.isRequired,
   apps: PropTypes.array
 };
 
@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
     packagesActions: bindActionCreators(packagesActions, dispatch),
     settingsActions: bindActionCreators(settingsActions, dispatch),
     layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
-    routeActions: bindActionCreators(routeActions, dispatch)
+    routerActions: bindActionCreators(routerActions, dispatch)
   };
 }
 

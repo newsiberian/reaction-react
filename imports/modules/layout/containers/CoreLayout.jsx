@@ -125,7 +125,7 @@ class CoreLayout extends Component {
                 "/dashboard/accounts"),
               togglePermission: permActions.togglePermission,
               selectedUser: selectedUser,
-              routeActions: routeActions,
+              routerActions: routerActions,
               submitAddMemberForm: submitAddMemberForm
             })*/}
           </LeftNav>

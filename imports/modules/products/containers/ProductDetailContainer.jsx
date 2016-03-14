@@ -102,6 +102,8 @@ function composer(props, onData) {
     ReactionCore.Subscriptions.Tags.ready()) {
     const product = getProduct(props.params.handle);
     const tags = getTags(product);
+    // this needed to prevent endless loading message. Seems we can't pass null
+    // or undefined to `onData` object
     let selectedVariant = {};
     // variant could be undefined if product doesn't have variants
     if (typeof props.productState.variantId === "string") {

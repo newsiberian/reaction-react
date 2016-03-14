@@ -2,7 +2,7 @@ import * as types from "../constants";
 import { displayAlert } from "../../layout/actions/alert";
 // import i18next from "i18next";
 import * as layoutSettingsActions from "../../layout/actions/settings";
-//import { routeActions } from "react-router-redux";
+//import { routerActions } from "react-router-redux";
 
 export const togglePermission = (toggled, perm, user) => {
   return dispatch => {
@@ -42,6 +42,6 @@ export const togglePermission = (toggled, perm, user) => {
 export const togglePermissionSettings = (user, nextPath) => {
   return dispatch => {
     dispatch({ type: types.TOGGLE_PERMISSION_SETTINGS, selectedUser: user});
-    return dispatch(routeActions.push(nextPath));
+    return dispatch(routerActions.push(nextPath));
   };
 };

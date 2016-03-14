@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Settings from "../components/productsGrid/Settings.jsx";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as productActions from "../actions/product";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 
 const ProductsSettingsContainer = props => <Settings {...props} />;
 
@@ -23,12 +23,13 @@ ProductsSettingsContainer.propTypes = {
     publishProduct: PropTypes.func,
     updateProductWeight: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired
+  routerActions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    location: state.routing.location,
+    //location: state.routing.location,
+    location: ownProps.location,
     selectedProducts: state.shop.productsGrid.selectedProducts
   };
 }
@@ -38,7 +39,7 @@ function mapDispatchToProps(dispatch) {
     layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
     productActions: bindActionCreators(productActions, dispatch),
     // to redirect to PDP
-    routeActions: bindActionCreators(routeActions, dispatch)
+    routerActions: bindActionCreators(routerActions, dispatch)
   };
 }
 

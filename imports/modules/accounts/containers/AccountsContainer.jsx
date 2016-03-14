@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as alertActions from "../../layout/actions/alert";
 import * as accountsActions from "../actions/accounts";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 
 const styles = {
   flex: "1 1 auto"
@@ -16,7 +16,7 @@ const AccountsContainer = props => {
   const children = React.cloneElement(props.children, {
     alertActions: props.alertActions,
     accountsActions: props.accountsActions,
-    routeActions: props.routeActions,
+    routerActions: props.routerActions,
     prevPath: props.location.state && props.location.state.prevPath || "/"
   });
 
@@ -33,7 +33,7 @@ AccountsContainer.propTypes = {
   alertActions: PropTypes.shape({
     displayAlert: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
+  routerActions: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired
 };
@@ -48,7 +48,7 @@ function mapDispatchToProps(dispatch) {
   return {
     alertActions: bindActionCreators(alertActions, dispatch),
     accountsActions: bindActionCreators(accountsActions, dispatch),
-    routeActions: bindActionCreators(routeActions, dispatch)
+    routerActions: bindActionCreators(routerActions, dispatch)
   };
 }
 

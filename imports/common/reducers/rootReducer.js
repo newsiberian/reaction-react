@@ -1,4 +1,4 @@
-import { routeReducer } from "react-router-redux";
+import { routerReducer } from "react-router-redux";
 import { reducer as formReducer } from "redux-form";
 import { combineReducers } from "redux";
 import layout from "../../modules/layout/reducers";
@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   dashboard,
   shop,
   form: formReducer,
-  routing: routeReducer
+  routing: routerReducer
 });
 
 export default rootReducer;

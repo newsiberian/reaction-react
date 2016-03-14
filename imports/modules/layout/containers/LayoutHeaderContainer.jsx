@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as accountsActions from "../../accounts/actions/accounts";
 import * as alertActions from "../../layout/actions/alert";
 import * as cartActions from "../../layout/actions/cart";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 //import { ReactionCore } from "meteor/reactioncommerce:core";
 //import LinearProgress from "material-ui/lib/linear-progress";
 import LayoutHeader from "../components/header/LayoutHeader.jsx";
@@ -112,15 +112,16 @@ LayoutHeaderContainer.propTypes = {
   cartActions: PropTypes.shape({
     toggleCart: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
+  routerActions: PropTypes.object.isRequired,
   displayCart: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     displayCart: state.layout.cart.visible,
-    pathname: state.routing.location.pathname
+    //pathname: state.routing.location.pathname,
+    pathname: ownProps.location.pathname
   };
 }
 
@@ -129,7 +130,7 @@ function mapDispatchToProps(dispatch) {
     accountsActions: bindActionCreators(accountsActions, dispatch),
     alertActions: bindActionCreators(alertActions, dispatch),
     cartActions: bindActionCreators(cartActions, dispatch),
-    routeActions: bindActionCreators(routeActions, dispatch)
+    routerActions: bindActionCreators(routerActions, dispatch)
   };
 }
 

@@ -39,7 +39,7 @@ export default class LayoutHeader extends Component {
 
   render() {
     const {
-      accountsActions, cart, cartActions, displayCart, pathname, routeActions
+      accountsActions, cart, cartActions, displayCart, pathname, routerActions
     } = this.props;
     //const {
     //  languages, pathname, cartCount, displayCart, onCartIconClick, siteName
@@ -90,7 +90,7 @@ export default class LayoutHeader extends Component {
               cartActions={cartActions}
               logout={accountsActions.logout}
               pathname={pathname}
-              push={routeActions.push}
+              push={routerActions.push}
             />
           }
           //iconElementRight={<FlatButton label="Save" />}
@@ -126,5 +126,5 @@ LayoutHeader.propTypes = {
     getCartCount: PropTypes.func
   }).isRequired,
   pathname: PropTypes.string.isRequired,
-  routeActions: PropTypes.object.isRequired
+  routerActions: PropTypes.object.isRequired
 };

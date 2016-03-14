@@ -118,12 +118,12 @@ class Package extends Component {
   }
 
   renderManagement() {
-    const { pkg, routeActions, t } = this.props;
+    const { pkg, routerActions, t } = this.props;
     if (ReactionCore.hasPermission(pkg.route)) {
       return (
         <FlatButton
           label={t("gridPackage.details")}
-          onClick={() => routeActions.push(pkg.route)}
+          onClick={() => routerActions.push(pkg.route)}
         />
       );
     }
@@ -170,7 +170,7 @@ Package.propTypes = {
   packagesActions: PropTypes.shape({
     togglePackage: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
+  routerActions: PropTypes.object.isRequired,
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func

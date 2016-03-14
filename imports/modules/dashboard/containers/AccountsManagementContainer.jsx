@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as formsActions from "../actions/forms";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as permActions from "../actions/permissions";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import Loading from "../../layout/components/Loading.jsx";
 import Management from "../components/accounts/Management.jsx";
@@ -20,7 +20,7 @@ class AccountsManagementContainer extends Component {
     // so we check again
     if (!ReactionCore.hasPermission("accounts")) {
       // redirect if no permission
-      this.props.routeActions.push({
+      this.props.routerActions.push({
         pathname: "/unauthorized",
         state: { prevPath: this.props.location.pathname }
       });
@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch) {
     formsActions: bindActionCreators(formsActions, dispatch),
     layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
     permActions: bindActionCreators(permActions, dispatch),
-    routeActions: bindActionCreators(routeActions, dispatch)
+    routerActions: bindActionCreators(routerActions, dispatch)
   };
 }
 

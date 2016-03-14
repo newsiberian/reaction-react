@@ -71,7 +71,7 @@ Combo.propTypes = {
   //alertActions: PropTypes.shape({
   //  displayAlert: PropTypes.func
   //}).isRequired,
-  //routeActions: PropTypes.object.isRequired,
+  //routerActions: PropTypes.object.isRequired,
   prevPath: PropTypes.string.isRequired,
   t: PropTypes.func
 };

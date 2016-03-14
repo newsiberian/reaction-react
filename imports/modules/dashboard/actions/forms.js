@@ -1,7 +1,7 @@
 import * as types from "../constants";
 import * as methods from "../../../api/shop/methods";
 import { displayAlert } from "../../layout/actions/alert";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 import i18next from "i18next";
 
 export const submitForm = (type, values, _id) => {
@@ -57,7 +57,7 @@ export const submitAddMemberForm = values => {
           dispatch({ type: types.SUBMIT_ADD_MEMBER_FORM, values: values,
             result: "success"});
           // close action bar after successfully invitation sent
-          dispatch(routeActions.push("/dashboard/accounts"));
+          dispatch(routerActions.push("/dashboard/accounts"));
         }
       }
     );

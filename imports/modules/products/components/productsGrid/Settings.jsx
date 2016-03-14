@@ -114,7 +114,7 @@ const getWeightActive = (products, weight) => {
  */
 class Settings extends Component {
   render() {
-    const { products, productActions, routeActions, t } = this.props;
+    const { products, productActions, routerActions, t } = this.props;
 
     if (!products.length) {
       return (
@@ -171,7 +171,7 @@ class Settings extends Component {
                 leftAvatar={<Avatar src={src} style={styles.avatar} />}
                 primaryText={product.title}
                 secondaryText={formatPrice(product.price.range)}
-                onClick={() => routeActions.push(`/shop/product/${product.handle}`)}
+                onClick={() => routerActions.push(`/shop/product/${product.handle}`)}
               />
             );
           })}
@@ -241,7 +241,7 @@ Settings.propTypes = {
     publishProduct: PropTypes.func,
     updateProductWeight: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.object.isRequired,
+  routerActions: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
 };
 

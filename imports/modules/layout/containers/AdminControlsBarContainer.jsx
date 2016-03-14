@@ -1,25 +1,25 @@
 import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { routeActions } from "react-router-redux";
+//import { bindActionCreators } from "redux";
+//import { connect } from "react-redux";
+//import { routerActions } from "react-router-redux";
 import getReactionApps from "../../../client/helpers/apps";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
 import AdminControlsBar from "../components/AdminControlsBar.jsx";
 
 const AdminControlsBarContainer = props => {
-  const { apps, routeActions } = props;
+  const { apps/*, routerActions*/ } = props;
   return (
     <AdminControlsBar
       apps={apps}
-      routeActions={routeActions}
+      //routerActions={routerActions}
     />
   );
 };
 
 AdminControlsBarContainer.propTypes = {
   apps: PropTypes.array.isRequired,
-  routeActions: PropTypes.object.isRequired
+  //routerActions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -28,22 +28,25 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    routeActions: bindActionCreators(routeActions, dispatch)
+    //routerActions: bindActionCreators(routerActions, dispatch)
   };
 }
 
 function composer(props, onData) {
   // admin nav shortcuts
   const apps = getReactionApps({ provides: "shortcut", enabled: true });
-
   onData(null, { apps: apps });
 }
 
-const AdminControlsBarContainerWithData = composeWithTracker(
+//const AdminControlsBarContainerWithData = composeWithTracker(
+//  composer
+//)(AdminControlsBarContainer);
+//
+//export default connect(
+//  mapStateToProps,
+//  mapDispatchToProps
+//)(AdminControlsBarContainerWithData);
+
+export default composeWithTracker(
   composer
 )(AdminControlsBarContainer);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminControlsBarContainerWithData);

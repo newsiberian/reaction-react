@@ -1,7 +1,7 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import * as types from "../constants";
 import { displayAlert } from "../../layout/actions/alert";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 import i18next from "i18next";
 
 /**
@@ -141,7 +141,7 @@ export const cloneProduct = productOrArray => {
       });
       // redirect to clone PDP if we cloning from PDP
       if (!Array.isArray(productOrArray)) {
-        dispatch(routeActions.push(`/shop/product/${res[0]}`));
+        dispatch(routerActions.push(`/shop/product/${res[0]}`));
       }
     });
   };
@@ -180,7 +180,7 @@ export const maybeDeleteProduct = products => {
         if (res) {
           // todo if we are located in product, we should be redirected to the
           // top level. Top level not always `shop`. We could be inside tag route
-          dispatch(routeActions.push("/shop"));
+          dispatch(routerActions.push("/shop"));
           if (products.length === 1) {
             title = products[0].title || "productDetail.";
             dispatch(displayAlert({
@@ -273,7 +273,7 @@ export const updateProductField = (productId, field, value) => {
               dispatch(displayAlert({ message: err.reason }));
             }
             if (res) {
-              dispatch(routeActions.push(`/shop/product/${res}`));
+              dispatch(routerActions.push(`/shop/product/${res}`));
             }
           });
         }

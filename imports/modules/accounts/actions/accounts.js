@@ -1,5 +1,5 @@
 import * as types from "../constants";
-import { routeActions } from "react-router-redux";
+import { routerActions } from "react-router-redux";
 import { displayAlert } from "../../layout/actions/alert";
 import { Accounts } from "meteor/accounts-base";
 import i18next from "i18next";
@@ -22,7 +22,7 @@ export const createUser = (type, values, prevPath) => {
       } else {
         // todo redirect to previous page? but not on login page if it was
         // called before.
-        dispatch(routeActions.push(prevPath));
+        dispatch(routerActions.push(prevPath));
       }
       dispatch({ type: types.CREATE_USER, email: values.email });
     });
@@ -53,7 +53,7 @@ export const login = (type, values, prevPath) => {
         dispatch({ type: types.LOGIN, email: values.email, success: true });
         // go back to previous path. We can't rely on goBack() because we could
         // have internal route change within accounts
-        dispatch(routeActions.push(prevPath));
+        dispatch(routerActions.push(prevPath));
       }
     });
   };
@@ -75,7 +75,7 @@ export const loginWithService = (name, prevPath, options = {}) => {
         dispatch({ type: types.LOGIN_WITH_SERVICE, success: false });
       } else {
         dispatch({ type: types.LOGIN_WITH_SERVICE, success: true });
-        dispatch(routeActions.push(prevPath));
+        dispatch(routerActions.push(prevPath));
       }
     });
   };
@@ -91,7 +91,7 @@ export const logout = id => {
           error.reason
         }));
       } else {
-        dispatch(routeActions.push("/"));
+        dispatch(routerActions.push("/"));
       }
     });
     dispatch({ type: types.LOGOUT, userId: id });

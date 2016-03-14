@@ -41,22 +41,9 @@ const appsInGroup = (groupName, groupedApps) => {
  * @classdesc Dashboard packages
  */
 class DashboardGrid extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSettingsClose = this.handleSettingsClose.bind(this);
-  }
-
-  /**
-   * handleSettingsClose
-   * @summary setting bar close button click handler.
-   */
-  handleSettingsClose() {
-    this.props.routeActions.push("/dashboard");
-  }
-
   render() {
     const {
-      routeActions, t, apps, layoutSettingsActions, packagesActions
+      routerActions, t, apps, layoutSettingsActions, packagesActions
     } = this.props;
     const groupedApps = _.groupBy(apps, (app) => app.container || "misc");
     const groups = Object.keys(groupedApps);
@@ -88,7 +75,7 @@ class DashboardGrid extends Component {
                           style={styles.cal}
                         >
                           <Package
-                            routeActions={routeActions}
+                            routerActions={routerActions}
                             packagesActions={packagesActions}
                             layoutSettingsActions={layoutSettingsActions}
                             pkg={app}
@@ -111,7 +98,7 @@ DashboardGrid.propTypes = {
   packagesActions: PropTypes.shape({
     togglePackage: PropTypes.func
   }).isRequired,
-  routeActions: PropTypes.shape({
+  routerActions: PropTypes.shape({
     push: PropTypes.func
   }).isRequired,
   layoutSettingsActions: PropTypes.shape({
