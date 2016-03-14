@@ -9,8 +9,7 @@ const { Media } = ReactionCore.Collections;
 export const uploadMedia = (files, product, variant) => {
   return dispatch => {
     if (!ReactionCore.hasPermission("createProduct")) {
-      // todo add log message
-      return false;
+      throw new Meteor.Error(403, "Access Denied");
     }
     const productId = product._id;
     const variantId = variant._id;

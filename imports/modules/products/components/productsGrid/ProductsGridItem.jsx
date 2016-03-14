@@ -291,7 +291,9 @@ class ProductsGridItem extends Component {
     } = product;
     //let gridControls = false;
     //const priceRange = price.max ? `${price.min} - ${price.max}` : `${price.min}`;
-    const formatedPrice = formatPrice(price.range);
+
+    // todo this could be a bug
+    const formatedPrice = formatPrice(price.range && price.range || "0");
 
     console.log("ProductGridItem: rendering...");
     // todo do we really need data-tags here?

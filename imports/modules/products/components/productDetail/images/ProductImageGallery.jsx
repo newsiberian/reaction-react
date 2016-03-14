@@ -67,35 +67,11 @@ class ProductImageGallery extends Component {
    */
   handleDrop(files) {
     const { product, selectedVariant, mediaActions } = this.props;
-    //mediaActions.uploadMedia(files, product, selectedVariant);
-    if (!ReactionCore.hasPermission("createProduct")) {
-      // todo add log message
-      return false;
+    // act only if at least one variant exists. `selectedVariant` could be empty
+    // or fulfilled object
+    if (typeof selectedVariant._id === "string") {
+      mediaActions.uploadMedia(files, product, selectedVariant);
     }
-    const productId = product._id;
-    const variantId = selectedVariant._id;
-    const shopId = product.shopId || ReactionCore.getShopId();
-    const userId = Meteor.userId();
-    let count = ReactionCore.Collections.Media.find({
-      "metadata.variantId": variantId
-    }).count();
-    const toGrid = selectedVariant.ancestors.length === 1;
-
-    files.forEach(file => {
-      let fileObj;
-      fileObj = new FS.File(file);
-      fileObj.metadata = {
-        ownerId: userId,
-        productId: productId,
-        variantId: variantId,
-        shopId: shopId,
-        priority: count,
-        toGrid: +toGrid // we need number
-      };
-
-      ReactionCore.Collections.Media.insert(fileObj);
-      count++;
-    });
   }
 
   /**
@@ -144,6 +120,7 @@ class ProductImageGallery extends Component {
       <div>
         <div /*className="ui images"*/ className={styles.images}>
           {media.length ? media.map((image, i) => {
+            // TODO the same as below
             return (
               <ImageDetail
                 key={image._id}
@@ -160,9 +137,11 @@ class ProductImageGallery extends Component {
           }
         </div>
         {ReactionCore.hasPermission("createProduct") &&
+          // TODO should we add check of existence of variant here? If yes, we will
+          // be not see this until varaint is created, but with productBundle type
+          // it could be messy
           <Dropzone
             className={styles.dropzone}
-            //className="ui huge fluid basic button"
             onDrop={files => this.handleDrop(files)}
             accept="image/*"
           >

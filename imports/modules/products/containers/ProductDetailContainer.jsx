@@ -46,7 +46,7 @@ class ProductDetailContainer extends Component {
     const { variantId } = this.props.params;
     // TODO maybe we don't need this logic at all. Review this Ids after pdp will
     // be done.
-    productActions.setProductId(product._id);
+    // productActions.setProductId(product._id);
     productActions.setVariantId(product._id, variantId);
   }
 
@@ -72,6 +72,8 @@ ProductDetailContainer.propTypes = {
   productState: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
     pageTitle: PropTypes.object,
+    vendor: PropTypes.object,
+    description: PropTypes.object,
     productId: PropTypes.string,
     variantId: PropTypes.string
   }),
@@ -96,13 +98,15 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   //const mediaHandle = Meteor.subscribe("Media");
   //const productsHandle = Meteor.subscribe("Product", props.params.handle);
-  // pass down as props
   if (Meteor.subscribe("Product", props.params.handle).ready() &&
     ReactionCore.Subscriptions.Tags.ready()) {
     const product = getProduct(props.params.handle);
     const tags = getTags(product);
-    const selectedVariant = getSelectedVariant(props.productState.variantId);
-
+    let selectedVariant = {};
+    // variant could be undefined if product doesn't have variants
+    if (typeof props.productState.variantId === "string") {
+      selectedVariant = getSelectedVariant(props.productState.variantId);
+    }
     onData(null, {
       product,
       selectedVariant,

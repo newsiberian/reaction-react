@@ -362,6 +362,8 @@ ProductDetail.propTypes = {
   productState: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
     pageTitle: PropTypes.object,
+    vendor: PropTypes.object,
+    description: PropTypes.object,
     productId: PropTypes.string,
     variantId: PropTypes.string
   }),

@@ -6,6 +6,21 @@ import look, { StyleSheet } from "react-look";
 
 const c = StyleSheet.combineStyles;
 
+const styles = StyleSheet.create({
+  onChange: {
+    backgroundColor: props => {
+      if (props.productState[props.options.field].isChanged) {
+        // fires effect rollback
+        setTimeout(() => {
+          props.productActions.rollbackFieldState(props.options.field);
+        }, 400);
+        return "#e2f2e2";
+      }
+      return "#fff";
+    }
+  }
+});
+
 class ProductDetailEdit extends Component {
   //shouldComponentUpdate(nextProps) {
   //  // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
@@ -60,7 +75,7 @@ class ProductDetailEdit extends Component {
       <input
         type="text"
         className={c(className, styles.onChange)}
-        //value={product[field]}
+        // value={product[field]}
         defaultValue={product[field]}
         onChange={event => this.handleChange(event, field)}
         onBlur={event => this.handleBlur(event, field)}
@@ -86,24 +101,11 @@ ProductDetailEdit.propTypes = {
   }).isRequired,
   productState: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
-    pageTitle: PropTypes.object
+    pageTitle: PropTypes.object,
+    vendor: PropTypes.object,
+    description: PropTypes.object
   }),
   t: PropTypes.func.isRequired
 };
-
-const styles = StyleSheet.create({
-  onChange: {
-    backgroundColor: props => {
-      if (props.productState[props.options.field].isChanged) {
-        // fires effect rollback
-        setTimeout(() => {
-          props.productActions.rollbackFieldState(props.options.field);
-        }, 400);
-        return "#e2f2e2";
-      }
-      return "#fff";
-    }
-  }
-});
 
 export default translate("core")(look(ProductDetailEdit));
