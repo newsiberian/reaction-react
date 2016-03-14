@@ -242,8 +242,8 @@ export const updateProductWeight = (products, weight) => {
  * @param value
  * @return {{type, field: *, value: *}}
  */
-export const changeProductField = (field, value) => {
-  return { type: types.CHANGE_PRODUCT_FIELD, field: field, value: value };
+export const changeProductField = (productId, field, value) => {
+  return { type: types.CHANGE_PRODUCT_FIELD, productId: productId, field: field, value: value };
 };
 
 /**
@@ -277,7 +277,7 @@ export const updateProductField = (productId, field, value) => {
             }
           });
         }
-        dispatch({ type: types.UPDATE_PRODUCT_FIELD, field: field, value: value });
+        dispatch({ type: types.UPDATE_PRODUCT_FIELD, productId: productId, field: field, value: value });
       }
     );
   };

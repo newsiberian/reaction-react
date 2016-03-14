@@ -16,10 +16,6 @@ import ProductMetaField from "./attributes/ProductMetaField";
 import ProductSocial from "./ProductSocial";
 import CartAddButton from "./CartAddButton";
 import VariantList from "./variants/VariantList";
-//import {
-//  titleStyle, pageTitleStyle, descriptionStyle, vendorStyle, priceStyle,
-//  inputHoverStyle, inputStyle
-//} from "../../styles/productDetail";
 import styles, { editStyles, priceStyle
   /*titleStyle, pageTitleStyle, descriptionStyle, vendorStyle,*/
   /*inputHoverStyle, inputStyle*/
