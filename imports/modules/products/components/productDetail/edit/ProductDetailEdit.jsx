@@ -98,11 +98,10 @@ const styles = StyleSheet.create({
         // fires effect rollback
         setTimeout(() => {
           props.productActions.rollbackFieldState(props.options.field);
-        }, 200);
+        }, 400);
         return "#e2f2e2";
       }
       return "#fff";
-      //return props.productState[props.options.field].isChanged ? "#e2f2e2" : "#fff"
     }
   }
 });

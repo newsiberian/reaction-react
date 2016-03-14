@@ -2,12 +2,16 @@ import * as types from "../constants";
 
 const initialState = {
   title: {
-    isChanged: false,
-    //value: ""
+    isChanged: false
   }, // changed state
   pageTitle: {
-    isChanged: false,
-    //value: ""
+    isChanged: false
+  },
+  vendor: {
+    isChanged: false
+  },
+  description: {
+    isChanged: false
   },
   productId: null,
   variantId: null

@@ -74,22 +74,6 @@ export const editStyles = StyleSheet.create({
   }
 });
 
-//export const inputHoverStyle = StyleSheet.create({
-//  ":hover": {
-//    borderColor: "#cccccc",
-//    borderWidth: 1,
-//    borderStyle: "dotted"
-//  }
-//});
-//
-//export const inputStyle = StyleSheet.create({
-//  textAlign: "center",
-//  width: "100%",
-//  borderColor: "#fafafa",
-//  borderWidth: 1,
-//  borderStyle: "solid"
-//});
-
 export const addToCartStyle = StyleSheet.create({
   display: "inline-flex",
   justifyContent: "center",
@@ -121,25 +105,6 @@ export const numberPickerStyle = StyleSheet.create({
   paddingTop: 5,
   paddingBottom: 5
 });
-
-//export const titleStyle = StyleSheet.create({
-//  //fontSize: "3.5rem"
-//  fontSize: "5vmin"
-//});
-//
-//export const pageTitleStyle = StyleSheet.create({
-//  //fontSize: "2rem"
-//  fontSize: "4vmin"
-//});
-//
-//export const vendorStyle = StyleSheet.create({
-//  borderColor: "#fafafa",
-//  borderWidth: 1,
-//  borderStyle: "solid",
-//  maxWidth: "30%",
-//  marginTop: "1rem",
-//  marginBottom: "1rem"
-//});
 
 export const priceStyle = StyleSheet.create({
   fontWeight: "bold",
