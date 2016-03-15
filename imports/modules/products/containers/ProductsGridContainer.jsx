@@ -3,6 +3,7 @@ import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { getTag } from "../../../client/helpers/products";
 import * as productActions from "../actions/product";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import ProductsGrid from "../components/productsGrid/ProductsGrid.jsx";
@@ -115,55 +116,59 @@ import Loading from "../../layout/components/Loading.jsx";
 //  }
 //});
 
-const loadProducts = location => {
+//const getTag = (location, params) => {
+//  // this should be in a beginning of `pathname`
+//  if (location.pathname.indexOf("/shop/tag/") === 0) {
+//    // it could be without slug I suppose
+//    return params.slug || ReactionCore.getShopName().toLowerCase();
+//  }
+//  return ReactionCore.getShopName().toLowerCase();
+//};
+
+const loadProducts = (location, params) => {
   /*
    * take natural sort, sorting by updatedAt
-   * then resort using positions.position for this tag
+   * then resort using positions[currentTag].position for this tag
    * retaining natural sort of untouched items
    */
 
+  // we are caching `currentTag` or if we are not inside tag route, we will
+  // use shop name as `base` name for `positions` object
+  const currentTag = getTag(location, params);
+
   // function to compare and sort position
   function compare(a, b) {
-    if (a.position.position === b.position.position) {
-      let x = a.position.updatedAt;
-      let y = b.position.updatedAt;
+    // we need to check that fields exists
+    // todo we could remove part of this checks of `positions` and `base`
+    // settings will be required fields
+    if (a.positions && a.positions[currentTag] &&
+      b.positions && b.positions[currentTag]) {
+      if (a.positions[currentTag].position === b.positions[currentTag].position) {
+        const x = a.positions[currentTag].updatedAt;
+        const y = b.positions[currentTag].updatedAt;
 
-      if (x > y) {
-        return -1;
-      } else if (x < y) {
-        return 1;
+        if (x > y) {
+          return -1;
+        } else if (x < y) {
+          return 1;
+        }
+
+        return 0;
       }
+      return a.positions[currentTag].position - b.positions[currentTag].position;
+    } // if some of them not exist, we need to comprare products `updatedAt`
+    const x = a.updatedAt;
+    const y = b.updatedAt;
 
-      return 0;
+    if (x > y) {
+      return -1;
+    } else if (x < y) {
+      return 1;
     }
-    return a.position.position - b.position.position;
+    return 0;
   }
 
   let gridProducts = ReactionCore.Collections.Products.find({}).fetch();
-  // performance test: http://jsperf.com/caching-array-length/112
-  for (let index = 0, length = gridProducts.length; index < length; index++) {
-    let gridProduct = gridProducts[index];
-    if (gridProduct.positions) {
-      let _results = [];
-      for (let position of gridProduct.positions) {
-        if (location.pathname === "/shop/product/tag") {
-          // fixme: need to rewrite getCurrentTag() for react-router
-          //if (position.tag === location.params._id) {
-          //  _results.push(position);
-          //}
-        }
-        gridProducts[index].position = _results[0];
-      }
-    }
-    if (!gridProduct.position) {
-      gridProducts[index].position = {
-        position: 0,
-        weight: 0,
-        pinned: false,
-        updatedAt: gridProduct.updatedAt
-      };
-    }
-  }
 
   return gridProducts.sort(compare);
 };
@@ -187,7 +192,7 @@ ProductsGridContainer.propTypes = {
   selectedProducts: PropTypes.arrayOf(PropTypes.string)
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     productsScrollLimit: state.shop.productsGrid.gridSettings.productsScrollLimit,
     selectedProducts: state.shop.productsGrid.selectedProducts
@@ -203,12 +208,12 @@ function mapDispatchToProps(dispatch) {
 
 function composer(props, onData) {
   //Meteor.subscribe("Media");
-  const { location, productsScrollLimit } = props;
+  const { location, params, productsScrollLimit } = props;
   const { Shops, Packages } = ReactionCore.Subscriptions;
   const handle = Meteor.subscribe("Products", productsScrollLimit);
 
   if (Shops.ready() && Packages.ready() && handle.ready()) {
-    const products = loadProducts(location);
+    const products = loadProducts(location, params);
     onData(null, { products: products });
   }
 }

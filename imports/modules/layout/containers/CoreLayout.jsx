@@ -92,7 +92,7 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { alert, cart, children, params, settings } = this.props;
+    const { alert, cart, children, location, params, settings } = this.props;
     const SettingsComponent = components.getComponent(settings.name);
     return (
 			<div style={styles.wrapper}>
@@ -117,17 +117,10 @@ class CoreLayout extends Component {
             style={layoutStyles.actionBarWrapper}
           >
             <SettingsComponent
-              payload={settings.payload}
+              location={location}
+              payload={settings.payload} // todo add description to this
               params={params}
             />
-            {/*React.cloneElement(children, {
-              handleSettingsClose: () => permActions.togglePermissionSettings({},
-                "/dashboard/accounts"),
-              togglePermission: permActions.togglePermission,
-              selectedUser: selectedUser,
-              routerActions: routerActions,
-              submitAddMemberForm: submitAddMemberForm
-            })*/}
           </LeftNav>
         }
 

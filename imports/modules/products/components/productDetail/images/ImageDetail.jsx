@@ -126,7 +126,7 @@ class ImageDetail extends Component {
     const { media } = this.props;
     const img = new Image();
     img.onload = () => this.props.connectDragPreview(img);
-    img.src = media.url({ store: "thumbnail" }); // media.thumb;
+    img.src = media.url({ store: "thumbnail" });
   }
 
   /**

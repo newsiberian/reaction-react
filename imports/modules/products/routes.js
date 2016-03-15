@@ -19,7 +19,7 @@ export default {
         }
       ]
     },
-    // { path: "tag/:_id", component: ProductsContainer },
-    { path: "product/:handle(/:variantId)", component: ProductDetailContainer },
+    { path: "tag/:slug", component: ProductsGridContainer },
+    { path: "product/:handle(/:variantId)", component: ProductDetailContainer }
   ]
 };

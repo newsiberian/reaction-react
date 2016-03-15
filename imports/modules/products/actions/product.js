@@ -204,7 +204,7 @@ export const maybeDeleteProduct = products => {
   };
 };
 
-export const updateProductWeight = (products, weight) => {
+export const updateProductWeight = (products, weight, tag) => {
   return dispatch => {
     products.forEach(product => {
       const positions = {
@@ -215,7 +215,7 @@ export const updateProductWeight = (products, weight) => {
         updatedAt: new Date()
       };
 
-      Meteor.call("products/updateProductPosition", product._id, positions,
+      Meteor.call("products/updateProductPosition", product._id, positions, tag,
         err => {
           // todo I'm not sure this method even return error or result
           if (err) {

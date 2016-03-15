@@ -11,6 +11,7 @@ import Paper from "material-ui/lib/paper";
 import RaisedButton from "material-ui/lib/raised-button";
 import Subheader from "material-ui/lib/Subheader";
 import { formatPrice } from "../../../../client/helpers/i18n";
+import { getTag } from "../../../../client/helpers/products";
 import { red500 } from "material-ui/lib/styles/colors";
 
 const styles = {
@@ -114,7 +115,7 @@ const getWeightActive = (products, weight) => {
  */
 class Settings extends Component {
   render() {
-    const { products, productActions, routerActions, t } = this.props;
+    const { location, params, products, productActions, routerActions, t } = this.props;
 
     if (!products.length) {
       return (
@@ -126,6 +127,7 @@ class Settings extends Component {
       );
     }
 
+    const tag = getTag(location, params);
     const publishClassName = products[0].isVisible ? "fa fa-eye" : "fa fa-eye-slash";
     const publishList = setPublishList(products);
     return (
@@ -185,7 +187,7 @@ class Settings extends Component {
           <div
             style={Object.assign({}, styles.sizeItem,
              { paddingLeft: 5, paddingRight: 5 }, getWeightActive(products, 0))}
-            onClick={() => productActions.updateProductWeight(products, 0)}
+            onClick={() => productActions.updateProductWeight(products, 0, tag)}
           >
             <div style={styles.sizeControl}>
               <div style={styles.sizeMain}></div>
@@ -193,7 +195,7 @@ class Settings extends Component {
           </div>
           <div
             style={Object.assign({}, styles.sizeItem, getWeightActive(products, 1))}
-            onClick={() => productActions.updateProductWeight(products, 1)}
+            onClick={() => productActions.updateProductWeight(products, 1, tag)}
           >
             <div
               style={Object.assign({}, styles.sizeControl, {
@@ -212,7 +214,7 @@ class Settings extends Component {
           </div>
           <div
             style={Object.assign({}, styles.sizeItem, getWeightActive(products, 2))}
-            onClick={() => productActions.updateProductWeight(products, 2)}
+            onClick={() => productActions.updateProductWeight(products, 2, tag)}
           >
             <div
               style={Object.assign({}, styles.sizeControl, {

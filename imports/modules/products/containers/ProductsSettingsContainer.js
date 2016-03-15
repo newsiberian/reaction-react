@@ -28,7 +28,6 @@ ProductsSettingsContainer.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    //location: state.routing.location,
     location: ownProps.location,
     selectedProducts: state.shop.productsGrid.selectedProducts
   };
