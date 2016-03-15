@@ -1,8 +1,9 @@
 import * as types from "../constants";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { ReactionProductAPI } from "meteor/reactioncommerce:reaction-catalog";
 import { displayAlert } from "../../layout/actions/alert";
 import { FS } from "meteor/cfs:base-package";
-import i18next from "i18next";
+//import i18next from "i18next";
 
 const { Media } = ReactionCore.Collections;
 
@@ -44,18 +45,14 @@ export const uploadMedia = (files, product, variant) => {
   };
 };
 
-export const removeMedia = id => {
+export const removeMedia = mediaId => {
   return dispatch => {
-    if (!ReactionCore.hasPermission("createProduct")) {
-      // todo add log message
-      return false;
-    }
-    const image = Media.findOne(id);
-    image.remove();
-    // todo fix this
-    // this.updateImagePriorities();
-
-    dispatch({ type: types.REMOVE_MEDIA, mediaId: id });
+    ReactionProductAPI.methods.removeMedia.call({ mediaId }, error => {
+      if (error) {
+        dispatch(displayAlert({ message: error.reason }));
+      }
+      dispatch({ type: types.REMOVE_MEDIA, mediaId: mediaId });
+    });
   };
 };
 

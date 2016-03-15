@@ -114,8 +114,10 @@ class ProductImageGallery extends Component {
     const { media, mediaIdsArray } = this.props;
     // we don't mutate `media`. Instead of this we just utilize `mediaIdsArray`
     // as correct indexes provider
+    // Looks like we will leave this logic instead of implementing new logic,
+    // because of `mediaIdsArray` usage... :(
+    // reaction currently uses: ReactionProductAPI.methods.updateMediaPriorities
     media.forEach(image => {
-      // todo create method for it?
       ReactionCore.Collections.Media.update(image._id, {
         $set: {
           "metadata.priority": _.indexOf(mediaIdsArray, image._id)
@@ -133,17 +135,21 @@ class ProductImageGallery extends Component {
           {mediaIdsArray.length ? mediaIdsArray.map((id, i) => {
             // TODO the same as below
             const files = media.filter(image => image._id === id);
-            return (
-              <ImageDetail
-                key={id}
-                index={i}
-                media={files[0]}
-                mediaActions={mediaActions}
-                moveMedia={this.handleMoveMedia}
-                onDropMedia={this.handleDropMedia}
-                productTitle={product.title}
-              />
-            );
+            // this is quickfix for situation then the `mediaIdsArray` is not
+            // synced with `media` yet
+            if (files.length) {
+              return (
+                <ImageDetail
+                  key={id}
+                  index={i}
+                  media={files[0]}
+                  mediaActions={mediaActions}
+                  moveMedia={this.handleMoveMedia}
+                  onDropMedia={this.handleDropMedia}
+                  productTitle={product.title}
+                />
+              );
+            }
           }) :
             <img src="/resources/placeholder.gif" className={styles.bigImage} />
           }
