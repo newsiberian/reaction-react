@@ -1,25 +1,43 @@
 import React, { PropTypes } from "react";
 import { Link } from "react-router";
+import { StyleSheet } from "react-look";
+
+// fixme: switch to material-chips then they'll be ready
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "flex-start",
+    alignContent: "space-around"
+  },
+  chip: {
+    height: 32,
+    fontSize: 13,
+    fontWeight: 500,
+    color: "rgba(0,0,0,0.6)",
+    lineHeight: "32px",
+    padding: "0 12px",
+    borderRadius: 16,
+    backgroundColor: "#e4e4e4",
+    textDecoration: "none",
+    margin: 3
+  }
+});
 
 /**
  * @function ProductDetailTags
- * @description Stateless Functional Component which renders tag labels
- * for end-user
+ * @description Renders tag labels for end-user
  */
 const ProductDetailTags = ({ tags }) => (
-  <div>
-    <div className="ui horizontal list">
-      {tags.map((tag) => (
-        <div /*className="item"*/>
-          <Link
-            //className="ui large label"
-            to={`/shop/product/tag/${ tag.slug }`}
-          >
-            {tag.name}
-          </Link>
-        </div>
-      ))}
-    </div>
+  <div className={styles.container}>
+    {tags.map((tag) => (
+      <Link
+        className={styles.chip}
+        to={`/shop/product/tag/${ tag.slug }`}
+      >
+        {tag.name}
+      </Link>
+    ))}
   </div>
 );
 

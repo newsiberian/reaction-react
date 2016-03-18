@@ -238,12 +238,13 @@ export const updateProductWeight = (products, weight, tag) => {
 /**
  * changeProductField
  * @summary this calls on product field change event
- * @param field
- * @param value
+ * @param {String} productId
+ * @param {String} field
+ * @param {String} value
  * @return {{type, field: *, value: *}}
  */
 export const changeProductField = (productId, field, value) => {
-  return { type: types.CHANGE_PRODUCT_FIELD, productId: productId, field: field, value: value };
+  return { type: types.CHANGE_PRODUCT_FIELD, productId, field, value };
 };
 
 /**

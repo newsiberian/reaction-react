@@ -172,12 +172,15 @@ class ProductDetail extends Component {
   }
 
   renderTagsComponent() {
-    const { tags } = this.props;
+    const { product, tags, tagActions, newTag } = this.props;
 
     if (ReactionCore.hasPermission("createProduct")) {
       return(
         <ProductTagInputForm
+          productId={product._id}
           tags={tags}
+          tagActions={tagActions}
+          newTag={newTag}
           //tagValue={ tagsBundle.tagValue }
           //tagsArray={ tagsBundle.tagsToArray() }
           //getTagSuggestions={ tagsBundle.getTagSuggestions }
@@ -192,11 +195,11 @@ class ProductDetail extends Component {
       );
     }
     // tags should be an array
-    if (Array.isArray(tags)) {
-      return (
-        <ProductDetailTags tags={tags} />
-      );
-    }
+    //if (Array.isArray(tags)) {
+    return (
+      <ProductDetailTags tags={tags} />
+    );
+    //}
     // todo add something like "there is no tags" span
     //return false;
   }
@@ -372,15 +375,24 @@ ProductDetail.propTypes = {
     productId: PropTypes.string,
     variantId: PropTypes.string
   }),
-  //tags: PropTypes.arrayOf(PropTypes.object),
-  tags: PropTypes.oneOfType([
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      slug: PropTypes.string
-    }),
-    PropTypes.arrayOf(PropTypes.object)
-  ]),
+  tags: PropTypes.arrayOf(PropTypes.object),
+  //tags: PropTypes.oneOfType([
+  //  PropTypes.shape({
+  //    _id: PropTypes.string,
+  //    name: PropTypes.string,
+  //    slug: PropTypes.string
+  //  }),
+  //  PropTypes.arrayOf(PropTypes.object)
+  //]),
+  tagActions: PropTypes.shape({
+    changeTag: PropTypes.func,
+    changeNewTag: PropTypes.func,
+    clearNewTagName: PropTypes.func,
+    updateTag: PropTypes.func,
+    clearSuggestions: PropTypes.func,
+    updateSuggestions: PropTypes.func
+  }),
+  newTag: PropTypes.object,
   t: PropTypes.func.isRequired
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,

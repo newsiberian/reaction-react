@@ -22,6 +22,11 @@ const fieldsInitialState = {
   }
 };
 
+const tagsState = {
+  tagName: "",
+  suggestions: []
+};
+
 function ids(state = idsInitialState, action) {
   switch (action.type) {
   case types.SET_PRODUCT_ID:
@@ -82,8 +87,42 @@ function mediaIdsArray(state = [], action) {
   }
 }
 
+function newTag(state = tagsState, action) {
+  switch (action.type) {
+  case types.CLEAR_SUGGESTIONS:
+    return {
+      ...state,
+      suggestions: []
+    };
+  case types.UPDATE_SUGGESTIONS:
+    // Ignore suggestions if input value changed
+    if (action.tagName !== state.tagName) {
+      return {
+        state
+      };
+    }
+    return {
+      ...state,
+      suggestions: action.suggestions
+    };
+  case types.CLEAR_NEW_TAG_NAME:
+    return {
+      tagName: "",
+      suggestions: []
+    }
+  case types.CHANGE_NEW_TAG:
+    return {
+      ...state,
+      tagName: action.tagName
+    };
+  default:
+    return state;
+  }
+}
+
 export default combineReducers({
   ids,
   fields,
-  mediaIdsArray
+  mediaIdsArray,
+  newTag
 });

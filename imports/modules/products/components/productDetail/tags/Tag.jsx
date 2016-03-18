@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 import { translate } from "react-i18next/lib";
+import { StyleSheet } from "react-look";
 import { DragSource, DropTarget } from "react-dnd";
 
 const style = {
@@ -9,6 +10,31 @@ const style = {
   //marginBottom: ".5rem",
   //backgroundColor: "white",
   //cursor: "move"
+};
+
+// fixme: this styling are temporaty till `material chips` out
+const styles = StyleSheet.create({
+  chip: {
+    borderRadius: 16,
+    boxSizing: "border-box",
+    cursor: "default",
+    display: "block",
+    float: "left",
+    height: 32,
+    lineHeight: 32,
+    margin: "8px 8px 0 0",
+    maxWidth: "100%",
+    padding: "0 12px",
+    position: "relative"
+  },
+  suiContainer: {
+    position: "relative",
+    display: "inline-flex"
+  }
+});
+
+const stylesInternal = {
+  leftIcon: {}
 };
 
 const tagSource = {
@@ -79,44 +105,52 @@ const tagTarget = {
 //  connectDragPreview: connect.dragPreview(),
 //  isDragging: monitor.isDragging()
 //}))
-/**
- * @class Tag
- */
-export default class Tag extends Component {
+class Tag extends Component {
+  handleUpdate(productId, tagName, tagId) {
+    // do not update if nothing change
+    if (this.props.tag.name !== tagName) {
+      this.props.tagActions.updateTag(productId, tagName, tagId);
+    }
+  }
+
   render() {
     const {
-      name, isDragging, connectDragSource, connectDragPreview, onTagBlurred,
+      name, isDragging, connectDragSource, connectDragPreview, onTagBlurred, productId, t, tagActions,
       connectDropTarget, hashtagMark, onHashtagClick, onTagGroupRemove, tag, onTagChange
     } = this.props;
     const opacity = isDragging ? 0 : 1;
 
     return(
-      <div className="item">
-        { connectDragPreview(connectDropTarget(
-          <div className="ui right action left icon input" style={{ ...style, opacity }}>
-            { connectDragSource(
-              <i className="sidebar icon" style={{ cursor: "move", pointerEvents: "auto" }}></i>
-            ) }
+      <li /*className="item"*/>
+        {connectDragPreview(connectDropTarget(
+          <div className={styles.chip}/* className="ui right action left icon input"*/ style={{ ...style, opacity }}>
+            {connectDragSource(
+              <i className="fa fa-bars" style={{ cursor: "move", pointerEvents: "auto" }}></i>
+            )}
             <input
               type="text"
-              placeholder={i18n.__("reaction.core.productDetail.tagsEdit")}
-              value={ name }
-              onChange={ (event) => onTagChange(event, tag._id) }
-              onBlur={ (event) => onTagBlurred(event, tag._id) }
+              placeholder={t("productDetail.tagsEdit")}
+              // value={name}
+              defaultValue={name}
+              onChange={event => tagActions.changeTag(productId, event.target.value, tag._id)}
+              onBlur={event => this.handleUpdate(productId, event.target.value, tag._id)}
             />
-            <div className="ui icon basic button" onClick={ () => onHashtagClick(tag._id) }>
-              <i className={ `${ hashtagMark(tag) } icon` }></i>
+            <div
+              //className="ui icon basic button"
+              //onClick={() => onHashtagClick(tag._id)}
+            >
+              <i /*className={`${hashtagMark(tag)} icon`}*/></i>
             </div>
             <div
-              className="ui icon basic button"
+              //className="ui icon basic button"
               style={{ marginLeft: -1 }}
-              onClick={ () => onTagGroupRemove(tag._id) }
+              //onClick={() => onTagGroupRemove(tag._id)}
             >
               <i className="remove icon"></i>
             </div>
           </div>
         ))}
-      </div>
+      </li>
     );
   }
 }
@@ -127,13 +161,28 @@ Tag.propTypes = {
   connectDragPreview: PropTypes.func,
   isDragging: PropTypes.bool,
   index: PropTypes.number.isRequired,
+  productId: PropTypes.string.isRequired,
   tag: PropTypes.object.isRequired,
+  tagActions: PropTypes.shape({
+    changeTag: PropTypes.func,
+    changeNewTag: PropTypes.func,
+    updateTag: PropTypes.func
+  }),
   id: PropTypes.string.isRequired,
   name: PropTypes.string,
-  onHashtagClick: PropTypes.func.isRequired,
-  onTagGroupRemove: PropTypes.func.isRequired,
-  onTagBlurred: PropTypes.func.isRequired,
-  onTagChange: PropTypes.func.isRequired,
-  moveTag: PropTypes.func.isRequired,
-  hashtagMark: PropTypes.func.isRequired
+  //onHashtagClick: PropTypes.func.isRequired,
+  //onTagGroupRemove: PropTypes.func.isRequired,
+  //onTagBlurred: PropTypes.func.isRequired,
+  //onTagChange: PropTypes.func.isRequired,
+  //moveTag: PropTypes.func.isRequired,
+  //hashtagMark: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
+
+export default DragSource("tag", tagSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging()
+}))(DropTarget("tag", tagTarget, connect => ({
+  connectDropTarget: connect.dropTarget()
+}))(translate("core")(Tag)));

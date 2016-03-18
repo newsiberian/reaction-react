@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import * as productActions from "../actions/product";
+import * as tagActions from "../actions/tag";
 import Loading from "../../layout/components/Loading";
 import ProductDetail from "../components/productDetail/ProductDetail";
 //import Unauthorized from "../../layout/components/Unauthorized";
@@ -40,19 +41,19 @@ const getSelectedVariant = variantId => {
 const getTags = product => {
   if (product) {
     if (product.hashtags) {
-      if (ReactionCore.hasPermission("createProduct")) {
-        let tags = {};
-        product.hashtags.forEach(id => {
-          const tag = Tags.findOne({ _id: id }, {
-            fields: {
-              name: 1,
-              slug: 1
-            }
-          });
-          tags[tag._id] = tag;
-        });
-        return tags;
-      }
+      //if (ReactionCore.hasPermission("createProduct")) {
+      //  let tags = {};
+      //  product.hashtags.forEach(id => {
+      //    const tag = Tags.findOne({ _id: id }, {
+      //      fields: {
+      //        name: 1,
+      //        slug: 1
+      //      }
+      //    });
+      //    tags[tag._id] = tag;
+      //  });
+      //  return tags;
+      //}
       return product.hashtags.map(id => Tags.findOne({ _id: id }, {
         fields: {
           name: 1,
@@ -101,15 +102,24 @@ ProductDetailContainer.propTypes = {
     variantId: PropTypes.string
   }),
   selectedVariant: PropTypes.object,
-  tags: PropTypes.oneOfType([
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      slug: PropTypes.string
-    }),
-    PropTypes.arrayOf(PropTypes.object)
-  ])
-  //tags: PropTypes.arrayOf(PropTypes.object)
+  //tags: PropTypes.oneOfType([
+  //  PropTypes.shape({
+  //    _id: PropTypes.string,
+  //    name: PropTypes.string,
+  //    slug: PropTypes.string
+  //  }),
+  //  PropTypes.arrayOf(PropTypes.object)
+  //])
+  tags: PropTypes.arrayOf(PropTypes.object),
+  tagActions: PropTypes.shape({
+    changeTag: PropTypes.func,
+    changeNewTag: PropTypes.func,
+    clearNewTagName: PropTypes.func,
+    updateTag: PropTypes.func,
+    clearSuggestions: PropTypes.func,
+    updateSuggestions: PropTypes.func
+  }),
+  newTag: PropTypes.object
   //tags: PropTypes.shape({
   //  _id: PropTypes.string,
   //  name: PropTypes.string,
@@ -121,13 +131,15 @@ function mapStateToProps(state) {
   return {
     //productId: state.shop.product.productId,
     variantId: state.shop.product.ids.variantId,
-    productState: state.shop.product.fields
+    productState: state.shop.product.fields,
+    newTag: state.shop.product.newTag
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    productActions: bindActionCreators(productActions, dispatch)
+    productActions: bindActionCreators(productActions, dispatch),
+    tagActions: bindActionCreators(tagActions, dispatch)
   };
 }
 

@@ -73,13 +73,13 @@ class ProductsGrid extends Component {
       <div>
         <section className="row" style={styles.container}>
           {products.length && products.map(product => (
-              <ProductsGridItem
-                key={product._id}
-                layoutSettingsActions={layoutSettingsActions}
-                product={product}
-                productActions={productActions}
-                selectedProducts={selectedProducts}
-              />
+            <ProductsGridItem
+              key={product._id}
+              layoutSettingsActions={layoutSettingsActions}
+              product={product}
+              productActions={productActions}
+              selectedProducts={selectedProducts}
+            />
           ))}
         </section>
       </div>

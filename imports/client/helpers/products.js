@@ -1,4 +1,5 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { TR } from "meteor/ongoworks:transliteration";
 
 /**
  * getSelected
@@ -22,4 +23,8 @@ export const getTag = (location, params) => {
     return params.slug || ReactionCore.getShopName().toLowerCase();
   }
   return ReactionCore.getShopName().toLowerCase();
+};
+
+export const getSlug = slugString => {
+  if (slugString) return TR.slugify(slugString);
 };
