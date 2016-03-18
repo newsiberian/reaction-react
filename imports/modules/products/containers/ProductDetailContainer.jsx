@@ -30,14 +30,37 @@ const getSelectedVariant = variantId => {
   return {};
 };
 
+/**
+ * getTags
+ * @summary fetch tags for a product
+ * @param product
+ * @return {Array|Object} for admin user we return an object due to drag'n'drop,
+ * for customer we return an array with cursors
+ */
 const getTags = product => {
   if (product) {
     if (product.hashtags) {
-      return product.hashtags.map(id => Tags.findOne(id));
+      if (ReactionCore.hasPermission("createProduct")) {
+        let tags = {};
+        product.hashtags.forEach(id => {
+          const tag = Tags.findOne({ _id: id }, {
+            fields: {
+              name: 1,
+              slug: 1
+            }
+          });
+          tags[tag._id] = tag;
+        });
+        return tags;
+      }
+      return product.hashtags.map(id => Tags.findOne({ _id: id }, {
+        fields: {
+          name: 1,
+          slug: 1
+        }
+      }));
     }
   }
-  // let it looks nice
-  return [];
 };
 
 class ProductDetailContainer extends Component {
@@ -78,7 +101,20 @@ ProductDetailContainer.propTypes = {
     variantId: PropTypes.string
   }),
   selectedVariant: PropTypes.object,
-  tags: PropTypes.array
+  tags: PropTypes.oneOfType([
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      slug: PropTypes.string
+    }),
+    PropTypes.arrayOf(PropTypes.object)
+  ])
+  //tags: PropTypes.arrayOf(PropTypes.object)
+  //tags: PropTypes.shape({
+  //  _id: PropTypes.string,
+  //  name: PropTypes.string,
+  //  slug: PropTypes.string
+  //})
 };
 
 function mapStateToProps(state) {

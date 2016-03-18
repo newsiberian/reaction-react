@@ -172,32 +172,33 @@ class ProductDetail extends Component {
   }
 
   renderTagsComponent() {
-    const { permissions, tagsBundle } = this.props;
+    const { tags } = this.props;
 
-    if (permissions.createProduct) {
+    if (ReactionCore.hasPermission("createProduct")) {
       return(
         <ProductTagInputForm
-          tags={ tagsBundle.tags }
-          tagValue={ tagsBundle.tagValue }
-          tagsArray={ tagsBundle.tagsToArray() }
-          getTagSuggestions={ tagsBundle.getTagSuggestions }
-          onTagBlurred={ tagsBundle.onTagBlurred }
-          onTagChange={ tagsBundle.onTagChange }
-          onNewTagChange={ tagsBundle.onNewTagChange }
-          onHashtagClick={ tagsBundle.onHashtagClick }
-          onTagGroupRemove={ tagsBundle.onTagGroupRemove }
-          moveTag={ tagsBundle.moveTag }
-          hashtagMark={ tagsBundle.hashtagMark }
+          tags={tags}
+          //tagValue={ tagsBundle.tagValue }
+          //tagsArray={ tagsBundle.tagsToArray() }
+          //getTagSuggestions={ tagsBundle.getTagSuggestions }
+          //onTagBlurred={ tagsBundle.onTagBlurred }
+          //onTagChange={ tagsBundle.onTagChange }
+          //onNewTagChange={ tagsBundle.onNewTagChange }
+          //onHashtagClick={ tagsBundle.onHashtagClick }
+          //onTagGroupRemove={ tagsBundle.onTagGroupRemove }
+          //moveTag={ tagsBundle.moveTag }
+          //hashtagMark={ tagsBundle.hashtagMark }
         />
       );
     }
-    if (tagsBundle.tags) {
+    // tags should be an array
+    if (Array.isArray(tags)) {
       return (
-        <ProductDetailTags tags={ tagsBundle.tagsToArray() } />
+        <ProductDetailTags tags={tags} />
       );
     }
     // todo add something like "there is no tags" span
-    return false;
+    //return false;
   }
 
   /**
@@ -240,7 +241,7 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { product, selectedVariant } = this.props;
+    const { product, selectedVariant, t } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
@@ -273,6 +274,10 @@ class ProductDetail extends Component {
                   product={product}
                   selectedVariant={selectedVariant}
                 />
+                <h3>{t("productDetail.tags")}</h3>
+                {this.renderTagsComponent()}
+                <h3>{t("productDetail.details")}</h3>
+                {/* this.renderMetaComponent() */}
               </div>
               <div className="col-xs-12 col-sm-7">
                 {/* Price Fixation */}
@@ -367,6 +372,15 @@ ProductDetail.propTypes = {
     productId: PropTypes.string,
     variantId: PropTypes.string
   }),
+  //tags: PropTypes.arrayOf(PropTypes.object),
+  tags: PropTypes.oneOfType([
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      slug: PropTypes.string
+    }),
+    PropTypes.arrayOf(PropTypes.object)
+  ]),
   t: PropTypes.func.isRequired
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,
