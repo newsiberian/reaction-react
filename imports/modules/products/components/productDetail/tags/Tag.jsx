@@ -186,7 +186,7 @@ class Tag extends Component {
         {connectDragPreview(connectDropTarget(
           <div className={styles.suiContainer} style={{ ...style, opacity }}>
             {connectDragSource(
-              <i className={`${styles.leftIcon} fa fa-bars`}></i>
+              <i className={`${styles.leftIcon} fa fa-bars`} />
             )}
             <input
               className={styles.input}
@@ -203,15 +203,10 @@ class Tag extends Component {
             >
               <i /!*className={`${hashtagMark(tag)} icon`}*!/></i>
             </div>*/}
-            <i className={`${styles.rightIcon} fa fa-times`}></i>
-            {/*<div
-              className={styles.rightIconWrapper}
-              //className="ui icon basic button"
-              style={{ marginLeft: -1 }}
-              //onClick={() => onTagGroupRemove(tag._id)}
-            >
-              <i className="remove icon"></i>
-            </div>*/}
+            <i
+              className={`${styles.rightIcon} fa fa-times`}
+              onClick={() => tagActions.removeTag(productId, tag._id)}
+            />
           </div>
         ))}
       </div>
@@ -235,9 +230,6 @@ Tag.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string,
   //onHashtagClick: PropTypes.func.isRequired,
-  //onTagGroupRemove: PropTypes.func.isRequired,
-  //onTagBlurred: PropTypes.func.isRequired,
-  //onTagChange: PropTypes.func.isRequired,
   //moveTag: PropTypes.func.isRequired,
   //hashtagMark: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired

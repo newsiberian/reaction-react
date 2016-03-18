@@ -44,6 +44,18 @@ export const updateTag = (productId, tagName, tagId) => {
   };
 };
 
+export const removeTag = (productId, tagId) => {
+  return dispatch => {
+    Meteor.call("products/removeProductTag", productId, tagId, err => {
+      if (err) {
+        dispatch(displayAlert({ message: err.reason }));
+        throw new Meteor.Error("error tag removing", err);
+      }
+      dispatch({ type: types.REMOVE_TAG, productId, tagId });
+    });
+  };
+};
+
 export const clearNewTagName = () => {
   return { type: types.CLEAR_NEW_TAG_NAME };
 };
