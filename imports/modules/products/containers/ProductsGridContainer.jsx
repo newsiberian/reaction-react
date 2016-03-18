@@ -144,8 +144,8 @@ const loadProducts = (location, params) => {
     if (a.positions && a.positions[currentTag] &&
       b.positions && b.positions[currentTag]) {
       if (a.positions[currentTag].position === b.positions[currentTag].position) {
-        const x = a.positions[currentTag].updatedAt;
-        const y = b.positions[currentTag].updatedAt;
+        const x = a.positions[currentTag].createdAt;
+        const y = b.positions[currentTag].createdAt;
 
         if (x > y) {
           return -1;
@@ -157,8 +157,8 @@ const loadProducts = (location, params) => {
       }
       return a.positions[currentTag].position - b.positions[currentTag].position;
     } // if some of them not exist, we need to comprare products `updatedAt`
-    const x = a.updatedAt;
-    const y = b.updatedAt;
+    const x = a.createdAt;
+    const y = b.createdAt;
 
     if (x > y) {
       return -1;
