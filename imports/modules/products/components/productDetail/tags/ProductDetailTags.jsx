@@ -32,6 +32,7 @@ const ProductDetailTags = ({ tags }) => (
   <div className={styles.container}>
     {tags.map((tag) => (
       <Link
+        key={tag._id}
         className={styles.chip}
         to={`/shop/product/tag/${ tag.slug }`}
       >

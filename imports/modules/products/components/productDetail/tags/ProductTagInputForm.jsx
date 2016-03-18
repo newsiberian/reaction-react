@@ -9,18 +9,21 @@ import Autosuggest from "react-autosuggest";
 import Tag from "./Tag.jsx";
 
 const styles = StyleSheet.create({
-  chip: {
-    borderRadius: 16,
-    boxSizing: "border-box",
-    cursor: "default",
-    display: "block",
-    float: "left",
-    height: 32,
-    lineHeight: 32,
-    margin: "8px 8px 0 0",
-    maxWidth: "100%",
-    padding: "0 12px",
-    position: "relative"
+  //chip: {
+  //  borderRadius: 16,
+  //  boxSizing: "border-box",
+  //  cursor: "default",
+  //  display: "block",
+  //  float: "left",
+  //  height: 32,
+  //  lineHeight: "32px",
+  //  margin: "8px 8px 0 0",
+  //  maxWidth: "100%",
+  //  padding: "0 12px",
+  //  position: "relative"
+  //},
+  list: {
+    listStyleType: "none"
   }
 });
 
@@ -57,7 +60,7 @@ class ProductTagInputForm extends Component {
     };
 
     return(
-      <ul>
+      <div className={styles.list}>
         {tags.map((tag, i) => (
           <Tag
             key={tag._id}
@@ -69,9 +72,8 @@ class ProductTagInputForm extends Component {
             name={tag.name}
           />
         ))}
-        <li>
+        <div>
           <Autosuggest
-            //ref="autosuggest"
             suggestions={newTag.suggestions}
             onSuggestionsUpdateRequested={({ value }) => tagActions.updateSuggestions(value)}
             getSuggestionValue={suggestion => suggestion}
@@ -80,8 +82,8 @@ class ProductTagInputForm extends Component {
             renderSuggestion={suggestion => <span>{suggestion}</span>}
             theme={theme}
           />
-        </li>
-      </ul>
+        </div>
+      </div>
     );
 
     // todo add react-motion here on autocomplete

@@ -14,22 +14,83 @@ const style = {
 
 // fixme: this styling are temporaty till `material chips` out
 const styles = StyleSheet.create({
-  chip: {
-    borderRadius: 16,
-    boxSizing: "border-box",
-    cursor: "default",
-    display: "block",
-    float: "left",
-    height: 32,
-    lineHeight: 32,
-    margin: "8px 8px 0 0",
-    maxWidth: "100%",
-    padding: "0 12px",
-    position: "relative"
-  },
+  //chip: {
+  //  borderRadius: 16,
+  //  boxSizing: "border-box",
+  //  cursor: "default",
+  //  display: "block",
+  //  float: "left",
+  //  height: 32,
+  //  lineHeight: "32px",
+  //  margin: "8px 8px 0 0",
+  //  maxWidth: "100%",
+  //  padding: "0 12px",
+  //  position: "relative"
+  //},
+
   suiContainer: {
     position: "relative",
-    display: "inline-flex"
+    display: "inline-flex",
+    fontWeight: 400,
+    fontStyle: "normal",
+    fontSize: "1em",
+    margin: 4
+  },
+  input: {
+    //borderTopRightRadius: 0,
+    //borderBottomRightRadius: 0,
+    borderRightColor: "transparent",
+    paddingTop: "0.678614em",
+    paddingBottom: "0.678614em",
+    paddingLeft: "2.67142857em",
+    paddingRight: "2.67142857em",
+    margin: 0,
+    maxWidth: "100%",
+    flex: "1 0 auto",
+    outline: 0,
+    textAlign: "left",
+    lineHeight: "1.2142em",
+    background: "#fff",
+    border: "1px solid rgba(34,36,38,.15)",
+    color: "rgba(0,0,0,.87)",
+    borderRadius: ".28571429rem",
+    transform: "box-shadow .1s ease,border-color .1s ease",
+    boxShadow: "none"
+  },
+  leftIcon: {
+    position: "absolute",
+    lineHeight: 1,
+    textAlign: "center",
+    top: ".6em",
+    left: "1px",
+    right: "auto",
+    margin: 0,
+    height: "100%",
+    width: "2.67142857em",
+    opacity: ".5",
+    borderRadius: ".28571429rem 0 0 .28571429rem",
+    transform: "opacity .3s ease",
+    display: "inline-block",
+    backfaceVisibility: "hidden",
+    cursor: "move",
+    pointerEvents: "auto"
+  },
+  rightIconWrapper: {
+
+  },
+  rightIcon: {
+    position: "absolute",
+    top: ".6em",
+    right: ".8em",
+    lineHeight: 1,
+    textAlign: "center",
+    margin: 0,
+    height: "100%",
+    opacity: ".5",
+    fontSize: "1em",
+    transform: "opacity .3s ease",
+    borderRadius: "0 .28571429rem .28571429rem 0",
+    cursor: "pointer"
   }
 });
 
@@ -121,13 +182,14 @@ class Tag extends Component {
     const opacity = isDragging ? 0 : 1;
 
     return(
-      <li /*className="item"*/>
+      <div>
         {connectDragPreview(connectDropTarget(
-          <div className={styles.chip}/* className="ui right action left icon input"*/ style={{ ...style, opacity }}>
+          <div className={styles.suiContainer} style={{ ...style, opacity }}>
             {connectDragSource(
-              <i className="fa fa-bars" style={{ cursor: "move", pointerEvents: "auto" }}></i>
+              <i className={`${styles.leftIcon} fa fa-bars`}></i>
             )}
             <input
+              className={styles.input}
               type="text"
               placeholder={t("productDetail.tagsEdit")}
               // value={name}
@@ -135,22 +197,24 @@ class Tag extends Component {
               onChange={event => tagActions.changeTag(productId, event.target.value, tag._id)}
               onBlur={event => this.handleUpdate(productId, event.target.value, tag._id)}
             />
-            <div
+            {/*<div
               //className="ui icon basic button"
               //onClick={() => onHashtagClick(tag._id)}
             >
-              <i /*className={`${hashtagMark(tag)} icon`}*/></i>
-            </div>
-            <div
+              <i /!*className={`${hashtagMark(tag)} icon`}*!/></i>
+            </div>*/}
+            <i className={`${styles.rightIcon} fa fa-times`}></i>
+            {/*<div
+              className={styles.rightIconWrapper}
               //className="ui icon basic button"
               style={{ marginLeft: -1 }}
               //onClick={() => onTagGroupRemove(tag._id)}
             >
               <i className="remove icon"></i>
-            </div>
+            </div>*/}
           </div>
         ))}
-      </li>
+      </div>
     );
   }
 }
