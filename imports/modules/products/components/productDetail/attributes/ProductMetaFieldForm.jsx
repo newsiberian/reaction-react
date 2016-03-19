@@ -1,6 +1,6 @@
-import MetaComponent from './MetaComponent';
-
 import React, { Component, PropTypes } from "react";
+import MetaComponent from "./MetaComponent";
+
 
 /**
  * @class ProductMetaFieldForm
@@ -11,7 +11,7 @@ export default class ProductMetaFieldForm extends Component {
     const {
       metafields, onChange, onBlur, onRemoveClick, newMetafield
     } = this.props.metaBundle;
-    console.log('ProductMetaFieldForm: rendering...');
+    console.log("ProductMetaFieldForm: rendering...");
     return (
       <div className="ui raised segments">
         { metafields.map((metafield, i) => {

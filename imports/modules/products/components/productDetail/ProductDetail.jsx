@@ -189,20 +189,19 @@ class ProductDetail extends Component {
     );
   }
 
-  /**
-   * @private
-   * @function render
-   * @description Render the meta block.
-   */
   renderMetaComponent() {
-    const { metaBundle, permissions } = this.props;
-    if (permissions.createProduct) {
-      return <ProductMetaFieldForm metaBundle={ metaBundle } />;
+    const { product, metafieldActions } = this.props;
+    if (ReactionCore.hasPermission("createProduct")) {
+      return (
+        <ProductMetaFieldForm
+          product={product}
+          metafieldActions={metafieldActions}
+        />
+      );
     }
-    if (metaBundle.metafields) {
-      return <ProductMetaField metafields={ metaBundle.metafields } />;
+    if (product.metafields.length) {
+      return <ProductMetaField metafields={product.metafields} />;
     }
-    return false;
   }
 
   renderProductSocialManage() {
@@ -265,7 +264,7 @@ class ProductDetail extends Component {
                 <h3>{t("productDetail.tags")}</h3>
                 {this.renderTagsComponent()}
                 <h3>{t("productDetail.details")}</h3>
-                {/* this.renderMetaComponent() */}
+                {this.renderMetaComponent()}
               </div>
               <div className="col-xs-12 col-sm-7">
                 {/* Price Fixation */}

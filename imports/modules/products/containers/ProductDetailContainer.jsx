@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { arrayCompare } from "../../../client/helpers/utilities";
+import * as metafieldActions from "../actions/metafield";
 import * as productActions from "../actions/product";
 import * as tagActions from "../actions/tag";
 import Loading from "../../layout/components/Loading";
@@ -19,7 +20,8 @@ const productFields = {
   description: 1,
   vendor: 1,
   isVisible: 1,
-  hashtags: 1
+  hashtags: 1,
+  metafields: 1
 };
 
 const variantFields = {};
@@ -125,6 +127,9 @@ ProductDetailContainer.propTypes = {
     updateSuggestions: PropTypes.func
   }),
   tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
+  metafieldActions: PropTypes.shape({
+
+  }),
   newTag: PropTypes.object
 };
 
@@ -140,6 +145,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    metafieldActions: bindActionCreators(metafieldActions, dispatch),
     productActions: bindActionCreators(productActions, dispatch),
     tagActions: bindActionCreators(tagActions, dispatch)
   };
