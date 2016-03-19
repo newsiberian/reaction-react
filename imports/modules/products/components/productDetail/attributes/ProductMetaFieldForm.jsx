@@ -8,44 +8,53 @@ import MetaComponent from "./MetaComponent";
  */
 export default class ProductMetaFieldForm extends Component {
   render() {
-    const {
-      metafields, onChange, onBlur, onRemoveClick, newMetafield
-    } = this.props.metaBundle;
+    const { product, metafieldActions, newMetafield } = this.props;
     console.log("ProductMetaFieldForm: rendering...");
     return (
-      <div className="ui raised segments">
-        { metafields.map((metafield, i) => {
+      <div /*className="ui raised segments"*/>
+        {product.metafields && product.metafields.map((metafield, index) => {
           return(
-            <div key={ i } className="ui segment">
+            <div key={index} /*className="ui segment"*/>
               <MetaComponent
-                id={ i }
-                metafield={ metafield }
-                onChange={ onChange }
-                onBlur={ onBlur }
-                onRemoveClick={ onRemoveClick }
+                index={index}
+                metafield={metafield}
+                metafieldActions={metafieldActions}
+                //onChange={onChange}
+                //onBlur={onBlur}
+                //onRemoveClick={onRemoveClick}
               />
             </div>
           );
         }) }
-        <div className="ui segment">
+        <div /*className="ui segment"*/>
           <MetaComponent
-            id="new"
-            metafield={ newMetafield }
-            onChange={ onChange }
-            onBlur={ onBlur }
+            index="new"
+            metafield={newMetafield}
+            metafieldActions={metafieldActions}
+            //onChange={onChange}
+            //onBlur={ onBlur}
           />
         </div>
       </div>
     );
-  }
+}
 }
 
 ProductMetaFieldForm.propTypes = {
-  metaBundle: PropTypes.shape({
-    metafields: PropTypes.array,
-    newMetafield: PropTypes.object,
-    onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func.isRequired,
-    onRemoveClick: PropTypes.func.isRequired
-  })
+  metafieldActions: PropTypes.shape({
+    changeMetafield: PropTypes.func,
+    updateMetafield: PropTypes.func,
+    removeMetafields: PropTypes.func
+  }).isRequired,
+  newMetafield: PropTypes.shape({
+    key: PropTypes.string,
+    value: PropTypes.string
+  }),
+  //metaBundle: PropTypes.shape({
+  //  metafields: PropTypes.array,
+  //  newMetafield: PropTypes.object,
+  //  onChange: PropTypes.func.isRequired,
+  //  onBlur: PropTypes.func.isRequired,
+  //  onRemoveClick: PropTypes.func.isRequired
+  //})
 };

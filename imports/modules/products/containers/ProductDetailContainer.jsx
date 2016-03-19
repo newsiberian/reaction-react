@@ -125,10 +125,16 @@ ProductDetailContainer.propTypes = {
     dropTag: PropTypes.func,
     clearSuggestions: PropTypes.func,
     updateSuggestions: PropTypes.func
-  }),
+  }).isRequired,
   tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
   metafieldActions: PropTypes.shape({
-
+    changeMetafield: PropTypes.func,
+    updateMetafield: PropTypes.func,
+    removeMetafields: PropTypes.func
+  }).isRequired,
+  newMetafield: PropTypes.shape({
+    key: PropTypes.string,
+    value: PropTypes.string
   }),
   newTag: PropTypes.object
 };
@@ -139,7 +145,8 @@ function mapStateToProps(state) {
     variantId: state.shop.product.ids.variantId,
     productState: state.shop.product.fields,
     newTag: state.shop.product.newTag,
-    tagsIdsArray: state.shop.product.tagsIdsArray
+    tagsIdsArray: state.shop.product.tagsIdsArray,
+    newMetafield: state.shop.product.newMetafield
   };
 }
 

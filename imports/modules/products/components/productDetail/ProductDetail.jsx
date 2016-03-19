@@ -190,12 +190,13 @@ class ProductDetail extends Component {
   }
 
   renderMetaComponent() {
-    const { product, metafieldActions } = this.props;
+    const { product, metafieldActions, newMetafield } = this.props;
     if (ReactionCore.hasPermission("createProduct")) {
       return (
         <ProductMetaFieldForm
           product={product}
           metafieldActions={metafieldActions}
+          newMetafield={newMetafield}
         />
       );
     }
@@ -371,9 +372,18 @@ ProductDetail.propTypes = {
     dropTag: PropTypes.func,
     clearSuggestions: PropTypes.func,
     updateSuggestions: PropTypes.func
-  }),
+  }).isRequired,
   tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
   newTag: PropTypes.object,
+  metafieldActions: PropTypes.shape({
+    changeMetafield: PropTypes.func,
+    updateMetafield: PropTypes.func,
+    removeMetafields: PropTypes.func
+  }).isRequired,
+  newMetafield: PropTypes.shape({
+    key: PropTypes.string,
+    value: PropTypes.string
+  }),
   t: PropTypes.func.isRequired
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,
