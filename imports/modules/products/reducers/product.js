@@ -120,9 +120,27 @@ function newTag(state = tagsState, action) {
   }
 }
 
+function tagsIdsArray(state = [], action) {
+  switch (action.type) {
+  case types.SYNC_TAGS:
+    return action.tagsIdsArray;
+  case types.MOVE_TAG:
+    const dragTag = state[action.dragIndex];
+    return update(state, {
+      $splice: [
+        [action.dragIndex, 1],
+        [action.hoverIndex, 0, dragTag]
+      ]
+    });
+  default:
+    return state;
+  }
+}
+
 export default combineReducers({
   ids,
   fields,
   mediaIdsArray,
-  newTag
+  newTag,
+  tagsIdsArray
 });

@@ -3,6 +3,7 @@ import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { arrayCompare } from "../../../client/helpers/utilities";
 import * as productActions from "../actions/product";
 import * as tagActions from "../actions/tag";
 import Loading from "../../layout/components/Loading";
@@ -42,25 +43,11 @@ const getSelectedVariant = variantId => {
  * getTags
  * @summary fetch tags for a product
  * @param product
- * @return {Array|Object} for admin user we return an object due to drag'n'drop,
- * for customer we return an array with cursors
+ * @return {Array}
  */
 const getTags = product => {
   if (product) {
     if (product.hashtags) {
-      //if (ReactionCore.hasPermission("createProduct")) {
-      //  let tags = {};
-      //  product.hashtags.forEach(id => {
-      //    const tag = Tags.findOne({ _id: id }, {
-      //      fields: {
-      //        name: 1,
-      //        slug: 1
-      //      }
-      //    });
-      //    tags[tag._id] = tag;
-      //  });
-      //  return tags;
-      //}
       return product.hashtags.map(id => Tags.findOne({ _id: id }, {
         fields: {
           name: 1,
@@ -71,14 +58,29 @@ const getTags = product => {
   }
 };
 
+const getTagsIdsArray = tags => tags.map(tag => tag._id);
+
 class ProductDetailContainer extends Component {
   componentWillMount() {
-    const { product, productActions } = this.props;
+    const { product, productActions, tagActions, tags } = this.props;
     const { variantId } = this.props.params;
     // TODO maybe we don't need this logic at all. Review this Ids after pdp will
     // be done.
     // productActions.setProductId(product._id);
     productActions.setVariantId(product._id, variantId);
+
+    const tagsIdsArray = getTagsIdsArray(tags);
+    tagActions.syncTags(tagsIdsArray);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // if we receive new tags, we should extract `_id` from it and rebuild
+    // `store` `tagsIdsArray` to keep things in sync
+    // this is the similar logic that we use with media
+    if (!arrayCompare(nextProps.tags, this.props.tags)) {
+      const tagsIdsArray = getTagsIdsArray(nextProps.tags);
+      this.props.tagActions.syncTags(tagsIdsArray);
+    }
   }
 
   render() {
@@ -88,7 +90,7 @@ class ProductDetailContainer extends Component {
 
 ProductDetailContainer.propTypes = {
   //productId: PropTypes.string,
-  //variantId: PropTypes.string,
+  variantId: PropTypes.string,
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
     setVariantId: PropTypes.func,
@@ -109,29 +111,21 @@ ProductDetailContainer.propTypes = {
     variantId: PropTypes.string
   }),
   selectedVariant: PropTypes.object,
-  //tags: PropTypes.oneOfType([
-  //  PropTypes.shape({
-  //    _id: PropTypes.string,
-  //    name: PropTypes.string,
-  //    slug: PropTypes.string
-  //  }),
-  //  PropTypes.arrayOf(PropTypes.object)
-  //])
   tags: PropTypes.arrayOf(PropTypes.object),
   tagActions: PropTypes.shape({
     changeTag: PropTypes.func,
     changeNewTag: PropTypes.func,
     clearNewTagName: PropTypes.func,
+    removeTag: PropTypes.func,
     updateTag: PropTypes.func,
+    syncTags: PropTypes.func,
+    moveTag: PropTypes.func,
+    dropTag: PropTypes.func,
     clearSuggestions: PropTypes.func,
     updateSuggestions: PropTypes.func
   }),
+  tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
   newTag: PropTypes.object
-  //tags: PropTypes.shape({
-  //  _id: PropTypes.string,
-  //  name: PropTypes.string,
-  //  slug: PropTypes.string
-  //})
 };
 
 function mapStateToProps(state) {
@@ -139,7 +133,8 @@ function mapStateToProps(state) {
     //productId: state.shop.product.productId,
     variantId: state.shop.product.ids.variantId,
     productState: state.shop.product.fields,
-    newTag: state.shop.product.newTag
+    newTag: state.shop.product.newTag,
+    tagsIdsArray: state.shop.product.tagsIdsArray
   };
 }
 

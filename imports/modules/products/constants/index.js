@@ -11,6 +11,7 @@ export const UPLOAD_MEDIA = "UPLOAD_MEDIA";
 export const REMOVE_MEDIA = "REMOVE_MEDIA";
 export const SYNC_MEDIA = "SYNC_MEDIA"; // with minimongo
 export const MOVE_MEDIA = "MOVE_MEDIA";
+export const DROP_MEDIA = "DROP_MEDIA";
 
 export const TOGGLE_PRODUCT_VISIBILITY = "TOGGLE_PRODUCT_VISIBILITY";
 export const CLONE_PRODUCTS = "CLONE_PRODUCTS";
@@ -26,6 +27,9 @@ export const CHANGE_TAG = "CHANGE_TAG";
 export const CHANGE_NEW_TAG = "CHANGE_NEW_TAG";
 export const UPDATE_TAG = "UPDATE_TAG";
 export const REMOVE_TAG = "REMOVE_TAG";
+export const SYNC_TAGS = "SYNC_TAGS";
+export const MOVE_TAG = "MOVE_TAG";
+export const DROP_TAG = "DROP_TAG";
 export const CLEAR_NEW_TAG_NAME = "CLEAR_NEW_TAG_NAME";
 export const LOAD_SUGGESTIONS_BEGIN = "LOAD_SUGGESTIONS_BEGIN";
 export const UPDATE_SUGGESTIONS = "UPDATE_SUGGESTIONS";

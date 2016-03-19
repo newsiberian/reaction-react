@@ -4,30 +4,8 @@ import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
 import { DragSource, DropTarget } from "react-dnd";
 
-const style = {
-  //border: "1px dashed gray",
-  //padding: "0.5rem 1rem",
-  //marginBottom: ".5rem",
-  //backgroundColor: "white",
-  //cursor: "move"
-};
-
 // fixme: this styling are temporaty till `material chips` out
 const styles = StyleSheet.create({
-  //chip: {
-  //  borderRadius: 16,
-  //  boxSizing: "border-box",
-  //  cursor: "default",
-  //  display: "block",
-  //  float: "left",
-  //  height: 32,
-  //  lineHeight: "32px",
-  //  margin: "8px 8px 0 0",
-  //  maxWidth: "100%",
-  //  padding: "0 12px",
-  //  position: "relative"
-  //},
-
   suiContainer: {
     position: "relative",
     display: "inline-flex",
@@ -37,8 +15,6 @@ const styles = StyleSheet.create({
     margin: 4
   },
   input: {
-    //borderTopRightRadius: 0,
-    //borderBottomRightRadius: 0,
     borderRightColor: "transparent",
     paddingTop: "0.678614em",
     paddingBottom: "0.678614em",
@@ -104,6 +80,25 @@ const tagSource = {
       id: props.id,
       index: props.index
     };
+  },
+  endDrag(props, monitor, component) {
+    if (!monitor.didDrop()) {
+      // You can check whether the drop was successful
+      // or if the drag ended but nobody handled the drop
+      return;
+    }
+
+    // When dropped on a compatible target, do something.
+    // Read the original dragged item from getItem():
+    const item = monitor.getItem();
+
+    // You may also read the drop result from the drop target
+    // that handled the drop, if it returned an object from
+    // its drop() method.
+    const dropResult = monitor.getDropResult();
+
+    // This is a good place to call some Flux action
+    props.tagActions.dropTag(props.productId, props.tagsIdsArray);
   }
 };
 
@@ -144,7 +139,7 @@ const tagTarget = {
     }
 
     // Time to actually perform the action
-    props.moveTag(dragIndex, hoverIndex);
+    props.tagActions.moveTag(dragIndex, hoverIndex);
 
     // Note: we"re mutating the monitor item here!
     // Generally it"s better to avoid mutations,
@@ -176,15 +171,15 @@ class Tag extends Component {
 
   render() {
     const {
-      name, isDragging, connectDragSource, connectDragPreview, onTagBlurred, productId, t, tagActions,
-      connectDropTarget, hashtagMark, onHashtagClick, onTagGroupRemove, tag, onTagChange
+      name, isDragging, connectDragSource, connectDragPreview, productId, t,
+      connectDropTarget, tag, tagActions
     } = this.props;
     const opacity = isDragging ? 0 : 1;
 
     return(
       <div>
         {connectDragPreview(connectDropTarget(
-          <div className={styles.suiContainer} style={{ ...style, opacity }}>
+          <div className={styles.suiContainer} style={{ opacity }}>
             {connectDragSource(
               <i className={`${styles.leftIcon} fa fa-bars`} />
             )}
@@ -192,17 +187,12 @@ class Tag extends Component {
               className={styles.input}
               type="text"
               placeholder={t("productDetail.tagsEdit")}
-              // value={name}
               defaultValue={name}
-              onChange={event => tagActions.changeTag(productId, event.target.value, tag._id)}
-              onBlur={event => this.handleUpdate(productId, event.target.value, tag._id)}
+              onChange={event =>
+               tagActions.changeTag(productId, event.target.value, tag._id)}
+              onBlur={event =>
+               this.handleUpdate(productId, event.target.value, tag._id)}
             />
-            {/*<div
-              //className="ui icon basic button"
-              //onClick={() => onHashtagClick(tag._id)}
-            >
-              <i /!*className={`${hashtagMark(tag)} icon`}*!/></i>
-            </div>*/}
             <i
               className={`${styles.rightIcon} fa fa-times`}
               onClick={() => tagActions.removeTag(productId, tag._id)}
@@ -220,18 +210,20 @@ Tag.propTypes = {
   connectDragPreview: PropTypes.func,
   isDragging: PropTypes.bool,
   index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string,
   productId: PropTypes.string.isRequired,
   tag: PropTypes.object.isRequired,
   tagActions: PropTypes.shape({
     changeTag: PropTypes.func,
     changeNewTag: PropTypes.func,
-    updateTag: PropTypes.func
+    removeTag: PropTypes.func,
+    updateTag: PropTypes.func,
+    syncTags: PropTypes.func,
+    moveTag: PropTypes.func,
+    dropTag: PropTypes.func
   }),
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string,
-  //onHashtagClick: PropTypes.func.isRequired,
-  //moveTag: PropTypes.func.isRequired,
-  //hashtagMark: PropTypes.func.isRequired,
+  tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
   t: PropTypes.func.isRequired
 };
 

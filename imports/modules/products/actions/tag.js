@@ -14,7 +14,6 @@ export const changeNewTag = (productId, tagName) => {
     }
     dispatch({ type: types.CHANGE_NEW_TAG, productId, tagName });
   };
-  //return { type: types.CHANGE_NEW_TAG, productId, tagName };
 };
 
 /**
@@ -27,14 +26,8 @@ export const changeNewTag = (productId, tagName) => {
 export const updateTag = (productId, tagName, tagId) => {
   return dispatch => {
     const id = typeof tagId === "string" ? tagId : null;
-    //const clear = this.clearField;
     // `tagName` could be empty
     tagName && Meteor.call("products/updateProductTags", productId, tagName, id, err => {
-      // todo надо очищать input value после удачного или неудачного ответа
-      //if (event.target.id === "tags-submit-new") {
-      //  clear({ newTagValue: "" });
-      //}
-
       if (err) {
         dispatch(displayAlert({ message: err.reason }));
         throw new Meteor.Error("error updating tag", err);
@@ -56,17 +49,23 @@ export const removeTag = (productId, tagId) => {
   };
 };
 
-export const moveTag = (productId, dragTag, dragIndex, hoverIndex) => {
+export const syncTags = tagsIdsArray => {
+  return { type: types.SYNC_TAGS, tagsIdsArray };
+};
+
+export const moveTag = (dragIndex, hoverIndex) => {
+  return { type: types.MOVE_TAG, dragIndex: dragIndex, hoverIndex: hoverIndex };
+};
+
+export const dropTag = (productId, tagsIdsArray) => {
   return dispatch => {
-    // FIXME
-    let tags = this.state.selectedProduct.hashtags;
-    const dragTags = tags[dragIndex];
-
-    tags.splice(dragIndex, 1);
-    tags.splice(hoverIndex, 0, dragTags);
-
-    Meteor.call("products/updateProductField",
-      this.state.selectedProduct._id, "hashtags", _.uniq(tags));
+    Meteor.call("products/updateProductField", productId, "hashtags", tagsIdsArray, err => {
+      if (err) {
+        dispatch(displayAlert({ message: err.reason }));
+        throw new Meteor.Error("error tag removing", err);
+      }
+      dispatch({ type: types.DROP_TAG, productId });
+    });
   };
 };
 
@@ -92,5 +91,3 @@ export const updateSuggestions = tagName => {
     dispatch({ type: types.UPDATE_SUGGESTIONS, suggestions, tagName });
   };
 };
-
-

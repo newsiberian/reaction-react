@@ -3,7 +3,6 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { ReactionProductAPI } from "meteor/reactioncommerce:reaction-catalog";
 import { displayAlert } from "../../layout/actions/alert";
 import { FS } from "meteor/cfs:base-package";
-//import i18next from "i18next";
 
 const { Media } = ReactionCore.Collections;
 
@@ -62,4 +61,15 @@ export const syncMedia = mediaIdsArray => {
 
 export const moveMedia = (dragIndex, hoverIndex) => {
   return { type: types.MOVE_MEDIA, dragIndex: dragIndex, hoverIndex: hoverIndex };
+};
+
+export const dropMedia = mediaIdsArray => {
+  return dispatch => {
+    // convert to reaction array format
+    const sortedMedias = mediaIdsArray.map(id => {
+      return { mediaId: id };
+    });
+    ReactionProductAPI.methods.updateMediaPriorities.call({ sortedMedias });
+    dispatch({ type: types.DROP_MEDIA });
+  };
 };

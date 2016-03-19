@@ -162,9 +162,8 @@ class ProductDetail extends Component {
     // todo add markdown support here:
     return (
       <div
-        key={index}
+        key={index} // todo do we need this here?
         className={options.className}
-        //style={options.styles ? options.styles : {}}
       >
         {options.value}
       </div>
@@ -172,7 +171,7 @@ class ProductDetail extends Component {
   }
 
   renderTagsComponent() {
-    const { product, tags, tagActions, newTag } = this.props;
+    const { product, tags, tagActions, tagsIdsArray, newTag } = this.props;
 
     if (ReactionCore.hasPermission("createProduct")) {
       return(
@@ -180,28 +179,14 @@ class ProductDetail extends Component {
           productId={product._id}
           tags={tags}
           tagActions={tagActions}
+          tagsIdsArray={tagsIdsArray}
           newTag={newTag}
-          //tagValue={ tagsBundle.tagValue }
-          //tagsArray={ tagsBundle.tagsToArray() }
-          //getTagSuggestions={ tagsBundle.getTagSuggestions }
-          //onTagBlurred={ tagsBundle.onTagBlurred }
-          //onTagChange={ tagsBundle.onTagChange }
-          //onNewTagChange={ tagsBundle.onNewTagChange }
-          //onHashtagClick={ tagsBundle.onHashtagClick }
-          //onTagGroupRemove={ tagsBundle.onTagGroupRemove }
-          //moveTag={ tagsBundle.moveTag }
-          //hashtagMark={ tagsBundle.hashtagMark }
         />
       );
     }
-    // tags should be an array
-    //if (Array.isArray(tags)) {
     return (
       <ProductDetailTags tags={tags} />
     );
-    //}
-    // todo add something like "there is no tags" span
-    //return false;
   }
 
   /**
@@ -229,7 +214,7 @@ class ProductDetail extends Component {
         { social.map((options, index) => {
           return(
             <a href="#" key={ index }>
-              <i className={ `large ${options.name} icon` }></i>
+              <i className={ `large ${options.name} icon` } />
             </a>
           );
         }) }
@@ -376,22 +361,19 @@ ProductDetail.propTypes = {
     variantId: PropTypes.string
   }),
   tags: PropTypes.arrayOf(PropTypes.object),
-  //tags: PropTypes.oneOfType([
-  //  PropTypes.shape({
-  //    _id: PropTypes.string,
-  //    name: PropTypes.string,
-  //    slug: PropTypes.string
-  //  }),
-  //  PropTypes.arrayOf(PropTypes.object)
-  //]),
   tagActions: PropTypes.shape({
     changeTag: PropTypes.func,
     changeNewTag: PropTypes.func,
     clearNewTagName: PropTypes.func,
+    removeTag: PropTypes.func,
     updateTag: PropTypes.func,
+    syncTags: PropTypes.func,
+    moveTag: PropTypes.func,
+    dropTag: PropTypes.func,
     clearSuggestions: PropTypes.func,
     updateSuggestions: PropTypes.func
   }),
+  tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
   newTag: PropTypes.object,
   t: PropTypes.func.isRequired
   //selectedVariant: PropTypes.oneOfType([
@@ -405,19 +387,6 @@ ProductDetail.propTypes = {
   //addToCartQuantity: PropTypes.number.isRequired,
   //onAddToCartClick: PropTypes.func.isRequired,
   //onAddToCartQuantityChange: PropTypes.func.isRequired,
-  //tagsBundle: PropTypes.shape({
-  //  tags: PropTypes.object,
-  //  tagValue: PropTypes.string,
-  //  tagsToArray: PropTypes.func.isRequired,
-  //  getTagSuggestions: PropTypes.func.isRequired,
-  //  onTagBlurred: PropTypes.func.isRequired,
-  //  onTagChange: PropTypes.func.isRequired,
-  //  onNewTagChange: PropTypes.func.isRequired,
-  //  onHashtagClick: PropTypes.func.isRequired,
-  //  onTagGroupRemove: PropTypes.func.isRequired,
-  //  moveTag: PropTypes.func.isRequired,
-  //  hashtagMark: PropTypes.func.isRequired
-  //}),
   //metaBundle: PropTypes.shape({
   //  metafields: PropTypes.array,
   //  newMetafield: PropTypes.object,

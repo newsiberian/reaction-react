@@ -4,6 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import look, { StyleSheet } from "react-look";
 //import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
+import { arrayCompare } from "../../../../../client/helpers/utilities";
 //import shallowCompare from "react-addons-shallow-compare";
 import ImageDetail from "./ImageDetail";
 
@@ -43,13 +44,6 @@ const styles = StyleSheet.create({
 });
 
 const getMediaIdsArray = media => media.map(file => file._id);
-
-// @link http://stackoverflow.com/a/22395463
-// we comparing only by id
-const arrayCompare = (array1, array2) => (array1.length === array2.length) &&
-array1.every(function (element, index) {
-  return element._id === array2[index]._id;
-});
 
 /**
  * @classdesc ProductImageGallery
@@ -105,25 +99,10 @@ class ProductImageGallery extends Component {
    * @function handleDropMedia
    * @description onDrop handler for images
    * @summary this will be called from ImageDetail component
-   * @fires Media.update
    */
   handleDropMedia() {
-    if (!ReactionCore.hasPermission("createProduct")) {
-      throw new Meteor.Error(403, "Access Denied");
-    }
-    const { media, mediaIdsArray } = this.props;
-    // we don't mutate `media`. Instead of this we just utilize `mediaIdsArray`
-    // as correct indexes provider
-    // Looks like we will leave this logic instead of implementing new logic,
-    // because of `mediaIdsArray` usage... :(
-    // reaction currently uses: ReactionProductAPI.methods.updateMediaPriorities
-    media.forEach(image => {
-      ReactionCore.Collections.Media.update(image._id, {
-        $set: {
-          "metadata.priority": _.indexOf(mediaIdsArray, image._id)
-        }
-      });
-    });
+    const { mediaIdsArray, mediaActions } = this.props;
+    mediaActions.dropMedia(mediaIdsArray);
   }
 
   render() {

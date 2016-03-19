@@ -2,26 +2,10 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
 import { getSlug } from "../../../../../client/helpers/products";
-// this moved upper
-// import { DragDropContext } from "react-dnd";
-// import HTML5Backend from "react-dnd-html5-backend";
 import Autosuggest from "react-autosuggest";
 import Tag from "./Tag.jsx";
 
 const styles = StyleSheet.create({
-  //chip: {
-  //  borderRadius: 16,
-  //  boxSizing: "border-box",
-  //  cursor: "default",
-  //  display: "block",
-  //  float: "left",
-  //  height: 32,
-  //  lineHeight: "32px",
-  //  margin: "8px 8px 0 0",
-  //  maxWidth: "100%",
-  //  padding: "0 12px",
-  //  position: "relative"
-  //},
   list: {
     listStyleType: "none"
   }
@@ -43,8 +27,7 @@ const theme = {
 class ProductTagInputForm extends Component {
   render() {
     const {
-      productId, tags, tagActions, newTag, /*getTagSuggestions, moveTag, hashtagMark, onHashtagClick, tagValue,
-      onTagGroupRemove, onTagBlurred, onTagChange, onNewTagChange, tagsArray,*/ t
+      productId, tags, tagActions, tagsIdsArray, newTag, t
     } = this.props;
     console.log("ProductTagInputForm: rendering...");
     const inputAttributes = {
@@ -61,17 +44,23 @@ class ProductTagInputForm extends Component {
 
     return(
       <div className={styles.list}>
-        {tags.map((tag, i) => (
-          <Tag
-            key={tag._id}
-            index={i}
-            productId={productId}
-            tag={tag}
-            tagActions={tagActions}
-            id={tag._id}
-            name={tag.name}
-          />
-        ))}
+        {tagsIdsArray && tagsIdsArray.map((tagId, i) => {
+          const currentTag = tags.filter(tag => tag._id === tagId);
+          if (currentTag.length) {
+            return (
+              <Tag
+                key={tagId}
+                id={tagId}
+                index={i}
+                name={currentTag[0].name}
+                productId={productId}
+                tag={currentTag[0]}
+                tagActions={tagActions}
+                tagsIdsArray={tagsIdsArray}
+              />
+            );
+          }
+        })}
         <div>
           <Autosuggest
             suggestions={newTag.suggestions}
@@ -85,68 +74,26 @@ class ProductTagInputForm extends Component {
         </div>
       </div>
     );
-
-    // todo add react-motion here on autocomplete
-    //return(
-    //  <div className="ui list">
-    //    { tagsArray.map((tag, i) => {
-    //      return (
-    //        <Tag
-    //          key={tag._id}
-    //          index={i}
-    //          tag={tag}
-    //          id={tag._id}
-    //          name={tags[tag._id].name}
-    //          moveTag={moveTag}
-    //          hashtagMark={hashtagMark}
-    //          onHashtagClick={onHashtagClick}
-    //          onTagGroupRemove={onTagGroupRemove}
-    //          onTagBlurred={onTagBlurred}
-    //          onTagChange={onTagChange}
-    //        />
-    //      );
-    //    }) }
-    //    { /* todo add here _id & name of single tag */ }
-    //    <div className="item">
-    //      {/*<div className="ui input">*/}
-    //        <Autosuggest
-    //          ref="autosuggest"
-    //          suggestions={getTagSuggestions}
-    //          inputAttributes={inputAttributes}
-    //          showWhen={input => input.trim().length >= 2}
-    //          theme={theme}
-    //          value={tagValue}
-    //        />
-    //      {/*</div>*/}
-    //    </div>
-    //  </div>
-    //);
   }
 }
 
 ProductTagInputForm.propTypes = {
   productId: PropTypes.string.isRequired,
-  //tags: PropTypes.object,
   tags: PropTypes.arrayOf(PropTypes.object),
   tagActions: PropTypes.shape({
     changeTag: PropTypes.func,
     changeNewTag: PropTypes.func,
     clearNewTagName: PropTypes.func,
+    removeTag: PropTypes.func,
     updateTag: PropTypes.func,
+    syncTags: PropTypes.func,
+    moveTag: PropTypes.func,
+    dropTag: PropTypes.func,
     clearSuggestions: PropTypes.func,
     updateSuggestions: PropTypes.func
   }),
+  tagsIdsArray: PropTypes.arrayOf(PropTypes.string),
   newTag: PropTypes.object,
-  //tagValue: PropTypes.string,
-  //tagsArray: PropTypes.array,
-  //getTagSuggestions: PropTypes.func.isRequired,
-  //onTagBlurred: PropTypes.func.isRequired,
-  //onTagChange: PropTypes.func.isRequired,
-  //onNewTagChange: PropTypes.func.isRequired,
-  //onHashtagClick: PropTypes.func.isRequired,
-  //onTagGroupRemove: PropTypes.func.isRequired,
-  //moveTag: PropTypes.func.isRequired,
-  //hashtagMark: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
 };
 

@@ -48,6 +48,13 @@ export function timezoneOptions() {
   });
 }
 
+// @link http://stackoverflow.com/a/22395463
+// we comparing only by id
+export const arrayCompare = (array1, array2) => (array1.length === array2.length) &&
+array1.every(function (element, index) {
+  return element._id === array2[index]._id;
+});
+
 /**
  * isCurrentUser
  * @return {[Boolean]} returns true/null if user has registered
