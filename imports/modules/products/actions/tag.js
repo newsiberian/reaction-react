@@ -56,6 +56,20 @@ export const removeTag = (productId, tagId) => {
   };
 };
 
+export const moveTag = (productId, dragTag, dragIndex, hoverIndex) => {
+  return dispatch => {
+    // FIXME
+    let tags = this.state.selectedProduct.hashtags;
+    const dragTags = tags[dragIndex];
+
+    tags.splice(dragIndex, 1);
+    tags.splice(hoverIndex, 0, dragTags);
+
+    Meteor.call("products/updateProductField",
+      this.state.selectedProduct._id, "hashtags", _.uniq(tags));
+  };
+};
+
 export const clearNewTagName = () => {
   return { type: types.CLEAR_NEW_TAG_NAME };
 };

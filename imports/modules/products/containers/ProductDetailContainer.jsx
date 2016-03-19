@@ -12,21 +12,28 @@ import ProductDetail from "../components/productDetail/ProductDetail";
 
 const { Products, Tags } = ReactionCore.Collections;
 
+const productFields = {
+  title: 1,
+  pageTitle: 1,
+  description: 1,
+  vendor: 1,
+  isVisible: 1,
+  hashtags: 1
+};
+
+const variantFields = {};
+
 const getProduct = handle => {
   if (!handle.match(/^[A-Za-z0-9]{17}$/)) {
     const possibleHandle = handle.toLowerCase();
-    return Products.findOne({
-      handle: possibleHandle
-    });
+    return Products.findOne({ handle: possibleHandle }, { fields: productFields });
   }
-  return Products.findOne({
-    _id: handle
-  });
+  return Products.findOne({ _id: handle }, { fields: productFields });
 };
 
 const getSelectedVariant = variantId => {
   if (variantId) {
-    return Products.findOne({ _id: variantId });
+    return Products.findOne({ _id: variantId }, { fields: variantFields });
   }
   return {};
 };
