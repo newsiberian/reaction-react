@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from "react";
+import { Meteor } from "meteor/meteor";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -6,7 +8,6 @@ import * as formsActions from "../actions/forms";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as permActions from "../actions/permissions";
 import { routerActions } from "react-router-redux";
-import { ReactionCore } from "meteor/reactioncommerce:core";
 import Loading from "../../layout/components/Loading.jsx";
 import Management from "../components/accounts/Management.jsx";
 

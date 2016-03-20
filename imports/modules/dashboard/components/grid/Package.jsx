@@ -5,7 +5,6 @@ import CardHeader from "material-ui/lib/card/card-header";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import FontIcon from "material-ui/lib/font-icon";
-// import { hasPermission } from "../../../../client/helpers/permissions";
 import getReactionApps from "../../../../client/helpers/apps";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { translate } from "react-i18next/lib";
@@ -72,6 +71,8 @@ const getRoute = template => {
     return "generic";
   case "i18nSettings":
     return "I18nSettingsContainer";
+  case "commentsSettings":
+    return "CommentsSettingsContainer";
   default:
     return "";
   }

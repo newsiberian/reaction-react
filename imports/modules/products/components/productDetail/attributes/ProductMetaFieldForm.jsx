@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import i18next from "i18next";
-import {reduxForm} from "redux-form";
+import { reduxForm } from "redux-form";
 import TextField from "material-ui/lib/text-field";
 import FlatButton from "material-ui/lib/flat-button";
 import ActionDone from "material-ui/lib/svg-icons/action/done";

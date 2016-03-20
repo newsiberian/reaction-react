@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import Settings from "../components/shop/Settings.jsx";
 import * as formsActions from "../actions/forms";
 import * as settingsActions from "../actions/settings";

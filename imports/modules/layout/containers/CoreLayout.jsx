@@ -50,6 +50,10 @@ components.registerComponent(
   "ProductsSettingsContainer",
   require("../../products/containers/ProductsSettingsContainer.js").default
 );
+components.registerComponent(
+  "CommentsSettingsContainer",
+  require("../../dashboard/containers/CommentsSettingsContainer.jsx").default
+);
 
 function modifyRawTheme(muiTheme, newFontFamily) {
   const {
