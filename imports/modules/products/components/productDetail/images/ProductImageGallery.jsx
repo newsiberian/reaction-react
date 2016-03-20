@@ -56,6 +56,14 @@ class ProductImageGallery extends Component {
     this.handleDropMedia = this.handleDropMedia.bind(this);
   }
 
+  // sometimes next.media and current media are the same within
+  // `componentWillReceiveProps`, but `mediaIdsArray` is not ready and to fix
+  // this case we are additionally firing this sync within `componentDidMount`
+  componentDidMount() {
+    const mediaIdsArray = getMediaIdsArray(this.props.media);
+    this.props.mediaActions.syncMedia(mediaIdsArray);
+  }
+
   componentWillReceiveProps(nextProps) {
     // if we receive new media, we should extract `_id` from it and rebuild
     // `store` `mediaIdsArray` to keep things in sync
@@ -63,6 +71,10 @@ class ProductImageGallery extends Component {
       const mediaIdsArray = getMediaIdsArray(nextProps.media);
       this.props.mediaActions.syncMedia(mediaIdsArray);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.mediaActions.syncMedia([]);
   }
 
   //shouldComponentUpdate(nextProps) {
@@ -112,7 +124,10 @@ class ProductImageGallery extends Component {
     return (
       <div>
         <div className={styles.images}>
-          {mediaIdsArray.length ? mediaIdsArray.map((id, i) => {
+          {/* difficult logic for fixing but when you switch between products
+           with products w/o media */}
+          {media.length ?
+            /*(mediaIdsArray.length && */mediaIdsArray.map((id, i) => {
             // TODO the same as below
             const files = media.filter(image => image._id === id);
             // this is quickfix for situation then the `mediaIdsArray` is not
@@ -130,7 +145,7 @@ class ProductImageGallery extends Component {
                 />
               );
             }
-          }) :
+          })/*)*/ :
             <img src="/resources/placeholder.gif" className={styles.bigImage} />
           }
         </div>
