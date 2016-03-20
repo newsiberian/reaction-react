@@ -126,8 +126,7 @@ class ProductImageGallery extends Component {
         <div className={styles.images}>
           {/* difficult logic for fixing but when you switch between products
            with products w/o media */}
-          {media.length ?
-            /*(mediaIdsArray.length && */mediaIdsArray.map((id, i) => {
+          {media.length ? mediaIdsArray.length && mediaIdsArray.map((id, i) => {
             // TODO the same as below
             const files = media.filter(image => image._id === id);
             // this is quickfix for situation then the `mediaIdsArray` is not
@@ -145,7 +144,7 @@ class ProductImageGallery extends Component {
                 />
               );
             }
-          })/*)*/ :
+          }) :
             <img src="/resources/placeholder.gif" className={styles.bigImage} />
           }
         </div>

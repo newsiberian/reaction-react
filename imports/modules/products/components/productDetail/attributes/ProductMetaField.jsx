@@ -1,4 +1,6 @@
 import React, { PropTypes } from "react";
+import Paper from "material-ui/lib/paper";
+import Divider from "material-ui/lib/divider";
 
 const styles = {
   container: {
@@ -6,9 +8,10 @@ const styles = {
     paddingLeft: 0
   },
   list: {
-    border: "1px solid #dddddd",
     position: "relative",
-    display: "block",
+    display: "block"
+  },
+  row: {
     padding: "5px 3px 5px",
     marginLeft: ".5rem",
     marginRight: ".5rem"
@@ -16,44 +19,18 @@ const styles = {
 };
 
 const ProductMetaField = ({ metafields }) => (
-  <ul style={styles.container}>
-  {metafields.map((metafield, i) => {
-    let borderStyle = {};
-    if (!i) {
-      borderStyle = {
-        borderTopRightRadius: 4,
-        borderTopLeftRadius: 4
-      };
-    } else if (i === metafields.length - 1) {
-      borderStyle = {
-        borderBottomRightRadius: 4,
-        borderBottomLeftRadius: 4
-      };
-    }
-    return (
-      <li key={i} style={Object.assign({}, styles.list, borderStyle)}>
-        <div className="row">
+  <Paper style={styles.container} zDepth={1}>
+    {metafields.map((metafield, i) => (
+      <li key={i} style={styles.list}>
+        <div className="row" style={styles.row}>
           <div className="col-sm-4">{metafield.key}</div>
           <div className="col-sm-8">{metafield.value}</div>
         </div>
+        <Divider />
       </li>
-    );
-  })}
-  </ul>
+    ))}
+  </Paper>
 );
-
-//const ProductMetaField = ({ metafields }) => (
-//  <table>
-//    <tbody>
-//      {metafields.map((metafield, i) => (
-//        <tr key={i}>
-//          <td>{metafield.key}</td>
-//          <td>{metafield.value}</td>
-//        </tr>
-//      ))}
-//    </tbody>
-//  </table>
-//);
 
 ProductMetaField.propTypes = {
   metafields: PropTypes.arrayOf(PropTypes.object)
