@@ -15,18 +15,19 @@ const styles = {
  */
 class ProductMetaFieldForms extends Component {
   render() {
-    const { product, metafieldActions, newMetafield } = this.props;
+    const { product, metafieldActions } = this.props;
     console.log("ProductMetaFieldForm: rendering...");
     return (
       <Paper zDepth={1} style={styles.container}>
         {product.metafields && product.metafields.map((metafield, index) => (
           <ProductMetaFieldForm
             key={index}
-            index={index}
             formKey={index.toString()} // formKey should be a string
             initialValues={metafield}
+            removeMetafields={metafieldActions.removeMetafields}
+            productId={product._id} // for remove
             onSubmit={values =>
-             metafieldActions.updateMetafield(product._id, index, values)}
+             metafieldActions.updateMetafield(product, index, values)}
           />
         ))}
         <ProductMetaFieldForm
@@ -35,8 +36,9 @@ class ProductMetaFieldForms extends Component {
             key: "",
             value: ""
           }}
+          removeMetafields={metafieldActions.removeMetafields}
           onSubmit={values =>
-           metafieldActions.updateMetafield(product._id, "new", values)}
+           metafieldActions.updateMetafield(product, "new", values)}
         />
       </Paper>
     );

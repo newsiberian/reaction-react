@@ -27,11 +27,6 @@ const tagsState = {
   suggestions: []
 };
 
-const newMetafieldInitialState = {
-  key: "",
-  value: ""
-};
-
 function ids(state = idsInitialState, action) {
   switch (action.type) {
   case types.SET_PRODUCT_ID:
@@ -142,22 +137,10 @@ function tagsIdsArray(state = [], action) {
   }
 }
 
-function newMetafield(state = newMetafieldInitialState, action) {
-  switch (action.type) {
-  case types.CHANGE_METAFIELD:
-    return Object.assign({}, state, { [action.field]: action.value });
-  //case types.UPDATE_METAFIELD:
-  //  return state;
-  default:
-    return state;
-  }
-}
-
 export default combineReducers({
   ids,
   fields,
   mediaIdsArray,
   newTag,
-  tagsIdsArray,
-  newMetafield
+  tagsIdsArray
 });
