@@ -11,7 +11,7 @@ import ProductImageGalleryContainer from "../../containers/ProductImageGalleryCo
 import ProductDetailEdit from "./edit/ProductDetailEdit";
 import ProductTagInputForm from "./tags/ProductTagInputForm";
 import ProductDetailTags from "./tags/ProductDetailTags";
-import ProductMetaFieldForm from "./attributes/ProductMetaFieldForm";
+import ProductMetaFieldForms from "./attributes/ProductMetaFieldForms";
 import ProductMetaField from "./attributes/ProductMetaField";
 import ProductSocial from "./ProductSocial";
 import CartAddButton from "./CartAddButton";
@@ -193,7 +193,7 @@ class ProductDetail extends Component {
     const { product, metafieldActions, newMetafield } = this.props;
     if (ReactionCore.hasPermission("createProduct")) {
       return (
-        <ProductMetaFieldForm
+        <ProductMetaFieldForms
           product={product}
           metafieldActions={metafieldActions}
           newMetafield={newMetafield}
