@@ -264,7 +264,9 @@ class ProductDetail extends Component {
                 />
                 <h3>{t("productDetail.tags")}</h3>
                 {this.renderTagsComponent()}
-                <h3>{t("productDetail.details")}</h3>
+                {(product.metafields.length || // display header for admin or if
+                  ReactionCore.hasPermission("createProduct")) && // array not empty
+                  <h3>{t("productDetail.details")}</h3>}
                 {this.renderMetaComponent()}
               </div>
               <div className="col-xs-12 col-sm-7">
