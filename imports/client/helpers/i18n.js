@@ -1,5 +1,6 @@
 /* eslint "no-extend-native": [2, {"exceptions": ["String"]}] */
 
+import { Meteor } from "meteor/meteor";
 import accounting from "accounting";
 import i18next from "i18next";
 //import LanguageDetector from "i18next-browser-languagedetector/lib";
@@ -56,8 +57,14 @@ const getResources = () => {
         reactive: false
       }).fetch();
     // map reduce translations into i18next formatting
-    return reactionTranslations.reduce(function (x, y) {
-      x[y.i18n] = y.translation;
+    return reactionTranslationsreduce(function (x, y) {
+      const ns = Object.keys(y.translation)[0];
+      // first creating the structure, when add additional namespaces
+      if (x[y.i18n]) {
+        x[y.i18n][ns] = y.translation[ns];
+      } else {
+        x[y.i18n] = y.translation;
+      }
       return x;
     }, {});
   }

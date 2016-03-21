@@ -1,6 +1,7 @@
 [{
   "language": "English",
   "i18n": "en",
+  "ns": "reaction-react",
   "translation": {
     "reaction-react": {
       "admin": {

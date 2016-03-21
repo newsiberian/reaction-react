@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
+import ListItem from 'material-ui/lib/lists/list-item';
+import Toggle from 'material-ui/lib/toggle';
 import { styles } from "../../styles/settings";
 
 /**
@@ -9,14 +11,16 @@ import { styles } from "../../styles/settings";
  * @classdesc
  */
 class Settings extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { t } = this.props;
     return (
-      <div></div>
+      <div>
+        <ListItem
+          primaryText={t("settings.enableModeration")}
+          title={t("settings.enableModerationTooltip")}
+          rightToggle={<Toggle />}
+        />
+      </div>
     );
   }
 }
@@ -36,4 +40,4 @@ const options = {
   title: "admin.settings.commentsSettingsLabel"
 };
 
-export default translate("core")(ActionBarWrapper(Settings, options));
+export default translate("reaction-comments-core")(ActionBarWrapper(Settings, options));

@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   if (ReactionCore.Subscriptions.Packages.ready()) {
     const shopId = ReactionCore.getShopId();
-    const commentsPackageData = ReactionCore.Collections.Shops.findOne({
+    const commentsPackageData = ReactionCore.Collections.Packages.findOne({
       name: "reaction-comments-core",
       shopId: shopId
     }, {
