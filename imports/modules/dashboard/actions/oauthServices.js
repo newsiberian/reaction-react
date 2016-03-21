@@ -32,6 +32,9 @@ export const submitForm = (service, values) => {
 
     Meteor.call("accounts/updateServiceConfiguration", service, fields,
       (error, result) => {
+        if (error) {
+          dispatch(displayAlert({ message: error.reason }));
+        }
         if (result) {
           dispatch(displayAlert({
             message: i18next.t(

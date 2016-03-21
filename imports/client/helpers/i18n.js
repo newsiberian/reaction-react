@@ -57,7 +57,7 @@ const getResources = () => {
         reactive: false
       }).fetch();
     // map reduce translations into i18next formatting
-    return reactionTranslationsreduce(function (x, y) {
+    return reactionTranslations.reduce(function (x, y) {
       const ns = Object.keys(y.translation)[0];
       // first creating the structure, when add additional namespaces
       if (x[y.i18n]) {

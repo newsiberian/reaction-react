@@ -8,7 +8,7 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("METEOR@1.3-rc.3");
+  api.versionsFrom("METEOR@1.3-rc.4");
   api.use("meteor-base");
   api.use("mongo");
   api.use("ecmascript");
@@ -35,14 +35,12 @@ Package.onUse(function (api) {
   api.use("amplify@1.0.0");
   api.use("fortawesome:fontawesome@4.5.0");
 
-  //api.imply("tracker");
+  api.use("reactioncommerce:core@0.12.0"); // todo do we need this?
+  api.use("sunlark:reaction-comments-core");
 
   api.mainModule("server/main.js", "server");
   api.mainModule("main.js", "client");
-  // api.export("Foo");
 
   api.addAssets("private/data/i18n/en.json", "server");
   api.addAssets("private/data/i18n/ru.json", "server");
-  //api.addFiles("common/routes.jsx", "client");
-  //api.addFiles("modules/layout/routes.jsx", "client");
 });

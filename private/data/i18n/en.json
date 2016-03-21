@@ -7,7 +7,8 @@
       "admin": {
         "dashboard": {
           "reactUiLabel": "React UI",
-          "reactUiDescription": "React Components"
+          "reactUiTitle": "React UI",
+          "reactUiDescription": "ReactJS UI for Reaction"
         },
         "accounts": {
           "avatar": "Avatar",

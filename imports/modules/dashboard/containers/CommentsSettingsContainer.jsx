@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import Settings from "../components/comments/Settings.jsx";
-import * as formsActions from "../actions/forms";
+import * as commentsActions from "../actions/comments";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 //import * as i18nActions from "../actions/i18n";
 
@@ -13,6 +13,9 @@ const CommentsSettingsContainer = props => <Settings {...props} />;
 CommentsSettingsContainer.propTypes = {
   commentsPackageData: PropTypes.shape({
     enabled: PropTypes.bool
+  }),
+  commentsActions: PropTypes.shape({
+    toggleCommentsModeration: PropTypes.func
   }),
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
@@ -26,7 +29,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    // formsActions: bindActionCreators(formsActions, dispatch),
+    commentsActions: bindActionCreators(commentsActions, dispatch),
     layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch)
   };
 }
