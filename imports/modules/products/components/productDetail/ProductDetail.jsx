@@ -8,7 +8,7 @@ import FontIcon from "material-ui/lib/font-icon";
 import Paper from "material-ui/lib/paper";
 //import { formatPrice } from "../../../../client/helpers/i18n";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
-import ProductCommentsContainer from "../../containers/ProductCommentsContainer.jsx";
+import CommentsContainer from "../../../comments/containers/CommentsContainer.jsx";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
 import ProductTagInputForm from "./tags/ProductTagInputForm";
 import ProductDetailTags from "./tags/ProductDetailTags";
@@ -278,7 +278,7 @@ class ProductDetail extends Component {
         </div>
         {/* Product Detail Page: END */}
         {/* Comments Section */}
-        <ProductCommentsContainer productId={product._id} />
+        <CommentsContainer sourceId={product._id} />
       </section>
     );
 
