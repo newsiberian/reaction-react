@@ -8,6 +8,7 @@ import FontIcon from "material-ui/lib/font-icon";
 import Paper from "material-ui/lib/paper";
 //import { formatPrice } from "../../../../client/helpers/i18n";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
+import ProductCommentsContainer from "../../containers/ProductCommentsContainer.jsx";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
 import ProductTagInputForm from "./tags/ProductTagInputForm";
 import ProductDetailTags from "./tags/ProductDetailTags";
@@ -276,6 +277,8 @@ class ProductDetail extends Component {
           </section>
         </div>
         {/* Product Detail Page: END */}
+        {/* Comments Section */}
+        <ProductCommentsContainer productId={product._id} />
       </section>
     );
 
@@ -398,13 +401,6 @@ ProductDetail.propTypes = {
   //addToCartQuantity: PropTypes.number.isRequired,
   //onAddToCartClick: PropTypes.func.isRequired,
   //onAddToCartQuantityChange: PropTypes.func.isRequired,
-  //metaBundle: PropTypes.shape({
-  //  metafields: PropTypes.array,
-  //  newMetafield: PropTypes.object,
-  //  onChange: PropTypes.func.isRequired,
-  //  onBlur: PropTypes.func.isRequired,
-  //  onRemoveClick: PropTypes.func.isRequired
-  //})
 };
 
 export default translate("core")(DragDropContext(HTML5Backend)(look(ProductDetail)));
