@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import look, { StyleSheet } from "react-look";
+import { StyleSheet } from "react-look";
 //import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 import { arrayCompare } from "../../../../../client/helpers/utilities";
@@ -179,4 +179,4 @@ ProductImageGallery.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(look(ProductImageGallery));
+export default translate("core")(ProductImageGallery);

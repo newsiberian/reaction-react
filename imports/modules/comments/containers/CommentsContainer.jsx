@@ -2,20 +2,21 @@ import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Comments } from "meteor/sunlark:reaction-comments-core";
-import { Comments as CommentsComponent } from "../components/Comments.jsx";
+import CommentsComponent from "../components/Comments.jsx";
 import * as commentsActions from "../actions/comments";
 
 const CommentsContainer = props => <CommentsComponent {...props} />;
 
 CommentsContainer.propTypes = {
   commentsActions: PropTypes.shape({
-
+    addComment: PropTypes.func,
+    updateComment: PropTypes.func
   })
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(/* state */) {
   return {};
 }
 
