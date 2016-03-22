@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { Editor } from "draft-js";
+import { StyleSheet } from "react-look";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import FlatButton from "material-ui/lib/flat-button";
@@ -8,7 +9,25 @@ import CardText from "material-ui/lib/card/card-text";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
 
-const styles = {};
+const styles = StyleSheet.create({
+  blockquote: {
+    borderLeft: "5px solid #eee",
+    color: "#666",
+    fontFamily: "'Hoefler Text', 'Georgia', serif",
+    fontStyle: "italic",
+    margin: "16px 0",
+    padding: "10px 20px"
+  }
+});
+
+const getBlockStyle = block => {
+  switch (block.getType()) {
+  case "blockquote":
+    return styles.blockquote;
+  default:
+    return null;
+  }
+};
 
 class CommentEditor extends Component {
   constructor(props) {
@@ -55,8 +74,11 @@ class CommentEditor extends Component {
             commentsActions={commentsActions}
           />
           <Editor
+            blockStyleFn={getBlockStyle}
             editorState={commentEditorState}
             ref="editor"
+            placeholder="Begin typing here..."
+            spellCheck={true}
             handleKeyCommand={this.handleKeyCommand}
             onChange={editorState => commentsActions.updateComment(editorState)}
           />

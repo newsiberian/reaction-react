@@ -24,14 +24,14 @@ const BlockStyleControls = props => {
     .getType();
 
   return (
-    <div className="RichEditor-controls">
+    <div>
       {BLOCK_TYPES.map(type =>
         <FlatButton
           key={type.label}
           active={type.style === blockType}
           label={type.label}
           onClick={() => props.onClick(type.style)}
-          style={type.style}
+          // style={type.style}
         />
       )}
     </div>

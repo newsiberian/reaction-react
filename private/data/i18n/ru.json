@@ -15,6 +15,14 @@
           "name": "Имя",
           "email": "Email"
         }
+      },
+      "comments": {
+        "editor": {
+          "bold": "Жирный",
+          "italic": "Курсив",
+          "underline": "Подчёркнутый",
+          "monospace": "Равноширинный"
+        }
       }
     }
   }

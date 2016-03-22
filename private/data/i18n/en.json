@@ -15,6 +15,14 @@
           "name": "Name",
           "email": "Email"
         }
+      },
+      "comments": {
+        "editor": {
+          "bold": "Bold",
+          "italic": "Italic",
+          "underline": "Underline",
+          "monospace": "Monospace"
+        }
       }
     }
   }
