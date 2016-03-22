@@ -12,12 +12,16 @@ const CommentsContainer = props => <CommentsComponent {...props} />;
 CommentsContainer.propTypes = {
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func,
-    updateComment: PropTypes.func
-  })
+    updateComment: PropTypes.func,
+    toggleBold: PropTypes.func
+  }).isRequired,
+  commentEditorState: PropTypes.object
 };
 
-function mapStateToProps(/* state */) {
-  return {};
+function mapStateToProps(state) {
+  return {
+    commentEditorState: state.comments.commentEditor // Draft.js `editorState`
+  };
 }
 
 function mapDispatchToProps(dispatch) {

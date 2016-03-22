@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import look, { StyleSheet } from "react-look";
 import { DragDropContext } from "react-dnd";
+import Helmet from "react-helmet";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import HTML5Backend from "react-dnd-html5-backend";
 import FontIcon from "material-ui/lib/font-icon";
@@ -236,10 +237,18 @@ class ProductDetail extends Component {
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
     //} = this.props;
 
-
     console.log("ProductDetail: rendering...");
     return (
       <section className="container-fluid" style={styles.container}>
+        {/* Headers */}
+        <Helmet
+          title={product.title}
+          titleTemplate={`${product.pageTitle} | ${ReactionCore.getShopName()}`}
+          meta={[
+            {charset: "utf-8"}
+          ]}
+        />
+
         {ReactionCore.hasPermission("createProduct") &&
           this.renderProductVisibilityAdminBlock()}
 

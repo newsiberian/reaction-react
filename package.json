@@ -18,6 +18,7 @@
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^0.14.7",
     "react-dropzone": "^3.3.2",
+    "react-helmet": "^2.3.1",
     "react-i18next": "^0.1.0",
     "react-komposer": "^1.4.1",
     "react-look": "^1.0.0",

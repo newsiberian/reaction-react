@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-//import product from "./product";
+import commentEditor from "./commentEditor";
 //import productsGrid from "./productsGrid";
 
 const commentsReducer = combineReducers({
-  // product,
+  commentEditor,
   // productsGrid
 });
+
+export default commentsReducer;

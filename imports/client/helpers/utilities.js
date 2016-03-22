@@ -1,6 +1,7 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { ServiceConfiguration } from "meteor/service-configuration";
+import { _ } from "meteor/underscore";
 
 /**
  * @function siteName
@@ -50,15 +51,34 @@ export function timezoneOptions() {
 
 // @link http://stackoverflow.com/a/22395463
 // we comparing only by id
-export const arrayCompareById = (array1, array2) => (array1.length === array2.length) &&
+export const arrayCompare = (array1, array2, arg) => {
+  if (array1.length === array2.length) {
+    if (typeof arg === "string") {
+      return array1.every((element, index) => element[arg] === array2[index][arg]);
+    }
+    return array1.every((element, index) => element === array2[index]);
+  }
+  return false;
+};
+
+/**
+ * arrayShallowCompare
+ * @summary special case of `arrayCompare` for CFS. It compares File.FS states.
+ * We need this because of `uploading` and `storing` image states while loading
+ * new image
+ * @param {Array} array1
+ * @param {Array} array2
+ * @return {Boolean} arrays are equal?
+ */
+export const arrayShallowCompare = (array1, array2) => (array1.length === array2.length) &&
 array1.every(function (element, index) {
-  return element._id === array2[index]._id;
+  return _.isEqual(element, array2[index]);
 });
 
-export const arrayCompare = (array1, array2) => (array1.length === array2.length) &&
-array1.every(function (element, index) {
-  return element === array2[index];
-});
+// export const arrayCompare = (array1, array2) => (array1.length === array2.length) &&
+// array1.every(function (element, index) {
+//   return element === array2[index];
+// });
 
 /**
  * isCurrentUser

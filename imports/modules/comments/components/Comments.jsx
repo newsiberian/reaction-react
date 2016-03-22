@@ -8,7 +8,7 @@ import CardTitle from "material-ui/lib/card/card-title";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import { StyleSheet } from "react-look";
-import NewComment from "./NewComment.jsx";
+import CommentEditor from "./CommentEditor.jsx";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,12 +23,15 @@ class Comments extends Component {
   }
 
   render() {
-    const { commentsActions, t } = this.props;
+    const { commentsActions, commentEditorState, t } = this.props;
     return (
       <div className={styles.container}>
         {/* Add comment section */}
         <h3>Comments</h3>
-        <NewComment commentsActions={commentsActions} />
+        <CommentEditor
+          commentsActions={commentsActions}
+          commentEditorState={commentEditorState}
+        />
 
         {/* Comments list */}
       </div>
@@ -39,8 +42,10 @@ class Comments extends Component {
 Comments.propTypes = {
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func,
-    updateComment: PropTypes.func
-  }),
+    updateComment: PropTypes.func,
+    toggleBold: PropTypes.func
+  }).isRequired,
+  commentEditorState: PropTypes.object,
   t: PropTypes.func.isRequired
 };
 
