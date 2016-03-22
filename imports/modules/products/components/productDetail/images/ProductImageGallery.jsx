@@ -4,8 +4,8 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { StyleSheet } from "react-look";
 //import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
-import { arrayCompare } from "../../../../../client/helpers/utilities";
-//import shallowCompare from "react-addons-shallow-compare";
+import { arrayCompare, arrayCompareById } from "../../../../../client/helpers/utilities";
+import shallowCompare from "react-addons-shallow-compare";
 import ImageDetail from "./ImageDetail";
 
 const styles = StyleSheet.create({
@@ -67,7 +67,7 @@ class ProductImageGallery extends Component {
   componentWillReceiveProps(nextProps) {
     // if we receive new media, we should extract `_id` from it and rebuild
     // `store` `mediaIdsArray` to keep things in sync
-    if (!arrayCompare(nextProps.media, this.props.media)) {
+    if (!arrayCompareById(nextProps.media, this.props.media)) {
       const mediaIdsArray = getMediaIdsArray(nextProps.media);
       this.props.mediaActions.syncMedia(mediaIdsArray);
     }
@@ -77,11 +77,13 @@ class ProductImageGallery extends Component {
     this.props.mediaActions.syncMedia([]);
   }
 
-  //shouldComponentUpdate(nextProps) {
-  //  // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-  //  // return !shallowCompare(this, nextProps.media);
-  //  return !_.isEqual(nextProps.media, this.props.media);
-  //}
+  shouldComponentUpdate(nextProps) {
+    // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
+    // return shallowCompare(this, nextProps);
+    // return !_.isEqual(nextProps.media, this.props.media);
+    return !arrayCompareById(nextProps.media, this.props.media) ||
+      !arrayCompare(nextProps.mediaIdsArray, this.props.mediaIdsArray);
+  }
 
   /**
    * @function handleDrop

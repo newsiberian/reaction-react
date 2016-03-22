@@ -3,7 +3,7 @@ import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { arrayCompare } from "../../../client/helpers/utilities";
+import { arrayCompareById } from "../../../client/helpers/utilities";
 import * as metafieldActions from "../actions/metafield";
 import * as productActions from "../actions/product";
 import * as tagActions from "../actions/tag";
@@ -79,7 +79,7 @@ class ProductDetailContainer extends Component {
     // if we receive new tags, we should extract `_id` from it and rebuild
     // `store` `tagsIdsArray` to keep things in sync
     // this is the similar logic that we use with media
-    if (!arrayCompare(nextProps.tags, this.props.tags)) {
+    if (!arrayCompareById(nextProps.tags, this.props.tags)) {
       const tagsIdsArray = getTagsIdsArray(nextProps.tags);
       this.props.tagActions.syncTags(tagsIdsArray);
     }
