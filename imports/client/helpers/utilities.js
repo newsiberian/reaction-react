@@ -75,11 +75,6 @@ array1.every(function (element, index) {
   return _.isEqual(element, array2[index]);
 });
 
-// export const arrayCompare = (array1, array2) => (array1.length === array2.length) &&
-// array1.every(function (element, index) {
-//   return element === array2[index];
-// });
-
 /**
  * isCurrentUser
  * @return {[Boolean]} returns true/null if user has registered

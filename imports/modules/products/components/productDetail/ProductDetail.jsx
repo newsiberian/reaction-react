@@ -123,7 +123,7 @@ class ProductDetail extends Component {
           {product.isVisible
             && (<span><a href="#" onClick={(e) => this.handleProductVisibility(e, false)}>
                 {t("productDetail.makeInvisible")}
-              </a>{" | "}</span>)}
+              </a>{" • "}</span>)}
           {ReactionCore.hasAdminAccess() &&
             <a href="#" ref="delete-product-link">{t("app.delete")}</a>}
         </b>

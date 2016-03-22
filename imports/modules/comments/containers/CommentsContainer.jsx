@@ -13,7 +13,7 @@ CommentsContainer.propTypes = {
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func,
     updateComment: PropTypes.func,
-    toggleBold: PropTypes.func
+    toggleInlineStyle: PropTypes.func
   }).isRequired,
   commentEditorState: PropTypes.object
 };
