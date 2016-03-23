@@ -38,4 +38,4 @@ InlineStyleControls.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate(["core", "reaction-react"])(InlineStyleControls);
+export default translate("reaction-react")(InlineStyleControls);

@@ -18,10 +18,17 @@
       },
       "comments": {
         "editor": {
+          "placeholder": "Start typing here...",
           "bold": "Bold",
           "italic": "Italic",
           "underline": "Underline",
-          "monospace": "Monospace"
+          "monospace": "Monospace",
+          "h1": "Header 1",
+          "h2": "Header 2",
+          "h3": "Header 3",
+          "blockquote": "Blockquote",
+          "ol": "Numeration",
+          "ul": "Unordered list"
         }
       }
     }

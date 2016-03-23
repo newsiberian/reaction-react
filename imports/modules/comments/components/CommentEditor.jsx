@@ -63,7 +63,7 @@ class CommentEditor extends Component {
     const { commentsActions, commentEditorState, t } = this.props;
     return (
       <Card>
-        <CardText>
+        <CardActions>
           <BlockStyleControls
             editorState={commentEditorState}
             onClick={this.toggleBlockType}
@@ -73,11 +73,13 @@ class CommentEditor extends Component {
             onClick={this.toggleInlineStyle}
             commentsActions={commentsActions}
           />
+        </CardActions>
+        <CardText>
           <Editor
             blockStyleFn={getBlockStyle}
             editorState={commentEditorState}
             ref="editor"
-            placeholder="Begin typing here..."
+            placeholder={t("comments.editor.placeholder")}
             spellCheck={true}
             handleKeyCommand={this.handleKeyCommand}
             onChange={editorState => commentsActions.updateComment(editorState)}
@@ -102,4 +104,4 @@ CommentEditor.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(CommentEditor);
+export default translate("reaction-react")(CommentEditor);
