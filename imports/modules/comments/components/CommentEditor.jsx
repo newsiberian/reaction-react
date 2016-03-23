@@ -5,7 +5,10 @@ import { StyleSheet } from "react-look";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import FlatButton from "material-ui/lib/flat-button";
+import CardHeader from "material-ui/lib/card/card-header";
 import CardText from "material-ui/lib/card/card-text";
+import TextField from "material-ui/lib/text-field";
+import Checkbox from "material-ui/lib/checkbox";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
 
@@ -63,7 +66,15 @@ class CommentEditor extends Component {
     const { commentsActions, commentEditorState, t } = this.props;
     return (
       <Card>
-        <CardActions>
+        <CardHeader
+          title="Leave comment"
+          // subtitle="Card subtitle"
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
+
+        {/* Controls */}
+        <CardActions expandable={true}>
           <BlockStyleControls
             editorState={commentEditorState}
             onClick={this.toggleBlockType}
@@ -74,7 +85,9 @@ class CommentEditor extends Component {
             commentsActions={commentsActions}
           />
         </CardActions>
-        <CardText>
+
+        {/* Editor */}
+        <CardText expandable={true}>
           <Editor
             blockStyleFn={getBlockStyle}
             editorState={commentEditorState}
@@ -85,9 +98,28 @@ class CommentEditor extends Component {
             onChange={editorState => commentsActions.updateComment(editorState)}
           />
         </CardText>
-        <CardActions>
-          <FlatButton label="Action1" />
-          <FlatButton label="Action2" />
+
+        {/* User Form */}
+        <CardText expandable={true}>
+          <TextField
+            // defaultValue="Default Value"
+            hintText="How others will refer to you?"
+            floatingLabelText="Your name"
+          />
+          <TextField
+            // id="text-field-default"
+            // defaultValue="Default Value"
+            hintText="Your Email"
+            floatingLabelText="Email"
+          />
+          <Checkbox
+            label="Notify on replies"
+            // style={styles.checkbox}
+          />
+        </CardText>
+        <CardActions expandable={true}>
+          <FlatButton label="Post" primary={true} />
+          <FlatButton label="Cancel" />
         </CardActions>
       </Card>
     );
