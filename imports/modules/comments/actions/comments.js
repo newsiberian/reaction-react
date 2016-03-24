@@ -7,7 +7,6 @@ import i18next from "i18next";
 
 export const addComment = (content, formValues, sourceId) => {
   return dispatch => {
-    debugger;
     const values = Object.assign({}, formValues, {
       content,
       sourceId
@@ -36,10 +35,10 @@ export const addComment = (content, formValues, sourceId) => {
           `${i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" })
             }${i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" })}`;
         dispatch(displayAlert({ message: message }));
+        // todo need to destroy editorState and formState
       }
       dispatch({ type: types.ADD_COMMENT, values });
     });
-
   };
 };
 

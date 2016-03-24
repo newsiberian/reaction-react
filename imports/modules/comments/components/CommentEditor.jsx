@@ -12,7 +12,6 @@ import FlatButton from "material-ui/lib/flat-button";
 import CardHeader from "material-ui/lib/card/card-header";
 import CardText from "material-ui/lib/card/card-text";
 import TextField from "material-ui/lib/text-field";
-// import Checkbox from "material-ui/lib/checkbox";
 import CheckboxWrapper from "../../layout/components/CheckboxWrapper.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
@@ -95,6 +94,7 @@ class CommentEditor extends Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
+
     this.onChange = editorState => this.setState({ editorState });
     this.focus = () => this.refs.editor.focus();
     this.handleKeyCommand = command => this._handleKeyCommand(command);
@@ -111,10 +111,6 @@ class CommentEditor extends Component {
       return true;
     }
     return false;
-    // this.props.commentsActions.handleKeyCommand(
-    //   this.props.commentEditorState,
-    //   command
-    // );
   }
 
   _toggleBlockType(blockType) {
@@ -124,10 +120,6 @@ class CommentEditor extends Component {
         blockType
       )
     );
-    // this.props.commentsActions.toggleBlockType(
-    //   this.props.commentEditorState,
-    //   blockType
-    // );
   }
 
   _toggleInlineStyle(inlineStyle) {
@@ -137,23 +129,18 @@ class CommentEditor extends Component {
         inlineStyle
       )
     );
-    // this.props.commentsActions.toggleInlineStyle(
-    //   this.props.commentEditorState,
-    //   inlineStyle
-    // );
   }
 
   _handleSubmit(values) {
-    debugger;
-    const { /*commentEditorState,*/dispatch, commentsActions, sourceId, t } = this.props;
+    const { dispatch, commentsActions, sourceId, t } = this.props;
     const content = this.state.editorState.getCurrentContent();
 
     // content should not been empty
     if (!content.hasText()) {
-      return dispatch(displayAlert({ message: t("comments.commentShouldNotBeEmpty") }));
+      dispatch(displayAlert({ message: t("comments.commentShouldNotBeEmpty") }));
+    } else {
+      commentsActions.addComment(convertToRaw(content), values, sourceId);
     }
-
-    commentsActions.addComment(convertToRaw(content), values, sourceId);
   }
 
   render() {

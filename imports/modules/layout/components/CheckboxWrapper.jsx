@@ -8,12 +8,17 @@ import Checkbox from "material-ui/lib/checkbox";
  * @see https://github.com/erikras/redux-form/issues/542
  */
 class CheckboxWrapper extends Component {
-  handleClick(event/* , index, value */) {
-    this.props.onChange(event.target.checked);
+  handleClick(checked) {
+    this.props.onChange(checked);
   }
   render() {
     return (
-      <Checkbox {...this.props} onClick={this.handleClick.bind(this)}>
+      <Checkbox
+        {...this.props}
+        value={this.props.name}
+        checked={this.props.value}
+        onCheck={(e, checked) => this.handleClick(checked)}
+      >
         {this.props.children}
       </Checkbox>
     );
