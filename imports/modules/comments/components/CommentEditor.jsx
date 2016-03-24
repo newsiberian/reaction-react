@@ -139,6 +139,7 @@ class CommentEditor extends Component {
     if (!content.hasText()) {
       dispatch(displayAlert({ message: t("comments.commentShouldNotBeEmpty") }));
     } else {
+      // Editor state clean after collapsing card component
       commentsActions.addComment(convertToRaw(content), values, sourceId);
     }
   }
@@ -150,76 +151,66 @@ class CommentEditor extends Component {
     } = this.props;
     return (
       <form onSubmit={handleSubmit(this.handleSubmit)}>
-        <Card>
-          <CardHeader
-            title={t("comments.ui.leaveComment")}
-            // subtitle="Card subtitle"
-            actAsExpander={true}
-            showExpandableButton={true}
+        {/* Controls */}
+        <CardActions expandable={true}>
+          <BlockStyleControls
+            editorState={editorState}
+            onClick={this.toggleBlockType}
           />
+          <InlineStyleControls
+            editorState={editorState}
+            onClick={this.toggleInlineStyle}
+          />
+        </CardActions>
 
-          {/* Controls */}
-          <CardActions expandable={true}/* onClick={this.focus}*/>
-            <BlockStyleControls
-              editorState={editorState}
-              onClick={this.toggleBlockType}
-            />
-            <InlineStyleControls
-              editorState={editorState}
-              onClick={this.toggleInlineStyle}
-            />
-          </CardActions>
+        {/* Editor */}
+        <CardText expandable={true} onClick={this.focus}>
+          <Editor
+            blockStyleFn={getBlockStyle}
+            editorState={editorState}
+            ref="editor"
+            placeholder={t("comments.editor.placeholder")}
+            spellCheck={true}
+            handleKeyCommand={this.handleKeyCommand}
+            onChange={this.onChange}
+          />
+        </CardText>
 
-          {/* Editor */}
-          <CardText expandable={true} onClick={this.focus}>
-            <Editor
-              blockStyleFn={getBlockStyle}
-              editorState={editorState}
-              ref="editor"
-              placeholder={t("comments.editor.placeholder")}
-              spellCheck={true}
-              handleKeyCommand={this.handleKeyCommand}
-              // onChange={editorState => commentsActions.updateComment(editorState)}
-              onChange={this.onChange}
-            />
-          </CardText>
-
-          {/* User Form */}
-            <CardText expandable={true}>
-              <TextField
-                {...name}
-                hintText={t("comments.ui.yourNamePlaceholder")}
-                floatingLabelText={t("comments.ui.yourName")}
-                errorText={name.touched && name.error}
-                maxLength={35}
-              />
-              <TextField
-                {...email}
-                hintText={t("comments.ui.emailPlaceholder")}
-                floatingLabelText={t("comments.ui.email")}
-                errorText={email.touched && email.error}
-                type="email"
-              />
-              <CheckboxWrapper
-                {...notify}
-                label={t("comments.ui.notifyOnReplies")}
-                // style={styles.checkbox}
-              />
-            </CardText>
-            <CardActions expandable={true}>
-              <FlatButton
-                label={t("comments.ui.post")}
-                primary={true}
-                type="submit"
-                disabled={pristine || submitting}
-              />
-              <FlatButton
-                label={t("comments.ui.cancel")}
-                disabled={pristine || submitting}
-                onClick={resetForm}
-              />
-            </CardActions>
-        </Card>
+        {/* User Form */}
+        <CardText expandable={true}>
+          <TextField
+            {...name}
+            hintText={t("comments.ui.yourNamePlaceholder")}
+            floatingLabelText={t("comments.ui.yourName")}
+            errorText={name.touched && name.error}
+            maxLength={35}
+          />
+          <TextField
+            {...email}
+            hintText={t("comments.ui.emailPlaceholder")}
+            floatingLabelText={t("comments.ui.email")}
+            errorText={email.touched && email.error}
+            type="email"
+          />
+          <CheckboxWrapper
+            {...notify}
+            label={t("comments.ui.notifyOnReplies")}
+            // style={styles.checkbox}
+          />
+        </CardText>
+        <CardActions expandable={true}>
+          <FlatButton
+            label={t("comments.ui.post")}
+            primary={true}
+            type="submit"
+            disabled={pristine || submitting}
+          />
+          <FlatButton
+            label={t("comments.ui.cancel")}
+            disabled={pristine || submitting}
+            onClick={resetForm}
+          />
+        </CardActions>
       </form>
     );
   }

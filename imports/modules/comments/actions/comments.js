@@ -20,8 +20,8 @@ export const addComment = (content, formValues, sourceId) => {
         shopId: ReactionCore.getShopId()
       });
     }
+
     methods.addComment.call({ values }, (err, res) => {
-      debugger;
       if (err) {
         dispatch(displayAlert({ message: err.reason }));
       }
@@ -33,11 +33,12 @@ export const addComment = (content, formValues, sourceId) => {
         const message = moderation ?
           i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" }) :
           `${i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" })
-            }${i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" })}`;
+            }${i18next.t("comments.itIsWaitingForApproval", { ns: "reaction-react" })}`;
         dispatch(displayAlert({ message: message }));
-        // todo need to destroy editorState and formState
+        dispatch({ type: types.ADD_COMMENT, values });
+        // closing window with comment to clean Editor and form state
+        dispatch({ type: types.TOGGLE_COMMENT_WINDOW });
       }
-      dispatch({ type: types.ADD_COMMENT, values });
     });
   };
 };
@@ -54,27 +55,6 @@ export const approveComment = () => {
   return { type: types.APPROVE_COMMENT };
 };
 
-// export const handleKeyCommand = (EditorState, command) => {
-//   return dispatch => {
-//     const modifiedEditorState = RichUtils.toggleBlockType(EditorState, command);
-//     if (modifiedEditorState) {
-//       dispatch({ type: types.HANDLE_KEY_COMMAND, EditorState: modifiedEditorState });
-//       return true;
-//     }
-//     return false;
-//   };
-// };
-
-// export const toggleBlockType = (EditorState, block) => {
-//   return dispatch => {
-//     const modifiedEditorState = RichUtils.toggleBlockType(EditorState, block);
-//     dispatch({ type: types.TOGGLE_BLOCK_TYPE, EditorState: modifiedEditorState });
-//   };
-// };
-//
-// export const toggleInlineStyle = (EditorState, style) => {
-//   return dispatch => {
-//     const modifiedEditorState = RichUtils.toggleInlineStyle(EditorState, style);
-//     dispatch({ type: types.TOGGLE_INLINE_STYLE, EditorState: modifiedEditorState });
-//   };
-// };
+export const toggleCommentWindow = () => {
+  return { type: types.TOGGLE_COMMENT_WINDOW };
+};

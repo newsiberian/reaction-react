@@ -24,24 +24,32 @@ class Comments extends Component {
   }
 
   render() {
-    const { commentsActions, commentEditorState, sourceId, t } = this.props;
+    const { commentsActions, commentEditor, sourceId, t } = this.props;
     return (
       <div className={styles.container}>
 
         {/* Add comment section */}
         <h3>{t("comments.ui.comments")}</h3>
+        <Card expanded={commentEditor.expanded}>
+          <CardHeader
+            title={t("comments.ui.leaveComment")}
+            // subtitle="Card subtitle"
+            actAsExpander={true}
+            showExpandableButton={true}
+            onClick={() => commentsActions.toggleCommentWindow()}
+          />
+          <CardText expandable={true}>
         <CommentEditor
           commentsActions={commentsActions}
-          // commentEditorState={commentEditorState}
           initialValues={{
-            // editorState: commentEditorState,
             name: "",
             mail: "",
             notify: true
           }}
           sourceId={sourceId}
-          // onSubmit={commentsActions.addComment}
         />
+          </CardText>
+        </Card>
 
         {/* Comments list */}
       </div>
@@ -50,12 +58,15 @@ class Comments extends Component {
 }
 
 Comments.propTypes = {
+  comments: PropTypes.arrayOf(PropTypes.object),
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func,
     updateComment: PropTypes.func,
-    toggleInlineStyle: PropTypes.func
+    toggleCommentWindow: PropTypes.func
   }).isRequired,
-  commentEditorState: PropTypes.object,
+  commentEditor: PropTypes.shape({
+    expanded: PropTypes.bool
+  }).isRequired,
   sourceId: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired
 };

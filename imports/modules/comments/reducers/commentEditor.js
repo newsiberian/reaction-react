@@ -1,13 +1,15 @@
 import * as types from "../constants";
-import { EditorState } from "draft-js";
 
-export default function CommentEditor(state = EditorState.createEmpty(), action) {
+const initialState = {
+  expanded: false
+};
+
+export default function commentEditor(state = initialState, action) {
   switch (action.type) {
-  // case types.HANDLE_KEY_COMMAND:
-  // case types.TOGGLE_BLOCK_TYPE:
-  // case types.TOGGLE_INLINE_STYLE:
-  case types.UPDATE_COMMENT:
-    return action.EditorState;
+  case types.TOGGLE_COMMENT_WINDOW:
+    return Object.assign({}, state, {
+      expanded: !state.expanded
+    });
   default:
     return state;
   }

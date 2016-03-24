@@ -10,19 +10,22 @@ import * as commentsActions from "../actions/comments";
 const CommentsContainer = props => <CommentsComponent {...props} />;
 
 CommentsContainer.propTypes = {
+  comments: PropTypes.arrayOf(PropTypes.object),
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func,
     updateComment: PropTypes.func,
-    toggleInlineStyle: PropTypes.func
+    toggleCommentWindow: PropTypes.func
   }).isRequired,
-  // commentEditorState: PropTypes.object,
+  commentEditor: PropTypes.shape({
+    expanded: PropTypes.bool
+  }).isRequired,
   sourceId: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    sourceId: ownProps.sourceId
-    // commentEditorState: state.comments.commentEditor // Draft.js `editorState`
+    sourceId: ownProps.sourceId,
+    commentEditor: state.comments.commentEditor
   };
 }
 
