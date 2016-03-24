@@ -1,8 +1,10 @@
-// fixme: we could use all this methods directly. Don't see the point in this
-// file
+import { Meteor } from "meteor/meteor";
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import { Roles } from "meteor/alanning:roles";
 
-//import { ReactionCore } from "meteor/reactioncommerce:core";
-//
+export const isAnonymous = () =>
+  Roles.userIsInRole(Meteor.userId(), "anonymous", ReactionCore.getShopId());
+
 /////**
 //// * hasPermission template helper
 //// * @summary check current user hasPermission

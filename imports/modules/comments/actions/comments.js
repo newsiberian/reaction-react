@@ -1,6 +1,7 @@
 import * as types from "../constants";
 // import { RichUtils } from "draft-js";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { isAnonymous } from "../../../client/helpers/permissions";
 import { methods } from "meteor/sunlark:reaction-comments-core";
 import { displayAlert } from "../../layout/actions/alert";
 import i18next from "i18next";
@@ -11,26 +12,16 @@ export const addComment = (content, formValues, sourceId) => {
       content,
       sourceId
     });
-    // we used `settings` here only to know what message to display on `success`,
-    // so, I suppose, it totally safe.
-    let settings;
-    if (ReactionCore.Subscriptions.Packages.ready()) {
-      settings = ReactionCore.Collections.Packages.findOne({
-        name: "reaction-comments-core",
-        shopId: ReactionCore.getShopId()
-      });
-    }
 
     methods.addComment.call({ values }, (err, res) => {
       if (err) {
-        dispatch(displayAlert({ message: err.reason }));
+        dispatch(displayAlert({ message: err.message }));
       }
       if (res) {
-        let moderation = true;
-        if (settings) {
-          moderation = settings.settings.moderation.enabled;
-        }
-        const message = moderation ?
+        // if comment was approval, then we receive result within `res.res`. If
+        // it is not - we should display a message that comment should be reviewed
+        // soon
+        const message = (typeof res.res === "number" || Array.isArray(res.res)) ?
           i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" }) :
           `${i18next.t("comments.yourCommentIsAdded", { ns: "reaction-react" })
             }${i18next.t("comments.itIsWaitingForApproval", { ns: "reaction-react" })}`;

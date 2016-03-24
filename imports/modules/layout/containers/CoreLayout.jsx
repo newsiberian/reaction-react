@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
 import LeftNav from "material-ui/lib/left-nav";
 import Snackbar from "material-ui/lib/snackbar";
+import { Meteor } from "meteor/meteor";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
 // import { LightRawTheme } from "material-ui/src/styles";
@@ -178,19 +179,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  // fixme we already subscribe to cart within reaction-collections package
-  //// @see http://guide.meteor.com/data-loading.html#changing-arguments
-  //Tracker.autorun(() => {
-  //  let sessionId;
-  //  // we really don't need to track the sessionId here
-  //  Tracker.nonreactive(() => {
-  //    sessionId = Session.get("sessionId");
-  //  });
-  //  ReactionCore.Subscriptions.Cart = Meteor.subscribe("Cart",
-  //    sessionId,
-  //    Meteor.userId()
-  //  );
-  //});
+  // we don't need to use this directly here, so we don't check this `ready`.
+  // We need this sometimes to get ReactionCore.Collections.Accounts info
+  Meteor.subscribe("Accounts", Meteor.userId());
   if (ReactionCore.Subscriptions.Cart.ready()) {
     // TODO maybe this is too much to transfer cart.items to cart container from
     // here? maybe we need to run another composer from there?

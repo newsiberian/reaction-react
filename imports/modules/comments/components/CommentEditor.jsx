@@ -1,50 +1,34 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { Editor, EditorState, /*ContentState,*/ RichUtils, convertToRaw } from "draft-js";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import { reduxForm } from "redux-form";
 import { StyleSheet } from "react-look";
 import { displayAlert } from "../../layout/actions/alert";
-import { Roles } from "meteor/alanning:roles";
+import { isAnonymous } from "../../../client/helpers/permissions";
 import i18next from "i18next";
-import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import FlatButton from "material-ui/lib/flat-button";
-import CardHeader from "material-ui/lib/card/card-header";
 import CardText from "material-ui/lib/card/card-text";
 import TextField from "material-ui/lib/text-field";
 import CheckboxWrapper from "../../layout/components/CheckboxWrapper.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
-export const fields = [
-  "name",
-  "email",
-  "notify"
-];
-
-const isAnonimous = () => {
-  const shopId = ReactionCore.getShopId();
-  const user = Accounts.findOne({
-    userId: Meteor.userId()
-  });
-  if(Roles.userIsInRole(user, "anonymous", shopId) && !this.value) {
-    return "required"; // todo i18n?
-  }
-};
 
 const validate = values => {
   const errors = {};
-
-  if (!values.name) {
-    errors.name = i18next.t("error.isRequired", {
-      field: i18next.t("accountsUI.name")
-    });
-  }
-  if (!values.email) {
-    errors.email = i18next.t("error.isRequired", {
-      field: i18next.t("accountsUI.email")
-    });
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
+  if (isAnonymous()) {
+    if (! values.name) {
+      errors.name = i18next.t("error.isRequired", {
+        field: i18next.t("accountsUI.name")
+      });
+    }
+    if (! values.email) {
+      errors.email = i18next.t("error.isRequired", {
+        field: i18next.t("accountsUI.email")
+      });
+    } else if (! /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
+    }
   }
 
   return errors;
@@ -147,8 +131,10 @@ class CommentEditor extends Component {
   render() {
     const { editorState } = this.state;
     const {
-      fields: { name, email, notify }, handleSubmit, t, pristine, resetForm, submitting
+      fields, handleSubmit, t, pristine, resetForm,
+      submitting
     } = this.props;
+    const isAnon = isAnonymous();
     return (
       <form onSubmit={handleSubmit(this.handleSubmit)}>
         {/* Controls */}
@@ -178,22 +164,26 @@ class CommentEditor extends Component {
 
         {/* User Form */}
         <CardText expandable={true}>
-          <TextField
-            {...name}
-            hintText={t("comments.ui.yourNamePlaceholder")}
-            floatingLabelText={t("comments.ui.yourName")}
-            errorText={name.touched && name.error}
-            maxLength={35}
-          />
-          <TextField
-            {...email}
-            hintText={t("comments.ui.emailPlaceholder")}
-            floatingLabelText={t("comments.ui.email")}
-            errorText={email.touched && email.error}
-            type="email"
-          />
+          {isAnon &&
+            <TextField
+              {...this.props.fields.name}
+              hintText={t("comments.ui.yourNamePlaceholder")}
+              floatingLabelText={t("comments.ui.yourName")}
+              errorText={this.props.fields.name.touched && this.props.fields.name.error}
+              maxLength={35}
+            />
+          }
+          {isAnon &&
+            < TextField
+              {...this.props.fields.email}
+              hintText={t("comments.ui.emailPlaceholder")}
+              floatingLabelText={t("comments.ui.email")}
+              errorText={this.props.fields.email.touched && this.props.fields.email.error}
+              type="email"
+            />
+          }
           <CheckboxWrapper
-            {...notify}
+            {...this.props.fields.notify}
             label={t("comments.ui.notifyOnReplies")}
             // style={styles.checkbox}
           />
@@ -203,11 +193,11 @@ class CommentEditor extends Component {
             label={t("comments.ui.post")}
             primary={true}
             type="submit"
-            disabled={pristine || submitting}
+            disabled={isAnon && (pristine || submitting)}
           />
           <FlatButton
             label={t("comments.ui.cancel")}
-            disabled={pristine || submitting}
+            disabled={isAnon && (pristine || submitting)}
             onClick={resetForm}
           />
         </CardActions>
@@ -231,6 +221,5 @@ CommentEditor.propTypes = {
 
 export default translate(["core", "reaction-react"])(reduxForm({
   form: "newCommentForm",
-  fields,
   validate
 })(CommentEditor));

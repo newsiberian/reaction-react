@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { EditorState, /*ContentState,*/ RichUtils, convertToRaw } from "draft-js";
+import { isAnonymous } from "../../../client/helpers/permissions";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
@@ -17,6 +17,32 @@ const styles = StyleSheet.create({
     marginBottom: "3rem"
   }
 });
+
+const initialValues = () => {
+  if (isAnonymous()) {
+    return {
+      name: "",
+      email: "",
+      notify: true
+    };
+  }
+  return {
+    notify: true
+  };
+};
+
+const fields = () => {
+  if (isAnonymous()) {
+    return [
+      "name",
+      "email",
+      "notify"
+    ];
+  }
+  return [
+    "notify"
+  ];
+};
 
 class Comments extends Component {
   constructor(props) {
@@ -41,11 +67,8 @@ class Comments extends Component {
           <CardText expandable={true}>
         <CommentEditor
           commentsActions={commentsActions}
-          initialValues={{
-            name: "",
-            mail: "",
-            notify: true
-          }}
+          initialValues={initialValues()}
+          fields={fields()}
           sourceId={sourceId}
         />
           </CardText>
