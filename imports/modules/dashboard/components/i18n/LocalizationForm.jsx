@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
+import { moment } from "meteor/momentjs:moment";
 import FlatButton from "material-ui/lib/flat-button";
 import SelectFieldWrapper from
   "../../../layout/components/SelectFieldWrapper.jsx";

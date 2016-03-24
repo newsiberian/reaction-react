@@ -21,6 +21,10 @@ export default {
       component: UnauthorizedContainer
     },
     {
+      path: "/404",
+      component: NotFound
+    },
+    {
       path: "*",
       component: NotFound
     }

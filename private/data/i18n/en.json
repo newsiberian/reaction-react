@@ -27,9 +27,27 @@
           "h2": "Header 2",
           "h3": "Header 3",
           "blockquote": "Blockquote",
+          "alignLeft": "Align Left",
+          "alignCenter": "Align Center",
+          "alignRight": "Align Right",
+          "alignJustify": "Justify",
           "ol": "Numeration",
           "ul": "Unordered list"
-        }
+        },
+        "ui": {
+          "comments": "Comments",
+          "leaveComment": "Leave comment",
+          "yourName": "Your Name",
+          "yourNamePlaceholder": "How others will refer to you?",
+          "email": "Email",
+          "emailPlaceholder": "Your Email",
+          "notifyOnReplies": "Notify on replies",
+          "post": "Post",
+          "cancel": "Cancel"
+        },
+        "yourCommentIsAdded": "Your comment is added.",
+        "itIsWaitingForApproval": " It is waiting for approval.",
+        "commentShouldNotBeEmpty": "Comment should not be empty."
       }
     }
   }

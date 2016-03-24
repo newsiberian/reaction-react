@@ -27,9 +27,27 @@
           "h2": "Заголовок 2",
           "h3": "Заголовок 3",
           "blockquote": "Цитата",
+          "alignLeft": "По левому краю",
+          "alignCenter": "По центру",
+          "alignRight": "По правому краю",
+          "alignJustify": "По ширине",
           "ol": "Нумерация",
           "ul": "Маркированный список"
-        }
+        },
+        "ui": {
+          "comments": "Комментарии",
+          "leaveComment": "Оставить комментарий",
+          "yourName": "Ваше имя",
+          "yourNamePlaceholder": "Как другие будут обращаться к вам?",
+          "email": "Email",
+          "emailPlaceholder": "Ваш email",
+          "notifyOnReplies": "Уведомлять об ответах",
+          "post": "Опубликовать",
+          "cancel": "Отмена"
+        },
+        "yourCommentIsAdded": "Ваш комментарий добавлен.",
+        "itIsWaitingForApproval": "Сейчас он ожидает одобрения.",
+        "commentShouldNotBeEmpty": "Комментарий не должен быть пустым."
       }
     }
   }

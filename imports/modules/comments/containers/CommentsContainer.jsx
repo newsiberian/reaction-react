@@ -15,12 +15,14 @@ CommentsContainer.propTypes = {
     updateComment: PropTypes.func,
     toggleInlineStyle: PropTypes.func
   }).isRequired,
-  commentEditorState: PropTypes.object
+  // commentEditorState: PropTypes.object,
+  sourceId: PropTypes.string.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    commentEditorState: state.comments.commentEditor // Draft.js `editorState`
+    sourceId: ownProps.sourceId
+    // commentEditorState: state.comments.commentEditor // Draft.js `editorState`
   };
 }
 

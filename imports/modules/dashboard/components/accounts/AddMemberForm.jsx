@@ -13,7 +13,7 @@ const validate = values => {
   const errors = {};
 
   if (!values.name) {
-    errors.user = i18next.t("error.isRequired", {
+    errors.name = i18next.t("error.isRequired", {
       field: i18next.t("accountsUI.name")
     });
   }
@@ -21,6 +21,8 @@ const validate = values => {
     errors.email = i18next.t("error.isRequired", {
       field: i18next.t("accountsUI.email")
     });
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
   }
 
   return errors;

@@ -4,13 +4,15 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { arrayCompare } from "../../../client/helpers/utilities";
+import { replace } from "react-router-redux";
 import * as metafieldActions from "../actions/metafield";
 import * as productActions from "../actions/product";
 import * as tagActions from "../actions/tag";
 import Loading from "../../layout/components/Loading";
 import ProductDetail from "../components/productDetail/ProductDetail";
 //import Unauthorized from "../../layout/components/Unauthorized";
-//import ProductNotFound from "../../layout/components/ProductNotFound";
+// import ProductNotFound from "../../layout/components/ProductNotFound";
+// import NotFound from "../../layout/components/NotFound";
 
 const { Products, Tags } = ReactionCore.Collections;
 
@@ -69,10 +71,16 @@ class ProductDetailContainer extends Component {
     // TODO maybe we don't need this logic at all. Review this Ids after pdp will
     // be done.
     // productActions.setProductId(product._id);
-    productActions.setVariantId(product._id, variantId);
 
-    const tagsIdsArray = getTagsIdsArray(tags);
-    tagActions.syncTags(tagsIdsArray);
+    // sometimes product is undefined. That's why this check exists
+    if (typeof product !== "undefined") {
+      productActions.setVariantId(product._id, variantId);
+      const tagsIdsArray = getTagsIdsArray(tags);
+      tagActions.syncTags(tagsIdsArray);
+    } else {
+      // FIXME keep an eye on RR changes with `notFound` route
+      this.props.replace("/404");
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -136,7 +144,8 @@ ProductDetailContainer.propTypes = {
     key: PropTypes.string,
     value: PropTypes.string
   }),
-  newTag: PropTypes.object
+  newTag: PropTypes.object,
+  replace: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -154,7 +163,8 @@ function mapDispatchToProps(dispatch) {
   return {
     metafieldActions: bindActionCreators(metafieldActions, dispatch),
     productActions: bindActionCreators(productActions, dispatch),
-    tagActions: bindActionCreators(tagActions, dispatch)
+    tagActions: bindActionCreators(tagActions, dispatch),
+    replace: bindActionCreators(replace, dispatch)
   };
 }
 
