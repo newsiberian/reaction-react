@@ -42,9 +42,16 @@
           "email": "Email",
           "emailPlaceholder": "Your Email",
           "notifyOnReplies": "Notify on replies",
+          "approve": "Approve",
+          "cancel": "Cancel",
+          "edit": "Edit",
           "post": "Post",
-          "cancel": "Cancel"
+          "remove": "Remove",
+          "reply": "Reply",
+          "save": "Save"
         },
+        "commentApprovedSuccessfully": "Comment approved successfully.",
+        "commentDeletedSuccessfully": "Comment deleted successfully.",
         "yourCommentIsAdded": "Your comment is added.",
         "itIsWaitingForApproval": " It is waiting for approval.",
         "commentShouldNotBeEmpty": "Comment should not be empty."

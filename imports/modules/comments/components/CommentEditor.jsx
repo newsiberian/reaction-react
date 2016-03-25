@@ -13,26 +13,7 @@ import TextField from "material-ui/lib/text-field";
 import CheckboxWrapper from "../../layout/components/CheckboxWrapper.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
-
-const validate = values => {
-  const errors = {};
-  if (isAnonymous()) {
-    if (! values.name) {
-      errors.name = i18next.t("error.isRequired", {
-        field: i18next.t("accountsUI.name")
-      });
-    }
-    if (! values.email) {
-      errors.email = i18next.t("error.isRequired", {
-        field: i18next.t("accountsUI.email")
-      });
-    } else if (! /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
-    }
-  }
-
-  return errors;
-};
+// export { styles } from "../styles/commonStyles";
 
 const styles = StyleSheet.create({
   blockquote: {
@@ -56,6 +37,26 @@ const styles = StyleSheet.create({
     textAlign: "justify"
   }
 });
+
+const validate = values => {
+  const errors = {};
+  if (isAnonymous()) {
+    if (! values.name) {
+      errors.name = i18next.t("error.isRequired", {
+        field: i18next.t("accountsUI.name")
+      });
+    }
+    if (! values.email) {
+      errors.email = i18next.t("error.isRequired", {
+        field: i18next.t("accountsUI.email")
+      });
+    } else if (! /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
+    }
+  }
+
+  return errors;
+};
 
 const getBlockStyle = block => {
   switch (block.getType()) {
@@ -131,14 +132,13 @@ class CommentEditor extends Component {
   render() {
     const { editorState } = this.state;
     const {
-      fields, handleSubmit, t, pristine, resetForm,
-      submitting
+      fields, handleSubmit, t, pristine, resetForm, submitting
     } = this.props;
     const isAnon = isAnonymous();
     return (
       <form onSubmit={handleSubmit(this.handleSubmit)}>
         {/* Controls */}
-        <CardActions expandable={true}>
+        <CardActions>
           <BlockStyleControls
             editorState={editorState}
             onClick={this.toggleBlockType}
@@ -150,7 +150,7 @@ class CommentEditor extends Component {
         </CardActions>
 
         {/* Editor */}
-        <CardText expandable={true} onClick={this.focus}>
+        <CardText onClick={this.focus}>
           <Editor
             blockStyleFn={getBlockStyle}
             editorState={editorState}
@@ -163,32 +163,32 @@ class CommentEditor extends Component {
         </CardText>
 
         {/* User Form */}
-        <CardText expandable={true}>
+        <CardText>
           {isAnon &&
             <TextField
-              {...this.props.fields.name}
+              {...fields.name}
               hintText={t("comments.ui.yourNamePlaceholder")}
               floatingLabelText={t("comments.ui.yourName")}
-              errorText={this.props.fields.name.touched && this.props.fields.name.error}
+              errorText={fields.name.touched && fields.name.error}
               maxLength={35}
             />
           }
           {isAnon &&
             < TextField
-              {...this.props.fields.email}
+              {...fields.email}
               hintText={t("comments.ui.emailPlaceholder")}
               floatingLabelText={t("comments.ui.email")}
-              errorText={this.props.fields.email.touched && this.props.fields.email.error}
+              errorText={fields.email.touched && fields.email.error}
               type="email"
             />
           }
           <CheckboxWrapper
-            {...this.props.fields.notify}
+            {...fields.notify}
             label={t("comments.ui.notifyOnReplies")}
             // style={styles.checkbox}
           />
         </CardText>
-        <CardActions expandable={true}>
+        <CardActions>
           <FlatButton
             label={t("comments.ui.post")}
             primary={true}
@@ -198,7 +198,7 @@ class CommentEditor extends Component {
           <FlatButton
             label={t("comments.ui.cancel")}
             disabled={isAnon && (pristine || submitting)}
-            onClick={resetForm}
+            onTouchTap={resetForm}
           />
         </CardActions>
       </form>

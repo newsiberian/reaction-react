@@ -13,8 +13,10 @@ CommentsContainer.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object),
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func,
-    updateComment: PropTypes.func,
-    toggleCommentWindow: PropTypes.func
+    approveComment: PropTypes.func,
+    removeComment: PropTypes.func,
+    toggleCommentWindow: PropTypes.func,
+    updateComment: PropTypes.func
   }).isRequired,
   commentEditor: PropTypes.shape({
     expanded: PropTypes.bool

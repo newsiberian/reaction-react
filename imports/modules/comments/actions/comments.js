@@ -1,7 +1,7 @@
 import * as types from "../constants";
 // import { RichUtils } from "draft-js";
-import { ReactionCore } from "meteor/reactioncommerce:core";
-import { isAnonymous } from "../../../client/helpers/permissions";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
+// import { isAnonymous } from "../../../client/helpers/permissions";
 import { methods } from "meteor/sunlark:reaction-comments-core";
 import { displayAlert } from "../../layout/actions/alert";
 import i18next from "i18next";
@@ -38,12 +38,34 @@ export const updateComment = EditorState => {
   return { type: types.UPDATE_COMMENT, EditorState };
 };
 
-export const removeComment = () => {
-  return { type: types.REMOVE_COMMENT };
+export const approveComment = _id => {
+  return dispatch => {
+    methods.approveComments.call({ ids: [_id] }, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({ message: err.message }));
+      }
+      if (res) {
+        dispatch(displayAlert({ message:
+          i18next.t("comments.commentApprovedSuccessfully", { ns: "reaction-react" }) }));
+        dispatch({ type: types.APPROVE_COMMENT, commentId: _id });
+      }
+    });
+  };
 };
 
-export const approveComment = () => {
-  return { type: types.APPROVE_COMMENT };
+export const removeComment = _id => {
+  return dispatch => {
+    methods.removeComments.call({ ids: [_id] }, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({ message: err.message }));
+      }
+      if (res) {
+        dispatch(displayAlert({ message:
+          i18next.t("comments.commentDeletedSuccessfully", { ns: "reaction-react" }) }));
+        dispatch({ type: types.REMOVE_COMMENT, commentId: _id });
+      }
+    });
+  };
 };
 
 export const toggleCommentWindow = () => {

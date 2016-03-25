@@ -32,8 +32,11 @@ Package.onUse(function (api) {
   api.use("ddp-rate-limiter");
   api.use("underscore");
   api.use("service-configuration");
+
   api.use("amplify@1.0.0");
   api.use("fortawesome:fontawesome@4.5.0");
+  api.use("momentjs:moment");
+  api.use("risul:moment-timezone");
 
   api.use("reactioncommerce:core@0.12.0"); // todo do we need this?
   api.use("sunlark:reaction-comments-core");

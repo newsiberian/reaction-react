@@ -42,9 +42,16 @@
           "email": "Email",
           "emailPlaceholder": "Ваш email",
           "notifyOnReplies": "Уведомлять об ответах",
+          "approve": "Одобрить",
+          "cancel": "Отмена",
+          "edit": "Редактировать",
           "post": "Опубликовать",
-          "cancel": "Отмена"
+          "remove": "Удалить",
+          "reply": "Ответить",
+          "save": "Сохранить"
         },
+        "commentApprovedSuccessfully": "Комментарий успешно одобрен.",
+        "commentDeletedSuccessfully": "Комментарий успешно удалён.",
         "yourCommentIsAdded": "Ваш комментарий добавлен.",
         "itIsWaitingForApproval": "Сейчас он ожидает одобрения.",
         "commentShouldNotBeEmpty": "Комментарий не должен быть пустым."
