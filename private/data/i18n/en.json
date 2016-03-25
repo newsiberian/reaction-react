@@ -50,6 +50,7 @@
           "reply": "Reply",
           "save": "Save"
         },
+        "deleteThisComment": "Delete this comment?",
         "commentApprovedSuccessfully": "Comment approved successfully.",
         "commentDeletedSuccessfully": "Comment deleted successfully.",
         "yourCommentIsAdded": "Your comment is added.",

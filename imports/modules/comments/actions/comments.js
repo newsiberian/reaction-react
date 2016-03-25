@@ -55,16 +55,19 @@ export const approveComment = _id => {
 
 export const removeComment = _id => {
   return dispatch => {
-    methods.removeComments.call({ ids: [_id] }, (err, res) => {
-      if (err) {
-        dispatch(displayAlert({ message: err.message }));
-      }
-      if (res) {
-        dispatch(displayAlert({ message:
-          i18next.t("comments.commentDeletedSuccessfully", { ns: "reaction-react" }) }));
-        dispatch({ type: types.REMOVE_COMMENT, commentId: _id });
-      }
-    });
+    if (confirm(i18next.t("comments.deleteThisComment", { ns: "reaction-react" }))) {
+      methods.removeComments.call({ ids: [_id] }, (err, res) => {
+        if (err) {
+          dispatch(displayAlert({ message: err.message }));
+        }
+        if (res) {
+          dispatch(displayAlert({
+            message: i18next.t("comments.commentDeletedSuccessfully", { ns: "reaction-react" })
+          }));
+          dispatch({ type: types.REMOVE_COMMENT, commentId: _id });
+        }
+      });
+    }
   };
 };
 

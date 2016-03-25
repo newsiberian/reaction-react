@@ -50,6 +50,7 @@
           "reply": "Ответить",
           "save": "Сохранить"
         },
+        "deleteThisComment": "Удалить этот комментарий?",
         "commentApprovedSuccessfully": "Комментарий успешно одобрен.",
         "commentDeletedSuccessfully": "Комментарий успешно удалён.",
         "yourCommentIsAdded": "Ваш комментарий добавлен.",
