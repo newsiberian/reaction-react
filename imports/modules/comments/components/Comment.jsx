@@ -4,6 +4,8 @@ import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
 import { StyleSheet } from "react-look";
+// import shallowCompare from "react-addons-shallow-compare";
+import { _ } from "meteor/underscore";
 import { moment } from "meteor/momentjs:moment";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
@@ -70,6 +72,30 @@ class Comment extends Component {
     this.handleSave = () => this._handleSave();
   }
 
+  componentWillReceiveProps(nextProps) {
+    // We use so complicated logic here because EditorState doesn't applies new
+    // state from nextProps automatically. We need to convert new `content`
+    // manually on `content` update.
+    let changed = false;
+    if (typeof this.props.comment.updatedAt !== "undefined") {
+      if (this.props.comment.updatedAt.getTime() !==
+        nextProps.comment.updatedAt.getTime()) {
+        changed = true;
+      }
+    } else if (typeof nextProps.comment.updatedAt !== "undefined") {
+      // if `updatedAt` is not defined in previous state but defined in next,
+      // this mean the EditorState changed
+      changed = true;
+    }
+    if(changed) {
+      this.setState({
+        editorState: EditorState.createWithContent(
+          ContentState.createFromBlockArray(convertFromRaw(nextProps.comment.content))
+        )
+      });
+    }
+  }
+
   _handleKeyCommand(command) {
     const {editorState} = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -100,6 +126,7 @@ class Comment extends Component {
 
   _handleSave() {
     const { comment, commentsActions, dispatch, t } = this.props;
+    // this.state.editorState.push();
     const content = this.state.editorState.getCurrentContent();
 
     // content should not been empty
@@ -117,7 +144,6 @@ class Comment extends Component {
 
   render() {
     const { editorState, editable } = this.state;
-    // const contentState = editorState.getCurrentContent();
     const { comment, commentsActions, containerClassName, t } = this.props;
 
     // permissions
@@ -127,7 +153,8 @@ class Comment extends Component {
       <Card className={containerClassName}>
         <CardHeader
           title={comment.name || t("accountsUI.guest")}
-          subtitle={moment(comment.createdAt).fromNow()}
+          // we prefer `updatedAt`
+          subtitle={moment(comment.updatedAt || comment.createdAt).fromNow()}
           // avatar="http://lorempixel.com/100/100/nature/"
         />
         {/* Controls */}

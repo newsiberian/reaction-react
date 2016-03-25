@@ -5,7 +5,7 @@ import { StyleSheet } from "react-look";
 //import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 import { arrayCompare, arrayShallowCompare } from "../../../../../client/helpers/utilities";
-import shallowCompare from "react-addons-shallow-compare";
+// import shallowCompare from "react-addons-shallow-compare";
 import ImageDetail from "./ImageDetail";
 
 const styles = StyleSheet.create({
