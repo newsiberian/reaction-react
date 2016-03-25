@@ -13,7 +13,6 @@ import TextField from "material-ui/lib/text-field";
 import CheckboxWrapper from "../../layout/components/CheckboxWrapper.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
-// export { styles } from "../styles/commonStyles";
 
 const styles = StyleSheet.create({
   blockquote: {
@@ -210,13 +209,14 @@ CommentEditor.propTypes = {
   commentsActions: PropTypes.shape({
     addComment: PropTypes.func
   }).isRequired,
+  dispatch: PropTypes.func,
   fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func,
   pristine: PropTypes.bool.isRequired,
-  resetForm: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
+  resetForm: PropTypes.func,
   sourceId: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  submitting: PropTypes.bool.isRequired,
+  t: PropTypes.func
 };
 
 export default translate(["core", "reaction-react"])(reduxForm({

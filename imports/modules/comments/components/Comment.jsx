@@ -10,7 +10,8 @@ import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
-// export { styles } from "../styles/commonStyles";
+import BlockStyleControls from  "./BlockStyleControls.jsx";
+import InlineStyleControls from "./InlineStyleControls.jsx";
 
 const styles = StyleSheet.create({
   blockquote: {
@@ -60,12 +61,58 @@ class Comment extends Component {
       editorState: EditorState.createWithContent(
         ContentState.createFromBlockArray(convertFromRaw(props.comment.content))
       ),
-      editable: false // admin or owner could edit comment
+      editable: false // Only admin could edit users comments
     };
+    this.onChange = editorState => this.setState({ editorState });
+    this.handleKeyCommand = command => this._handleKeyCommand(command);
+    this.toggleBlockType = type => this._toggleBlockType(type);
+    this.toggleInlineStyle = style => this._toggleInlineStyle(style);
+    this.handleSave = () => this._handleSave();
+  }
+
+  _handleKeyCommand(command) {
+    const {editorState} = this.state;
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      this.onChange(newState);
+      return true;
+    }
+    return false;
+  }
+
+  _toggleBlockType(blockType) {
+    this.onChange(
+      RichUtils.toggleBlockType(
+        this.state.editorState,
+        blockType
+      )
+    );
+  }
+
+  _toggleInlineStyle(inlineStyle) {
+    this.onChange(
+      RichUtils.toggleInlineStyle(
+        this.state.editorState,
+        inlineStyle
+      )
+    );
+  }
+
+  _handleSave() {
+    const { comment, commentsActions, dispatch, t } = this.props;
+    const content = this.state.editorState.getCurrentContent();
+
+    // content should not been empty
+    if (!content.hasText()) {
+      dispatch(displayAlert({ message: t("comments.commentShouldNotBeEmpty") }));
+    } else {
+      commentsActions.updateComment(comment._id, convertToRaw(content));
+      this.setState({ editable: false });
+    }
   }
 
   handleEditClick() {
-    this.state({ editable: true });
+    this.setState({ editable: true });
   }
 
   render() {
@@ -83,25 +130,40 @@ class Comment extends Component {
           subtitle={moment(comment.createdAt).fromNow()}
           // avatar="http://lorempixel.com/100/100/nature/"
         />
+        {/* Controls */}
+        {((isAdmin || isOwner) && editable) &&
+          <CardActions>
+            <BlockStyleControls
+              editorState={editorState}
+              onClick={this.toggleBlockType}
+            />
+            <InlineStyleControls
+              editorState={editorState}
+              onClick={this.toggleInlineStyle}
+            />
+          </CardActions>
+        }
         <CardText>
           <Editor
             blockStyleFn={getBlockStyle}
             editorState={editorState}
-            readOnly={true}
+            readOnly={!editable}
+            handleKeyCommand={this.handleKeyCommand}
+            onChange={this.onChange}
           />
         </CardText>
         <CardActions>
           <FlatButton label={t("comments.ui.reply")} />
-          {(isAdmin || isOwner) &&
+          {(isAdmin && !editable) &&
             <FlatButton
               label={t("comments.ui.edit")}
-              onTouchTap={() => handleEditClick()}
+              onTouchTap={() => this.handleEditClick()}
             />
           }
-          {editable &&
+          {(isAdmin && editable) &&
             <FlatButton
               label={t("comments.ui.save")}
-              onTouchTap={() => commentsActions.updateComment(comment._id)}
+              onTouchTap={() => this.handleSave()}
             />
           }
           {(isAdmin && comment.workflow.status === "new") &&
@@ -131,7 +193,8 @@ Comment.propTypes = {
     updateComment: PropTypes.func
   }).isRequired,
   containerClassName: PropTypes.string,
-  t: PropTypes.func.isRequired
+  dispatch: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default translate(["core", "reaction-react"])(Comment);

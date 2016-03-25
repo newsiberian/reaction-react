@@ -34,8 +34,19 @@ export const addComment = (content, formValues, sourceId) => {
   };
 };
 
-export const updateComment = EditorState => {
-  return { type: types.UPDATE_COMMENT, EditorState };
+export const updateComment = (commentId, content) => {
+  return dispatch => {
+    methods.updateComment.call({ _id: commentId, content }, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({ message: err.message }));
+      }
+      if (res) {
+        dispatch(displayAlert({ message:
+          i18next.t("comments.commentUpdatedSuccessfully", { ns: "reaction-react" }) }));
+        dispatch({ type: types.UPDATE_COMMENT, commentId });
+      }
+    });
+  };
 };
 
 export const approveComment = _id => {

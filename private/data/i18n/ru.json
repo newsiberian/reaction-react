@@ -53,6 +53,7 @@
         "deleteThisComment": "Удалить этот комментарий?",
         "commentApprovedSuccessfully": "Комментарий успешно одобрен.",
         "commentDeletedSuccessfully": "Комментарий успешно удалён.",
+        "commentUpdatedSuccessfully": "Комментарий обновлён успешно.",
         "yourCommentIsAdded": "Ваш комментарий добавлен.",
         "itIsWaitingForApproval": "Сейчас он ожидает одобрения.",
         "commentShouldNotBeEmpty": "Комментарий не должен быть пустым."

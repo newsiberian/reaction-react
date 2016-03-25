@@ -53,6 +53,7 @@
         "deleteThisComment": "Delete this comment?",
         "commentApprovedSuccessfully": "Comment approved successfully.",
         "commentDeletedSuccessfully": "Comment deleted successfully.",
+        "commentUpdatedSuccessfully": "Comment updated successfully.",
         "yourCommentIsAdded": "Your comment is added.",
         "itIsWaitingForApproval": " It is waiting for approval.",
         "commentShouldNotBeEmpty": "Comment should not be empty."
