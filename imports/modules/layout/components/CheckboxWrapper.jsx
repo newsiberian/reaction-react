@@ -27,7 +27,7 @@ class CheckboxWrapper extends Component {
 
 CheckboxWrapper.propTypes = {
   children: PropTypes.node,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func
 };
 
 export default CheckboxWrapper;

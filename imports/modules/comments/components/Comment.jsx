@@ -4,14 +4,13 @@ import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
 import { StyleSheet } from "react-look";
-// import shallowCompare from "react-addons-shallow-compare";
-import { _ } from "meteor/underscore";
 import { moment } from "meteor/momentjs:moment";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
+import List from "material-ui/lib/lists/list";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
 
@@ -170,6 +169,8 @@ class Comment extends Component {
             />
           </CardActions>
         }
+
+        {/* Editor */}
         <CardText>
           <Editor
             blockStyleFn={getBlockStyle}
@@ -179,6 +180,16 @@ class Comment extends Component {
             onChange={this.onChange}
           />
         </CardText>
+
+        {/* Replies */}
+        <CardText>
+          
+        </CardText>
+        <CardText>
+          
+        </CardText>
+
+        {/* Actions */}
         <CardActions>
           <FlatButton label={t("comments.ui.reply")} />
           {(isAdmin && !editable) &&

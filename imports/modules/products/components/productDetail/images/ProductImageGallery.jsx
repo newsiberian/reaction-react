@@ -176,7 +176,7 @@ ProductImageGallery.propTypes = {
   mediaIdsArray: PropTypes.arrayOf(PropTypes.string),
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 export default translate("core")(ProductImageGallery);

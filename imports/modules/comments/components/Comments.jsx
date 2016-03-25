@@ -104,7 +104,7 @@ Comments.propTypes = {
     expanded: PropTypes.bool
   }).isRequired,
   sourceId: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 export default translate("reaction-react")(Comments);

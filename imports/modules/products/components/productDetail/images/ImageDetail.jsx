@@ -189,7 +189,7 @@ ImageDetail.propTypes = {
     removeMedia: PropTypes.func
   }),
   moveMedia: PropTypes.func,
-  onDropMedia: PropTypes.func.isRequired,
+  onDropMedia: PropTypes.func,
   productTitle: PropTypes.string.isRequired
 };
 
