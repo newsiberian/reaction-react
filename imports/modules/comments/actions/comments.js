@@ -6,11 +6,12 @@ import { methods } from "meteor/sunlark:reaction-comments-core";
 import { displayAlert } from "../../layout/actions/alert";
 import i18next from "i18next";
 
-export const addComment = (content, formValues, sourceId) => {
+export const addComment = (content, formValues, sourceId, parentId) => {
   return dispatch => {
     const values = Object.assign({}, formValues, {
       content,
-      sourceId
+      sourceId,
+      parentId
     });
 
     methods.addComment.call({ values }, (err, res) => {
@@ -27,8 +28,9 @@ export const addComment = (content, formValues, sourceId) => {
             }${i18next.t("comments.itIsWaitingForApproval", { ns: "reaction-react" })}`;
         dispatch(displayAlert({ message: message }));
         dispatch({ type: types.ADD_COMMENT, values });
-        // closing window with comment to clean Editor and form state
-        dispatch({ type: types.TOGGLE_COMMENT_WINDOW });
+        // closing window with comment to clean Editor and form state only if
+        // this is not reply
+        !parentId && dispatch({ type: types.TOGGLE_COMMENT_WINDOW });
       }
     });
   };

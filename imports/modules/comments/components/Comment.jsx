@@ -3,55 +3,38 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
-import { StyleSheet } from "react-look";
 import { moment } from "meteor/momentjs:moment";
+import { isAnonymous } from "../../../client/helpers/permissions";
+import { getChildComments, getBlockStyle } from "../../../client/helpers/comments";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
-import List from "material-ui/lib/lists/list";
+import CommentEditor from "./CommentEditor.jsx";
+import Reply from "./Reply.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
 
-const styles = StyleSheet.create({
-  blockquote: {
-    borderLeft: "5px solid #eee",
-    color: "#666",
-    fontFamily: "'Hoefler Text', 'Georgia', serif",
-    fontStyle: "italic",
-    margin: "16px 0",
-    padding: "10px 20px"
-  },
-  alignLeft: {
-    textAlign: "left"
-  },
-  alignCenter: {
-    textAlign: "center"
-  },
-  alignRight: {
-    textAlign: "right"
-  },
-  alignJustify: {
-    textAlign: "justify"
+const initialValues = () => {
+  if (isAnonymous()) {
+    return {
+      name: "",
+      email: "",
+      notify: true
+    };
   }
-});
+  return {};
+};
 
-const getBlockStyle = block => {
-  switch (block.getType()) {
-  case "blockquote":
-    return styles.blockquote;
-  case "alignleft":
-    return styles.alignLeft;
-  case "aligncenter":
-    return styles.alignCenter;
-  case "alignright":
-    return styles.alignRight;
-  case "alignjustify":
-    return styles.alignJustify;
-  default:
-    return null;
+const fields = () => {
+  if (isAnonymous()) {
+    return [
+      "name",
+      "email"
+    ];
   }
+  return [];
 };
 
 class Comment extends Component {
@@ -62,13 +45,15 @@ class Comment extends Component {
       editorState: EditorState.createWithContent(
         ContentState.createFromBlockArray(convertFromRaw(props.comment.content))
       ),
-      editable: false // Only admin could edit users comments
+      editable: false, // Only admin could edit users comments
+      showReplyForm: false
     };
     this.onChange = editorState => this.setState({ editorState });
     this.handleKeyCommand = command => this._handleKeyCommand(command);
     this.toggleBlockType = type => this._toggleBlockType(type);
     this.toggleInlineStyle = style => this._toggleInlineStyle(style);
     this.handleSave = () => this._handleSave();
+    this.handleCloseReplyForm = this._handleCloseReplyForm.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -141,10 +126,18 @@ class Comment extends Component {
     this.setState({ editable: true });
   }
 
-  render() {
-    const { editorState, editable } = this.state;
-    const { comment, commentsActions, containerClassName, t } = this.props;
+  handleReplyClick() {
+    this.setState({ showReplyForm: true });
+  }
 
+  _handleCloseReplyForm() {
+    this.setState({ showReplyForm: false });
+  }
+
+  render() {
+    const { editorState, editable, showReplyForm } = this.state;
+    const { comment, commentsActions, containerClassName, t } = this.props;
+    const replies = getChildComments(comment._id);
     // permissions
     const isAdmin = ReactionCore.hasPermission("manageComments");
     const isOwner = Meteor.userId() === comment.userId;
@@ -183,15 +176,34 @@ class Comment extends Component {
 
         {/* Replies */}
         <CardText>
-          
+          {replies.map(reply =>
+            <Reply
+              key={reply._id}
+              comment={reply}
+              commentsActions={commentsActions}
+            />
+          )}
         </CardText>
         <CardText>
-          
+          {showReplyForm && <CommentEditor
+            commentsActions={commentsActions}
+            initialValues={initialValues()}
+            isReply={true}
+            fields={fields()}
+            parentId={comment._id}
+            sourceId={comment.sourceId}
+            onCloseReplyForm={this.handleCloseReplyForm}
+          />}
         </CardText>
 
         {/* Actions */}
         <CardActions>
-          <FlatButton label={t("comments.ui.reply")} />
+          {! showReplyForm &&
+            <FlatButton
+              label={t("comments.ui.reply")}
+              onTouchTap={() => this.handleReplyClick()}
+            />
+          }
           {(isAdmin && !editable) &&
             <FlatButton
               label={t("comments.ui.edit")}

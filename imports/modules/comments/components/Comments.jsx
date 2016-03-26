@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { isAnonymous } from "../../../client/helpers/permissions";
 import Card from "material-ui/lib/card/card";
-import CardActions from "material-ui/lib/card/card-actions";
 import CardHeader from "material-ui/lib/card/card-header";
-import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import { StyleSheet } from "react-look";
 import CommentEditor from "./CommentEditor.jsx";
@@ -71,7 +69,9 @@ class Comments extends Component {
             <CommentEditor
               commentsActions={commentsActions}
               initialValues={initialValues()}
+              isReply={false}
               fields={fields()}
+              parentId={null}
               sourceId={sourceId}
             />
           </CardText>

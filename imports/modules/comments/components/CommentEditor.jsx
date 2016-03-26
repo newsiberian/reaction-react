@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from "react";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { translate } from "react-i18next/lib";
 import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import { reduxForm } from "redux-form";
-import { StyleSheet } from "react-look";
 import { displayAlert } from "../../layout/actions/alert";
 import { isAnonymous } from "../../../client/helpers/permissions";
+import { getBlockStyle } from "../../../client/helpers/comments";
 import i18next from "i18next";
 import CardActions from "material-ui/lib/card/card-actions";
 import FlatButton from "material-ui/lib/flat-button";
@@ -13,29 +14,6 @@ import TextField from "material-ui/lib/text-field";
 import CheckboxWrapper from "../../layout/components/CheckboxWrapper.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
-
-const styles = StyleSheet.create({
-  blockquote: {
-    borderLeft: "5px solid #eee",
-    color: "#666",
-    fontFamily: "'Hoefler Text', 'Georgia', serif",
-    fontStyle: "italic",
-    margin: "16px 0",
-    padding: "10px 20px"
-  },
-  alignLeft: {
-    textAlign: "left"
-  },
-  alignCenter: {
-    textAlign: "center"
-  },
-  alignRight: {
-    textAlign: "right"
-  },
-  alignJustify: {
-    textAlign: "justify"
-  }
-});
 
 const validate = values => {
   const errors = {};
@@ -55,23 +33,6 @@ const validate = values => {
   }
 
   return errors;
-};
-
-const getBlockStyle = block => {
-  switch (block.getType()) {
-  case "blockquote":
-    return styles.blockquote;
-  case "alignleft":
-    return styles.alignLeft;
-  case "aligncenter":
-    return styles.alignCenter;
-  case "alignright":
-    return styles.alignRight;
-  case "alignjustify":
-    return styles.alignJustify;
-  default:
-    return null;
-  }
 };
 
 class CommentEditor extends Component {
@@ -116,7 +77,10 @@ class CommentEditor extends Component {
   }
 
   _handleSubmit(values) {
-    const { dispatch, commentsActions, sourceId, t } = this.props;
+    const {
+      dispatch, commentsActions, parentId, sourceId, isReply,
+      onCloseReplyForm, t
+    } = this.props;
     const content = this.state.editorState.getCurrentContent();
 
     // content should not been empty
@@ -124,29 +88,35 @@ class CommentEditor extends Component {
       dispatch(displayAlert({ message: t("comments.commentShouldNotBeEmpty") }));
     } else {
       // Editor state clean after collapsing card component
-      commentsActions.addComment(convertToRaw(content), values, sourceId);
+      commentsActions.addComment(convertToRaw(content), values, sourceId, parentId);
+      // close component if it is reply
+      isReply && onCloseReplyForm();
     }
   }
 
   render() {
     const { editorState } = this.state;
     const {
-      fields, handleSubmit, t, pristine, resetForm, submitting
+      fields, handleSubmit, t, pristine, resetForm, submitting, isReply
     } = this.props;
     const isAnon = isAnonymous();
+    // admin should always have an Editor controls
+    const isAdmin = ReactionCore.hasPermission("manageComments");
     return (
       <form onSubmit={handleSubmit(this.handleSubmit)}>
         {/* Controls */}
-        <CardActions>
-          <BlockStyleControls
-            editorState={editorState}
-            onClick={this.toggleBlockType}
-          />
-          <InlineStyleControls
-            editorState={editorState}
-            onClick={this.toggleInlineStyle}
-          />
-        </CardActions>
+        {(!isReply || isAdmin) &&
+          <CardActions>
+            <BlockStyleControls
+              editorState={editorState}
+              onClick={this.toggleBlockType}
+            />
+            <InlineStyleControls
+              editorState={editorState}
+              onClick={this.toggleInlineStyle}
+            />
+          </CardActions>
+        }
 
         {/* Editor */}
         <CardText onClick={this.focus}>
@@ -181,11 +151,13 @@ class CommentEditor extends Component {
               type="email"
             />
           }
-          <CheckboxWrapper
-            {...fields.notify}
-            label={t("comments.ui.notifyOnReplies")}
-            // style={styles.checkbox}
-          />
+          {!isReply &&
+            <CheckboxWrapper
+              {...fields.notify}
+              label={t("comments.ui.notifyOnReplies")}
+              // style={styles.checkbox}
+            />
+          }
         </CardText>
         <CardActions>
           <FlatButton
@@ -212,8 +184,13 @@ CommentEditor.propTypes = {
   dispatch: PropTypes.func,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func,
+  isReply: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   resetForm: PropTypes.func,
+  onCloseReplyForm: PropTypes.func,
+  // in case if this is Reply, we need this to build an `ancestors` array
+  parentId: PropTypes.string,
+  // product or blog post `_id`
   sourceId: PropTypes.string.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func

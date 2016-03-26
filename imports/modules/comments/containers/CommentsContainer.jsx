@@ -2,8 +2,9 @@ import React, { PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { getTopComments } from "../../../client/helpers/comments";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
-import { Comments } from "meteor/sunlark:reaction-comments-core";
+// import { Comments } from "meteor/sunlark:reaction-comments-core";
 import CommentsComponent from "../components/Comments.jsx";
 import * as commentsActions from "../actions/comments";
 
@@ -40,7 +41,7 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   const handle = Meteor.subscribe("Comments", props.sourceId);
   if (handle.ready()) {
-    const comments = Comments.find({ sourceId: props.sourceId }).fetch();
+    const comments = getTopComments(props.sourceId); // Comments.find({ sourceId: props.sourceId }).fetch();
 
     onData(null, { comments });
   }
