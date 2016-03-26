@@ -2,9 +2,35 @@ import React, {Component, PropTypes} from "react";
 import {translate} from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
-import { StyleSheet } from "react-look";
+import Avatar from "material-ui/lib/avatar";
+import IconMenu from "material-ui/lib/menus/icon-menu";
+import MenuItem from "material-ui/lib/menus/menu-item";
+import IconButton from "material-ui/lib/icon-button";
+import MoreVertIcon from "material-ui/lib/svg-icons/navigation/more-vert";
 import { moment } from "meteor/momentjs:moment";
 import { getBlockStyle } from "../../../client/helpers/comments";
+import { StyleSheet } from "react-look";
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    padding: "1rem",
+    position: "relative"
+  },
+  avatar: {
+    marginRight: "1rem"
+    // padding: "1rem"
+  },
+  content: {
+    // padding: "1rem",
+    flex: "1 1 auto"
+  },
+  menu: {
+    float: "right"
+  },
+  info: {},
+  editor: {}
+});
 
 class Reply extends Component {
   constructor(props) {
@@ -25,7 +51,7 @@ class Reply extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // We use so complicated logic here because EditorState doesn't applies new
+    // We use so complicated logic here because EditorState doesn"t applies new
     // state from nextProps automatically. We need to convert new `content`
     // manually on `content` update.
     let changed = false;
@@ -99,14 +125,35 @@ class Reply extends Component {
     const { comment, commentsActions, t } = this.props;
     const isAdmin = ReactionCore.hasPermission("manageComments");
     return (
-      <div>
-        <Editor
-          blockStyleFn={getBlockStyle}
-          editorState={editorState}
-          readOnly={!editable}
-          handleKeyCommand={this.handleKeyCommand}
-          onChange={this.onChange}
-        />
+      <div className={styles.container}>
+        <Avatar className={styles.avatar} />
+        <div className={styles.content}>
+          <div className={styles.info}>
+            {comment.name || t("accountsUI.guest")}
+            {" | "}
+            {moment(comment.updatedAt || comment.createdAt).fromNow()}
+            <IconMenu
+              className={styles.menu}
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              anchorOrigin={{horizontal: "right", vertical: "top"}}
+              targetOrigin={{horizontal: "right", vertical: "top"}}
+            >
+              <MenuItem primaryText="Refresh" />
+              <MenuItem primaryText="Send feedback" />
+              <MenuItem primaryText="Settings" />
+              <MenuItem primaryText="Help" />
+              <MenuItem primaryText="Sign out" />
+            </IconMenu>
+          </div>
+          <Editor
+            // className={styles.editor}
+            blockStyleFn={getBlockStyle}
+            editorState={editorState}
+            readOnly={!editable}
+            handleKeyCommand={this.handleKeyCommand}
+            onChange={this.onChange}
+          />
+        </div>
       </div>
     );
   }

@@ -12,6 +12,7 @@ import CardHeader from "material-ui/lib/card/card-header";
 import FlatButton from "material-ui/lib/flat-button";
 import CardText from "material-ui/lib/card/card-text";
 import CommentEditor from "./CommentEditor.jsx";
+import Subheader from "material-ui/lib/Subheader";
 import Reply from "./Reply.jsx";
 import BlockStyleControls from  "./BlockStyleControls.jsx";
 import InlineStyleControls from "./InlineStyleControls.jsx";
@@ -175,15 +176,18 @@ class Comment extends Component {
         </CardText>
 
         {/* Replies */}
-        <CardText>
-          {replies.map(reply =>
-            <Reply
-              key={reply._id}
-              comment={reply}
-              commentsActions={commentsActions}
-            />
-          )}
-        </CardText>
+        {replies.length &&
+          <CardText style={{ backgroundColor: "#F8F8F8" }}>
+            <Subheader>{t("comments.ui.replies")}</Subheader>
+            {replies.map(reply =>
+              <Reply
+                key={reply._id}
+                comment={reply}
+                commentsActions={commentsActions}
+              />
+            )}
+          </CardText>
+        }
         <CardText>
           {showReplyForm && <CommentEditor
             commentsActions={commentsActions}

@@ -187,6 +187,8 @@ CommentEditor.propTypes = {
   isReply: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   resetForm: PropTypes.func,
+  // this is used only for reply. It needed to destroy this component after
+  // submit changes
   onCloseReplyForm: PropTypes.func,
   // in case if this is Reply, we need this to build an `ancestors` array
   parentId: PropTypes.string,

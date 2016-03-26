@@ -1,7 +1,4 @@
 import * as types from "../constants";
-// import { RichUtils } from "draft-js";
-// import { ReactionCore } from "meteor/reactioncommerce:core";
-// import { isAnonymous } from "../../../client/helpers/permissions";
 import { methods } from "meteor/sunlark:reaction-comments-core";
 import { displayAlert } from "../../layout/actions/alert";
 import i18next from "i18next";
