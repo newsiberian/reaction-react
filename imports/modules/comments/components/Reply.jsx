@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from "react";
 import {translate} from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
+// import CommentEditor from "./CommentEditor.jsx";
+import Status from "./Status.jsx";
 import Avatar from "material-ui/lib/avatar";
 import IconMenu from "material-ui/lib/menus/icon-menu";
 import MenuItem from "material-ui/lib/menus/menu-item";
@@ -19,17 +21,14 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginRight: "1rem"
-    // padding: "1rem"
   },
   content: {
-    // padding: "1rem",
     flex: "1 1 auto"
   },
   menu: {
     float: "right"
   },
-  info: {},
-  editor: {}
+  info: {}
 });
 
 class Reply extends Component {
@@ -132,21 +131,36 @@ class Reply extends Component {
             {comment.name || t("accountsUI.guest")}
             {" | "}
             {moment(comment.updatedAt || comment.createdAt).fromNow()}
-            <IconMenu
-              className={styles.menu}
-              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: "right", vertical: "top"}}
-              targetOrigin={{horizontal: "right", vertical: "top"}}
-            >
-              <MenuItem primaryText="Refresh" />
-              <MenuItem primaryText="Send feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Help" />
-              <MenuItem primaryText="Sign out" />
-            </IconMenu>
+            {(isAdmin && comment.workflow.status === "new") &&
+              <span>{" | "}<Status status={comment.workflow.status} /></span>
+            }
+            {isAdmin &&
+              <IconMenu
+                className={styles.menu}
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{horizontal: "right", vertical: "top"}}
+                targetOrigin={{horizontal: "right", vertical: "top"}}
+              >
+                {! editable && <MenuItem
+                  primaryText={t("comments.ui.edit")}
+                  onTouchTap={() => this.handleEditClick()}
+                />}
+                {editable && <MenuItem
+                  primaryText={t("comments.ui.save")}
+                  onTouchTap={() => this.handleSave()}
+                />}
+                {comment.workflow.status === "new" && <MenuItem
+                  primaryText={t("comments.ui.approve")}
+                  onTouchTap={() => commentsActions.approveComment(comment._id)}
+                />}
+                <MenuItem
+                  primaryText={t("comments.ui.remove")}
+                  onTouchTap={() => commentsActions.removeComment(comment._id)}
+                />
+              </IconMenu>
+            }
           </div>
           <Editor
-            // className={styles.editor}
             blockStyleFn={getBlockStyle}
             editorState={editorState}
             readOnly={!editable}

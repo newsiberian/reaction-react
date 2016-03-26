@@ -49,7 +49,9 @@
           "remove": "Удалить",
           "replies": "Ответы",
           "reply": "Ответить",
-          "save": "Сохранить"
+          "save": "Сохранить",
+          "new": "Новый",
+          "approved": "Одобренный"
         },
         "deleteThisComment": "Удалить этот комментарий?",
         "commentApprovedSuccessfully": "Комментарий успешно одобрен.",

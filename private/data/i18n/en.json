@@ -49,7 +49,9 @@
           "remove": "Remove",
           "replies": "Replies",
           "reply": "Reply",
-          "save": "Save"
+          "save": "Save",
+          "new": "New",
+          "approved": "Approved"
         },
         "deleteThisComment": "Delete this comment?",
         "commentApprovedSuccessfully": "Comment approved successfully.",
