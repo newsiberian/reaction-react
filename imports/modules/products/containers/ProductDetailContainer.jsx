@@ -78,6 +78,7 @@ class ProductDetailContainer extends Component {
       const tagsIdsArray = getTagsIdsArray(tags);
       tagActions.syncTags(tagsIdsArray);
     } else {
+      // @link https://github.com/reactjs/react-router/issues/3210
       // FIXME keep an eye on RR changes with `notFound` route
       this.props.replace("/404");
     }

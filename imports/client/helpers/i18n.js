@@ -4,8 +4,8 @@ import { Meteor } from "meteor/meteor";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import accounting from "accounting";
 import i18next from "i18next";
+import { moment } from "meteor/momentjs:moment";
 //import LanguageDetector from "i18next-browser-languagedetector/lib";
-
 
 /**
  * String.prototype.toCamelCase
@@ -95,63 +95,68 @@ export function getLabelsFor(schema, name) {
   return labels;
 }
 
+let shopLanguage;
+
 Meteor.startup(function () {
   // todo getLang should be called then DOM ready?
   Session.set("language", getLang());
-  // shop subscription ready?
-  const shopId = ReactionCore.getShopId();
-  const shop = ReactionCore.Collections.Shops.findOne(shopId);
-  if (!shop) return; // sub not ready yet
-  const shopLanguage = shop.language;
+  // shop subscription ready? - important check
+  if (ReactionCore.Subscriptions.Shops.ready()) {
+    const shopId = ReactionCore.getShopId();
+    const shop = ReactionCore.Collections.Shops.findOne(shopId);
+    const shopLanguage = shop.language;
 
-  // every package gets a namespace, fetch them
-  const packageNamespaces = ReactionCore.Collections.Packages.find({}, {
-    fields: {
-      name: 1
-    }
-  }).map(pkg => pkg.name);
+    // every package gets a namespace, fetch them
+    const packageNamespaces = ReactionCore.Collections.Packages.find({}, {
+      fields: {
+        name: 1
+      }
+    }).map(pkg => pkg.name);
 
-  Meteor.call("shop/getLocale", function (error, result) {
-    if (result) {
-      ReactionCore.Locale = result;
-      // this is need to make language changing reactive.
-      Tracker.autorun(() => {
-        ReactionCore.Locale.language = Session.get("language");
-      });
-      // TODO for now moment are global. It cames from meteor package
-      // I think we need to move it to npm in future
-      moment.locale(ReactionCore.Locale.language);
-    }
-  });
+    Meteor.call("shop/getLocale", function (error, result) {
+      if (result) {
+        ReactionCore.Locale = result;
+        // this is need to make language changing reactive.
+        Tracker.autorun(() => {
+          ReactionCore.Locale.language = Session.get("language");
+        });
+        // TODO for now moment are global. It cames from meteor package
+        // I think we need to move it to npm in future
+        moment.locale(ReactionCore.Locale.language);
+      }
+    });
 
-  Tracker.autorun(() => {
-    ReactionCore.Subscriptions.Translations = Meteor.subscribe("Translations",
-      Session.get("language"), () => {
-        i18next
-        // .use(XHR)
-        // .use(LanguageDetector) // we don't need this here, because
+    // Reaction run this snippet outside of `Meteor.startup`. We don't do this
+    // because in that case data will be not ready.
+    Tracker.autorun(() => {
+      ReactionCore.Subscriptions.Translations = Meteor.subscribe("Translations",
+        Session.get("language"), () => {
+          i18next
+          // .use(XHR)
+          // .use(LanguageDetector) // we don't need this here, because
           // we want to manually change language sometimes by reactive
           // way
-          .init({
-            lng: Session.get("language"),
-            fallbackLng: shopLanguage,
-            // have a common namespace used around the full app
-            ns: packageNamespaces,
-            defaultNS: "core",
-            resources: getResources(),
+            .init({
+              lng: Session.get("language"),
+              fallbackLng: shopLanguage,
+              // have a common namespace used around the full app
+              ns: packageNamespaces,
+              defaultNS: "core",
+              resources: getResources(),
 
-            debug: true,
+              debug: true
 
-            interpolation: {
-              escapeValue: false // not needed for react!!
-            }
-            //backend: {
-            //  // path where resources get loaded from
-            //  loadPath: "/common/locales/{{lng}}.json"
-            //}
-          });
-      });
-  });
+              // interpolation: {
+              //   escapeValue: false // not needed for react!!
+              // }
+              // backend: {
+              //   // path where resources get loaded from
+              //   loadPath: "/common/locales/{{lng}}.json"
+              // }
+            });
+        });
+    });
+  }
 });
 
 /**
@@ -163,7 +168,7 @@ Meteor.startup(function () {
  */
 export function formatPrice(currentPrice) {
   const { Locale } = ReactionCore;
-  //localeDep.depend();
+  // localeDep.depend();
 
   if (typeof Locale !== "object" || typeof Locale.currency !== "object") {
     // locale not yet loaded, so we don't need to return anything.

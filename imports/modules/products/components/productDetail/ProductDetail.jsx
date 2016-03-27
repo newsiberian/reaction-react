@@ -7,7 +7,8 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import HTML5Backend from "react-dnd-html5-backend";
 import FontIcon from "material-ui/lib/font-icon";
 import Paper from "material-ui/lib/paper";
-//import { formatPrice } from "../../../../client/helpers/i18n";
+import { formatPrice } from "../../../../client/helpers/i18n";
+import { getVariants, getProductPriceRange } from "../../../../client/helpers/products";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
 import CommentsContainer from "../../../comments/containers/CommentsContainer.jsx";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
@@ -103,6 +104,16 @@ const social = [
     field: "googleplusMsg"
   }
 ];
+
+const actualPrice = (current, productId) => {
+  if (current && typeof current._id === "string") {
+    const childVariants = getVariants(current._id);
+    if (childVariants.length === 0) {
+      return current.price;
+    }
+    return getProductPriceRange(productId).range;
+  }
+};
 
 // TODO babel @deco not supported in 1.3
 // @DragDropContext(HTML5Backend)
@@ -213,18 +224,18 @@ class ProductDetail extends Component {
 
     return (
       <div>
-        { social.map((options, index) => {
+        {social.map((options, index) => {
           return(
-            <a href="#" key={ index }>
-              <i className={ `large ${options.name} icon` } />
+            <a href="#" key={index}>
+              <i className={`large ${options.name} icon`} />
             </a>
           );
-        }) }
+        })}
         <div>
-          { social.map((options, index) => {
-            { /* todo fix this */ }
+          {social.map((options, index) => {
+            {/* todo fix this */}
             return this.renderFieldComponent(options, index);
-          }) }
+          })}
         </div>
       </div>
     );
@@ -243,7 +254,7 @@ class ProductDetail extends Component {
         {/* Headers */}
         <Helmet
           title={product.title}
-          titleTemplate={`${product.pageTitle} | ${ReactionCore.getShopName()}`}
+          titleTemplate={`${ReactionCore.getShopName()} | ${product.pageTitle}`}
           meta={[
             {charset: "utf-8"}
           ]}
@@ -281,6 +292,12 @@ class ProductDetail extends Component {
               </div>
               <div className="col-xs-12 col-sm-7">
                 {/* Price Fixation */}
+                <span itemProp="price" className={priceStyle}>
+                  {formatPrice(actualPrice(selectedVariant, product._id))}
+                </span>
+                <div>
+                {/*this.renderFieldComponent(vendorOptions)*/}
+                </div>
               </div>
             </div>
           </section>
@@ -398,7 +415,7 @@ ProductDetail.propTypes = {
     key: PropTypes.string,
     value: PropTypes.string
   }),
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
   //selectedVariant: PropTypes.oneOfType([
   //  PropTypes.object,
   //  PropTypes.bool
@@ -412,4 +429,4 @@ ProductDetail.propTypes = {
   //onAddToCartQuantityChange: PropTypes.func.isRequired,
 };
 
-export default translate("core")(DragDropContext(HTML5Backend)(look(ProductDetail)));
+export default translate("core")(DragDropContext(HTML5Backend)(/*look(*/ProductDetail)/*)*/);
