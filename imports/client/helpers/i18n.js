@@ -1,10 +1,11 @@
 /* eslint "no-extend-native": [2, {"exceptions": ["String"]}] */
 
 import { Meteor } from "meteor/meteor";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import accounting from "accounting";
 import i18next from "i18next";
 //import LanguageDetector from "i18next-browser-languagedetector/lib";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+
 
 /**
  * String.prototype.toCamelCase
@@ -153,9 +154,6 @@ Meteor.startup(function () {
   });
 });
 
-// this needed for init.js
-export default i18next;
-
 /**
  * formatPrice
  * @summary return shop /locale specific formatted price
@@ -208,7 +206,17 @@ export function formatPrice(currentPrice) {
 }
 
 /**
+ * _formatPrice
+ * private function for formatting locale currency
  * @private
+ * @param  {Number} price         price
+ * @param  {Number} originalPrice originalPrice
+ * @param  {Number} actualPrice   actualPrice
+ * @param  {Number} currentPrice  currentPrice
+ * @param  {Number} currency      currency
+ * @param  {Number} pos           position
+ * @param  {Number} len           length
+ * @return {Number}               formatted price
  */
 function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
                       pos, len) {
@@ -248,7 +256,7 @@ export const translateRegistry = (registry, app) => {
   if (registry.label) {
     registryLabel = registry.label.toCamelCase();
     i18nKey = `admin.${registry.provides}.${registryLabel}`;
-    // and if we don't find it, we are trying to look at first
+    // and if we don"t find it, we are trying to look at first
     // registry entry
   } else if (app && app.registry && app.registry.length &&
     app.registry[0].label) {
@@ -259,6 +267,10 @@ export const translateRegistry = (registry, app) => {
   registry.i18nKeyDescription = `${i18nKey}Description`;
   registry.i18nKeyPlaceholder = `${i18nKey}Placeholder`;
   registry.i18nKeyTooltip = `${i18nKey}Tooltip`;
+  registry.i18nKeyTitle = `${i18nKey}Title`;
 
   return registry;
 };
+
+// this needed for init.js
+export default i18next;
