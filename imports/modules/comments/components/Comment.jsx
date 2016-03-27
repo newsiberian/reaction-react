@@ -142,6 +142,7 @@ class Comment extends Component {
     // permissions
     const isAdmin = ReactionCore.hasPermission("manageComments");
     const isOwner = Meteor.userId() === comment.userId;
+    // TODO add number of replies which should looks beautiful
     return (
       <Card className={containerClassName}>
         <CardHeader

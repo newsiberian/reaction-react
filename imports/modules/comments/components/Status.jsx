@@ -3,6 +3,7 @@ import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
 
 const c = StyleSheet.combineStyles;
+// taken from SUI label
 const styles = StyleSheet.create({
   label: {
     display: "inline-block",

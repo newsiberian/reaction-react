@@ -176,7 +176,7 @@ Package.propTypes = {
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
   }).isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 export default translate(["core", "reaction-react"])(Package);

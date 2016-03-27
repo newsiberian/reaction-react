@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 //import List from "material-ui/lib/lists/list";
 //import ListItem from "material-ui/lib/lists/list-item";
 import MenuItem from "material-ui/lib/menus/menu-item";
@@ -10,7 +11,7 @@ import {/* Link,*/ browserHistory } from "react-router";
 
 // fixme fix this component. It not tracks activeLink and looks ugly
 const AdminControlsBar = props => {
-  const { apps/*, routerActions*/ } = props;
+  const { apps } = props;
   //return (
   //  <nav style={styles.nav}>
   //    <List>
@@ -34,6 +35,7 @@ const AdminControlsBar = props => {
           //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
           //children={<Link to={app.route} activeStyle={{color: "red"}}><FontIcon className={app.icon} /></Link>}
           style={styles.navButton}
+          title={props.t(app.i18nKeyTooltip)}
         />
       ))}
     </nav>
@@ -42,7 +44,7 @@ const AdminControlsBar = props => {
 
 AdminControlsBar.propTypes = {
   apps: PropTypes.array.isRequired,
-  //routerActions: PropTypes.object.isRequired
+  t: PropTypes.func
 };
 
-export default AdminControlsBar;
+export default translate(["core", "reaction-react"])(AdminControlsBar);
