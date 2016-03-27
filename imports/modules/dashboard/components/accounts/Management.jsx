@@ -13,10 +13,6 @@ const styles = {
   }
 };
 
-/**
- * @class Management
- * @classdesc
- */
 class Management extends Component {
   render() {
     const { guests, members, layoutSettingsActions, t } = this.props;

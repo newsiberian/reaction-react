@@ -2,15 +2,23 @@ import React, { PropTypes } from "react";
 import { Meteor } from "meteor/meteor";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
+import { getAllComments } from "../../../client/helpers/comments";
 import { connect } from "react-redux";
-import CommentsManagement from "../components/comments/CommentsManagement.jsx";
+import * as commentsActions from "../../comments/actions/comments";
+import Management from "../components/comments/Management.jsx";
 import Loading from "../../layout/components/Loading.jsx";
 
 
-const CommentsManagementContainer = props => <CommentsManagement {...props} />;
+const CommentsManagementContainer = props => <Management {...props} />;
 
 CommentsManagementContainer.propTypes = {
-
+  comments: PropTypes.arrayOf(PropTypes.object),
+  commentsActions: PropTypes.shape({
+    approveComment: PropTypes.func,
+    removeComment: PropTypes.func,
+    toggleCommentWindow: PropTypes.func,
+    updateComment: PropTypes.func
+  }).isRequired
 };
 
 function mapStateToProps(state) {
@@ -21,16 +29,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    permActions: bindActionCreators(permActions, dispatch)
+    commentsActions: bindActionCreators(commentsActions, dispatch)
   };
 }
 
 function composer(props, onData) {
   const handler = Meteor.subscribe("AllComments");
   if (handler.ready()) {
-    const comments = getUser(props.userId);
+    const comments = getAllComments();
 
-    onData(null, { selectedUser });
+    onData(null, { comments });
   }
 }
 

@@ -10,40 +10,26 @@ import {/* Link,*/ browserHistory } from "react-router";
 // import SettingsHeader from "/modules/dashboard/components/settings/SettingsHeader";
 
 // fixme fix this component. It not tracks activeLink and looks ugly
-const AdminControlsBar = props => {
-  const { apps } = props;
-  //return (
-  //  <nav style={styles.nav}>
-  //    <List>
-  //      {apps.map(app => (
-  //        <ListItem
-  //          key={app.label}
-  //          children={<FontIcon className={app.icon} />}
-  //        />
-  //      ))}
-  //    </List>
-  //  </nav>
-  //);
-  return (
-    <nav style={styles.nav}>
-      {apps.map(app => (
-        <MenuItem
-          key={app.label}
-          //primaryText={app.label}
-          children={<FontIcon className={app.icon} />}
-          onTouchTap={() => browserHistory.push(app.route)}
-          //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
-          //children={<Link to={app.route} activeStyle={{color: "red"}}><FontIcon className={app.icon} /></Link>}
-          style={styles.navButton}
-          title={props.t(app.i18nKeyTooltip)}
-        />
-      ))}
-    </nav>
-  );
-};
+const AdminControlsBar = ({ apps, t }) => (
+  <nav style={styles.nav}>
+    {apps.map(app => (
+      <MenuItem
+        key={app.label}
+        //primaryText={app.label}
+        children={<FontIcon className={app.icon} />}
+        onTouchTap={() => browserHistory.push(app.route)}
+        //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
+        //children={<Link to={app.route} activeStyle={{color: "red"}}><FontIcon className={app.icon} /></Link>}
+        style={styles.navButton}
+        title={t(app.i18nKeyTooltip)}
+      />
+    ))}
+  </nav>
+);
+
 
 AdminControlsBar.propTypes = {
-  apps: PropTypes.array.isRequired,
+  apps: PropTypes.arrayOf(PropTypes.object).isRequired,
   t: PropTypes.func
 };
 

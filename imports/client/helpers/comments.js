@@ -28,6 +28,14 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * getAllComments
+ * @summary get all comments by admin within `dashboard/comments`
+ */
+export const getAllComments = () => {
+  return Comments.find().fetch();
+};
+
 export const getTopComments = sourceId => {
   return Comments.find({
     sourceId: sourceId,

@@ -82,11 +82,9 @@ class UsersGroup extends Component {
               </TableHeaderColumn>
             </TableRow>
             <TableRow>
-              <TableHeaderColumn>Avatar</TableHeaderColumn>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>
-                {t("accountsUI.email")}
-              </TableHeaderColumn>
+              <TableHeaderColumn>{t("admin.accounts.avatar")}</TableHeaderColumn>
+              <TableHeaderColumn>{t("admin.accounts.name")}</TableHeaderColumn>
+              <TableHeaderColumn>{t("admin.accounts.email")}</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -122,4 +120,4 @@ UsersGroup.propTypes = {
   usersGroup: PropTypes.array
 };
 
-export default translate("core")(UsersGroup);
+export default translate(["core", "reaction-react"])(UsersGroup);

@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   const handle = Meteor.subscribe("Comments", props.sourceId);
   if (handle.ready()) {
-    const comments = getTopComments(props.sourceId); // Comments.find({ sourceId: props.sourceId }).fetch();
+    const comments = getTopComments(props.sourceId);
 
     onData(null, { comments });
   }

@@ -6,6 +6,7 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "draft-js": "^0.1.0",
+    "griddle-react": "^0.4.1",
     "history": "^2.0.1",
     "i18next": "^2.3.5",
     "i18next-browser-languagedetector": "0.0.14",
