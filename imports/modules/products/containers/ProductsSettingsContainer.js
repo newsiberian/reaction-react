@@ -14,6 +14,12 @@ ProductsSettingsContainer.propTypes = {
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
   }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   products: PropTypes.array,
@@ -28,6 +34,7 @@ ProductsSettingsContainer.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
+    locale: state.layout.locale,
     location: ownProps.location,
     selectedProducts: state.shop.productsGrid.selectedProducts
   };

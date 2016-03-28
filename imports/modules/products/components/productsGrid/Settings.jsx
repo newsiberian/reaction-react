@@ -115,7 +115,9 @@ const getWeightActive = (products, weight) => {
  */
 class Settings extends Component {
   render() {
-    const { location, params, products, productActions, routerActions, t } = this.props;
+    const {
+      locale, location, params, products, productActions, routerActions, t
+    } = this.props;
 
     if (!products.length) {
       return (
@@ -172,7 +174,7 @@ class Settings extends Component {
                 key={product._id}
                 leftAvatar={<Avatar src={src} style={styles.avatar} />}
                 primaryText={product.title}
-                secondaryText={formatPrice(product.price.range)}
+                secondaryText={formatPrice(product.price.range, locale)}
                 onClick={() => routerActions.push(`/shop/product/${product.handle}`)}
               />
             );
@@ -233,6 +235,12 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   // could be helpful for `maybeDeleteProduct` actionCreator. Currently unused.
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,

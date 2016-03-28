@@ -1,11 +1,14 @@
 /* eslint "no-extend-native": [2, {"exceptions": ["String"]}] */
 
 import { Meteor } from "meteor/meteor";
+import { Session } from "meteor/session";
+import { Tracker } from "meteor/tracker";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import accounting from "accounting";
 import i18next from "i18next";
-import { moment } from "meteor/momentjs:moment";
-//import LanguageDetector from "i18next-browser-languagedetector/lib";
+// import { moment } from "meteor/momentjs:moment";
+// import "../../../locales/ru";
+// import LanguageDetector from "i18next-browser-languagedetector/lib";
 
 /**
  * String.prototype.toCamelCase
@@ -30,7 +33,7 @@ String.prototype.toCamelCase = function () {
  * @summary detects device default language
  * @return {String} language code
  */
-const getLang = () => {
+export const getLang = () => {
   if (typeof navigator.languages !== "undefined")  {
     if (~navigator.languages[0].indexOf("-")) {
       return navigator.languages[0].split("-")[0];
@@ -95,10 +98,15 @@ export function getLabelsFor(schema, name) {
   return labels;
 }
 
-let shopLanguage;
+// without this price will be loaded faster then Locale'll be ready and we don't
+// see the price.
+// ReactionCore.localeDependency = new Tracker.Dependency();
+// this.localeDep = new Tracker.Dependency();
+// export const localeDep = new Tracker.Dependency();
 
 Meteor.startup(function () {
-  // todo getLang should be called then DOM ready?
+// export const loadLocale = () => {
+  // todo getLang should be called when DOM ready?
   Session.set("language", getLang());
   // shop subscription ready? - important check
   if (ReactionCore.Subscriptions.Shops.ready()) {
@@ -113,18 +121,24 @@ Meteor.startup(function () {
       }
     }).map(pkg => pkg.name);
 
-    Meteor.call("shop/getLocale", function (error, result) {
-      if (result) {
-        ReactionCore.Locale = result;
-        // this is need to make language changing reactive.
-        Tracker.autorun(() => {
-          ReactionCore.Locale.language = Session.get("language");
-        });
-        // TODO for now moment are global. It cames from meteor package
-        // I think we need to move it to npm in future
-        moment.locale(ReactionCore.Locale.language);
-      }
-    });
+    // Meteor.call("shop/getLocale", (error, result) => {
+    //   if (result) {
+    //     ReactionCore.Locale = result;
+    //     // this is need to make language changing reactive.
+    //     Tracker.autorun(() => {
+    //       ReactionCore.Locale.language = Session.get("language");
+    //     });
+    //     // localeDep.changed();
+    //     moment.locale(ReactionCore.Locale.language);
+    //     // ReactionCore.localeDependency.changed();
+    //   }
+    // });
+
+    // this is need to make language changing reactive.
+    // Tracker.autorun(() => {
+    //   ReactionCore.Locale.language = Session.get("language");
+    //   localeDep.changed();
+    // });
 
     // Reaction run this snippet outside of `Meteor.startup`. We don't do this
     // because in that case data will be not ready.
@@ -158,29 +172,83 @@ Meteor.startup(function () {
     });
   }
 });
+// };
+
+// /**
+//  * formatPrice
+//  * @summary return shop /locale specific formatted price
+//  * also accepts a range formatted with " - "
+//  * @param {String} currentPrice - currentPrice or "xx.xx - xx.xx" formatted String
+//  * @return {String} returns locale formatted and exchange rate converted values
+//  */
+// export function formatPrice(currentPrice) {
+//   const { Locale } = ReactionCore;
+//   // localeDep.depend();
+//   // ReactionCore.localeDependency.depend();
+//
+//   if (typeof Locale !== "object" || typeof Locale.currency !== "object") {
+//     // locale not yet loaded, so we don't need to return anything.
+//     return false;
+//   }
+//
+//   if (typeof currentPrice !== "string" && typeof currentPrice !== "number") {
+//     return false;
+//   }
+//
+//   // for the cases then we have only one price. It is a number.
+//   currentPrice = currentPrice.toString();
+//   let price = 0;
+//   const prices = ~currentPrice.indexOf(" - ") ?
+//     currentPrice.split(" - ") :
+//     [currentPrice];
+//
+//   // basic "for" is faster then "for ...of" for arrays. We need more speed here
+//   const len = prices.length;
+//   for (let i = 0; i < len; i++) {
+//     let originalPrice = prices[i];
+//     try {
+//       // we know the locale, but we don't know exchange rate. In that case we
+//       // should return to default shop currency
+//       if (typeof Locale.currency.rate !== "number") {
+//         throw new Meteor.Error("exchangeRateUndefined");
+//       }
+//       prices[i] *= Locale.currency.rate;
+//
+//       price = _formatPrice(price, originalPrice, prices[i],
+//         currentPrice, Locale.currency, i, len);
+//     } catch (error) {
+//       ReactionCore.Log.debug("currency error, fallback to shop currency");
+//       price = _formatPrice(price, originalPrice, prices[i],
+//         currentPrice, Locale.shopCurrency, i, len);
+//     }
+//   }
+//
+//   return price;
+// }
 
 /**
  * formatPrice
  * @summary return shop /locale specific formatted price
  * also accepts a range formatted with " - "
- * @param {String} currentPrice - currentPrice or "xx.xx - xx.xx" formatted String
+ * @param {String} actualPrice - currentPrice or "xx.xx - xx.xx" formatted String
+ * @param {Object} locale - this is the reaction's ReactionCore.Locale
  * @return {String} returns locale formatted and exchange rate converted values
  */
-export function formatPrice(currentPrice) {
-  const { Locale } = ReactionCore;
+export function formatPrice(actualPrice, locale) {
+  // const { Locale } = ReactionCore;
   // localeDep.depend();
 
-  if (typeof Locale !== "object" || typeof Locale.currency !== "object") {
+  if (typeof locale.currency.symbol !== "string") {
     // locale not yet loaded, so we don't need to return anything.
-    return false;
+    return;
   }
 
-  if (typeof currentPrice !== "string" && typeof currentPrice !== "number") {
-    return false;
+  if (typeof actualPrice !== "string" && typeof actualPrice !== "number") {
+    return;
   }
 
   // for the cases then we have only one price. It is a number.
-  currentPrice = currentPrice.toString();
+  let currentPrice = actualPrice.toString();
   let price = 0;
   const prices = ~currentPrice.indexOf(" - ") ?
     currentPrice.split(" - ") :
@@ -193,17 +261,17 @@ export function formatPrice(currentPrice) {
     try {
       // we know the locale, but we don't know exchange rate. In that case we
       // should return to default shop currency
-      if (typeof Locale.currency.rate !== "number") {
+      if (typeof locale.currency.rate !== "number") {
         throw new Meteor.Error("exchangeRateUndefined");
       }
-      prices[i] *= Locale.currency.rate;
+      prices[i] *= locale.currency.rate;
 
       price = _formatPrice(price, originalPrice, prices[i],
-        currentPrice, Locale.currency, i, len);
+        currentPrice, locale.currency, i, len);
     } catch (error) {
       ReactionCore.Log.debug("currency error, fallback to shop currency");
       price = _formatPrice(price, originalPrice, prices[i],
-        currentPrice, Locale.shopCurrency, i, len);
+        currentPrice, locale.shopCurrency, i, len);
     }
   }
 

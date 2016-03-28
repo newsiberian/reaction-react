@@ -15,6 +15,7 @@ import LayoutFooter from "../components/footer/LayoutFooter.jsx";
 import AdminControlsBarContainer from "./AdminControlsBarContainer.jsx";
 import * as alertActions from "../actions/alert";
 import * as settingsActions from "../actions/settings";
+import * as localeActions from "../actions/locale";
 import { styles } from "../styles/coreLayout";
 import { layoutStyles } from "../styles/layout";
 import "../styles/styles.css";
@@ -86,6 +87,11 @@ class CoreLayout extends Component {
     };
   }
 
+  componentWillMount() {
+    // initial load locale. This is the same as ReactionCore.Locale
+    this.props.localeActions.loadLocale();
+  }
+
   getChildContext() {
     return {
       muiTheme: modifyRawTheme({}, "Open Sans")
@@ -155,6 +161,10 @@ CoreLayout.propTypes = {
     items: PropTypes.array
   }),
   children: PropTypes.node,
+  localeActions: PropTypes.shape({
+    changeLocale: PropTypes.func,
+    loadLocale: PropTypes.func
+  }).isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   settings: PropTypes.shape({
@@ -174,6 +184,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     alertActions: bindActionCreators(alertActions, dispatch),
+    localeActions: bindActionCreators(localeActions, dispatch),
     settingsActions: bindActionCreators(settingsActions, dispatch)
   };
 }

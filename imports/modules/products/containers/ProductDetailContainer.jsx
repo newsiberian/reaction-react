@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import { Meteor } from "meteor/meteor";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -101,6 +102,12 @@ class ProductDetailContainer extends Component {
 
 ProductDetailContainer.propTypes = {
   //productId: PropTypes.string,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   variantId: PropTypes.string,
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
@@ -151,6 +158,7 @@ ProductDetailContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    locale: state.layout.locale,
     //productId: state.shop.product.productId,
     variantId: state.shop.product.ids.variantId,
     productState: state.shop.product.fields,
@@ -183,6 +191,7 @@ function composer(props, onData) {
     if (typeof props.productState.variantId === "string") {
       selectedVariant = getSelectedVariant(props.productState.variantId);
     }
+    // const locale = ReactionCore.Locale;
     onData(null, {
       product,
       selectedVariant,

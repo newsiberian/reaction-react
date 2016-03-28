@@ -31,7 +31,7 @@ class ProductsGrid extends Component {
   render() {
     // const productsInLine = NUMBERS[4];
     const {
-      layoutSettingsActions, products, productActions, selectedProducts
+      layoutSettingsActions, locale, products, productActions, selectedProducts
     } = this.props;
     //const products = this.products();
     // const layouts = this.generateLayouts(products);
@@ -76,6 +76,7 @@ class ProductsGrid extends Component {
             <ProductsGridItem
               key={product._id}
               layoutSettingsActions={layoutSettingsActions}
+              locale={locale}
               product={product}
               productActions={productActions}
               selectedProducts={selectedProducts}
@@ -91,6 +92,12 @@ ProductsGrid.propTypes = {
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired,
   products: PropTypes.array.isRequired,
   productActions: PropTypes.shape({

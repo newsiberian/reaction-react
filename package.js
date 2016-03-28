@@ -8,7 +8,7 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("METEOR@1.3-rc.12");
+  api.versionsFrom("METEOR@1.3");
   api.use("meteor-base");
   api.use("mongo");
   api.use("ecmascript");
@@ -35,6 +35,7 @@ Package.onUse(function (api) {
 
   api.use("amplify@1.0.0");
   api.use("fortawesome:fontawesome@4.5.0");
+  // TODO move moment to NPM? Also, why we have moment in core?
   api.use("momentjs:moment");
   api.use("risul:moment-timezone");
 

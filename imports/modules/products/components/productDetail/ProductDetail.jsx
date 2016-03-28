@@ -242,7 +242,7 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { product, selectedVariant, t } = this.props;
+    const { locale, product, selectedVariant, t } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
@@ -293,7 +293,7 @@ class ProductDetail extends Component {
               <div className="col-xs-12 col-sm-7">
                 {/* Price Fixation */}
                 <span itemProp="price" className={priceStyle}>
-                  {formatPrice(actualPrice(selectedVariant, product._id))}
+                  {formatPrice(actualPrice(selectedVariant, product._id), locale)}
                 </span>
                 <div>
                 {/*this.renderFieldComponent(vendorOptions)*/}
@@ -308,7 +308,7 @@ class ProductDetail extends Component {
       </section>
     );
 
-    //return (
+    // return (
     //  <section className="ui fluid container basic segment">
     //    { permissions.createProduct && this.renderProductVisibilityAdminBlock() }
     //    <div className="ui basic segment" itemScope itemType="http://schema.org/Product">
@@ -367,11 +367,17 @@ class ProductDetail extends Component {
     //      </div>
     //    </div>
     //  </section>
-    //);
+    // );
   }
 }
 
 ProductDetail.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object,
   productActions: PropTypes.shape({

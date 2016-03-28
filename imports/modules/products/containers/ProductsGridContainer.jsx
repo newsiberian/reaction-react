@@ -180,6 +180,12 @@ ProductsGridContainer.propTypes = {
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
   }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   location: PropTypes.object.isRequired,
   products: PropTypes.array,
   productActions: PropTypes.shape({
@@ -194,6 +200,7 @@ ProductsGridContainer.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
+    locale: state.layout.locale,
     productsScrollLimit: state.shop.productsGrid.gridSettings.productsScrollLimit,
     selectedProducts: state.shop.productsGrid.selectedProducts
   };

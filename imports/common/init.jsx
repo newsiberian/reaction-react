@@ -1,10 +1,11 @@
+import { Meteor } from "meteor/meteor";
 import { render } from "react-dom";
 import React from "react";
 import Root from "./containers/Root";
 import configureStore from "./store";
+import i18next from "../client/helpers/i18n";
 import { I18nextProvider } from "react-i18next/lib";
 import { LookRoot, Presets } from "react-look";
-import i18next from "../client/helpers/i18n";
 import injectTapEventPlugin from "react-tap-event-plugin";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
 

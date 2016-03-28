@@ -285,7 +285,7 @@ class ProductsGridItem extends Component {
   }
 
   render() {
-    const { product, productActions, layoutSettingsActions } = this.props;
+    const { locale, product, productActions, layoutSettingsActions } = this.props;
     const {
       _id, handle, title, isSoldOut, isBackorder, isLowQuantity, price
     } = product;
@@ -293,7 +293,7 @@ class ProductsGridItem extends Component {
     //const priceRange = price.max ? `${price.min} - ${price.max}` : `${price.min}`;
 
     // todo this could be a bug
-    const formatedPrice = formatPrice(price.range && price.range || "0");
+    const formatedPrice = formatPrice(price.range && price.range || "0", locale);
 
     console.log("ProductGridItem: rendering...");
     // todo do we really need data-tags here?
@@ -339,6 +339,12 @@ ProductsGridItem.propTypes = {
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired,
   product: PropTypes.object.isRequired,
   productActions: PropTypes.shape({
