@@ -35,7 +35,7 @@ const getOptions = (field, product) => {
       type: "input",
       value: product[field],
       className: isAdmin ? c(editStyles.input, editStyles.title, editStyles.hover) :
-        c(editStyles.title)
+        editStyles.title
     };
   case "pageTitle":
     return {
@@ -43,24 +43,25 @@ const getOptions = (field, product) => {
       type: "input",
       value: product[field],
       className: isAdmin ? c(editStyles.pageTitle, editStyles.input, editStyles.hover) :
-        c(editStyles.pageTitle)
+        editStyles.pageTitle
     };
   case "vendor":
     return {
       field: "vendor",
       type: "input",
       value: product[field],
-      className: c(editStyles.vendor, editStyles.hover)
+      className: isAdmin ? c(editStyles.input, editStyles.vendor, editStyles.hover) :
+        editStyles.vendor
     };
-    case "description":
-      return {
-        field: "description",
-        type: "textarea",
-        value: product[field],
-        className: c(editStyles.description, editStyles.hover)
-      };
+  case "description":
+    return {
+      field: "description",
+      type: "textarea",
+      value: product[field],
+      className: c(editStyles.description, editStyles.hover)
+    };
   default:
-    return {}; // should not fires
+    return null; // should not fires
   }
 };
 //
@@ -164,7 +165,7 @@ class ProductDetail extends Component {
       return (
         <ProductDetailEdit
           key={index}
-          //field={field}
+          // field={field}
           options={options}
           product={product}
           productActions={productActions}
@@ -174,10 +175,7 @@ class ProductDetail extends Component {
 
     // todo add markdown support here:
     return (
-      <div
-        key={index} // todo do we need this here?
-        className={options.className}
-      >
+      <div className={options.className}>
         {options.value}
       </div>
     );
@@ -295,8 +293,9 @@ class ProductDetail extends Component {
                 <span itemProp="price" className={priceStyle}>
                   {formatPrice(actualPrice(selectedVariant, product._id), locale)}
                 </span>
-                <div>
-                {/*this.renderFieldComponent(vendorOptions)*/}
+                <div itemProp="manufacturer">
+                  {product.vendor && `${t("productDetailEdit.vendor")}: `}
+                  {this.renderFieldComponent(getOptions("vendor", product))}
                 </div>
               </div>
             </div>

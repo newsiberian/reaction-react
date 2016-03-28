@@ -9,16 +9,14 @@ import "../../../../locales/ru";
 
 export const loadLocale = () => {
   return dispatch => {
-    if (ReactionCore.Subscriptions.Shops.ready()) {
-      Meteor.call("shop/getLocale", (error, result) => {
-        if (result) {
-          let locale = result;
-          locale.language = getLang();
-          moment.locale(locale.language);
-          dispatch({ type: types.LOAD_LOCALE, locale });
-        }
-      });
-    }
+    Meteor.call("shop/getLocale", (error, result) => {
+      if (result) {
+        let locale = result;
+        locale.language = getLang();
+        moment.locale(locale.language);
+        dispatch({ type: types.LOAD_LOCALE, locale });
+      }
+    });
   };
 };
 

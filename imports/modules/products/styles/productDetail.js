@@ -46,21 +46,20 @@ export const editStyles = StyleSheet.create({
     transition: "background-color .1s ease-out"
   },
   title: {
-    //fontSize: "3.5rem"
+    // fontSize: "3.5rem"
     fontSize: "5vmin"
   },
   pageTitle: {
-    //fontSize: "2rem"
+    // fontSize: "2rem"
     fontSize: "4vmin",
     color: "inherit"
   },
   vendor: {
-    borderColor: "#fafafa",
-    borderWidth: 1,
-    borderStyle: "solid",
-    maxWidth: "30%",
-    marginTop: "1rem",
-    marginBottom: "1rem"
+    // maxWidth: "30%",
+    display: "inline",
+    // marginTop: "1rem",
+    marginBottom: "1rem",
+    width: "auto"
   },
   description: {
 
@@ -107,6 +106,7 @@ export const numberPickerStyle = StyleSheet.create({
 });
 
 export const priceStyle = StyleSheet.create({
+  fontFamily: '"Open Sans", "Roboto", "Helvetica Neue", Helvetica, sans-serif',
   fontWeight: "bold",
   fontSize: "3.5rem"
 });

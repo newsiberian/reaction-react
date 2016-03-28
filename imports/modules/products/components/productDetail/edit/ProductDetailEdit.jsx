@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
 });
 
 class ProductDetailEdit extends Component {
-  //shouldComponentUpdate(nextProps) {
-  //  // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-  //  return !shallowCompare(this, nextProps.product.title);
-  //  //return !_.isEqual(nextProps.media, this.props.product);
-  //}
+  // shouldComponentUpdate(nextProps) {
+  //   // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
+  //   return shallowCompare(this, nextProps.product.title);
+  //   // return !_.isEqual(nextProps.media, this.props.product);
+  // }
 
   handleChange(event, field) {
     const { product, productActions } = this.props;
@@ -105,7 +105,7 @@ ProductDetailEdit.propTypes = {
     vendor: PropTypes.object,
     description: PropTypes.object
   }),
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 export default translate("core")(look(ProductDetailEdit));
