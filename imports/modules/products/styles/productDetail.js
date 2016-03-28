@@ -38,7 +38,6 @@ export default {
 
 export const editStyles = StyleSheet.create({
   input: {
-    textAlign: "center",
     width: "100%",
     borderColor: "#fafafa",
     borderWidth: 1,
@@ -46,23 +45,25 @@ export const editStyles = StyleSheet.create({
     transition: "background-color .1s ease-out"
   },
   title: {
+    textAlign: "center",
     // fontSize: "3.5rem"
     fontSize: "5vmin"
   },
   pageTitle: {
+    textAlign: "center",
     // fontSize: "2rem"
     fontSize: "4vmin",
     color: "inherit"
   },
   vendor: {
-    // maxWidth: "30%",
     display: "inline",
-    // marginTop: "1rem",
+    marginTop: "1rem",
     marginBottom: "1rem",
     width: "auto"
   },
   description: {
-
+    marginTop: "1rem",
+    marginBottom: "2rem"
   },
   hover: {
     ":hover": {

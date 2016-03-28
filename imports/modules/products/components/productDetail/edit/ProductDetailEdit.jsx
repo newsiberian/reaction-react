@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-//import {Editor, EditorState} from 'draft-js';
-import shallowCompare from "react-addons-shallow-compare";
+// import shallowCompare from "react-addons-shallow-compare";
 import look, { StyleSheet } from "react-look";
 
 const c = StyleSheet.combineStyles;
@@ -22,11 +21,12 @@ const styles = StyleSheet.create({
 });
 
 class ProductDetailEdit extends Component {
-  // shouldComponentUpdate(nextProps) {
-  //   // todo разобраться с shallowCompare, возможно применить _.isEqual вместо него.
-  //   return shallowCompare(this, nextProps.product.title);
-  //   // return !_.isEqual(nextProps.media, this.props.product);
-  // }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.product[this.props.options.field] !==
+      this.props.product[this.props.options.field] ||
+      nextProps.productState[this.props.options.field] !==
+      this.props.productState[this.props.options.field];
+  }
 
   handleChange(event, field) {
     const { product, productActions } = this.props;
@@ -43,39 +43,13 @@ class ProductDetailEdit extends Component {
 
   render() {
     const { product, options, t } = this.props;
-    const { field, type, className } = options;
-
-    if (type === "textarea") {
-      console.log("ProductDetailEdit: rendering...");
-      // todo непонятно зачем в темплейте product-detail-message. я его пока не скопировал
-      //return(
-      //  <ReactMarkdownMediumEditor
-      //    className={className && className}
-      //    markdown={product[field]}
-      //    onChange={text => onInputChange(text, field)}
-      //    onBlur={event => onInputBlur(event, field)}
-      //    options={{
-      //      disableReturn: false,
-      //      toolbar: true,
-      //      placeholder: {text: t(`productDetailEdit.${field}`)}
-      //    }}
-      //    style={styles ? styles : {}}
-      //  />
-      //);
-    }
+    const { field, className } = options;
 
     console.log("ProductDetailEdit: rendering...");
-    //return (
-    //  <Editor
-    //    editorState={product[field]}
-    //    onChange={event => this.handleChange(event, field)}
-    //  />
-    //);
     return (
       <input
         type="text"
         className={c(className, styles.onChange)}
-        // value={product[field]}
         defaultValue={product[field]}
         onChange={event => this.handleChange(event, field)}
         onBlur={event => this.handleBlur(event, field)}
@@ -90,7 +64,6 @@ ProductDetailEdit.propTypes = {
     field: PropTypes.string.isRequired,
     value: PropTypes.string, // this field is not Required because in case
     // of social messages we could not have them.
-    type: PropTypes.string,
     className: PropTypes.string
   }).isRequired,
   product: PropTypes.object.isRequired,

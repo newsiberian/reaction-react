@@ -12,7 +12,7 @@ import i18next from "i18next";
  * @return {{type, productId: *}}
  */
 export const setProductId = productId => {
-  return { type: types.SET_PRODUCT_ID, productId: productId };
+  return { type: types.SET_PRODUCT_ID, productId };
 };
 
 /**
@@ -36,10 +36,7 @@ export const setVariantId = (productId, variantId) => {
     }
   }
 
-  return {
-    type: types.SET_VARIANT_ID,
-    variantId: variantId
-  };
+  return { type: types.SET_VARIANT_ID, variantId };
 };
 
 /**
@@ -278,7 +275,7 @@ export const updateProductField = (productId, field, value) => {
             }
           });
         }
-        dispatch({ type: types.UPDATE_PRODUCT_FIELD, productId: productId, field: field, value: value });
+        dispatch({ type: types.UPDATE_PRODUCT_FIELD, productId, field, value });
       }
     );
   };
@@ -286,15 +283,15 @@ export const updateProductField = (productId, field, value) => {
 
 // this needed to rollback `isChanged` field state to remove animation effect
 export const rollbackFieldState = field => {
-  return { type: types.ROLLBACK_FIELD_STATE, field: field };
+  return { type: types.ROLLBACK_FIELD_STATE, field };
 };
 
-export const selectProduct = (productId) => {
-  return { type: types.SELECT_PRODUCT, productId: productId };
+export const selectProduct = productId => {
+  return { type: types.SELECT_PRODUCT, productId };
 };
 
-export const unselectProduct = (productId) => {
-  return { type: types.UNSELECT_PRODUCT, productId: productId };
+export const unselectProduct = productId => {
+  return { type: types.UNSELECT_PRODUCT, productId };
 };
 
 export const flushProductsList = () => {

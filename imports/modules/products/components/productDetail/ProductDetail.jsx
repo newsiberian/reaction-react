@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import look, { StyleSheet } from "react-look";
+import { StyleSheet } from "react-look";
 import { DragDropContext } from "react-dnd";
 import Helmet from "react-helmet";
 import { ReactionCore } from "meteor/reactioncommerce:core";
@@ -16,11 +16,12 @@ import ProductTagInputForm from "./tags/ProductTagInputForm";
 import ProductDetailTags from "./tags/ProductDetailTags";
 import ProductMetaFieldForms from "./attributes/ProductMetaFieldForms";
 import ProductMetaField from "./attributes/ProductMetaField";
+import Description from "./edit/Description.jsx";
 import ProductSocial from "./ProductSocial";
 import CartAddButton from "./CartAddButton";
 import VariantList from "./variants/VariantList";
 import styles, { editStyles, priceStyle
-  /*titleStyle, pageTitleStyle, descriptionStyle, vendorStyle,*/
+  /*titleStyle, pageTitleStyle, , vendorStyle,*/
   /*inputHoverStyle, inputStyle*/
 } from "../../styles/productDetail";
 
@@ -32,7 +33,7 @@ const getOptions = (field, product) => {
   case "title":
     return {
       field: "title",
-      type: "input",
+      // type: "input", // we are not using textarea anymore
       value: product[field],
       className: isAdmin ? c(editStyles.input, editStyles.title, editStyles.hover) :
         editStyles.title
@@ -40,7 +41,7 @@ const getOptions = (field, product) => {
   case "pageTitle":
     return {
       field: "pageTitle",
-      type: "input",
+      // type: "input",
       value: product[field],
       className: isAdmin ? c(editStyles.pageTitle, editStyles.input, editStyles.hover) :
         editStyles.pageTitle
@@ -48,18 +49,18 @@ const getOptions = (field, product) => {
   case "vendor":
     return {
       field: "vendor",
-      type: "input",
+      // type: "input",
       value: product[field],
       className: isAdmin ? c(editStyles.input, editStyles.vendor, editStyles.hover) :
         editStyles.vendor
     };
-  case "description":
-    return {
-      field: "description",
-      type: "textarea",
-      value: product[field],
-      className: c(editStyles.description, editStyles.hover)
-    };
+  // case "description":
+  //   return {
+  //     field: "description",
+  //     type: "textarea",
+  //     value: product[field],
+  //     className: c(editStyles.description, editStyles.hover)
+  //   };
   default:
     return null; // should not fires
   }
@@ -240,12 +241,12 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { locale, product, selectedVariant, t } = this.props;
+    const { locale, product, productActions, productState, selectedVariant, t } = this.props;
     //const {
     //  selectedProduct, selectedVariant, permissions, actualPrice,
     //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
     //} = this.props;
-
+    const isAdmin = ReactionCore.hasPermission("createProduct");
     console.log("ProductDetail: rendering...");
     return (
       <section className="container-fluid" style={styles.container}>
@@ -258,8 +259,7 @@ class ProductDetail extends Component {
           ]}
         />
 
-        {ReactionCore.hasPermission("createProduct") &&
-          this.renderProductVisibilityAdminBlock()}
+        {isAdmin && this.renderProductVisibilityAdminBlock()}
 
         {/* Product Detail Page: BEGIN */}
         <div className="row" itemScope itemType="http://schema.org/Product">
@@ -284,18 +284,49 @@ class ProductDetail extends Component {
                 <h3>{t("productDetail.tags")}</h3>
                 {this.renderTagsComponent()}
                 {(product.metafields.length || // display header for admin or if
-                  ReactionCore.hasPermission("createProduct")) && // array not empty
+                  isAdmin) && // array not empty
                   <h3>{t("productDetail.details")}</h3>}
                 {this.renderMetaComponent()}
               </div>
               <div className="col-xs-12 col-sm-7">
-                {/* Price Fixation */}
-                <span itemProp="price" className={priceStyle}>
-                  {formatPrice(actualPrice(selectedVariant, product._id), locale)}
-                </span>
-                <div itemProp="manufacturer">
-                  {product.vendor && `${t("productDetailEdit.vendor")}: `}
-                  {this.renderFieldComponent(getOptions("vendor", product))}
+                <div className="row">
+                  {/* Price Fixation */}
+                  <span itemProp="price" className={priceStyle}>
+                    {formatPrice(actualPrice(selectedVariant, product._id), locale)}
+                  </span>
+
+                  {/* Vendor */}
+                  <div itemProp="manufacturer">
+                    {product.vendor && `${t("productDetailEdit.vendor")}: `}
+                    {this.renderFieldComponent(getOptions("vendor", product))}
+                  </div>
+
+                 {/* Social Commentary */}
+                 {/* todo fix following code */}
+                 {/*ReactionCore.hasPermission("createProduct") ?
+                   this.renderProductSocialManage() :
+                   <ProductSocial />
+                 */}
+                </div>
+
+                {/* Main product information */}
+                <div className="row col-md-11">
+                  {/* Description */}
+                  <div
+                    className={isAdmin ? // styles from Editor
+                      c(editStyles.input, editStyles.description, editStyles.hover) :
+                      editStyles.description}
+                    itemProp="description"
+                  >
+                    {/*this.renderFieldComponent(getOptions("description", product))*/}
+                    <Description
+                      productId={product._id}
+                      description={product.description}
+                      descriptionState={productState.description}
+                      rollbackFieldState={productActions.rollbackFieldState}
+                      updateProductField={productActions.updateProductField}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -434,4 +465,4 @@ ProductDetail.propTypes = {
   //onAddToCartQuantityChange: PropTypes.func.isRequired,
 };
 
-export default translate("core")(DragDropContext(HTML5Backend)(/*look(*/ProductDetail)/*)*/);
+export default translate("core")(DragDropContext(HTML5Backend)(ProductDetail));
