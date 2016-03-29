@@ -20,10 +20,7 @@ import Description from "./edit/Description.jsx";
 import ProductSocial from "./ProductSocial";
 import CartAddButton from "./CartAddButton";
 import VariantList from "./variants/VariantList";
-import styles, { editStyles, priceStyle
-  /*titleStyle, pageTitleStyle, , vendorStyle,*/
-  /*inputHoverStyle, inputStyle*/
-} from "../../styles/productDetail";
+import styles, { editStyles, priceStyle } from "../../styles/productDetail";
 
 const c = StyleSheet.combineStyles;
 
@@ -33,7 +30,6 @@ const getOptions = (field, product) => {
   case "title":
     return {
       field: "title",
-      // type: "input", // we are not using textarea anymore
       value: product[field],
       className: isAdmin ? c(editStyles.input, editStyles.title, editStyles.hover) :
         editStyles.title
@@ -41,7 +37,6 @@ const getOptions = (field, product) => {
   case "pageTitle":
     return {
       field: "pageTitle",
-      // type: "input",
       value: product[field],
       className: isAdmin ? c(editStyles.pageTitle, editStyles.input, editStyles.hover) :
         editStyles.pageTitle
@@ -49,44 +44,14 @@ const getOptions = (field, product) => {
   case "vendor":
     return {
       field: "vendor",
-      // type: "input",
       value: product[field],
       className: isAdmin ? c(editStyles.input, editStyles.vendor, editStyles.hover) :
         editStyles.vendor
     };
-  // case "description":
-  //   return {
-  //     field: "description",
-  //     type: "textarea",
-  //     value: product[field],
-  //     className: c(editStyles.description, editStyles.hover)
-  //   };
   default:
     return null; // should not fires
   }
 };
-//
-//const titleOptions = {
-//  field: "title",
-//  type: "input",
-//  //className: c(styles.input, styles.title, styles.hover)
-//  className: c(titleStyle, inputHoverStyle, inputStyle)
-//};
-//const pageTitleOptions = {
-//  field: "pageTitle",
-//  type: "input",
-//  className: c(pageTitleStyle, inputHoverStyle, inputStyle)
-//};
-//const vendorOptions = {
-//  field: "vendor",
-//  type: "input",
-//  className: c(vendorStyle, inputHoverStyle)
-//};
-//const descriptionOptions = {
-//  field: "description",
-//  type: "textarea",
-//  className: c(descriptionStyle, inputHoverStyle)
-//};
 
 const social = [
   {
@@ -241,11 +206,11 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { locale, product, productActions, productState, selectedVariant, t } = this.props;
-    //const {
-    //  selectedProduct, selectedVariant, permissions, actualPrice,
-    //  addToCartQuantity, onAddToCartClick, onAddToCartQuantityChange
-    //} = this.props;
+    const {
+      locale, product, productActions, productState, selectedVariant, t
+    } = this.props;
+
+    // caching permission check
     const isAdmin = ReactionCore.hasPermission("createProduct");
     console.log("ProductDetail: rendering...");
     return (
@@ -253,7 +218,7 @@ class ProductDetail extends Component {
         {/* Headers */}
         <Helmet
           title={product.title}
-          titleTemplate={`${ReactionCore.getShopName()} | ${product.pageTitle}`}
+          titleTemplate={`${ReactionCore.getShopName()} • ${product.pageTitle}`}
           meta={[
             {charset: "utf-8"}
           ]}
@@ -289,7 +254,7 @@ class ProductDetail extends Component {
                 {this.renderMetaComponent()}
               </div>
               <div className="col-xs-12 col-sm-7">
-                <div className="row">
+                <div>
                   {/* Price Fixation */}
                   <span itemProp="price" className={priceStyle}>
                     {formatPrice(actualPrice(selectedVariant, product._id), locale)}
@@ -302,15 +267,14 @@ class ProductDetail extends Component {
                   </div>
 
                  {/* Social Commentary */}
-                 {/* todo fix following code */}
-                 {/*ReactionCore.hasPermission("createProduct") ?
-                   this.renderProductSocialManage() :
+                 {/* TODO fix following code */}
+                 {/*isAdmin ? this.renderProductSocialManage() :
                    <ProductSocial />
                  */}
                 </div>
 
                 {/* Main product information */}
-                <div className="row col-md-11">
+                <div>
                   {/* Description */}
                   <div
                     className={isAdmin ? // styles from Editor
@@ -318,13 +282,22 @@ class ProductDetail extends Component {
                       editStyles.description}
                     itemProp="description"
                   >
-                    {/*this.renderFieldComponent(getOptions("description", product))*/}
                     <Description
                       productId={product._id}
                       description={product.description}
                       descriptionState={productState.description}
                       rollbackFieldState={productActions.rollbackFieldState}
                       updateProductField={productActions.updateProductField}
+                    />
+                  </div>
+
+                  {/* Variants & Options */}
+                  <div>
+                    <h3>{t("productDetail.options")}</h3>
+                    <VariantList
+                      locale={locale}
+                      productId={product._id}
+                      selectedVariant={selectedVariant}
                     />
                   </div>
                 </div>
@@ -452,17 +425,6 @@ ProductDetail.propTypes = {
     value: PropTypes.string
   }),
   t: PropTypes.func
-  //selectedVariant: PropTypes.oneOfType([
-  //  PropTypes.object,
-  //  PropTypes.bool
-  //]),
-  //permissions: PropTypes.object.isRequired,
-  //actualPrice: PropTypes.func.isRequired,
-  //onInputChange: PropTypes.func.isRequired,
-  //onInputBlur: PropTypes.func.isRequired,
-  //addToCartQuantity: PropTypes.number.isRequired,
-  //onAddToCartClick: PropTypes.func.isRequired,
-  //onAddToCartQuantityChange: PropTypes.func.isRequired,
 };
 
 export default translate("core")(DragDropContext(HTML5Backend)(ProductDetail));

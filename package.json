@@ -22,7 +22,7 @@
     "react-helmet": "^2.3.1",
     "react-i18next": "^0.1.0",
     "react-komposer": "^1.4.1",
-    "react-look": "^1.0.0",
+    "react-look": "^1.0.0-beta7",
     "react-redux": "^4.4.1",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",

@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { arrayCompare } from "../../../client/helpers/utilities";
+import { getProduct, getSelectedVariant } from "../../../client/helpers/products";
 import { replace } from "react-router-redux";
 import * as metafieldActions from "../actions/metafield";
 import * as productActions from "../actions/product";
@@ -15,34 +16,36 @@ import ProductDetail from "../components/productDetail/ProductDetail";
 // import ProductNotFound from "../../layout/components/ProductNotFound";
 // import NotFound from "../../layout/components/NotFound";
 
-const { Products, Tags } = ReactionCore.Collections;
+// const { /*Products,*/ Tags } = ReactionCore.Collections;
 
-const productFields = {
-  title: 1,
-  pageTitle: 1,
-  description: 1,
-  vendor: 1,
-  isVisible: 1,
-  hashtags: 1,
-  metafields: 1
-};
+// TODO this commented part moved to products helper;
 
-const variantFields = {};
-
-const getProduct = handle => {
-  if (!handle.match(/^[A-Za-z0-9]{17}$/)) {
-    const possibleHandle = handle.toLowerCase();
-    return Products.findOne({ handle: possibleHandle }, { fields: productFields });
-  }
-  return Products.findOne({ _id: handle }, { fields: productFields });
-};
-
-const getSelectedVariant = variantId => {
-  if (variantId) {
-    return Products.findOne({ _id: variantId }, { fields: variantFields });
-  }
-  return {};
-};
+// const productFields = {
+//   title: 1,
+//   pageTitle: 1,
+//   description: 1,
+//   vendor: 1,
+//   isVisible: 1,
+//   hashtags: 1,
+//   metafields: 1
+// };
+//
+// const variantFields = {};
+//
+// const getProduct = handle => {
+//   if (!handle.match(/^[A-Za-z0-9]{17}$/)) {
+//     const possibleHandle = handle.toLowerCase();
+//     return Products.findOne({ handle: possibleHandle }, { fields: productFields });
+//   }
+//   return Products.findOne({ _id: handle }, { fields: productFields });
+// };
+//
+// const getSelectedVariant = variantId => {
+//   if (variantId) {
+//     return Products.findOne({ _id: variantId }, { fields: variantFields });
+//   }
+//   return {};
+// };
 
 /**
  * getTags
@@ -53,7 +56,9 @@ const getSelectedVariant = variantId => {
 const getTags = product => {
   if (product) {
     if (product.hashtags) {
-      return product.hashtags.map(id => Tags.findOne({ _id: id }, {
+      return product.hashtags.map(id => ReactionCore.Collections.Tags.findOne({
+        _id: id
+      }, {
         fields: {
           name: 1,
           slug: 1
@@ -159,7 +164,7 @@ ProductDetailContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     locale: state.layout.locale,
-    //productId: state.shop.product.productId,
+    // productId: state.shop.product.productId,
     variantId: state.shop.product.ids.variantId,
     productState: state.shop.product.fields,
     newTag: state.shop.product.newTag,
@@ -178,8 +183,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  //const mediaHandle = Meteor.subscribe("Media");
-  //const productsHandle = Meteor.subscribe("Product", props.params.handle);
+  // const mediaHandle = Meteor.subscribe("Media");
+  // const productsHandle = Meteor.subscribe("Product", props.params.handle);
   if (Meteor.subscribe("Product", props.params.handle).ready() &&
     ReactionCore.Subscriptions.Tags.ready()) {
     const product = getProduct(props.params.handle);
