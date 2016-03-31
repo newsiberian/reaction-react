@@ -5,7 +5,7 @@ import Root from "./containers/Root";
 import configureStore from "./store";
 import i18next from "../client/helpers/i18n";
 import { I18nextProvider } from "react-i18next/lib";
-import { LookRoot, Presets } from "react-look";
+import { DynamicPrefixer, LookRoot, Presets } from "react-look";
 import injectTapEventPlugin from "react-tap-event-plugin";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
 
@@ -21,9 +21,12 @@ Meteor.startup(() => {
   root.setAttribute("id", "root");
   document.body.appendChild(root);
 
+  const config = Presets["react-dom"];
+  config.prefixer = new DynamicPrefixer({userAgent: navigator.userAgent});
+
   render(
     <I18nextProvider i18n={i18next}>
-      <LookRoot config={Presets["react-dom"]}>
+      <LookRoot config={config}>
         <Root store={store} />
       </LookRoot>
     </I18nextProvider>,

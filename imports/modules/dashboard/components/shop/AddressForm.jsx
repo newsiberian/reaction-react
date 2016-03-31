@@ -143,10 +143,10 @@ class AddressForm extends Component {
 
 AddressForm.propTypes = {
   fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 export default translate("core")(reduxForm({

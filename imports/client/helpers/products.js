@@ -100,6 +100,49 @@ export const getTopVariants = id => ReactionCore.getTopVariants(id);
 export const getVariants = (id, type) => ReactionCore.getVariants(id, type);
 
 /**
+ * getChildVariants
+ * @summary get a list of children for variant
+ * @param {String} productId - product _id
+ * @param {Object} parentVariant - could be current selected variant or just
+ * one of the top level variants
+ * @return {Array} with children variants data
+ */
+export const getChildVariants = (productId, parentVariant) => {
+  const childVariants = [];
+  const variants = getVariants(productId);
+  if (variants.length) {
+    const current = parentVariant;
+
+    if (!current || typeof current._id !== "string") {
+      return;
+    }
+
+    if (current.ancestors.length === 1) {
+      variants.forEach(variant => {
+        if (typeof variant.ancestors[1] === "string" &&
+          variant.ancestors[1] === current._id &&
+          variant.optionTitle &&
+          variant.type !== "inventory") {
+          childVariants.push(variant);
+        }
+      });
+    } else {
+      // TODO not sure we need this part...
+      variants.forEach(variant => {
+        if (typeof variant.ancestors[1] === "string" &&
+          variant.ancestors.length === current.ancestors.length &&
+          variant.ancestors[1] === current.ancestors[1] &&
+          variant.optionTitle) {
+          childVariants.push(variant);
+        }
+      });
+    }
+
+    return childVariants;
+  }
+};
+
+/**
  * getTag
  * @summary This needed for naming `positions` object. Method could return `tag`
  * route name or shop name as default name.

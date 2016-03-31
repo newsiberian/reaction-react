@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import update from "react/lib/update";
 import * as types from "../constants";
+import topVariantsArray from "./variants";
 
 const idsInitialState = {
   productId: null,
@@ -34,6 +35,7 @@ function ids(state = idsInitialState, action) {
       productId: action.productId
     });
   case types.SET_VARIANT_ID:
+  case types.CHANGE_SELECTED_VARIANT_ID:
     return Object.assign({}, state, {
       variantId: action.variantId
     });
@@ -45,14 +47,14 @@ function ids(state = idsInitialState, action) {
 // PDP reducer
 function fields(state = fieldsInitialState, action) {
   switch (action.type) {
-  case types.SET_PRODUCT_ID:
-    return Object.assign({}, state, {
-      productId: action.productId
-    });
-  case types.SET_VARIANT_ID:
-    return Object.assign({}, state, {
-      variantId: action.variantId
-    });
+  // case types.SET_PRODUCT_ID:
+  //   return Object.assign({}, state, {
+  //     productId: action.productId
+  //   });
+  // case types.SET_VARIANT_ID:
+  //   return Object.assign({}, state, {
+  //     variantId: action.variantId
+  //   });
   case types.UPDATE_PRODUCT_FIELD:
     return Object.assign({}, state, {
       [action.field]: {
@@ -142,5 +144,6 @@ export default combineReducers({
   fields,
   mediaIdsArray,
   newTag,
-  tagsIdsArray
+  tagsIdsArray,
+  topVariantsArray
 });

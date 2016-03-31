@@ -39,6 +39,10 @@ export const setVariantId = (productId, variantId) => {
   return { type: types.SET_VARIANT_ID, variantId };
 };
 
+export const changeSelectedVariantId = variantId => {
+  return { type: types.CHANGE_SELECTED_VARIANT_ID, variantId };
+};
+
 /**
  * validateBeforeToggleVisibility
  * @summary validate product document before fire toggle product visibility
@@ -235,6 +239,7 @@ export const updateProductWeight = (products, weight, tag) => {
 /**
  * changeProductField
  * @summary this calls on product field change event
+ * @deprecated
  * @param {String} productId
  * @param {String} field
  * @param {String} value
@@ -250,9 +255,10 @@ export const changeProductField = (productId, field, value) => {
  * @param productId
  * @param field
  * @param value
+ * @param {String} [type] - type of product
  * @return {Function}
  */
-export const updateProductField = (productId, field, value) => {
+export const updateProductField = (productId, field, value, type = "product") => {
   return dispatch => {
     Meteor.call("products/updateProductField", productId, field, value,
       (error, result) => {
@@ -265,7 +271,7 @@ export const updateProductField = (productId, field, value) => {
           }
           dispatch(displayAlert({ message: message }));
         }
-        if (result && field === "title") {
+        if (result && field === "title" && type !== "variant") {
           Meteor.call("products/setHandle", productId, (err, res) => {
             if (err) {
               dispatch(displayAlert({ message: err.reason }));

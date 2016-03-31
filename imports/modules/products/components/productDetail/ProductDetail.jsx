@@ -19,7 +19,8 @@ import ProductMetaField from "./attributes/ProductMetaField";
 import Description from "./edit/Description.jsx";
 import ProductSocial from "./ProductSocial";
 import CartAddButton from "./CartAddButton";
-import VariantList from "./variants/VariantList";
+// import VariantList from "./variants/VariantList";
+import ProductVariantListContainer from "../../containers/ProductVariantListContainer.jsx";
 import styles, { editStyles, priceStyle } from "../../styles/productDetail";
 
 const c = StyleSheet.combineStyles;
@@ -126,7 +127,7 @@ class ProductDetail extends Component {
   }
 
   renderFieldComponent(options, index = 1) {
-    const { product, productActions, productState } = this.props;
+    const { product, productActions, fields } = this.props;
     if (ReactionCore.hasPermission("createProduct")) {
       return (
         <ProductDetailEdit
@@ -135,7 +136,7 @@ class ProductDetail extends Component {
           options={options}
           product={product}
           productActions={productActions}
-          productState={productState}
+          fields={fields}
         />);
     }
 
@@ -207,7 +208,7 @@ class ProductDetail extends Component {
 
   render() {
     const {
-      locale, product, productActions, productState, selectedVariant, t
+      locale, product, productActions, fields, selectedVariant, t
     } = this.props;
 
     // caching permission check
@@ -253,28 +254,31 @@ class ProductDetail extends Component {
                   <h3>{t("productDetail.details")}</h3>}
                 {this.renderMetaComponent()}
               </div>
-              <div className="col-xs-12 col-sm-7">
-                <div>
-                  {/* Price Fixation */}
-                  <span itemProp="price" className={priceStyle}>
-                    {formatPrice(actualPrice(selectedVariant, product._id), locale)}
-                  </span>
 
-                  {/* Vendor */}
-                  <div itemProp="manufacturer">
-                    {product.vendor && `${t("productDetailEdit.vendor")}: `}
-                    {this.renderFieldComponent(getOptions("vendor", product))}
+              <div className="col-sm-7">
+                <div className="row">
+                  <div className="col-xs-10">
+                    {/* Price Fixation */}
+                    <span itemProp="price" className={priceStyle}>
+                      {formatPrice(actualPrice(selectedVariant, product._id), locale)}
+                    </span>
+
+                    {/* Vendor */}
+                    <div itemProp="manufacturer">
+                      {product.vendor && `${t("productDetailEdit.vendor")}: `}
+                      {this.renderFieldComponent(getOptions("vendor", product))}
+                    </div>
+
+                  {/* Social Commentary */}
+                  {/* TODO fix following code */}
+                  {/*isAdmin ? this.renderProductSocialManage() :
+                    <ProductSocial />
+                  */}
                   </div>
-
-                 {/* Social Commentary */}
-                 {/* TODO fix following code */}
-                 {/*isAdmin ? this.renderProductSocialManage() :
-                   <ProductSocial />
-                 */}
                 </div>
 
                 {/* Main product information */}
-                <div>
+                <div className="col-md-11">
                   {/* Description */}
                   <div
                     className={isAdmin ? // styles from Editor
@@ -285,7 +289,7 @@ class ProductDetail extends Component {
                     <Description
                       productId={product._id}
                       description={product.description}
-                      descriptionState={productState.description}
+                      descriptionState={fields.description}
                       rollbackFieldState={productActions.rollbackFieldState}
                       updateProductField={productActions.updateProductField}
                     />
@@ -294,7 +298,7 @@ class ProductDetail extends Component {
                   {/* Variants & Options */}
                   <div>
                     <h3>{t("productDetail.options")}</h3>
-                    <VariantList
+                    <ProductVariantListContainer
                       locale={locale}
                       productId={product._id}
                       selectedVariant={selectedVariant}
@@ -392,13 +396,11 @@ ProductDetail.propTypes = {
     rollbackFieldState: PropTypes.func,
     validateBeforeToggleVisibility: PropTypes.func
   }).isRequired,
-  productState: PropTypes.shape({ // product state from `store`
+  fields: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
     pageTitle: PropTypes.object,
     vendor: PropTypes.object,
-    description: PropTypes.object,
-    productId: PropTypes.string,
-    variantId: PropTypes.string
+    description: PropTypes.object
   }),
   tags: PropTypes.arrayOf(PropTypes.object),
   tagActions: PropTypes.shape({

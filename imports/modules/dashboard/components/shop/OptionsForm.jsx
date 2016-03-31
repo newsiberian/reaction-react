@@ -79,7 +79,7 @@ OptionsForm.propTypes = {
     submitForm: PropTypes.func
   }).isRequired,
   packageId: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 //export default translate("core")(reduxForm({

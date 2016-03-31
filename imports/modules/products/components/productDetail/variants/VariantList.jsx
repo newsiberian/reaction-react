@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { getVariants, getVariantQuantity, getTopVariants } from "../../../../../client/helpers/products";
+import { getVariantQuantity, getTopVariants, getChildVariants } from "../../../../../client/helpers/products";
 import Variant from "./Variant.jsx";
 import FlatButton from "material-ui/lib/flat-button";
 import ContentAdd from "material-ui/lib/svg-icons/content/add";
@@ -10,8 +10,7 @@ const styles = {
   list: {
     paddingLeft: 0,
     listStyle: "none",
-    marginBottom: ".5rem",
-    position: "relative"
+    marginBottom: ".5rem"
   }
 };
 
@@ -46,57 +45,31 @@ const getProductTopVariants = productId => {
   }
 };
 
-const getChildVariants = (productId, selectedVariant) => {
-  const childVariants = [];
-  const variants = getVariants(productId);
-  if (variants.length) {
-    const current = selectedVariant;
-
-    if (typeof current._id !== "string") {
-      return;
-    }
-
-    if (current.ancestors.length === 1) {
-      variants.forEach(variant => {
-        if (typeof variant.ancestors[1] === "string" &&
-          variant.ancestors[1] === current._id &&
-          variant.optionTitle &&
-          variant.type !== "inventory") {
-          childVariants.push(variant);
-        }
-      });
-    } else {
-      // TODO not sure we need this part...
-      variants.forEach(variant => {
-        if (typeof variant.ancestors[1] === "string" &&
-          variant.ancestors.length === current.ancestors.length &&
-          variant.ancestors[1] === current.ancestors[1] &&
-          variant.optionTitle) {
-          childVariants.push(variant);
-        }
-      });
-    }
-
-    return childVariants;
-  }
-};
-
 class VariantList extends Component {
   render() {
     // TODO we need to not show part of variant UI if there is only one top-level
     // variant presents
-    const { locale, productId, selectedVariant, t } = this.props;
+    const {
+      locale, productId, productActions, selectedVariant, t, topVariantsArray,
+      variantsActions
+    } = this.props;
     const variants = getProductTopVariants(productId);
     const childVariants = getChildVariants(productId, selectedVariant);
 
     return (
       <ul style={styles.list} >
-        {variants.length ? variants.map(variant => (
+        {variants.length ? topVariantsArray.map((variant, index) => (
           <Variant
             key={variant._id}
+            // `topVariants` could be empty on page startup
+            // formVisible={topVariants[variant._id] && topVariants[variant._id].visible}
+            formVisible={variant.visible}
             locale={locale}
-            variant={variant}
+            productId={productId}
+            productActions={productActions}
             selectedVariant={selectedVariant}
+            variant={variants[index]}
+            variantsActions={variantsActions}
           />
         )) :
         ReactionCore.hasPermission("createProduct") &&
@@ -117,8 +90,20 @@ VariantList.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   productId: PropTypes.string.isRequired,
+  productActions: PropTypes.shape({
+    changeSelectedVariantId: PropTypes.func,
+    updateProductField: PropTypes.func
+  }).isRequired,
   selectedVariant: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
+  topVariantsArray: PropTypes.arrayOf(PropTypes.object),
+  variantsActions: PropTypes.shape({
+    changeVariantFormVisibility: PropTypes.func,
+    createChildVariant: PropTypes.func,
+    cloneVariant: PropTypes.func,
+    deleteVariant: PropTypes.func,
+    getTopVariants: PropTypes.func
+  }).isRequired
 };
 
 export default translate("core")(VariantList);

@@ -103,7 +103,7 @@ class CommentEditor extends Component {
     // admin should always have an Editor controls
     const isAdmin = ReactionCore.hasPermission("manageComments");
     return (
-      <form onSubmit={handleSubmit(this.handleSubmit)}>
+        <form onSubmit={handleSubmit(this.handleSubmit)}>
         {/* Controls */}
         {(!isReply || isAdmin) &&
           <CardActions>

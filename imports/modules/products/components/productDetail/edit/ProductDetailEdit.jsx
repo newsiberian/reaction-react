@@ -8,7 +8,7 @@ const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
   onChange: {
     backgroundColor: props => {
-      if (props.productState[props.options.field].isChanged) {
+      if (props.fields[props.options.field].isChanged) {
         // fires effect rollback
         setTimeout(() => {
           props.productActions.rollbackFieldState(props.options.field);
@@ -24,8 +24,8 @@ class ProductDetailEdit extends Component {
   shouldComponentUpdate(nextProps) {
     return nextProps.product[this.props.options.field] !==
       this.props.product[this.props.options.field] ||
-      nextProps.productState[this.props.options.field] !==
-      this.props.productState[this.props.options.field];
+      nextProps.fields[this.props.options.field] !==
+      this.props.fields[this.props.options.field];
   }
 
   handleChange(event, field) {
@@ -72,7 +72,7 @@ ProductDetailEdit.propTypes = {
     updateProductField: PropTypes.func,
     rollbackFieldState: PropTypes.func
   }).isRequired,
-  productState: PropTypes.shape({ // product state from `store`
+  fields: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
     pageTitle: PropTypes.object,
     vendor: PropTypes.object,

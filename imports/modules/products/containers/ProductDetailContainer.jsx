@@ -125,13 +125,11 @@ ProductDetailContainer.propTypes = {
   }).isRequired,
   params: PropTypes.object.isRequired, // TODO why it is here?
   product: PropTypes.object.isRequired,
-  productState: PropTypes.shape({ // product state from `store`
+  fields: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
     pageTitle: PropTypes.object,
     vendor: PropTypes.object,
-    description: PropTypes.object,
-    productId: PropTypes.string,
-    variantId: PropTypes.string
+    description: PropTypes.object
   }),
   selectedVariant: PropTypes.object,
   tags: PropTypes.arrayOf(PropTypes.object),
@@ -166,7 +164,7 @@ function mapStateToProps(state) {
     locale: state.layout.locale,
     // productId: state.shop.product.productId,
     variantId: state.shop.product.ids.variantId,
-    productState: state.shop.product.fields,
+    fields: state.shop.product.fields,
     newTag: state.shop.product.newTag,
     tagsIdsArray: state.shop.product.tagsIdsArray,
     newMetafield: state.shop.product.newMetafield
@@ -193,10 +191,9 @@ function composer(props, onData) {
     // or undefined to `onData` object
     let selectedVariant = {};
     // variant could be undefined if product doesn't have variants
-    if (typeof props.productState.variantId === "string") {
-      selectedVariant = getSelectedVariant(props.productState.variantId);
+    if (typeof props.variantId === "string") {
+      selectedVariant = getSelectedVariant(props.variantId);
     }
-    // const locale = ReactionCore.Locale;
     onData(null, {
       product,
       selectedVariant,

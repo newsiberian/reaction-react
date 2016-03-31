@@ -218,7 +218,7 @@ Settings.propTypes = {
     toggleCard: PropTypes.func
   }).isRequired,
   shopData: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 const options = {
