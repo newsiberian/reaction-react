@@ -12,7 +12,9 @@ const styles = StyleSheet.create({
   images: {
     textAlign: "center"
   },
-  bigImage: {},
+  bigImage: {
+    width: "100%"
+  },
   dropzone: { // taken from SUI "ui basic button"
     display: "inline-block",
     cursor: "pointer",
