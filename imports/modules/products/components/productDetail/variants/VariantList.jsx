@@ -68,37 +68,43 @@ class VariantList extends Component {
     } = this.props;
     const topVariants = getProductTopVariants(productId);
     const childVariants = getChildVariants(productId, selectedVariant);
-
+    const isAdmin = ReactionCore.hasPermission("createProduct");
+    const oneVariantCase = !isAdmin &&
+      topVariants.length === 1;
     return (
       <div>
-        <ul style={styles.list} >
-          {topVariants.length && topVariantsArray.length ?
-            topVariantsArray.map((variant, index) => (
-              <Variant
-                // using `variant._id` as `key` leads to an error about unique key,
-                // so we are using `index`
-                key={index}
-                formVisible={variant.visible}
-                locale={locale}
-                productId={productId}
-                productActions={productActions}
-                selectedVariant={selectedVariant}
-                variant={topVariants[index]}
-                variantsActions={variantsActions}
-                displayAlert={displayAlert}
-              />
-            )) :
-            ReactionCore.hasPermission("createProduct") &&
-              <FlatButton
-                label={t("variantList.createVariant")}
-                icon={<ContentAdd />}
-                onTouchTap={() => variantsActions.createTopVariant(productId)}
-              />
-          }
-        </ul>
+        {!oneVariantCase &&
+          <ul style={styles.list}>
+            {topVariants.length && topVariantsArray.length ?
+              topVariantsArray.map((variant, index) => (
+                <Variant
+                  // using `variant._id` as `key` leads to an error about unique
+                  // key, so we are using `index`
+                  key={index}
+                  formVisible={variant.visible}
+                  locale={locale}
+                  productId={productId}
+                  productActions={productActions}
+                  selectedVariant={selectedVariant}
+                  variant={topVariants[index]}
+                  variantsActions={variantsActions}
+                  displayAlert={displayAlert}
+                />
+              )) :
+            isAdmin &&
+            <FlatButton
+              label={t("variantList.createVariant")}
+              icon={<ContentAdd />}
+              onTouchTap={() => variantsActions.createTopVariant(productId)}
+            />
+            }
+          </ul>
+        }
         {Boolean(childVariants && childVariants.length) &&
           <div>
-            <Subheader>{t("variantList.moreOptions")}</Subheader>
+            {!oneVariantCase &&
+              <Subheader>{t("variantList.moreOptions")}</Subheader>
+            }
             {childVariants.map(childVariant =>
               <FlatButton
                 key={childVariant._id}

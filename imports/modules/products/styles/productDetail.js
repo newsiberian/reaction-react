@@ -108,5 +108,5 @@ export const numberPickerStyle = StyleSheet.create({
 
 export const priceStyle = StyleSheet.create({
   fontWeight: "bold",
-  fontSize: "3.5rem"
+  fontSize: "6vmin" // "3.5rem"
 });

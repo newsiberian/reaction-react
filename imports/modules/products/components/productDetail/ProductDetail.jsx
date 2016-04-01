@@ -208,11 +208,14 @@ class ProductDetail extends Component {
 
   render() {
     const {
-      locale, product, productActions, fields, selectedVariant, t
+      locale, product, productActions, fields, selectedVariant, t, allVariants
     } = this.props;
 
     // caching permission check
     const isAdmin = ReactionCore.hasPermission("createProduct");
+    // we want to hide "Options" header and top variant element for the customers
+    // if only one variant exists
+    const notDisplayOptionsHeader = !isAdmin && allVariants.length === 1;
     console.log("ProductDetail: rendering...");
     return (
       <section className="container-fluid" style={styles.container}>
@@ -257,7 +260,7 @@ class ProductDetail extends Component {
 
               <div className="col-sm-7">
                 <div className="row">
-                  <div className="col-xs-10">
+                  <div className="col-xs-12">
                     {/* Price Fixation */}
                     <span itemProp="price" className={priceStyle}>
                       {formatPrice(actualPrice(selectedVariant, product._id), locale)}
@@ -297,7 +300,7 @@ class ProductDetail extends Component {
 
                   {/* Variants & Options */}
                   <div>
-                    <h3>{t("productDetail.options")}</h3>
+                    {!notDisplayOptionsHeader && <h3>{t("productDetail.options")}</h3>}
                     <ProductVariantListContainer
                       locale={locale}
                       productId={product._id}
@@ -387,6 +390,7 @@ ProductDetail.propTypes = {
   }).isRequired,
   product: PropTypes.object.isRequired,
   selectedVariant: PropTypes.object,
+  allVariants: PropTypes.arrayOf(PropTypes.object),
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
     setVariantId: PropTypes.func,

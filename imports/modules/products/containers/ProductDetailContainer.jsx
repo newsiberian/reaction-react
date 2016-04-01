@@ -132,6 +132,7 @@ ProductDetailContainer.propTypes = {
     description: PropTypes.object
   }),
   selectedVariant: PropTypes.object,
+  allVariants: PropTypes.arrayOf(PropTypes.object),
   tags: PropTypes.arrayOf(PropTypes.object),
   tagActions: PropTypes.shape({
     changeTag: PropTypes.func,
@@ -196,12 +197,15 @@ function composer(props, onData) {
     }
     // We don't use this variable, but it is needed to make all childVariants
     // reactive.
+    // We reuse this for checking how much variants product has for displaying
+    // or not "Options" title
     const allVariants = ReactionCore.Collections.Products.find({
       ancestors: { $in: [product._id] }
-    }).fetch();
+    }, { fields: { _id: 1 } }).fetch();
     onData(null, {
       product,
       selectedVariant,
+      allVariants,
       tags
     });
   }
