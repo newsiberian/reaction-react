@@ -8,7 +8,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 import FontIcon from "material-ui/lib/font-icon";
 import Paper from "material-ui/lib/paper";
 import { formatPrice } from "../../../../client/helpers/i18n";
-import { getVariants, getProductPriceRange } from "../../../../client/helpers/products";
+import { getVariants, getVariantPriceRange } from "../../../../client/helpers/products";
 import ProductImageGalleryContainer from "../../containers/ProductImageGalleryContainer";
 import CommentsContainer from "../../../comments/containers/CommentsContainer.jsx";
 import ProductDetailEdit from "./edit/ProductDetailEdit";
@@ -17,9 +17,8 @@ import ProductDetailTags from "./tags/ProductDetailTags";
 import ProductMetaFieldForms from "./attributes/ProductMetaFieldForms";
 import ProductMetaField from "./attributes/ProductMetaField";
 import Description from "./edit/Description.jsx";
-import ProductSocial from "./ProductSocial";
-import CartAddButton from "./CartAddButton";
-// import VariantList from "./variants/VariantList";
+// import ProductSocial from "./ProductSocial";
+// import CartAddButton from "./CartAddButton";
 import ProductVariantListContainer from "../../containers/ProductVariantListContainer.jsx";
 import styles, { editStyles, priceStyle } from "../../styles/productDetail";
 
@@ -73,13 +72,13 @@ const social = [
   }
 ];
 
-const actualPrice = (current, productId) => {
+const actualPrice = (current) => {
   if (current && typeof current._id === "string") {
     const childVariants = getVariants(current._id);
     if (childVariants.length === 0) {
       return current.price;
     }
-    return getProductPriceRange(productId).range;
+    return getVariantPriceRange(current._id);
   }
 };
 
