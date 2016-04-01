@@ -4,6 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { getVariantQuantity, getTopVariants, getChildVariants } from "../../../../../client/helpers/products";
 import Variant from "./Variant.jsx";
 import FlatButton from "material-ui/lib/flat-button";
+import Subheader from "material-ui/lib/Subheader";
 import ContentAdd from "material-ui/lib/svg-icons/content/add";
 
 const styles = {
@@ -11,6 +12,13 @@ const styles = {
     paddingLeft: 0,
     listStyle: "none",
     marginBottom: ".5rem"
+  },
+  selectedChildVariant: {
+    backgroundColor: "#E3E3E3",
+    margin: "0 0.25rem 1rem"
+  },
+  childVariantButton: {
+    margin: "0 0.25rem 1rem"
   }
 };
 
@@ -21,14 +29,14 @@ const getProductTopVariants = productId => {
   if (variants.length) {
     // calculate inventory total for all variants
     variants.forEach(variant => {
-      let qty = getVariantQuantity(variant);
+      const qty = getVariantQuantity(variant);
       if (typeof qty === "number") {
         inventoryTotal += qty;
       }
     });
     // calculate percentage of total inventory of this product
     variants.forEach(variant => {
-      let qty = getVariantQuantity(variant);
+      const qty = getVariantQuantity(variant);
       variant.inventoryTotal = inventoryTotal;
       if (inventoryTotal) {
         variant.inventoryPercentage = parseInt(qty / inventoryTotal * 100, 10);
@@ -62,31 +70,51 @@ class VariantList extends Component {
     const childVariants = getChildVariants(productId, selectedVariant);
 
     return (
-      <ul style={styles.list} >
-        {topVariants.length && topVariantsArray.length ?
-          topVariantsArray.map((variant, index) => (
-            <Variant
-              // using `variant._id` as `key` leads to an error about unique key,
-              // so we are using `index`
-              key={index}
-              formVisible={variant.visible}
-              locale={locale}
-              productId={productId}
-              productActions={productActions}
-              selectedVariant={selectedVariant}
-              variant={topVariants[index]}
-              variantsActions={variantsActions}
-              displayAlert={displayAlert}
-            />
-          )) :
-          ReactionCore.hasPermission("createProduct") &&
-            <FlatButton
-              label={t("variantList.createVariant")}
-              icon={<ContentAdd />}
-              onTouchTap={() => variantsActions.createTopVariant(productId)}
-            />
+      <div>
+        <ul style={styles.list} >
+          {topVariants.length && topVariantsArray.length ?
+            topVariantsArray.map((variant, index) => (
+              <Variant
+                // using `variant._id` as `key` leads to an error about unique key,
+                // so we are using `index`
+                key={index}
+                formVisible={variant.visible}
+                locale={locale}
+                productId={productId}
+                productActions={productActions}
+                selectedVariant={selectedVariant}
+                variant={topVariants[index]}
+                variantsActions={variantsActions}
+                displayAlert={displayAlert}
+              />
+            )) :
+            ReactionCore.hasPermission("createProduct") &&
+              <FlatButton
+                label={t("variantList.createVariant")}
+                icon={<ContentAdd />}
+                onTouchTap={() => variantsActions.createTopVariant(productId)}
+              />
+          }
+        </ul>
+        {Boolean(childVariants && childVariants.length) &&
+          <div>
+            <Subheader>{t("variantList.moreOptions")}</Subheader>
+            {childVariants.map(childVariant =>
+              <FlatButton
+                key={childVariant._id}
+                // backgroundColor="#E3E3E3"
+                // hoverColor="#D0D0D0"
+                label={childVariant.title}
+                onTouchTap={() =>
+                  productActions.changeSelectedVariantId(childVariant._id)}
+                // child variants also could be selected
+                style={Boolean(selectedVariant._id === childVariant._id) ?
+                  styles.selectedChildVariant : styles.childVariantButton}
+              />
+            )}
+          </div>
         }
-      </ul>
+      </div>
     );
   }
 }
