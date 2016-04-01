@@ -275,7 +275,7 @@ VariantForm.propTypes = {
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func,
+    getTopVariantsArray: PropTypes.func,
     syncWithTitle: PropTypes.func
   }).isRequired
 };

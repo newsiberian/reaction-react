@@ -6,23 +6,12 @@ import { getSlug } from "../../../client/helpers/products";
 import i18next from "i18next";
 
 /**
- * getTopVariants
+ * getTopVariantsArray
  * @summary we need to have a state of variantForms opened/closed state.
  * @param {Array} variantsArray
  * @return {{type, variants: Array}}
  */
-// export const getTopVariants = variantsArray => {
-//   return dispatch => {
-//     let variants = {};
-//     variantsArray.forEach(variant => {
-//       variants[variant._id] = {
-//         visible: false
-//       };
-//     });
-//     dispatch({ type: types.GET_TOP_VARIANTS, variants });
-//   };
-// };
-export const getTopVariants = variantsArray => {
+export const getTopVariantsArray = variantsArray => {
   return dispatch => {
     const variants = variantsArray.map(variant => ({
       _id: variant._id,
@@ -43,6 +32,35 @@ export const removeTopVariant = variantId => {
 export const changeVariantFormVisibility = variantId => {
   return dispatch => {
     dispatch({ type: types.CHANGE_VARIANT_FORM_VISIBILITY, variantId });
+  };
+};
+
+/**
+ * createTopVariant
+ * @summary call `products/createVariant` method. This actionCreators call is
+ * not reactive for the third user and this is fine. We don't have to do all our
+ * actions reactive
+ * @param {String} productId - product _id
+ * @return {function()}
+ */
+export const createTopVariant = productId => {
+  return dispatch => {
+    Meteor.call("products/createVariant", productId, (err, res) => {
+      if (err) {
+        displayAlert({ message: err.message });
+      }
+      if (res) {
+        dispatch({
+          type: types.CREATE_TOP_VARIANT,
+          productId: productId,
+          newTopVariantId: res
+        });
+        // new variant should be consistent to component state
+        dispatch(addTopVariant(res));
+        // and it should be selected
+        dispatch(setVariantId(productId));
+      }
+    });
   };
 };
 

@@ -2,50 +2,23 @@ import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 // import { composeWithTracker } from "react-komposer";
-import { ReactionCore } from "meteor/reactioncommerce:core";
-import { getVariantQuantity, getTopVariants } from "../../../client/helpers/products";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
+import { getTopVariants } from "../../../client/helpers/products";
 import * as variantsActions from "../actions/variants";
 import * as productActions from "../actions/product";
 import { displayAlert } from "../../layout/actions/alert";
 import VariantList from "../components/productDetail/variants/VariantList.jsx";
-import Loading from "../../layout/components/Loading";
+// import Loading from "../../layout/components/Loading";
 
-const getProductTopVariants = productId => {
-  let inventoryTotal = 0;
-  const variants = getTopVariants(productId);
-
-  if (variants.length > 0) {
-    // calculate inventory total for all variants
-    variants.forEach(variant => {
-      let qty = getVariantQuantity(variant);
-      if (typeof qty === "number") {
-        inventoryTotal += qty;
-      }
-    });
-    // calculate percentage of total inventory of this product
-    variants.forEach(variant => {
-      let qty = getVariantQuantity(variant);
-      variant.inventoryTotal = inventoryTotal;
-      variant.inventoryPercentage = parseInt(qty / inventoryTotal * 100, 10);
-      if (variant.title) {
-        variant.inventoryWidth = parseInt(variant.inventoryPercentage -
-          variant.title.length, 10);
-      } else {
-        variant.inventoryWidth = 0;
-      }
-    });
-    // sort variants in correct order
-    variants.sort((a, b) => a.index - b.index);
-
-    return variants;
-  }
-};
-
-// const ProductVariantListContainer = props => <VariantList {...props} />;
 class ProductVariantListContainer extends Component {
   componentWillMount() {
     // fill the store with the list of top variants
-    this.props.variantsActions.getTopVariants(getProductTopVariants(this.props.productId));
+    const topVariants = getTopVariants(this.props.productId);
+    if (topVariants.length) {
+      // sort variants in correct order
+      topVariants.sort((a, b) => a.index - b.index);
+      this.props.variantsActions.getTopVariantsArray(topVariants);
+    }
   }
 
   render() {
@@ -65,10 +38,11 @@ ProductVariantListContainer.propTypes = {
   topVariantsArray: PropTypes.arrayOf(PropTypes.object),
   variantsActions: PropTypes.shape({
     changeVariantFormVisibility: PropTypes.func,
+    createTopVariant: PropTypes.func,
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func,
+    getTopVariantsArray: PropTypes.func,
     syncWithTitle: PropTypes.func
   }).isRequired
 };

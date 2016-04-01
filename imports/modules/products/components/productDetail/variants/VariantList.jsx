@@ -18,7 +18,7 @@ const getProductTopVariants = productId => {
   let inventoryTotal = 0;
   const variants = getTopVariants(productId);
 
-  if (variants.length > 0) {
+  if (variants.length) {
     // calculate inventory total for all variants
     variants.forEach(variant => {
       let qty = getVariantQuantity(variant);
@@ -30,7 +30,11 @@ const getProductTopVariants = productId => {
     variants.forEach(variant => {
       let qty = getVariantQuantity(variant);
       variant.inventoryTotal = inventoryTotal;
-      variant.inventoryPercentage = parseInt(qty / inventoryTotal * 100, 10);
+      if (inventoryTotal) {
+        variant.inventoryPercentage = parseInt(qty / inventoryTotal * 100, 10);
+      } else {
+        variant.inventoryPercentage = 100;
+      }
       if (variant.title) {
         variant.inventoryWidth = parseInt(variant.inventoryPercentage -
           variant.title.length, 10);
@@ -43,6 +47,7 @@ const getProductTopVariants = productId => {
 
     return variants;
   }
+  return [];
 };
 
 class VariantList extends Component {
@@ -53,31 +58,34 @@ class VariantList extends Component {
       locale, productId, productActions, selectedVariant, t, topVariantsArray,
       variantsActions, displayAlert
     } = this.props;
-    const variants = getProductTopVariants(productId);
+    const topVariants = getProductTopVariants(productId);
     const childVariants = getChildVariants(productId, selectedVariant);
 
     return (
       <ul style={styles.list} >
-        {variants.length ? topVariantsArray.map((variant, index) => (
-          <Variant
-            // using `variant._id` as `key` leads to an error about unique key,
-            // so we are using `index`
-            key={index}
-            formVisible={variant.visible}
-            locale={locale}
-            productId={productId}
-            productActions={productActions}
-            selectedVariant={selectedVariant}
-            variant={variants[index]}
-            variantsActions={variantsActions}
-            displayAlert={displayAlert}
-          />
-        )) :
-        ReactionCore.hasPermission("createProduct") &&
-        <FlatButton
-          label={t("variantList.createVariant")}
-          icon={<ContentAdd />}
-        />}
+        {topVariants.length && topVariantsArray.length ?
+          topVariantsArray.map((variant, index) => (
+            <Variant
+              // using `variant._id` as `key` leads to an error about unique key,
+              // so we are using `index`
+              key={index}
+              formVisible={variant.visible}
+              locale={locale}
+              productId={productId}
+              productActions={productActions}
+              selectedVariant={selectedVariant}
+              variant={topVariants[index]}
+              variantsActions={variantsActions}
+              displayAlert={displayAlert}
+            />
+          )) :
+          ReactionCore.hasPermission("createProduct") &&
+            <FlatButton
+              label={t("variantList.createVariant")}
+              icon={<ContentAdd />}
+              onTouchTap={() => variantsActions.createTopVariant(productId)}
+            />
+        }
       </ul>
     );
   }
@@ -101,10 +109,11 @@ VariantList.propTypes = {
   topVariantsArray: PropTypes.arrayOf(PropTypes.object),
   variantsActions: PropTypes.shape({
     changeVariantFormVisibility: PropTypes.func,
+    createTopVariant: PropTypes.func,
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func,
+    getTopVariantsArray: PropTypes.func,
     syncWithTitle: PropTypes.func
   }).isRequired
 };
