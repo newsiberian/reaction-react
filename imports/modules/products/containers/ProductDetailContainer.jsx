@@ -194,6 +194,11 @@ function composer(props, onData) {
     if (typeof props.variantId === "string") {
       selectedVariant = getSelectedVariant(props.variantId);
     }
+    // We don't use this variable, but it is needed to make all childVariants
+    // reactive.
+    const allVariants = ReactionCore.Collections.Products.find({
+      ancestors: { $in: [product._id] }
+    }).fetch();
     onData(null, {
       product,
       selectedVariant,

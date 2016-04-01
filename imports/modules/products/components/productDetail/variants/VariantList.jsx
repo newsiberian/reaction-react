@@ -60,9 +60,9 @@ class VariantList extends Component {
       <ul style={styles.list} >
         {variants.length ? topVariantsArray.map((variant, index) => (
           <Variant
-            key={variant._id}
-            // `topVariants` could be empty on page startup
-            // formVisible={topVariants[variant._id] && topVariants[variant._id].visible}
+            // using `variant._id` as `key` leads to an error about unique key,
+            // so we are using `index`
+            key={index}
             formVisible={variant.visible}
             locale={locale}
             productId={productId}
