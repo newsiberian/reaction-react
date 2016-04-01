@@ -23,7 +23,7 @@ Package.onUse(function (api) {
   // todo do we need this?
   api.use("ejson");
   api.use("logging");
-  //api.use("reload");
+  // api.use("reload");
   api.use("check");
   api.use("aldeed:simple-schema");
   api.use("mdg:validated-method");

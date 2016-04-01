@@ -1,5 +1,5 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { TR } from "meteor/ongoworks:transliteration";
+// import { TR } from "meteor/ongoworks:transliteration";
 
 const defaultProductFields = {
   title: 1,
@@ -119,9 +119,7 @@ export const getChildVariants = (productId, parentVariant) => {
 
     if (current.ancestors.length === 1) {
       variants.forEach(variant => {
-        if (typeof variant.ancestors[1] === "string" &&
-          variant.ancestors[1] === current._id &&
-          variant.optionTitle &&
+        if (~variant.ancestors.indexOf(current._id) &&
           variant.type !== "inventory") {
           childVariants.push(variant);
         }

@@ -160,7 +160,7 @@ class Variant extends Component {
   render() {
     const {
       formVisible, locale, productId, productActions, selectedVariant, t,
-      variant, variantsActions
+      variant, variantsActions, displayAlert
     } = this.props;
     // this is used while variant is selected variant and we are removing it
     if (!variant) return null;
@@ -218,21 +218,8 @@ class Variant extends Component {
         </div>
         {formVisible &&
         <VariantForm
-          formKey={variant._id}
-          initialValues={{
-            title: variant.title,
-            weight: variant.weight,
-            inventoryQuantity: variant.inventoryQuantity,
-            price: variant.price,
-            lowInventoryWarningThreshold: variant.lowInventoryWarningThreshold,
-            taxable: variant.taxable,
-            inventoryManagement: variant.inventoryManagement,
-            inventoryPolicy: variant.inventoryPolicy
-          }}
-          onSubmit={values => variantsActions.updateVariant(
-            Object.assign({}, variant, values)
-          )}
-          childVariantsCount={childVariants.length}
+          displayAlert={displayAlert}
+          childVariants={childVariants}
           productId={productId}
           productActions={productActions}
           selectedVariant={selectedVariant}
@@ -246,6 +233,7 @@ class Variant extends Component {
 }
 
 Variant.propTypes = {
+  displayAlert: PropTypes.func,
   formVisible: PropTypes.bool.isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
@@ -266,7 +254,8 @@ Variant.propTypes = {
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func
+    getTopVariants: PropTypes.func,
+    syncWithTitle: PropTypes.func
   }).isRequired
 };
 

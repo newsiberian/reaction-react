@@ -51,7 +51,7 @@ class VariantList extends Component {
     // variant presents
     const {
       locale, productId, productActions, selectedVariant, t, topVariantsArray,
-      variantsActions
+      variantsActions, displayAlert
     } = this.props;
     const variants = getProductTopVariants(productId);
     const childVariants = getChildVariants(productId, selectedVariant);
@@ -70,6 +70,7 @@ class VariantList extends Component {
             selectedVariant={selectedVariant}
             variant={variants[index]}
             variantsActions={variantsActions}
+            displayAlert={displayAlert}
           />
         )) :
         ReactionCore.hasPermission("createProduct") &&
@@ -83,6 +84,7 @@ class VariantList extends Component {
 }
 
 VariantList.propTypes = {
+  displayAlert: PropTypes.func,
   locale: PropTypes.shape({
     currency: PropTypes.object,
     language: PropTypes.string,
@@ -102,7 +104,8 @@ VariantList.propTypes = {
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func
+    getTopVariants: PropTypes.func,
+    syncWithTitle: PropTypes.func
   }).isRequired
 };
 

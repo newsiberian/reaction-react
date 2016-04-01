@@ -2,7 +2,8 @@ export const styles = {
   wrapper: {
     display: "flex",
     height: "100vh",
-    overflow: "hidden"
+    overflow: "hidden",
+    fontFamily: '"Open Sans", "Roboto", "Helvetica Neue", Helvetica, sans-serif'
   },
   container: {
     display: "flex",

@@ -107,7 +107,6 @@ export const numberPickerStyle = StyleSheet.create({
 });
 
 export const priceStyle = StyleSheet.create({
-  fontFamily: '"Open Sans", "Roboto", "Helvetica Neue", Helvetica, sans-serif',
   fontWeight: "bold",
   fontSize: "3.5rem"
 });

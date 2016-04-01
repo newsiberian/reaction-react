@@ -60,6 +60,9 @@
         "yourCommentIsAdded": "Your comment is added.",
         "itIsWaitingForApproval": " It is waiting for approval.",
         "commentShouldNotBeEmpty": "Comment should not be empty."
+      },
+      "productVariant": {
+        "variantOptions": "Variant options"
       }
     }
   }

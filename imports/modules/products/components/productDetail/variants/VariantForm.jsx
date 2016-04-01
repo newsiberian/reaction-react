@@ -1,25 +1,14 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { reduxForm } from "redux-form";
-// import look, { StyleSheet } from "react-look";
-import i18next from "i18next";
-import { getChildVariants } from "../../../../../client/helpers/products";
+import ContentClear from "material-ui/lib/svg-icons/content/clear";
+import Divider from "material-ui/lib/divider";
+import IconButton from "material-ui/lib/icon-button";
 import FlatButton from "material-ui/lib/flat-button";
 import Paper from "material-ui/lib/paper";
 import TextField from "material-ui/lib/text-field";
-import CheckboxWrapper from "../../../../layout/components/CheckboxWrapper.jsx";
-export const fields = [
-  "title",
-  "weight",
-  "inventoryQuantity",
-  "price",
-  "lowInventoryWarningThreshold",
-  "taxable",
-  "inventoryManagement",
-  "inventoryPolicy"
-];
+import Checkbox from "material-ui/lib/checkbox";
+import Subheader from "material-ui/lib/Subheader";
 
-// const c = StyleSheet.combineStyles;
 const styles = {
   variantEditForm: {
     margin: "0px 10px 0 10px",
@@ -41,145 +30,154 @@ const styles = {
   variantControls: {
     marginTop: "1rem",
     marginBottom: ".5rem"
-  }
-};
-
-const validate = (values, props) => {
-  const errors = {};
-  const { variant, childVariantsCount } = props;
-
-  if (!values.title) {
-    errors.title = i18next.t("error.isRequired", {
-      field: i18next.t("productVariant.title")
-    });
-  }
-  // we are validating quantity only in case when management enabled and variant
-  // doesn't have child variants
-  if (variant.inventoryManagement && !childVariantsCount) {
-    if (!values.inventoryQuantity) {
-      errors.inventoryQuantity = i18next.t("error.isRequired", {
-        field: i18next.t("productVariant.inventoryQuantity")
-      });
+  },
+  divider: {
+    marginBottom: ".5rem",
+    marginLeft: "-8px",
+    marginRight: "-8px",
+    height: 2
+  },
+  table: {
+    table: {
+      width: "100%"
+    },
+    title: {
+      minWidth: 200
     }
   }
-  if (variant.inventoryManagement && !childVariantsCount) {
-    if (!values.price) {
-      errors.price = i18next.t("error.isRequired", {
-        field: i18next.t("productVariant.price")
-      });
-    }
-  }
-
-  return errors;
 };
 
 class VariantForm extends Component {
-  componentWillReceiveProps(nextProps) {
-    // @link https://github.com/erikras/redux-form/issues/362#issuecomment-164013479
-    if (nextProps.dirty && nextProps.valid) {
-      let doubleDirty = false;
-      Object.keys(nextProps.fields).forEach(key => {
-        if (nextProps.fields[key].value !== this.props.fields[key].value) {
-          doubleDirty = true;
-        }
-      });
-      if (doubleDirty) {
-        nextProps.handleSubmit();
+  /**
+   * handleBlur
+   * @summary onBlur input fields handler
+   * @param event
+   * @param {String} variantId - object with variant or option data
+   * @param {String} field - field name
+   * @param {String} type - could be "variant" or "option"
+   */
+  handleBlur(event, variantId, field, type = "variant") {
+    const { productActions, variantsActions, displayAlert, t } = this.props;
+    const value = event.target.value;
+
+    // if some of the fields become empty we send validation error
+    if (~["title", "price", "weight", "inventoryQuantity"].indexOf(field)) {
+      if (value === "") {
+        displayAlert({ message: t("error.isRequired",
+          { field: t(`productVariant.${field}`) }) });
+        return;
       }
     }
+
+    // first we need to make sync with `optionTitle` field because we not fill it
+    // manually
+    if (type === "option") {
+      variantsActions.syncWithTitle(variantId, event.target.value);
+    }
+
+    productActions.updateProductField(variantId, field, value, "variant");
   }
 
   render() {
     const {
-      fields: { title, weight, inventoryQuantity, price, lowInventoryWarningThreshold,
-      taxable, inventoryManagement, inventoryPolicy }, handleSubmit, productId,
-      selectedVariant, variant, variantsActions, t, childVariantsCount
+      productId, selectedVariant, variant, variantsActions, t, childVariants,
+      productActions
     } = this.props;
-    // const childVariants = getChildVariants(productId, variant);
+    console.log("VariantForm rendering...");
     return (
       <Paper zDepth={2} style={styles.variantEditForm}>
-        <form onSubmit={handleSubmit}>
-          <fieldset style={styles.fieldset}>
-            <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-9">
-                <div className="col-sm-12">
-                  <TextField
-                    {...title}
-                    floatingLabelText={t("productVariant.title")}
-                    fullWidth={true}
-                    errorText={title.touched && title.error}
-                  />
-                </div>
-                <div className="row">
-                  <div className="col-xs">
-                    <TextField
-                      {...weight}
-                      floatingLabelText={t("productVariant.weight")}
-                      fullWidth={true}
-                      type="number"
-                      min={0}
-                      // errorText={weight.touched && weight.error}
-                    />
-                  </div>
-                  <div className="col-xs">
-                    <TextField
-                      {...inventoryQuantity}
-                      floatingLabelText={t("productVariant.inventoryQuantity")}
-                      fullWidth={true}
-                      type="number"
-                      min={0}
-                      // we are not listen `inventoryQuantity.touched` because of
-                      // hack we using to submit this form
-                      errorText={/*inventoryQuantity.touched && */inventoryQuantity.error}
-                      disabled={Boolean(childVariantsCount)}
-                    />
-                  </div>
-                  <div className="col-xs">
-                    <TextField
-                      {...price}
-                      floatingLabelText={t("productVariant.price")}
-                      fullWidth={true}
-                      type="number"
-                      min={0}
-                      errorText={/*price.touched && */price.error}
-                      disabled={Boolean(childVariantsCount)}
-                    />
-                  </div>
-                  {variant.inventoryManagement &&
-                    <div className="col-xs">
-                      <TextField
-                        {...lowInventoryWarningThreshold}
-                        floatingLabelText={t("productVariant.lowInventoryWarningThreshold")}
-                        fullWidth={true}
-                        type="number"
-                        min={0}
-                        title={t("productVariant.lowInventoryWarningThresholdLabel")}
-                      />
-                    </div>
-                  }
-                </div>
+        <fieldset style={styles.fieldset}>
+          <div className="row">
+            <div className="col-xs-12 col-sm-12 col-md-9">
+              <div className="col-sm-12">
+                <TextField
+                  defaultValue={variant.title}
+                  floatingLabelText={t("productVariant.title")}
+                  fullWidth={true}
+                  // errorText={title.touched && title.error}
+                  onBlur={event =>
+                   this.handleBlur(event, variant._id, "title")}
+                />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3">
-                <CheckboxWrapper
-                  {...taxable}
-                  label={t("productVariant.taxable")}
-                />
-                <CheckboxWrapper
-                  {...inventoryManagement}
-                  label={t("productVariant.inventoryManagement")}
-                  title={t("productVariant.inventoryManagementLabel")}
-                />
-                {variant.inventoryManagement &&
-                  <CheckboxWrapper
-                    {...inventoryPolicy}
-                    label={t("productVariant.inventoryPolicy")}
-                    title={t("productVariant.inventoryPolicyLabel")}
+              <div className="row">
+                <div className="col-xs">
+                  <TextField
+                    defaultValue={variant.weight}
+                    floatingLabelText={t("productVariant.weight")}
+                    fullWidth={true}
+                    type="number"
+                    min={0}
+                    // errorText={weight.touched && weight.error}
+                    onBlur={event =>
+                     this.handleBlur(event, variant._id, "weight")}
                   />
+                </div>
+                <div className="col-xs">
+                  <TextField
+                    defaultValue={variant.inventoryQuantity}
+                    floatingLabelText={t("productVariant.inventoryQuantity")}
+                    fullWidth={true}
+                    type="number"
+                    min={0}
+                    disabled={Boolean(childVariants.length)}
+                    onBlur={event =>
+                     this.handleBlur(event, variant._id, "inventoryQuantity")}
+                  />
+                </div>
+                <div className="col-xs">
+                  <TextField
+                    defaultValue={variant.price}
+                    floatingLabelText={t("productVariant.price")}
+                    fullWidth={true}
+                    type="number"
+                    min={0}
+                    disabled={Boolean(childVariants.length)}
+                    onBlur={event =>
+                     this.handleBlur(event, variant._id, "price")}
+                  />
+                </div>
+                {variant.inventoryManagement &&
+                  <div className="col-xs">
+                    <TextField
+                      defaultValue={variant.lowInventoryWarningThreshold}
+                      floatingLabelText={t("productVariant.lowInventoryWarningThreshold")}
+                      fullWidth={true}
+                      type="number"
+                      min={0}
+                      title={t("productVariant.lowInventoryWarningThresholdLabel")}
+                      onBlur={event =>
+                       this.handleBlur(event, variant._id, "lowInventoryWarningThreshold")}
+                    />
+                  </div>
                 }
               </div>
             </div>
-          </fieldset>
-        </form>
+            <div className="col-xs-12 col-sm-12 col-md-3">
+              <Checkbox
+                defaultChecked={variant.taxable}
+                label={t("productVariant.taxable")}
+                onCheck={(event, checked) => productActions.updateProductField(
+                  variant._id, "taxable", checked, "variant")}
+              />
+              <Checkbox
+                defaultChecked={variant.inventoryManagement}
+                label={t("productVariant.inventoryManagement")}
+                title={t("productVariant.inventoryManagementLabel")}
+                onCheck={(event, checked) => productActions.updateProductField(
+                  variant._id, "inventoryManagement", checked, "variant")}
+              />
+              {variant.inventoryManagement &&
+                <Checkbox
+                  defaultChecked={variant.inventoryPolicy}
+                  label={t("productVariant.inventoryPolicy")}
+                  title={t("productVariant.inventoryPolicyLabel")}
+                  onCheck={(event, checked) => productActions.updateProductField(
+                    variant._id, "inventoryPolicy", checked, "variant")}
+                />
+              }
+            </div>
+          </div>
+        </fieldset>
 
         <div className="col-sm-12" style={styles.variantControls}>
           <FlatButton
@@ -195,13 +193,76 @@ class VariantForm extends Component {
             onTouchTap={() => variantsActions.deleteVariant(variant, selectedVariant)}
           />
         </div>
+        {Boolean(childVariants.length) &&
+          <div>
+            <Divider style={styles.divider} />
+            <Subheader>{t("productVariant.variantOptions")}</Subheader>
+            <table style={styles.table.table}>
+              <thead>
+                <tr>
+                  <th style={styles.table.title}>{t("productVariant.title")}</th>
+                  <th>{t("productVariant.inventoryQuantity")}</th>
+                  <th cols="2">{t("productVariant.price")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {childVariants.map(childVariant => (
+                  <tr key={childVariant._id}>
+                    <td style={styles.table.title}>
+                      <TextField
+                        defaultValue={childVariant.title}
+                        fullWidth={true}
+                        hintText={t("productVariant.title")}
+                        onBlur={event => this.handleBlur(event, childVariant._id,
+                          "title", "option")}
+                      />
+                    </td>
+                    <td>
+                      <TextField
+                        defaultValue={childVariant.inventoryQuantity}
+                        hintText={t("productVariant.inventoryQuantity")}
+                        fullWidth={true}
+                        type="number"
+                        min={0}
+                        onBlur={event => this.handleBlur(event, childVariant._id,
+                          "inventoryQuantity", "option")}
+                      />
+                    </td>
+                    <td>
+                      <TextField
+                        defaultValue={childVariant.price}
+                        hintText={t("productVariant.price")}
+                        fullWidth={true}
+                        type="number"
+                        min={0}
+                        onBlur={event => this.handleBlur(event, childVariant._id,
+                          "price", "option")}
+                      />
+                    </td>
+                    <td>
+                      <IconButton
+                        tooltip={t("productDetailEdit.removeVariant")}
+                        tooltipPosition="top-left"
+                        onTouchTap={() =>
+                         variantsActions.deleteVariant(childVariant, null, "option")}
+                      >
+                        <ContentClear />
+                      </IconButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        }
       </Paper>
     );
   }
 }
 
 VariantForm.propTypes = {
-  childVariantsCount: PropTypes.number.isRequired,
+  childVariants: PropTypes.arrayOf(PropTypes.object),
+  displayAlert: PropTypes.func,
   productId: PropTypes.string.isRequired,
   productActions: PropTypes.shape({
     updateProductField: PropTypes.func
@@ -214,14 +275,9 @@ VariantForm.propTypes = {
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func
-  }).isRequired,
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func
+    getTopVariants: PropTypes.func,
+    syncWithTitle: PropTypes.func
+  }).isRequired
 };
 
-export default translate("core")(reduxForm({
-  form: "shopProductTopVariantForm",
-  fields,
-  validate
-})(VariantForm));
+export default translate(["core", "reaction-react"])(VariantForm);

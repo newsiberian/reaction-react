@@ -60,6 +60,9 @@
         "yourCommentIsAdded": "Ваш комментарий добавлен.",
         "itIsWaitingForApproval": "Сейчас он ожидает одобрения.",
         "commentShouldNotBeEmpty": "Комментарий не должен быть пустым."
+      },
+      "productVariant": {
+        "variantOptions": "Опции варианта"
       }
     }
   }

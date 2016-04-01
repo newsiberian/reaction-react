@@ -252,10 +252,10 @@ export const changeProductField = (productId, field, value) => {
 /**
  * updateProductField
  * @summary this calls on product field blur event
- * @param productId
- * @param field
- * @param value
- * @param {String} [type] - type of product
+ * @param {String} productId - product or variant or child variant `_id`
+ * @param {String} field - field name
+ * @param {String|Number} value - field value
+ * @param {String} [type] - type of product. Could be "variant" or "product"
  * @return {Function}
  */
 export const updateProductField = (productId, field, value, type = "product") => {

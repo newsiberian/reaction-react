@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getVariantQuantity, getTopVariants } from "../../../client/helpers/products";
 import * as variantsActions from "../actions/variants";
 import * as productActions from "../actions/product";
+import { displayAlert } from "../../layout/actions/alert";
 import VariantList from "../components/productDetail/variants/VariantList.jsx";
 
 const getProductTopVariants = productId => {
@@ -41,7 +42,7 @@ const getProductTopVariants = productId => {
 // const ProductVariantListContainer = props => <VariantList {...props} />;
 class ProductVariantListContainer extends Component {
   componentWillMount() {
-    // fill the store via the list of top variants
+    // fill the store with the list of top variants
     this.props.variantsActions.getTopVariants(getProductTopVariants(this.props.productId));
   }
 
@@ -53,6 +54,7 @@ class ProductVariantListContainer extends Component {
 }
 
 ProductVariantListContainer.propTypes = {
+  displayAlert: PropTypes.func,
   productActions: PropTypes.shape({
     changeSelectedVariantId: PropTypes.func,
     updateProductField: PropTypes.func
@@ -63,7 +65,8 @@ ProductVariantListContainer.propTypes = {
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
-    getTopVariants: PropTypes.func
+    getTopVariants: PropTypes.func,
+    syncWithTitle: PropTypes.func
   }).isRequired
 };
 
@@ -75,6 +78,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    displayAlert: bindActionCreators(displayAlert, dispatch),
     productActions: bindActionCreators(productActions, dispatch),
     variantsActions: bindActionCreators(variantsActions, dispatch)
   };

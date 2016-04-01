@@ -1,7 +1,8 @@
 import * as types from "../constants";
 import { displayAlert } from "../../layout/actions/alert";
 import { Meteor } from "meteor/meteor";
-import { setVariantId } from "./product";
+import { setVariantId, updateProductField } from "./product";
+import { getSlug } from "../../../client/helpers/products";
 import i18next from "i18next";
 
 /**
@@ -86,29 +87,44 @@ export const cloneVariant = (productId, variantId) => {
   };
 };
 
-export const deleteVariant = (variant, selectedVariant) => {
+/**
+ * deleteVariant
+ * @summary fires `products/deleteVariant` method
+ * @param {Object} variant - could be top level variant or child variant
+ * @param [selectedVariant]
+ * @param {String} [type] - could be "variant" or "option"
+ * @return {function()}
+ */
+export const deleteVariant = (variant, selectedVariant, type = "variant") => {
   return dispatch => {
-    const title = variant.title || i18next.t("productDetailEdit.thisVariant");
+    const title = variant.title || (type === "variant" ?
+      i18next.t("productDetailEdit.thisVariant") :
+      i18next.t("productDetailEdit.thisOption"));
     if (confirm(i18next.t("productDetailEdit.removeVariantConfirm", { title }))) {
       // this is a workaround, because changing selected variant after removing
       // it from mongodb prevents to error with props
-      if (selectedVariant._id === variant._id) {
+      if (selectedVariant && selectedVariant._id === variant._id) {
         dispatch(setVariantId(variant.ancestors[0]));
       }
       Meteor.call("products/deleteVariant", variant._id, (err, res) => {
         if (err) {
-          // if error happens, we have to put selected variant back
-          dispatch(setVariantId(variant.ancestors[0], variant._id));
+          // if error happens, we have to put selected variant back, but only if
+          // this is top variant
+          if (selectedVariant) {
+            dispatch(setVariantId(variant.ancestors[0], variant._id));
+          }
           displayAlert({ message: err.message });
         }
         if (res) {
           // additionally we have to remove deleted variant from `store` top
           // variants list
-          dispatch(removeTopVariant(variant._id));
+          if (selectedVariant) {
+            dispatch(removeTopVariant(variant._id));
+          }
         }
       });
     }
-    dispatch({ type: types.DELETE_VARIANT });
+    dispatch({ type: types.DELETE_VARIANT, variantId: variant._id });
   };
 };
 
@@ -123,5 +139,21 @@ export const updateVariant = variant => {
         dispatch({ type: types.UPDATE_VARIANT, variantId: variant._id });
       }
     });
+  };
+};
+
+/**
+ * syncWithTitle
+ * @summary we are using this to sync `optionTitle` of child variant with `title`
+ * because we don't want to fill `optionTitle` manually
+ * @param {String} childVariantId
+ * @param {String} value - child variant`title`
+ * @return {function()}
+ */
+export const syncWithTitle = (childVariantId, value) => {
+  return dispatch => {
+    const newValue = getSlug(value);
+    dispatch(updateProductField(childVariantId, "optionTitle", newValue, "option"));
+    dispatch({ type: types.SYNC_WITH_TITLE, childVariantId, optionTitle: newValue });
   };
 };
