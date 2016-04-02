@@ -303,3 +303,15 @@ export const unselectProduct = productId => {
 export const flushProductsList = () => {
   return { type: types.FLUSH_SELECTED_PRODUCTS };
 };
+
+export const incrementAddToCartQuantity = () => {
+  return { type: types.INCREMENT_ADD_TO_CART_QUANTITY };
+};
+
+export const decrementAddToCartQuantity = () => {
+  return { type: types.DECREMENT_ADD_TO_CART_QUANTITY };
+};
+
+export const changeAddToCartQuantity = quantity => {
+  return { type: types.CHANGE_ADD_TO_CART_QUANTITY, quantity };
+};

@@ -107,6 +107,7 @@ class ProductDetailContainer extends Component {
 
 ProductDetailContainer.propTypes = {
   //productId: PropTypes.string,
+  addToCartQuantity: PropTypes.number.isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
     language: PropTypes.string,
@@ -121,7 +122,10 @@ ProductDetailContainer.propTypes = {
     changeProductField: PropTypes.func,
     updateProductField: PropTypes.func,
     rollbackFieldState: PropTypes.func,
-    validateBeforeToggleVisibility: PropTypes.func
+    validateBeforeToggleVisibility: PropTypes.func,
+    changeAddToCartQuantity: PropTypes.func,
+    incrementAddToCartQuantity: PropTypes.func,
+    decrementAddToCartQuantity: PropTypes.func
   }).isRequired,
   params: PropTypes.object.isRequired, // TODO why it is here?
   product: PropTypes.object.isRequired,
@@ -168,7 +172,8 @@ function mapStateToProps(state) {
     fields: state.shop.product.fields,
     newTag: state.shop.product.newTag,
     tagsIdsArray: state.shop.product.tagsIdsArray,
-    newMetafield: state.shop.product.newMetafield
+    newMetafield: state.shop.product.newMetafield,
+    addToCartQuantity: state.shop.product.addToCartQuantity
   };
 }
 

@@ -207,7 +207,8 @@ class ProductDetail extends Component {
 
   render() {
     const {
-      locale, product, productActions, fields, selectedVariant, t, allVariants
+      locale, product, productActions, fields, selectedVariant, t, allVariants,
+      addToCartQuantity
     } = this.props;
 
     // caching permission check
@@ -310,9 +311,11 @@ class ProductDetail extends Component {
                   { /* Cart Add Block */ }
                   <div>
                     <CartAdd
-                      // addToCartQuantity={ addToCartQuantity }
-                      // onAddToCartClick={ onAddToCartClick }
-                      // onAddToCartQuantityChange={ onAddToCartQuantityChange }
+                      selectedVariant={selectedVariant}
+                      addToCartQuantity={addToCartQuantity}
+                      changeAddToCartQuantity={productActions.changeAddToCartQuantity}
+                      incrementAddToCartQuantity={productActions.incrementAddToCartQuantity}
+                      decrementAddToCartQuantity={productActions.decrementAddToCartQuantity}
                     />
                   </div>
                 </div>
@@ -390,6 +393,7 @@ class ProductDetail extends Component {
 }
 
 ProductDetail.propTypes = {
+  addToCartQuantity: PropTypes.number.isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
     language: PropTypes.string,
@@ -406,7 +410,10 @@ ProductDetail.propTypes = {
     changeProductField: PropTypes.func,
     updateProductField: PropTypes.func,
     rollbackFieldState: PropTypes.func,
-    validateBeforeToggleVisibility: PropTypes.func
+    validateBeforeToggleVisibility: PropTypes.func,
+    changeAddToCartQuantity: PropTypes.func,
+    incrementAddToCartQuantity: PropTypes.func,
+    decrementAddToCartQuantity: PropTypes.func
   }).isRequired,
   fields: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,

@@ -139,11 +139,25 @@ function tagsIdsArray(state = [], action) {
   }
 }
 
+const addToCartQuantity = (state = 1, action) => {
+  switch (action.type) {
+  case types.INCREMENT_ADD_TO_CART_QUANTITY:
+    return state + 1;
+  case types.DECREMENT_ADD_TO_CART_QUANTITY:
+    return state - 1;
+  case types.CHANGE_ADD_TO_CART_QUANTITY:
+    return action.quantity;
+  default:
+    return state;
+  }
+};
+
 export default combineReducers({
   ids,
   fields,
   mediaIdsArray,
   newTag,
   tagsIdsArray,
-  topVariantsArray
+  topVariantsArray,
+  addToCartQuantity
 });

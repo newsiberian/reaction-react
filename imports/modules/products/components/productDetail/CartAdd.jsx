@@ -29,8 +29,27 @@ class CartAdd extends Component {
   //   // return nextProps.addToCartQuantity !== this.props.addToCartQuantity;
   // }
 
+  handleAddToCartQuantityChange(event) {
+    // we are not allow to set quantity lower than 1
+    if (+event.target.value > 0 && +event.target.value < 100) {
+      this.props.changeAddToCartQuantity(+event.target.value);
+    }
+  }
+
+  handleAddToCartQuantityIncrement() {
+    if (this.props.addToCartQuantity < 99) {
+      this.props.incrementAddToCartQuantity();
+    }
+  }
+
+  handleAddToCartQuantityDecrement() {
+    if (this.props.addToCartQuantity > 1) {
+      this.props.decrementAddToCartQuantity();
+    }
+  }
+
   render() {
-    const { t } = this.props;
+    const { addToCartQuantity, selectedVariant, t } = this.props;
     console.log("CartAdd: rendering...");
     return (
       <Paper zDepth={1} style={styles.container}>
@@ -42,23 +61,24 @@ class CartAdd extends Component {
             icon={<ContentRemove color="grey" />}
             // title={t("productDetailEdit.editOption")}
             style={styles.control}
-            // onTouchTap={() =>
-            //        variantsActions.changeVariantFormVisibility(variant._id)}
+            onTouchTap={() => this.handleAddToCartQuantityDecrement()}
           />
           <TextField
-            defaultValue="1"
-            min="1"
+            id="add-to-cart-quantity"
+            value={addToCartQuantity}
+            min={1}
+            max={99}
             type="number"
             style={styles.counter}
             inputStyle={styles.input}
             underlineShow={false}
+            onChange={event => this.handleAddToCartQuantityChange(event)}
           />
           <FlatButton
             icon={<ContentAdd color="grey" />}
             // title={t("productDetailEdit.editOption")}
             style={styles.control}
-            // onTouchTap={() =>
-            //        variantsActions.changeVariantFormVisibility(variant._id)}
+            onTouchTap={() => this.handleAddToCartQuantityIncrement()}
           />
         </div>
         <div
@@ -117,9 +137,13 @@ class CartAdd extends Component {
 }
 
 CartAdd.propTypes = {
-  // addToCartQuantity: PropTypes.number.isRequired,
-  // onAddToCartClick: PropTypes.func.isRequired,
-  // onAddToCartQuantityChange: PropTypes.func.isRequired
+  // current addToCart quantity state
+  addToCartQuantity: PropTypes.number.isRequired,
+  changeAddToCartQuantity: PropTypes.func,
+  incrementAddToCartQuantity: PropTypes.func,
+  decrementAddToCartQuantity: PropTypes.func,
+  selectedVariant: PropTypes.object,
+  t: PropTypes.func
 };
 
 export default translate("core")(CartAdd);
