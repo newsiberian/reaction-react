@@ -102,7 +102,7 @@ class VariantForm extends Component {
               <div className="row">
                 <div className="col-xs">
                   <TextField
-                    defaultValue={variant.weight}
+                    defaultValue={variant.weight || 0}
                     floatingLabelText={t("productVariant.weight")}
                     fullWidth={true}
                     type="number"
@@ -114,7 +114,7 @@ class VariantForm extends Component {
                 </div>
                 <div className="col-xs">
                   <TextField
-                    defaultValue={variant.inventoryQuantity}
+                    defaultValue={variant.inventoryQuantity || 0}
                     floatingLabelText={t("productVariant.inventoryQuantity")}
                     fullWidth={true}
                     type="number"
@@ -126,7 +126,7 @@ class VariantForm extends Component {
                 </div>
                 <div className="col-xs">
                   <TextField
-                    defaultValue={variant.price}
+                    defaultValue={variant.price || 0}
                     floatingLabelText={t("productVariant.price")}
                     fullWidth={true}
                     type="number"
@@ -219,7 +219,7 @@ class VariantForm extends Component {
                     </td>
                     <td>
                       <TextField
-                        defaultValue={childVariant.inventoryQuantity}
+                        defaultValue={childVariant.inventoryQuantity || 0}
                         hintText={t("productVariant.inventoryQuantity")}
                         fullWidth={true}
                         type="number"
@@ -230,7 +230,7 @@ class VariantForm extends Component {
                     </td>
                     <td>
                       <TextField
-                        defaultValue={childVariant.price}
+                        defaultValue={childVariant.price || 0}
                         hintText={t("productVariant.price")}
                         fullWidth={true}
                         type="number"

@@ -15,7 +15,13 @@ const styles = {
     paddingBottom: "0.5rem",
     display: "flex"
   },
-  counter: { width: 40 },
+  counter: {
+    display: "flex", // this is needed for cases when "add to cart" phrase
+    alignItems: "center", // displayed in two lines
+    fontSize: 20,
+    height: "auto",
+    width: 40
+  },
   counterContainer: { display: "flex", justifyContent: "space-around" },
   input: { textAlign: "right" },
   control: { minWidth: 44 },
@@ -30,15 +36,32 @@ class CartAdd extends Component {
   // }
 
   handleAddToCartQuantityChange(event) {
+    const { changeAddToCartQuantity, selectedVariant } = this.props;
+    let value = +event.target.value;
     // we are not allow to set quantity lower than 1
-    if (+event.target.value > 0 && +event.target.value < 100) {
-      this.props.changeAddToCartQuantity(+event.target.value);
+    if (+event.target.value > 0 && +event.target.value < 999) {
+      if (selectedVariant.inventoryManagement && selectedVariant.inventoryQuantity) {
+        // if customer want buy more than have in stock, we give em all
+        if (selectedVariant.inventoryQuantity < value) {
+          value = selectedVariant.inventoryQuantity;
+        }
+      }
+      // just in case we round a number
+      changeAddToCartQuantity(~~value);
     }
   }
 
   handleAddToCartQuantityIncrement() {
-    if (this.props.addToCartQuantity < 99) {
-      this.props.incrementAddToCartQuantity();
+    const { incrementAddToCartQuantity, selectedVariant, addToCartQuantity } = this.props;
+    if (addToCartQuantity < 999) {
+      if (selectedVariant.inventoryManagement && selectedVariant.inventoryQuantity) {
+        // we can increment quantity not more then we have in inventoryQuantity
+        if (addToCartQuantity < selectedVariant.inventoryQuantity) {
+          incrementAddToCartQuantity();
+        }
+      } else {
+        incrementAddToCartQuantity();
+      }
     }
   }
 
@@ -59,7 +82,6 @@ class CartAdd extends Component {
         >
           <FlatButton
             icon={<ContentRemove color="grey" />}
-            // title={t("productDetailEdit.editOption")}
             style={styles.control}
             onTouchTap={() => this.handleAddToCartQuantityDecrement()}
           />
@@ -67,7 +89,7 @@ class CartAdd extends Component {
             id="add-to-cart-quantity"
             value={addToCartQuantity}
             min={1}
-            max={99}
+            max={999}
             type="number"
             style={styles.counter}
             inputStyle={styles.input}
@@ -76,7 +98,6 @@ class CartAdd extends Component {
           />
           <FlatButton
             icon={<ContentAdd color="grey" />}
-            // title={t("productDetailEdit.editOption")}
             style={styles.control}
             onTouchTap={() => this.handleAddToCartQuantityIncrement()}
           />

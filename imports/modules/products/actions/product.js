@@ -315,3 +315,9 @@ export const decrementAddToCartQuantity = () => {
 export const changeAddToCartQuantity = quantity => {
   return { type: types.CHANGE_ADD_TO_CART_QUANTITY, quantity };
 };
+
+export const addToCart = () => {
+  return dispatch => {
+    
+  };
+};
