@@ -18,7 +18,7 @@ import ProductMetaFieldForms from "./attributes/ProductMetaFieldForms";
 import ProductMetaField from "./attributes/ProductMetaField";
 import Description from "./edit/Description.jsx";
 // import ProductSocial from "./ProductSocial";
-// import CartAddButton from "./CartAddButton";
+import CartAdd from "./CartAdd";
 import ProductVariantListContainer from "../../containers/ProductVariantListContainer.jsx";
 import styles, { editStyles, priceStyle } from "../../styles/productDetail";
 
@@ -304,6 +304,15 @@ class ProductDetail extends Component {
                       locale={locale}
                       productId={product._id}
                       selectedVariant={selectedVariant}
+                    />
+                  </div>
+
+                  { /* Cart Add Block */ }
+                  <div>
+                    <CartAdd
+                      // addToCartQuantity={ addToCartQuantity }
+                      // onAddToCartClick={ onAddToCartClick }
+                      // onAddToCartQuantityChange={ onAddToCartQuantityChange }
                     />
                   </div>
                 </div>
