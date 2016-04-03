@@ -280,6 +280,29 @@ class ProductDetail extends Component {
                   </div>
                 </div>
 
+                {/* Variants & Options */}
+                <div>
+                  {!notDisplayOptionsHeader && <h3>{t("productDetail.options")}</h3>}
+                  <ProductVariantListContainer
+                    locale={locale}
+                    productId={product._id}
+                    selectedVariant={selectedVariant}
+                  />
+                </div>
+
+                { /* Cart Add Block */ }
+                <div>
+                  <CartAdd
+                    product={product}
+                    selectedVariant={selectedVariant}
+                    addToCartQuantity={addToCartQuantity}
+                    addToCart={productActions.addToCart}
+                    changeAddToCartQuantity={productActions.changeAddToCartQuantity}
+                    incrementAddToCartQuantity={productActions.incrementAddToCartQuantity}
+                    decrementAddToCartQuantity={productActions.decrementAddToCartQuantity}
+                  />
+                </div>
+
                 {/* Main product information */}
                 <div className="col-md-11">
                   {/* Description */}
@@ -295,29 +318,6 @@ class ProductDetail extends Component {
                       descriptionState={fields.description}
                       rollbackFieldState={productActions.rollbackFieldState}
                       updateProductField={productActions.updateProductField}
-                    />
-                  </div>
-
-                  {/* Variants & Options */}
-                  <div>
-                    {!notDisplayOptionsHeader && <h3>{t("productDetail.options")}</h3>}
-                    <ProductVariantListContainer
-                      locale={locale}
-                      productId={product._id}
-                      selectedVariant={selectedVariant}
-                    />
-                  </div>
-
-                  { /* Cart Add Block */ }
-                  <div>
-                    <CartAdd
-                      product={product}
-                      selectedVariant={selectedVariant}
-                      addToCartQuantity={addToCartQuantity}
-                      addToCart={productActions.addToCart}
-                      changeAddToCartQuantity={productActions.changeAddToCartQuantity}
-                      incrementAddToCartQuantity={productActions.incrementAddToCartQuantity}
-                      decrementAddToCartQuantity={productActions.decrementAddToCartQuantity}
                     />
                   </div>
                 </div>
