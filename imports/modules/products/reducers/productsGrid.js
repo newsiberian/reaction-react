@@ -7,7 +7,7 @@ const initialState = {
 
 // todo this reducer not used yet in reaction. Need to make setting for it in
 // dashboard
-/*export default */function gridSettings(state = initialState, action) {
+function gridSettings(state = initialState, action) {
   switch (action.type) {
   case types.SET_PRODUCTS_SCROLL_LIMIT:
     return Object.assign({}, state, {

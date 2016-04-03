@@ -75,3 +75,15 @@ export const dropMedia = mediaIdsArray => {
 };
 
 export const destroyMedia = () => ({ type: types.DESTROY_MEDIA });
+
+/**
+ * Lightbox section
+ */
+// currentImage not always could be provided
+export const toggleLightbox = (index = 0) => {
+  return { type: types.TOGGLE_LIGHTBOX, index };
+};
+
+export const showNextLightbox = () => ({ type: types.SHOW_NEXT_LIGHTBOX });
+
+export const showPrevLightbox = () => ({ type: types.SHOW_PREV_LIGHTBOX });

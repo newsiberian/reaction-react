@@ -142,7 +142,7 @@ class ImageDetail extends Component {
   render() {
     const {
       isDragging, connectDragSource, connectDropTarget, index, media,
-      productTitle
+      productTitle, mediaActions
     } = this.props;
     //const className = index === 0 ? "ui fluid image" : "ui tiny image";
     const opacity = isDragging ? 0.4 : 1;
@@ -154,7 +154,8 @@ class ImageDetail extends Component {
         <Paper
           zDepth={1}
           rounded={false}
-          style={{ padding: 2, margin: "3px 3px 0 0" }}
+          style={{ padding: 2, margin: "3px 3px 0 0", cursor: "pointer" }}
+          onTouchTap={() => mediaActions.toggleLightbox(index)}
         >
           <img
             src={media.url({
@@ -186,7 +187,8 @@ ImageDetail.propTypes = {
   index: PropTypes.number.isRequired,
   media: PropTypes.object,
   mediaActions: PropTypes.shape({
-    removeMedia: PropTypes.func
+    removeMedia: PropTypes.func,
+    toggleLightbox: PropTypes.func
   }),
   moveMedia: PropTypes.func,
   onDropMedia: PropTypes.func,

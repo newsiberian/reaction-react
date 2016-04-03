@@ -43,13 +43,20 @@ class ProductImageGalleryContainer extends Component {
 }
 
 ProductImageGalleryContainer.propTypes = {
+  lightbox: PropTypes.shape({
+    lightboxIsOpen: PropTypes.bool,
+    currentImage: PropTypes.number
+  }).isRequired,
   media: PropTypes.array,
   mediaActions: PropTypes.shape({
     uploadMedia: PropTypes.func,
     removeMedia: PropTypes.func,
     syncMedia: PropTypes.func,
     moveMedia: PropTypes.func,
-    destroyMedia: PropTypes.func
+    destroyMedia: PropTypes.func,
+    toggleLightbox: PropTypes.func,
+    showNextLightbox: PropTypes.func,
+    showPrevLightbox: PropTypes.func
   }),
   mediaIdsArray: PropTypes.arrayOf(PropTypes.string),
   product: PropTypes.object.isRequired,
@@ -58,7 +65,8 @@ ProductImageGalleryContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    mediaIdsArray: state.shop.product.mediaIdsArray
+    mediaIdsArray: state.shop.product.mediaIdsArray,
+    lightbox: state.shop.product.lightbox
   };
 }
 

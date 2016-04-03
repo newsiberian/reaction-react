@@ -1,28 +1,5 @@
 import * as types from "../constants";
 
-// export default function topVariants(state = {}, action) {
-//   switch (action.type) {
-//   case types.GET_TOP_VARIANTS:
-//     return Object.assign({}, state, action.variants);
-//   case types.ADD_TOP_VARIANT:
-//     return Object.assign({}, state, {
-//       [action.variantId]: {
-//         visible: false
-//       }
-//     });
-//   case types.REMOVE_TOP_VARIANT:
-//     return
-//   case types.CHANGE_VARIANT_FORM_VISIBILITY:
-//     return Object.assign({}, state, {
-//       [action.variantId]: {
-//         visible: !state[action.variantId].visible
-//       }
-//     });
-//   default:
-//     return state;
-//   }
-// }
-
 export default function topVariantsArray(state = [], action) {
   switch (action.type) {
   case types.GET_TOP_VARIANTS:

@@ -44,7 +44,8 @@ class UserMenu extends Component {
     return (
       <div>
         <FlatButton
-          label={userState.label}
+          // userState.label is undefined on a first load
+          label={userState.label || " "}
           onClick={userState.handleClick}
         />
         <Badge

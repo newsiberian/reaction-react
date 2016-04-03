@@ -40,10 +40,7 @@ function ids(state = idsInitialState, action) {
       variantId: action.variantId
     });
   case types.DESTROY_SELECTED_IDS:
-    return Object.assign({}, state, {
-      productId: null,
-      variantId: null
-    });
+    return Object.assign({}, state, idsInitialState);
   default:
     return state;
   }
@@ -95,6 +92,32 @@ function mediaIdsArray(state = [], action) {
     return state;
   }
 }
+
+const lightboxInitialState = {
+  lightboxIsOpen: false,
+  currentImage: 0
+};
+
+const lightbox = (state = lightboxInitialState, action) => {
+  switch (action.type) {
+  case types.TOGGLE_LIGHTBOX:
+    return Object.assign({}, state, {
+      lightboxIsOpen: !state.lightboxIsOpen,
+      currentImage: action.index
+    });
+  case types.SHOW_NEXT_LIGHTBOX:
+    return Object.assign({}, state, {
+      currentImage: state.currentImage + 1
+    });
+  case types.SHOW_PREV_LIGHTBOX:
+    return Object.assign({}, state, {
+      currentImage: state.currentImage - 1
+    });
+  // we have no need to destroy lightbox because on close event it's resets to 0
+  default:
+    return state;
+  }
+};
 
 function newTag(state = tagsState, action) {
   switch (action.type) {
@@ -167,6 +190,7 @@ export default combineReducers({
   ids,
   fields,
   mediaIdsArray,
+  lightbox,
   newTag,
   tagsIdsArray,
   topVariantsArray,

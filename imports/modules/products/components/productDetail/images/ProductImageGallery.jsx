@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { StyleSheet } from "react-look";
+import Lightbox from "react-images";
 //import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 import { arrayCompare, arrayShallowCompare } from "../../../../../client/helpers/utilities";
@@ -121,7 +122,15 @@ class ProductImageGallery extends Component {
   }
 
   render() {
-    const { media, mediaActions, mediaIdsArray, product, t } = this.props;
+    const { media, mediaActions, mediaIdsArray, product, t, lightbox } = this.props;
+    const images = media.length ? media.map(image => ({
+      src: image.url({ store: "medium" }),
+      srcset: [
+        `${image.url({ store: "large" })} 1000w`,
+        `${image.url({ store: "medium" })} 600w`,
+        `${image.url({ store: "small" })} 235w`
+      ]
+    })) : [];
     console.log("ProductImageGallery: rendering...");
     return (
       <div>
@@ -162,18 +171,34 @@ class ProductImageGallery extends Component {
             {t("productDetail.dropFiles")}
           </Dropzone>
         }
+        <Lightbox
+          images={images}
+          currentImage={lightbox.currentImage}
+          isOpen={lightbox.lightboxIsOpen}
+          // `onClose` should not pass event as first arg
+          onClose={() => mediaActions.toggleLightbox()}
+          onClickPrev={mediaActions.showPrevLightbox}
+          onClickNext={mediaActions.showNextLightbox}
+        />
       </div>
     );
   }
 }
 
 ProductImageGallery.propTypes = {
+  lightbox: PropTypes.shape({
+    lightboxIsOpen: PropTypes.bool,
+    currentImage: PropTypes.number
+  }).isRequired,
   media: PropTypes.array.isRequired,
   mediaActions: PropTypes.shape({
     uploadMedia: PropTypes.func,
     removeMedia: PropTypes.func,
     syncMedia: PropTypes.func,
-    moveMedia: PropTypes.func
+    moveMedia: PropTypes.func,
+    toggleLightbox: PropTypes.func,
+    showNextLightbox: PropTypes.func,
+    showPrevLightbox: PropTypes.func
   }),
   mediaIdsArray: PropTypes.arrayOf(PropTypes.string),
   product: PropTypes.object.isRequired,
