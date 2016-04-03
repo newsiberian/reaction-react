@@ -11,10 +11,15 @@ import ImageDetail from "./ImageDetail";
 
 const styles = StyleSheet.create({
   images: {
-    textAlign: "center"
+    // textAlign: "center"
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "center",
+    alignItems: "baseline"
   },
   bigImage: {
-    width: "100%"
+    // width: "100%"
+    flex: "1 0 100%"
   },
   dropzone: { // taken from SUI "ui basic button"
     display: "inline-block",

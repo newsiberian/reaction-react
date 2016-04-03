@@ -6,24 +6,30 @@ import IconButton from "material-ui/lib/icon-button";
 import FontIcon from "material-ui/lib/font-icon";
 
 const styles = {
-  fluidImage: {
+  fluidImageContainer: {
     position: "relative",
-    verticalAlign: "middle",
-    maxWidth: "100%",
+    textAlign: "center",
     backgroundColor: "transparent",
-    width: "100%",
-    height: "auto"
+    height: "auto",
+    flex: "1 0 100%",
+    display: "flex",
+    justifyContent: "center"
   },
-  tinyImage: {
+  fluidImage: { maxHeight: "70vh", maxWidth: "100%" },
+  tinyImageContainer: {
     display: "inline-block",
     position: "relative",
     verticalAlign: "middle",
     maxWidth: "100%",
-    //margin: 2,
     backgroundColor: "transparent",
-    width: "80px",
     height: "auto",
-    //fontSize: ".85714286rem"
+    flex: "0 0 auto"
+  },
+  tinyImage: { width: "80px" },
+  paper: {
+    padding: "4px 4px 0 4px",
+    margin: "3px 3px 0 0",
+    cursor: "pointer"
   },
   removeButton: {
     position: "absolute",
@@ -146,15 +152,15 @@ class ImageDetail extends Component {
     } = this.props;
     //const className = index === 0 ? "ui fluid image" : "ui tiny image";
     const opacity = isDragging ? 0.4 : 1;
-    const style = index === 0 ? Object.assign(styles.fluidImage, opacity) :
-      Object.assign(styles.tinyImage, opacity);
+    const style = index === 0 ? Object.assign(styles.fluidImageContainer, opacity) :
+      Object.assign(styles.tinyImageContainer, opacity);
     console.log(`ImageGallery ${index}: rendering...`);
     return connectDragSource(connectDropTarget(
       <div style={style}>
         <Paper
           zDepth={1}
           rounded={false}
-          style={{ padding: 2, margin: "3px 3px 0 0", cursor: "pointer" }}
+          style={styles.paper}
           onTouchTap={() => mediaActions.toggleLightbox(index)}
         >
           <img
