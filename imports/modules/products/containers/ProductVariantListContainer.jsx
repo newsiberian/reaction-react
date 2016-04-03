@@ -21,10 +21,13 @@ class ProductVariantListContainer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    // cleanup
+    this.props.variantsActions.destroyTopVariants();
+  }
+
   render() {
-    return (
-      <VariantList {...this.props} />
-    );
+    return <VariantList {...this.props} />;
   }
 }
 
@@ -42,6 +45,7 @@ ProductVariantListContainer.propTypes = {
     createChildVariant: PropTypes.func,
     cloneVariant: PropTypes.func,
     deleteVariant: PropTypes.func,
+    destroyTopVariants: PropTypes.func,
     getTopVariantsArray: PropTypes.func,
     syncWithTitle: PropTypes.func
   }).isRequired

@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React, { Component, PropTypes } from "react";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -30,7 +30,17 @@ const getMedia = id => {
   //});
 };
 
-const ProductImageGalleryContainer = props => <ProductImageGallery {...props} />;
+// const ProductImageGalleryContainer = props => <ProductImageGallery {...props} />;
+class ProductImageGalleryContainer extends Component {
+  componentWillUnmount() {
+    // cleanup product store state
+    this.props.mediaActions.destroyMedia();
+  }
+
+  render() {
+    return <ProductImageGallery {...this.props} />;
+  }
+}
 
 ProductImageGalleryContainer.propTypes = {
   media: PropTypes.array,
@@ -38,7 +48,8 @@ ProductImageGalleryContainer.propTypes = {
     uploadMedia: PropTypes.func,
     removeMedia: PropTypes.func,
     syncMedia: PropTypes.func,
-    moveMedia: PropTypes.func
+    moveMedia: PropTypes.func,
+    destroyMedia: PropTypes.func
   }),
   mediaIdsArray: PropTypes.arrayOf(PropTypes.string),
   product: PropTypes.object.isRequired,

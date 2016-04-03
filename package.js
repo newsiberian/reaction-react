@@ -1,6 +1,6 @@
 Package.describe({
   name: "newsiberian:reaction-react",
-  version: "0.0.2"
+  version: "0.1.2"
 });
 
 Npm.depends({

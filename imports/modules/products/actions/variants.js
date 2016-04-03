@@ -64,6 +64,8 @@ export const createTopVariant = productId => {
   };
 };
 
+export const destroyTopVariants = () => ({ type: types.DESTROY_TOP_VARIANTS });
+
 export const createChildVariant = variantId => {
   return dispatch => {
     Meteor.call("products/createVariant", variantId, (err, res) => {

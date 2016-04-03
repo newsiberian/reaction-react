@@ -162,6 +162,7 @@ class Variant extends Component {
       formVisible, locale, productId, productActions, selectedVariant, t,
       variant, variantsActions, displayAlert
     } = this.props;
+
     // this is used while variant is selected variant and we are removing it
     if (!variant) return null;
 

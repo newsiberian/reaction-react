@@ -44,6 +44,8 @@ export default function topVariantsArray(state = [], action) {
     return state.map(variant => variant._id === action.variantId ?
       Object.assign({}, variant, { visible: !variant.visible }) :
       variant);
+  case types.DESTROY_TOP_VARIANTS:
+    return [];
   default:
     return state;
   }

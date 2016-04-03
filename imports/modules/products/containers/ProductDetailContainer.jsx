@@ -100,13 +100,20 @@ class ProductDetailContainer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    // cleanup product store state
+    this.props.productActions.destroySelectedIds();
+    this.props.productActions.destroyAddToCartQuantity();
+    this.props.tagActions.destroyTags();
+  }
+
   render() {
     return (<ProductDetail {...this.props} />);
   }
 }
 
 ProductDetailContainer.propTypes = {
-  //productId: PropTypes.string,
+  // productId: PropTypes.string,
   addToCartQuantity: PropTypes.number.isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
@@ -114,10 +121,11 @@ ProductDetailContainer.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired,
-  variantId: PropTypes.string,
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
     setVariantId: PropTypes.func,
+    changeSelectedVariantId: PropTypes.func,
+    destroySelectedIds: PropTypes.func,
     publishProduct: PropTypes.func,
     changeProductField: PropTypes.func,
     updateProductField: PropTypes.func,
@@ -126,9 +134,9 @@ ProductDetailContainer.propTypes = {
     changeAddToCartQuantity: PropTypes.func,
     incrementAddToCartQuantity: PropTypes.func,
     decrementAddToCartQuantity: PropTypes.func,
+    destroyAddToCartQuantity: PropTypes.func,
     addToCart: PropTypes.func
   }).isRequired,
-  params: PropTypes.object.isRequired, // TODO why it is here?
   product: PropTypes.object.isRequired,
   fields: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,
@@ -136,6 +144,7 @@ ProductDetailContainer.propTypes = {
     vendor: PropTypes.object,
     description: PropTypes.object
   }),
+  variantId: PropTypes.string,
   selectedVariant: PropTypes.object,
   allVariants: PropTypes.arrayOf(PropTypes.object),
   tags: PropTypes.arrayOf(PropTypes.object),
@@ -148,6 +157,7 @@ ProductDetailContainer.propTypes = {
     syncTags: PropTypes.func,
     moveTag: PropTypes.func,
     dropTag: PropTypes.func,
+    destroyTags: PropTypes.func,
     clearSuggestions: PropTypes.func,
     updateSuggestions: PropTypes.func
   }).isRequired,

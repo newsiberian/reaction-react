@@ -45,6 +45,10 @@ export const changeSelectedVariantId = variantId => {
   return { type: types.CHANGE_SELECTED_VARIANT_ID, variantId };
 };
 
+export const destroySelectedIds = () => {
+  return { type: types.DESTROY_SELECTED_IDS };
+};
+
 /**
  * validateBeforeToggleVisibility
  * @summary validate product document before fire toggle product visibility
@@ -311,30 +315,24 @@ export const unselectProduct = productId => {
   return { type: types.UNSELECT_PRODUCT, productId };
 };
 
-export const flushProductsList = () => {
-  return { type: types.FLUSH_SELECTED_PRODUCTS };
-};
+export const flushProductsList = () => ({ type: types.FLUSH_SELECTED_PRODUCTS });
 
-export const incrementAddToCartQuantity = () => {
-  return { type: types.INCREMENT_ADD_TO_CART_QUANTITY };
-};
+export const incrementAddToCartQuantity = () => ({ type: types.INCREMENT_ADD_TO_CART_QUANTITY });
 
-export const decrementAddToCartQuantity = () => {
-  return { type: types.DECREMENT_ADD_TO_CART_QUANTITY };
-};
+export const decrementAddToCartQuantity = () => ({ type: types.DECREMENT_ADD_TO_CART_QUANTITY });
 
 export const changeAddToCartQuantity = quantity => {
   return { type: types.CHANGE_ADD_TO_CART_QUANTITY, quantity };
 };
 
 /**
- * resetAddToCartQuantity
+ * destroyAddToCartQuantity
  * @summary we need to reset `addToCartQuantity` state after successful adding
  * to cart
  * @return {{type, quantity: *}}
  */
-const resetAddToCartQuantity = () => {
-  return { type: types.RESET_ADD_TO_CART_QUANTITY, quantity };
+export const destroyAddToCartQuantity = () => {
+  return { type: types.DESTROY_ADD_TO_CART_QUANTITY };
 };
 
 export const addToCart = (product, currentVariant, quantity) => {

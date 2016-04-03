@@ -168,12 +168,35 @@ const loadProducts = (location, params) => {
     return 0;
   }
 
-  let gridProducts = ReactionCore.Collections.Products.find({}).fetch();
+  // we are passing `ancestors: []`, because in case when we turn back from PDP
+  // for a moment we still subscribed to variants too, and we will get an error
+  // because of it, because our `productGrid` component can't work with variants
+  // objects.
+  //
+  // Also, we it is possible to change this selector to the following:
+  // `type: { $in: ["simple"] }`, but I found this way is not kind to package
+  // creators, because to specify they new product type, they will need to change
+  // this file, which broke another piece of compatibility with `reaction`
+  let gridProducts = ReactionCore.Collections.Products.find({
+    ancestors: []
+    // keep this, as an example
+    // type: { $in: ["simple"] }
+  }).fetch();
 
   return gridProducts.sort(compare);
 };
 
-const ProductsGridContainer = props => <ProductsGrid {...props} />;
+// const ProductsGridContainer = props => <ProductsGrid {...props} />;
+class ProductsGridContainer extends Component {
+  componentWillUnmount() {
+    // cleanup
+    this.props.productActions.flushProductsList();
+  }
+
+  render() {
+    return <ProductsGrid {...this.props} />;
+  }
+}
 
 ProductsGridContainer.propTypes = {
   layoutSettingsActions: PropTypes.shape({
@@ -198,7 +221,7 @@ ProductsGridContainer.propTypes = {
   selectedProducts: PropTypes.arrayOf(PropTypes.string)
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     locale: state.layout.locale,
     productsScrollLimit: state.shop.productsGrid.gridSettings.productsScrollLimit,

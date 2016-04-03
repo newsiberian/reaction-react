@@ -73,3 +73,5 @@ export const dropMedia = mediaIdsArray => {
     dispatch({ type: types.DROP_MEDIA });
   };
 };
+
+export const destroyMedia = () => ({ type: types.DESTROY_MEDIA });

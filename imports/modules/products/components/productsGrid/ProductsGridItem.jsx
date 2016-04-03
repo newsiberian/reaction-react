@@ -10,7 +10,7 @@ import { Link } from "react-router";
 import {
   styles,
   fakeImage,
-  primatyImage,
+  primaryImage,
   additionalImages,
   additianalImage,
   realImage,
@@ -234,7 +234,7 @@ class ProductsGridItem extends Component {
         to={`/shop/product/${ product.handle }`}
         style={linkStyles}
       >
-        <div style={primatyImage}>
+        <div style={primaryImage}>
           {image}
         </div>
         {this.renderAdditionalMedia(isObjectFitSupported)}

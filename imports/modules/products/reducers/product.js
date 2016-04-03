@@ -39,6 +39,11 @@ function ids(state = idsInitialState, action) {
     return Object.assign({}, state, {
       variantId: action.variantId
     });
+  case types.DESTROY_SELECTED_IDS:
+    return Object.assign({}, state, {
+      productId: null,
+      variantId: null
+    });
   default:
     return state;
   }
@@ -84,6 +89,8 @@ function mediaIdsArray(state = [], action) {
         [action.hoverIndex, 0, dragMedia]
       ]
     });
+  case types.DESTROY_MEDIA:
+    return [];
   default:
     return state;
   }
@@ -134,6 +141,8 @@ function tagsIdsArray(state = [], action) {
         [action.hoverIndex, 0, dragTag]
       ]
     });
+  case types.DESTROY_TAGS:
+    return [];
   default:
     return state;
   }
@@ -147,7 +156,7 @@ const addToCartQuantity = (state = 1, action) => {
     return state - 1;
   case types.CHANGE_ADD_TO_CART_QUANTITY:
     return action.quantity;
-  case types.RESET_ADD_TO_CART_QUANTITY:
+  case types.DESTROY_ADD_TO_CART_QUANTITY:
     return 1;
   default:
     return state;

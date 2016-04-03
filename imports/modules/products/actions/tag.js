@@ -69,6 +69,8 @@ export const dropTag = (productId, tagsIdsArray) => {
   };
 };
 
+export const destroyTags = () => ({ type: types.DESTROY_TAGS });
+
 export const clearNewTagName = () => {
   return { type: types.CLEAR_NEW_TAG_NAME };
 };
