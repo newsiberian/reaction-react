@@ -161,7 +161,6 @@ class ImageDetail extends Component {
           zDepth={1}
           rounded={false}
           style={styles.paper}
-          onTouchTap={() => mediaActions.toggleLightbox(index)}
         >
           <img
             src={media.url({
@@ -170,6 +169,7 @@ class ImageDetail extends Component {
               store: "large"
             })}
             alt={productTitle}
+            onTouchTap={() => mediaActions.toggleLightbox(index)}
             style={index === 0 ? styles.fluidImage : styles.tinyImage}
           />
           {ReactionCore.hasPermission("createProduct") &&
