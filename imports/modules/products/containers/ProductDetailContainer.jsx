@@ -125,7 +125,8 @@ ProductDetailContainer.propTypes = {
     validateBeforeToggleVisibility: PropTypes.func,
     changeAddToCartQuantity: PropTypes.func,
     incrementAddToCartQuantity: PropTypes.func,
-    decrementAddToCartQuantity: PropTypes.func
+    decrementAddToCartQuantity: PropTypes.func,
+    addToCart: PropTypes.func
   }).isRequired,
   params: PropTypes.object.isRequired, // TODO why it is here?
   product: PropTypes.object.isRequired,

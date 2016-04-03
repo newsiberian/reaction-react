@@ -311,8 +311,10 @@ class ProductDetail extends Component {
                   { /* Cart Add Block */ }
                   <div>
                     <CartAdd
+                      product={product}
                       selectedVariant={selectedVariant}
                       addToCartQuantity={addToCartQuantity}
+                      addToCart={productActions.addToCart}
                       changeAddToCartQuantity={productActions.changeAddToCartQuantity}
                       incrementAddToCartQuantity={productActions.incrementAddToCartQuantity}
                       decrementAddToCartQuantity={productActions.decrementAddToCartQuantity}
@@ -413,7 +415,8 @@ ProductDetail.propTypes = {
     validateBeforeToggleVisibility: PropTypes.func,
     changeAddToCartQuantity: PropTypes.func,
     incrementAddToCartQuantity: PropTypes.func,
-    decrementAddToCartQuantity: PropTypes.func
+    decrementAddToCartQuantity: PropTypes.func,
+    addToCart: PropTypes.func
   }).isRequired,
   fields: PropTypes.shape({ // product state from `store`
     title: PropTypes.object,

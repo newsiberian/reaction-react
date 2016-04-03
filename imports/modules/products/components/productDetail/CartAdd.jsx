@@ -72,7 +72,7 @@ class CartAdd extends Component {
   }
 
   render() {
-    const { addToCartQuantity, selectedVariant, t } = this.props;
+    const { addToCartQuantity, addToCart, product, selectedVariant, t } = this.props;
     console.log("CartAdd: rendering...");
     return (
       <Paper zDepth={1} style={styles.container}>
@@ -114,8 +114,7 @@ class CartAdd extends Component {
             labelStyle={styles.addToCartLabel}
             // title={t("productDetailEdit.editOption")}
             style={styles.addToCart}
-            // onTouchTap={() =>
-            //        variantsActions.changeVariantFormVisibility(variant._id)}
+            onTouchTap={() => addToCart(product, selectedVariant, addToCartQuantity)}
           />
         </div>
       </Paper>
@@ -160,10 +159,12 @@ class CartAdd extends Component {
 CartAdd.propTypes = {
   // current addToCart quantity state
   addToCartQuantity: PropTypes.number.isRequired,
+  addToCart: PropTypes.func,
   changeAddToCartQuantity: PropTypes.func,
   incrementAddToCartQuantity: PropTypes.func,
   decrementAddToCartQuantity: PropTypes.func,
-  selectedVariant: PropTypes.object,
+  product: PropTypes.object.isRequired,
+  selectedVariant: PropTypes.object.isRequired,
   t: PropTypes.func
 };
 

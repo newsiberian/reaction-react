@@ -71,8 +71,8 @@ class VariantForm extends Component {
 
     // first we need to make sync with `optionTitle` field because we not fill it
     // manually
-    if (type === "option") {
-      variantsActions.syncWithTitle(variantId, event.target.value);
+    if (type === "option" && field === "title") {
+      variantsActions.syncWithTitle(variantId, value);
     }
 
     productActions.updateProductField(variantId, field, value, "variant");

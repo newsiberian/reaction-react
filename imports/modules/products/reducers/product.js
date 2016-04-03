@@ -147,6 +147,8 @@ const addToCartQuantity = (state = 1, action) => {
     return state - 1;
   case types.CHANGE_ADD_TO_CART_QUANTITY:
     return action.quantity;
+  case types.RESET_ADD_TO_CART_QUANTITY:
+    return 1;
   default:
     return state;
   }

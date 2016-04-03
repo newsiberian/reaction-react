@@ -1,5 +1,7 @@
+import { Meteor } from "meteor/meteor";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import * as types from "../constants";
+import { getVariants, getTopVariants } from "../../../client/helpers/products";
 import { displayAlert } from "../../layout/actions/alert";
 import { routerActions } from "react-router-redux";
 import i18next from "i18next";
@@ -30,7 +32,7 @@ export const setVariantId = (productId, variantId) => {
     });
     if (product) {
       // set the first variant as the default.
-      const variants = ReactionCore.getTopVariants(productId);
+      const variants = getTopVariants(productId);
       variantId = Array.isArray(variants) && variants.length &&
         variants[0]._id || null;
     }
@@ -49,7 +51,7 @@ export const changeSelectedVariantId = variantId => {
  *
  * @param {Object} product - product doc
  * @param {Boolean} doVisible - new visibility state
- * @return {Function}
+ * @return {Function} publishProduct
  */
 export const validateBeforeToggleVisibility = (product, doVisible) => {
   return dispatch => {
@@ -59,18 +61,21 @@ export const validateBeforeToggleVisibility = (product, doVisible) => {
         field: i18next.t("productDetailEdit.title")
       });
     }
-    const variants = ReactionCore.getVariants(product._id);
-    for (let variant of variants) {
-      let index = _.indexOf(variants, variant);
+    const variants = getVariants(product._id);
+    variants.forEach((variant, index) => {
       if (!variant.title) {
         message += `${i18next.t("error.variantFieldIsRequired",
           { field: i18next.t("productVariant.title"), number: index + 1 })} `;
       }
-      if (!variant.price) {
-        message += `${i18next.t("error.variantFieldIsRequired",
-          { field: i18next.t("productVariant.price"), number: index + 1 })} `;
+      // if top variant has children, it is not necessary to check its price
+      if (variant.ancestors.length === 1 && !getVariants(variant._id) ||
+        variant.ancestors.length !== 1) {
+        if (! variant.price) {
+          message += `${i18next.t("error.variantFieldIsRequired",
+            { field: i18next.t("productVariant.price"), number: index + 1 })} `;
+        }
       }
-    }
+    });
     if (message.length) {
       dispatch(displayAlert({ message: message }));
     } else {
@@ -83,14 +88,20 @@ export const validateBeforeToggleVisibility = (product, doVisible) => {
  * publishProduct
  * @summary loop over products array and fires `publishProduct` method for each
  * @param {Array} products - array with product _id and new visibility state
- * @return {Function}
+ * @return {Function} calls `products/publishProduct` Meteor method
  */
 export const publishProduct = products => {
   return dispatch => {
     products.forEach(product => Meteor.call("products/publishProduct", product._id,
       (error, result) => {
         if (error) {
-          dispatch(displayAlert({ message: error.reason }));
+          let errMessage;
+          if (error.message === "Some properties are missing.") {
+            errMessage = "Some properties are missing.";
+          } else {
+            errMessage = error.message;
+          }
+          dispatch(displayAlert({ message: errMessage }));
           throw new Meteor.Error("error publishing product", error);
         }
         const message = result ?
@@ -154,7 +165,7 @@ export const cloneProduct = productOrArray => {
  * @param {Array} products - array with products objects
  * @todo we could make this actionCreator better by checking the current route
  * and redirect accordingly to it.
- * @return {Function}
+ * @return {Function} calls `products/deleteProduct` Meteor method
  */
 export const maybeDeleteProduct = products => {
   return dispatch => {
@@ -236,18 +247,18 @@ export const updateProductWeight = (products, weight, tag) => {
   };
 };
 
-/**
- * changeProductField
- * @summary this calls on product field change event
- * @deprecated
- * @param {String} productId
- * @param {String} field
- * @param {String} value
- * @return {{type, field: *, value: *}}
- */
-export const changeProductField = (productId, field, value) => {
-  return { type: types.CHANGE_PRODUCT_FIELD, productId, field, value };
-};
+// /**
+//  * changeProductField
+//  * @summary this calls on product field change event
+//  * @deprecated
+//  * @param {String} productId - product
+//  * @param {String} field
+//  * @param {String} value
+//  * @return {{type, field: *, value: *}}
+//  */
+// export const changeProductField = (productId, field, value) => {
+//   return { type: types.CHANGE_PRODUCT_FIELD, productId, field, value };
+// };
 
 /**
  * updateProductField
@@ -256,7 +267,7 @@ export const changeProductField = (productId, field, value) => {
  * @param {String} field - field name
  * @param {String|Number} value - field value
  * @param {String} [type] - type of product. Could be "variant" or "product"
- * @return {Function}
+ * @return {Function} calls `products/setHandle` Meteor method
  */
 export const updateProductField = (productId, field, value, type = "product") => {
   return dispatch => {
@@ -316,8 +327,57 @@ export const changeAddToCartQuantity = quantity => {
   return { type: types.CHANGE_ADD_TO_CART_QUANTITY, quantity };
 };
 
-export const addToCart = () => {
+/**
+ * resetAddToCartQuantity
+ * @summary we need to reset `addToCartQuantity` state after successful adding
+ * to cart
+ * @return {{type, quantity: *}}
+ */
+const resetAddToCartQuantity = () => {
+  return { type: types.RESET_ADD_TO_CART_QUANTITY, quantity };
+};
+
+export const addToCart = (product, currentVariant, quantity) => {
   return dispatch => {
-    
+    if (currentVariant) {
+      if (currentVariant.ancestors.length === 1) {
+        // if options exists, one should be chosen
+        const options = getVariants(currentVariant._id);
+        if (options.length > 0) {
+          dispatch(displayAlert({ message: i18next.t("productDetail.chooseOptions") }));
+          return [];
+        }
+      }
+
+      if (currentVariant.inventoryPolicy && currentVariant.inventoryQuantity < 1) {
+        dispatch(displayAlert({ message: i18next.t("productDetail.outOfStock") }));
+        return [];
+      }
+
+      if (!product.isVisible) {
+        dispatch(displayAlert({ message: i18next.t("productDetail.publishFirst") }));
+      } else {
+        Meteor.call("cart/addToCart", product._id, currentVariant._id, quantity,
+          (err, res) => {
+            if (err) {
+              ReactionCore.Log.error("Failed to add to cart.", error);
+              dispatch(displayAlert({ message: err.reason }));
+            }
+            if (res) {
+              dispatch({
+                type: types.ADD_TO_CART,
+                productId: product._id,
+                variantId: currentVariant._id,
+                quantity
+              });
+              dispatch(resetAddToCartQuantity());
+              // TODO add remained logic with cool add to cart animation
+            }
+          }
+        );
+      }
+    } else {
+      dispatch(displayAlert({ message: i18next.t("productDetail.selectOption") }));
+    }
   };
 };
