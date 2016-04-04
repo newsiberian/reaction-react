@@ -99,11 +99,14 @@ class ProductsGridItem extends Component {
     const weight = positions.weight || 0;
     switch (weight) {
     case 1:
-      return styles.productMedium;
+      return "col-xs-12 col-xsm-6 col-sm-8 col-md-5 col-lg-3";
+      // return styles.productMedium;
     case 2:
-      return styles.productLarge;
+      return "col-xs-12 col-sm-12 col-md-12 col-lg-12";
+      // return styles.productLarge;
     default:
-      return styles.productSmall;
+      return "col-xs-12 col-xsm-6 col-sm-4 col-md-3 col-lg-20";
+      // return styles.productSmall;
     }
   }
 
@@ -318,8 +321,8 @@ class ProductsGridItem extends Component {
     // style={ this.weightClass.call(product) }
     return (
       <div
-        className={c(styles.card, this.weightClass(),
-          "col-xs-12 col-xsm-6 col-sm-4 col-md-3 col-lg-20")}
+        className={c(styles.card, this.weightClass()/*,
+          "col-xs-12 col-xsm-6 col-sm-4 col-md-3 col-lg-20"*/)}
         //data-id={_id}
         // style={Object.assign({}, styles.card, this.weightClass())}
         // style={styles.card}

@@ -40,7 +40,6 @@ export const styles = StyleSheet.create({
     flexBasis: "auto"
   },
   realImage: {
-    // borderTopLeftRadius: "0.28571429rem",
     height: 325,
     width: "100%",
     objectFit: "cover"
@@ -48,7 +47,8 @@ export const styles = StyleSheet.create({
   realAdditionalImage: {
     height: "calc(325px / 3)",
     width: "100%",
-    objectFit: "cover"
+    objectFit: "cover",
+    flex: "1 1 auto"
   },
   productMedium: {
     width: "calc(50% - 1.5em)"
