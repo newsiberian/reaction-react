@@ -4,6 +4,7 @@ import { FS } from "meteor/cfs:base-package";
 import GridControls from "./GridControls.jsx";
 import GridContent from "./GridContent.jsx";
 import GridNotice from "./GridNotice.jsx";
+import { getTag } from "../../../../client/helpers/products";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import { Link } from "react-router";
@@ -88,8 +89,12 @@ class ProductsGridItem extends Component {
   //}
 
   weightClass() {
-    const position = this.props.product.position || {};
-    const weight = position.weight || 0;
+    const { product, location, params } = this.props;
+    const tag = getTag(location, params);
+    // const position = this.props.product.position || {};
+    const positions = product.positions &&
+      product.positions[tag] || {};
+    const weight = positions.weight || 0;
     switch (weight) {
     case 1:
       return productMedium;
@@ -100,16 +105,26 @@ class ProductsGridItem extends Component {
     }
   }
 
+  isSelected(id) {
+    return Boolean(~this.props.selectedProducts.indexOf(id));
+  }
+
   isMediumWeight() {
-    const position = this.props.product.position || {};
-    const weight = position.weight || 0;
+    const { product, location, params } = this.props;
+    const tag = getTag(location, params);
+    const positions = product.positions && product.positions[tag] || {};
+    const weight = positions.weight || 0;
 
     return weight === 1;
   }
 
-  isSelected(id) {
-    // transform result to boolean
-    return !!~this.props.selectedProducts.indexOf(id);
+  isLargeWeight() {
+    const { product, location, params } = this.props;
+    const tag = getTag(location, params);
+    const positions = product.positions && product.positions[tag] || {};
+    const weight = positions.weight || 0;
+
+    return weight === 3;
   }
 
   //isSoldOut() {
@@ -216,16 +231,16 @@ class ProductsGridItem extends Component {
     if (isObjectFitSupported) {
       if (media instanceof FS.File) { // typeof media === "object"
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <img style={realImage} src={media.url({ store: "large" })} alt={media.name()} />;
+        image = <img style={realImage} src={media.url({ store: "large" })} alt={product.title/*media.name()*/} />;
       } else {
-        image = <img style={realImage} src="resources/placeholder.gif" alt="" />;
+        image = <img style={realImage} src="/resources/placeholder.gif" alt={product.title} />;
       }
     } else {
       if (media instanceof FS.File) {
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <div style={[fakeImage, { backgroundImage: `url(${media.url({ store: "large" })})`}] }></div>;
+        image = <div style={[fakeImage, { backgroundImage: `url(${media.url({ store: "large" })})`}]}></div>;
       } else {
-        image = <div style={[fakeImage, { backgroundImage: "url(resources/placeholder.gif)" }]}></div>;
+        image = <div style={[fakeImage, { backgroundImage: "url(/resources/placeholder.gif)" }]}></div>;
       }
     }
     return (
@@ -250,32 +265,33 @@ class ProductsGridItem extends Component {
       if (this.isMediumWeight()) {
         if (isObjectFitSupported) {
           return (
-            <div style={ additionalImages }>
-              { additionalMedia.fetch().map((media, i) => {
+            <div style={additionalImages}>
+              {additionalMedia.fetch().map((media, i) => {
                 return (
                   <img
-                    key={ i }
-                    style={ realAdditionalImage }
-                    src={ media.url({ store: "medium" }) }
-                    alt={ media.name() }
+                    key={i}
+                    style={realAdditionalImage}
+                    src={media.url({ store: "medium" })}
+                    alt={media.name()}
                     />
-                )
-              }) }
+                );
+              })}
             </div>
           );
         } else {
           return (
-            <div style={ additionalImages }>
-              { additionalMedia.fetch().map((media, i) => {
+            <div style={additionalImages}>
+              {additionalMedia.fetch().map((media, i) => {
+                debugger;
                 return (
                   <div
-                    key={ i }
-                    style={ [additianalImage, fakeImage,
+                    key={i}
+                    style={[additianalImage, fakeImage,
                       { backgroundImage: `url(${media.url({ store: "medium" })})` }
-                    ] }
+                    ]}
                   >
                   </div>);
-              }) }
+              })}
             </div>
           );
         }
@@ -345,6 +361,10 @@ ProductsGridItem.propTypes = {
     language: PropTypes.string,
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
+  }).isRequired,
+  location: PropTypes.object.isRequired,
+  params: PropTypes.shape({
+    slug: PropTypes.string
   }).isRequired,
   product: PropTypes.object.isRequired,
   productActions: PropTypes.shape({

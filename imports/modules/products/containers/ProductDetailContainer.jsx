@@ -121,6 +121,10 @@ ProductDetailContainer.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired,
+  params: PropTypes.shape({
+    handle: PropTypes.string,
+    variantId: PropTypes.string
+  }).isRequired,
   productActions: PropTypes.shape({
     setProductId: PropTypes.func,
     setVariantId: PropTypes.func,

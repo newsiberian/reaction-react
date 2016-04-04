@@ -184,7 +184,7 @@ class ProductDetail extends Component {
 
   renderProductSocialManage() {
     // todo make this part work
-    const { selectedProduct } = this.props;
+    // const { selectedProduct } = this.props;
 
     return (
       <div>
@@ -197,7 +197,7 @@ class ProductDetail extends Component {
         })}
         <div>
           {social.map((options, index) => {
-            {/* todo fix this */}
+            // todo fix this
             return this.renderFieldComponent(options, index);
           })}
         </div>

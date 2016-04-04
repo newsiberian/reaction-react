@@ -210,6 +210,9 @@ ProductsGridContainer.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   location: PropTypes.object.isRequired,
+  params: PropTypes.shape({
+    slug: PropTypes.string
+  }).isRequired,
   products: PropTypes.array,
   productActions: PropTypes.shape({
     publishProduct: PropTypes.func,
