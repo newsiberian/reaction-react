@@ -218,6 +218,7 @@ function composer(props, onData) {
     const allVariants = ReactionCore.Collections.Products.find({
       ancestors: { $in: [product._id] }
     }, { fields: { _id: 1 } }).fetch();
+
     onData(null, {
       product,
       selectedVariant,

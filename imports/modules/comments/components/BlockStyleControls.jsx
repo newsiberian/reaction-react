@@ -47,7 +47,7 @@ const BlockStyleControls = props => {
           // title={props.t(`comments.editor.${type.label}`)}
           // icon={<type.icon />}
           onClick={() => props.onClick(type.style)}
-          style={type.style === blockType && styles}
+          style={type.style === blockType ? styles : {}}
         />
       )}
     </div>
@@ -56,8 +56,8 @@ const BlockStyleControls = props => {
 
 BlockStyleControls.propTypes = {
   editorState: PropTypes.object,
-  onClick: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onClick: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default translate("reaction-react")(BlockStyleControls);

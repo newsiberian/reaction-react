@@ -25,7 +25,7 @@ const InlineStyleControls = props => {
           title={props.t(`comments.editor.${type.label}`)}
           icon={<type.icon />}
           onClick={() => props.onClick(type.style)}
-          style={currentStyle.has(type.style) && styles}
+          style={currentStyle.has(type.style) ? styles : {}}
         />
       )}
     </div>
@@ -34,8 +34,8 @@ const InlineStyleControls = props => {
 
 InlineStyleControls.propTypes = {
   editorState: PropTypes.object,
-  onClick: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onClick: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default translate("reaction-react")(InlineStyleControls);

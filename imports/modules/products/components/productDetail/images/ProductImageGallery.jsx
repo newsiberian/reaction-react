@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   },
   bigImage: {
     maxWidth: "100%"
-    // flex: "1 0 100%"
   },
   dropzone: { // taken from SUI "ui basic button"
     display: "inline-block",

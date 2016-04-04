@@ -100,7 +100,7 @@ class CoreLayout extends Component {
 
   handleAlertClose() {
     this.props.alertActions.closeAlert();
-  };
+  }
 
   render() {
     const { alert, cart, children, location, params, settings } = this.props;
@@ -198,6 +198,7 @@ function composer(props, onData) {
     // here? maybe we need to run another composer from there?
     const cart = ReactionCore.Collections.Cart.findOne({},
       { fields: { items: 1 } });
+
     onData(null, { cart: cart });
   }
 }
