@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { FS } from "meteor/cfs:base-package";
+import { StyleSheet } from "react-look";
 import GridControls from "./GridControls.jsx";
 import GridContent from "./GridContent.jsx";
 import GridNotice from "./GridNotice.jsx";
@@ -10,16 +11,18 @@ import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import { Link } from "react-router";
 import {
   styles,
-  fakeImage,
-  primaryImage,
-  additionalImages,
-  additianalImage,
-  realImage,
-  realAdditionalImage,
-  productMedium,
-  productLarge,
-  productSmall
+  // fakeImage,
+  // primaryImage,
+  // additionalImages,
+  // additionalImage,
+  // realImage,
+  // realAdditionalImage,
+  // productMedium,
+  // productLarge,
+  // productSmall
 } from "../../styles/productsGridItem";
+
+const c = StyleSheet.combineStyles;
 
 const getMedia = _id => {
   const media = ReactionCore.Collections.Media.findOne({
@@ -92,16 +95,15 @@ class ProductsGridItem extends Component {
     const { product, location, params } = this.props;
     const tag = getTag(location, params);
     // const position = this.props.product.position || {};
-    const positions = product.positions &&
-      product.positions[tag] || {};
+    const positions = product.positions && product.positions[tag] || {};
     const weight = positions.weight || 0;
     switch (weight) {
     case 1:
-      return productMedium;
+      return styles.productMedium;
     case 2:
-      return productLarge;
+      return styles.productLarge;
     default:
-      return productSmall;
+      return styles.productSmall;
     }
   }
 
@@ -118,14 +120,14 @@ class ProductsGridItem extends Component {
     return weight === 1;
   }
 
-  isLargeWeight() {
-    const { product, location, params } = this.props;
-    const tag = getTag(location, params);
-    const positions = product.positions && product.positions[tag] || {};
-    const weight = positions.weight || 0;
-
-    return weight === 3;
-  }
+  // isLargeWeight() {
+  //   const { product, location, params } = this.props;
+  //   const tag = getTag(location, params);
+  //   const positions = product.positions && product.positions[tag] || {};
+  //   const weight = positions.weight || 0;
+  //
+  //   return weight === 3;
+  // }
 
   //isSoldOut() {
   //  return this.props.product.isSoldOut;
@@ -220,36 +222,40 @@ class ProductsGridItem extends Component {
     const media = getMedia(product._id);
     const selected = this.isSelected(product._id);
     const isObjectFitSupported = checkObjectFitSupported();
-    const linkStyles = {
+    const linkStyles = StyleSheet.create({
       display: "flex",
       height: 325,
       boxShadow: selected ? "0px 1px 3px 1px #2FE74E, 0px 0px 0px 3px #2FE74E" :
         "0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5",
       transition: "box-shadow 0.1s ease, transform 0.1s ease"
-    };
+    });
 
     if (isObjectFitSupported) {
       if (media instanceof FS.File) { // typeof media === "object"
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <img style={realImage} src={media.url({ store: "large" })} alt={product.title/*media.name()*/} />;
+        image = <img className={styles.realImage} src={media.url({ store: "large" })} alt={product.title/*media.name()*/} />;
       } else {
-        image = <img style={realImage} src="/resources/placeholder.gif" alt={product.title} />;
+        image = <img className={styles.realImage} src="/resources/placeholder.gif" alt={product.title} />;
       }
     } else {
       if (media instanceof FS.File) {
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <div style={[fakeImage, { backgroundImage: `url(${media.url({ store: "large" })})`}]}></div>;
+        image = <div
+          className={styles.fakeImage}
+          style={{ backgroundImage: `url(${media.url({ store: "large" })})`}}></div>;
       } else {
-        image = <div style={[fakeImage, { backgroundImage: "url(/resources/placeholder.gif)" }]}></div>;
+        image = <div
+          className={styles.fakeImage}
+          style={{ backgroundImage: "url(/resources/placeholder.gif)" }}></div>;
       }
     }
     return (
       <Link
-        className="image"
+        className={linkStyles}
         to={`/shop/product/${ product.handle }`}
-        style={linkStyles}
+        // style={linkStyles}
       >
-        <div style={primaryImage}>
+        <div className={styles.primaryImage}>
           {image}
         </div>
         {this.renderAdditionalMedia(isObjectFitSupported)}
@@ -265,36 +271,32 @@ class ProductsGridItem extends Component {
       if (this.isMediumWeight()) {
         if (isObjectFitSupported) {
           return (
-            <div style={additionalImages}>
-              {additionalMedia.fetch().map((media, i) => {
-                return (
-                  <img
-                    key={i}
-                    style={realAdditionalImage}
-                    src={media.url({ store: "medium" })}
-                    alt={media.name()}
-                    />
-                );
-              })}
-            </div>
-          );
-        } else {
-          return (
-            <div style={additionalImages}>
-              {additionalMedia.fetch().map((media, i) => {
-                debugger;
-                return (
-                  <div
-                    key={i}
-                    style={[additianalImage, fakeImage,
-                      { backgroundImage: `url(${media.url({ store: "medium" })})` }
-                    ]}
-                  >
-                  </div>);
-              })}
+            <div className={styles.additionalImages}>
+              {additionalMedia.fetch().map((media, i) => (
+                <img
+                  key={i}
+                  className={styles.realAdditionalImage}
+                  src={media.url({ store: "medium" })}
+                  alt={this.props.product.title/*media.name()*/}
+                />
+              ))}
             </div>
           );
         }
+        return (
+          <div style={additionalImages}>
+            {additionalMedia.fetch().map((media, i) => {
+              debugger;
+              return (
+                <div
+                  key={i}
+                  className={c(styles.additionalImage, styles.fakeImage)}
+                  style={{backgroundImage: `url(${media.url({ store: "medium" })})`}}
+                >
+                </div>);
+            })}
+          </div>
+        );
       }
     }
     return false;
@@ -309,21 +311,18 @@ class ProductsGridItem extends Component {
     //const priceRange = price.max ? `${price.min} - ${price.max}` : `${price.min}`;
 
     // todo this could be a bug
-    const formatedPrice = formatPrice(price.range && price.range || "0", locale);
+    const formattedPrice = formatPrice(price.range && price.range || "0", locale) || "";
 
     console.log("ProductGridItem: rendering...");
     // todo do we really need data-tags here?
     // style={ this.weightClass.call(product) }
     return (
       <div
-        className="col-xs-12
-                col-xsm-6
-                col-sm-4
-                col-md-3
-                col-lg-20"
+        className={c(styles.card, this.weightClass(),
+          "col-xs-12 col-xsm-6 col-sm-4 col-md-3 col-lg-20")}
         //data-id={_id}
-        //style={Object.assign({}, styles, this.weightClass())}
-        style={styles.card}
+        // style={Object.assign({}, styles.card, this.weightClass())}
+        // style={styles.card}
         onClick={(event) => this.handleClick(event, _id)}
       >
         <GridNotice
@@ -344,7 +343,7 @@ class ProductsGridItem extends Component {
         <GridContent
           handle={handle}
           title={title}
-          price={formatedPrice}
+          price={formattedPrice}
         />
       </div>
     );
