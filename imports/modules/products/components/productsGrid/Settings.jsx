@@ -102,9 +102,9 @@ const setPublishList = products => {
 };
 
 // get styles by products `weight`
-const getWeightActive = (products, weight) => {
+const getWeightActive = (products, weight, tag) => {
   for (let product of products) {
-    let positions = product.positions || {};
+    let positions = product.positions && product.positions[tag] || {};
     let currentWeight = positions.weight || 0;
     if (currentWeight === weight) {
       return { backgroundColor: "#666666" };
@@ -192,7 +192,7 @@ class Settings extends Component {
         <Paper style={styles.sizeContainer} zDepth={1} rounded={false}>
           <div
             className={c(ss.sizeItem, StyleSheet.create({ paddingLeft: 5, paddingRight: 5 }),
-              StyleSheet.create(getWeightActive(products, 0)))}
+              StyleSheet.create(getWeightActive(products, 0, tag)))}
             onClick={() => productActions.updateProductWeight(products, 0, tag)}
           >
             <div className={ss.sizeControl}>
@@ -200,7 +200,7 @@ class Settings extends Component {
             </div>
           </div>
           <div
-            className={c(ss.sizeItem, StyleSheet.create(getWeightActive(products, 1)))}
+            className={c(ss.sizeItem, StyleSheet.create(getWeightActive(products, 1, tag)))}
             onClick={() => productActions.updateProductWeight(products, 1, tag)}
           >
             <div
@@ -219,14 +219,14 @@ class Settings extends Component {
             </div>
           </div>
           <div
-            className={c(ss.sizeItem, StyleSheet.create(getWeightActive(products, 2)))}
+            className={c(ss.sizeItem, StyleSheet.create(getWeightActive(products, 2, tag)))}
             onClick={() => productActions.updateProductWeight(products, 2, tag)}
           >
             <div
               className={c(ss.sizeControl, StyleSheet.create({
                 width: 100,
                 marginLeft: 0,
-                marginRight: 0
+                marginRight: 5
               }))}
             >
               <div style={styles.sizeMain}></div>
