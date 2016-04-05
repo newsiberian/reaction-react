@@ -14,6 +14,15 @@ export const styles = StyleSheet.create({
   }
 });
 
+export const cartButton = {
+  width: "100%",
+  margin: "0 1rem 2rem 0",
+  fontSize: 17,
+  fontWeight: 600,
+  lineHeight: "40px",
+  borderRadius: 0
+};
+
 export const openCartStyles = {
   marginTop: "1rem",
   marginBottom: "1rem"

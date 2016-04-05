@@ -1,15 +1,7 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import FlatButton from "material-ui/lib/flat-button";
-import { styles } from "../../styles/cartDrawer";
-
-// we use styles because not to use `!important`
-const emptyCartButton = {
-  width: "100%",
-  margin: "0 1rem 2rem 0",
-  fontSize: 17,
-  lineHeight: "40px"
-};
+import { cartButton, styles } from "../../styles/cartDrawer";
 
 const EmptyCartDrawer = props => {
   const { cartActions, t } = props;
@@ -27,7 +19,7 @@ const EmptyCartDrawer = props => {
        hoverColor="#DEA048"
        label={t("cartDrawer.keepShopping")}
        onTouchTap={cartActions.toggleCart}
-       style={emptyCartButton}
+       style={cartButton}
        labelStyle={{ color: "#fff" }}
      />
    </div>
