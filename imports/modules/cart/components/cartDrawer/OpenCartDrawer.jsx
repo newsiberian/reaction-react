@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { browserHistory } from "react-router";
+import Slider from "react-slick";
 import FlatButton from "material-ui/lib/flat-button";
 import CartSubTotals from "./CartSubTotals.jsx";
 import CartDrawerItem from "./CartDrawerItem.jsx";
-// fixme
-// import Slider from "meteor/universe:carousel";
 import { openCartStyles as styles, cardStyles, cartButton } from "../../styles/cartDrawer";
 
 class OpenCartDrawer extends Component {
@@ -19,19 +18,19 @@ class OpenCartDrawer extends Component {
 
   render() {
     const { cart, cartActions,  media, t } = this.props;
-    //const slidesToShow = Math.floor(window.innerWidth / cardStyles.width);
-    //const settings = {
-    //  adaptiveHeight: false,
-    //  arrows: false,
-    //  dots: false,
-    //  infinite: false,
-    //  speed: 500,
-    //  slidesToShow: slidesToShow,
-    //  slidesToScroll: 1,
-    //  swipe: true,
-    //  swipeToSlide: true,
-    //  vertical: false
-    //};
+    const slidesToShow = Math.floor(window.innerWidth / cardStyles.width);
+    const settings = {
+      adaptiveHeight: false,
+      arrows: false,
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: slidesToShow,
+      slidesToScroll: 1,
+      swipe: true,
+      swipeToSlide: true,
+      vertical: false
+    };
     console.log("OpenCartDrawer rendering...");
     return (
      <div>
