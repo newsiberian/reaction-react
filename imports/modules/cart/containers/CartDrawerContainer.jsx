@@ -69,7 +69,7 @@ class CartDrawerContainer extends Component {
   //},
 
   render() {
-    return <CartDrawer {...props} />;
+    return <CartDrawer {...this.props} />;
   }
 };
 

@@ -111,7 +111,7 @@ LayoutHeaderContainer.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    displayCart: state.cart.visible,
+    displayCart: state.cart.displayCart,
     //pathname: state.routing.location.pathname,
     pathname: ownProps.location.pathname
   };
