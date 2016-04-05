@@ -29,16 +29,18 @@ const getProductTopVariants = productId => {
   if (variants.length) {
     // calculate inventory total for all variants
     variants.forEach(variant => {
-      const qty = getVariantQuantity(variant);
-      if (typeof qty === "number") {
-        inventoryTotal += qty;
+      if (variant.inventoryManagement) {
+        const qty = getVariantQuantity(variant);
+        if (typeof qty === "number") {
+          inventoryTotal += qty;
+        }
       }
     });
     // calculate percentage of total inventory of this product
     variants.forEach(variant => {
       const qty = getVariantQuantity(variant);
       variant.inventoryTotal = inventoryTotal;
-      if (inventoryTotal) {
+      if (variant.inventoryManagement && inventoryTotal) {
         variant.inventoryPercentage = parseInt(qty / inventoryTotal * 100, 10);
       } else {
         variant.inventoryPercentage = 100;

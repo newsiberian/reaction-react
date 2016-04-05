@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
+import { StyleSheet } from "react-look";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import Avatar from "material-ui/lib/avatar";
@@ -14,6 +15,26 @@ import { formatPrice } from "../../../../client/helpers/i18n";
 import { getTag } from "../../../../client/helpers/products";
 import { red500 } from "material-ui/lib/styles/colors";
 
+const c = StyleSheet.combineStyles;
+const ss = StyleSheet.create({
+  sizeItem: {
+    position: "relative",
+    display: "block",
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: "#ffffff"
+  },
+  sizeControl: {
+    display: "flex",
+    flex: "1 1 auto",
+    width: 50,
+    maxWidth: 100,
+    height: 50,
+    margin: 10
+  }
+});
 const styles = {
   headerContainer: {
     display: "flex",
@@ -38,23 +59,6 @@ const styles = {
   sizeContainer: {
     display: "flex",
     cursor: "pointer"
-  },
-  sizeItem: {
-    position: "relative",
-    display: "block",
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: "#ffffff"
-  },
-  sizeControl: {
-    display: "flex",
-    flex: "1 1 auto",
-    width: 50,
-    maxWidth: 100,
-    height: 50,
-    margin: 10
   },
   sizeMain: {
     flex: "1 1 auto",
@@ -187,24 +191,24 @@ class Settings extends Component {
         <Divider />
         <Paper style={styles.sizeContainer} zDepth={1} rounded={false}>
           <div
-            style={Object.assign({}, styles.sizeItem,
-             { paddingLeft: 5, paddingRight: 5 }, getWeightActive(products, 0))}
+            className={c(ss.sizeItem, StyleSheet.create({ paddingLeft: 5, paddingRight: 5 }),
+              StyleSheet.create(getWeightActive(products, 0)))}
             onClick={() => productActions.updateProductWeight(products, 0, tag)}
           >
-            <div style={styles.sizeControl}>
+            <div className={ss.sizeControl}>
               <div style={styles.sizeMain}></div>
             </div>
           </div>
           <div
-            style={Object.assign({}, styles.sizeItem, getWeightActive(products, 1))}
+            className={c(ss.sizeItem, StyleSheet.create(getWeightActive(products, 1)))}
             onClick={() => productActions.updateProductWeight(products, 1, tag)}
           >
             <div
-              style={Object.assign({}, styles.sizeControl, {
+              className={c(ss.sizeControl, StyleSheet.create({
                 width: 75,
                 marginLeft: 0,
                 marginRight: 0
-              })}
+              }))}
             >
               <div style={styles.sizeMain}></div>
               <div style={styles.sizeSide}>
@@ -215,15 +219,15 @@ class Settings extends Component {
             </div>
           </div>
           <div
-            style={Object.assign({}, styles.sizeItem, getWeightActive(products, 2))}
+            className={c(ss.sizeItem, StyleSheet.create(getWeightActive(products, 2)))}
             onClick={() => productActions.updateProductWeight(products, 2, tag)}
           >
             <div
-              style={Object.assign({}, styles.sizeControl, {
+              className={c(ss.sizeControl, StyleSheet.create({
                 width: 100,
                 marginLeft: 0,
                 marginRight: 0
-              })}
+              }))}
             >
               <div style={styles.sizeMain}></div>
             </div>
