@@ -47,7 +47,13 @@ export default class CartDrawer extends Component {
 }
 
 CartDrawer.propTypes = {
-  cart: PropTypes.object.isRequired,
+  cart: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    items: PropTypes.array
+  }),
+  cartActions: PropTypes.shape({
+    toggleCart: PropTypes.func
+  }).isRequired,
   //checkCartIsEmpty: PropTypes.func.isRequired,
   //displayCart: PropTypes.bool.isRequired,
   //pathname: PropTypes.string.isRequired,

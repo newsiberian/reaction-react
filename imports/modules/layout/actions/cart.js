@@ -36,6 +36,6 @@ import * as types from "../constants";
  * @summary toggle cart visibility
  * @return {{type: *}}
  */
-export function toggleCart() {
-  return { type: types.TOGGLE_CART };
-}
+// export function toggleCart() {
+//   return { type: types.TOGGLE_CART };
+// }

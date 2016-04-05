@@ -1,11 +1,12 @@
-//import update from "react/lib/update";
 import React, { PropTypes } from "react";
 //import React, { Component, PropTypes } from "react";
+import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import * as accountsActions from "../../accounts/actions/accounts";
 import * as alertActions from "../../layout/actions/alert";
-import * as cartActions from "../../layout/actions/cart";
+import * as cartActions from "../../cart/actions/cart";
 import { routerActions } from "react-router-redux";
 //import { ReactionCore } from "meteor/reactioncommerce:core";
 //import LinearProgress from "material-ui/lib/linear-progress";
@@ -84,16 +85,7 @@ const LayoutHeaderContainer = props => {
   //},
 
   //render() {
-    //const { alertActions, cart, cartActions, displayCart } = props;
-    return (
-      <LayoutHeader
-        {...props}
-        //alertActions={alertActions}
-        //cart={cart}
-        //cartActions={cartActions}
-        //displayCart={displayCart}
-      />
-    );
+    return <LayoutHeader {...props} />;
   //}
 }; //);
 
@@ -119,7 +111,7 @@ LayoutHeaderContainer.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    displayCart: state.layout.cart.visible,
+    displayCart: state.cart.visible,
     //pathname: state.routing.location.pathname,
     pathname: ownProps.location.pathname
   };
@@ -134,7 +126,22 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+function composer(props, onData) {
+  if (ReactionCore.Subscriptions.Cart.ready()) {
+    // TODO maybe this is too much to transfer cart.items to cart container from
+    // here? maybe we need to run another composer from there?
+    const cart = ReactionCore.Collections.Cart.findOne({},
+      { fields: { items: 1 } });
+
+    onData(null, { cart });
+  }
+}
+
+const LayoutHeaderContainerWithData = composeWithTracker(
+  composer
+)(LayoutHeaderContainer);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LayoutHeaderContainer);
+)(LayoutHeaderContainerWithData);

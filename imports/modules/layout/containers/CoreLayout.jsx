@@ -103,12 +103,12 @@ class CoreLayout extends Component {
   }
 
   render() {
-    const { alert, cart, children, location, params, settings } = this.props;
+    const { alert, children, location, params, settings } = this.props;
     const SettingsComponent = components.getComponent(settings.name);
     return (
 			<div style={styles.wrapper}>
         <div style={styles.container}>
-          <LayoutHeaderContainer cart={cart} location={location} />
+          <LayoutHeaderContainer location={location} />
           <main role="main" style={styles.main}>
             {children}
             <LayoutFooter />
@@ -156,10 +156,6 @@ CoreLayout.propTypes = {
     closeAlert: PropTypes.func
   }).isRequired,
   alert: PropTypes.object,
-  cart: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    items: PropTypes.array
-  }),
   children: PropTypes.node,
   localeActions: PropTypes.shape({
     changeLocale: PropTypes.func,
@@ -193,14 +189,7 @@ function composer(props, onData) {
   // we don't need to use this directly here, so we don't check this `ready`.
   // We need this sometimes to get ReactionCore.Collections.Accounts info
   Meteor.subscribe("Accounts", Meteor.userId());
-  if (ReactionCore.Subscriptions.Cart.ready()) {
-    // TODO maybe this is too much to transfer cart.items to cart container from
-    // here? maybe we need to run another composer from there?
-    const cart = ReactionCore.Collections.Cart.findOne({},
-      { fields: { items: 1 } });
-
-    onData(null, { cart: cart });
-  }
+  onData(null, {});
 }
 
 const coreLayoutSubscribed = composeWithTracker(

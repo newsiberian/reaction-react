@@ -1,18 +1,14 @@
-// import { AutorunMixin, SubscriptionMixin } from "{universe:utilities-react}";
-import React, { PropTypes } from "react";
+import React, { Component, PropTypes } from "react";
+import { Meteor } from "meteor/meteor";
 import { composeWithTracker } from "react-komposer";
-//import update from "react/lib/update";
-import CartDrawer from "../components/cartDrawer/CartDrawer.jsx";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import * as alertActions from "../../layout/actions/alert";
+import CartDrawer from "../components/cartDrawer/CartDrawer.jsx";
+import * as cartActions from "../actions/cart";
 
-// const { PropTypes } = React;
-const { Cart, Products, Media } = ReactionCore.Collections;
-/**
- *
- */
-//export default React.createClass({
-const CartDrawerContainer = props => {
+class CartDrawerContainer extends Component {
+// const CartDrawerContainer = props => {
   //displayName: "CartDrawerContainer",
   //propTypes: {
   //  displayCart: PropTypes.bool.isRequired,
@@ -72,36 +68,46 @@ const CartDrawerContainer = props => {
   //    this.state.cart._id, itemId);
   //},
 
-  //render() {
-  return (
-    <CartDrawer
-      //checkCartIsEmpty={ this.checkCartIsEmpty }
-      {...props}
-      //cart={ this.state.cart }
-      //media={ this.media }
-      //onRemoveCartItemClick={ this.handleRemoveCartItemClick }
-    />
-  );
-  //}
+  render() {
+    return <CartDrawer {...props} />;
+  }
 };
 
 CartDrawerContainer.propTypes = {
   cart: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     items: PropTypes.array
-  })
+  }),
+  cartActions: PropTypes.shape({
+    toggleCart: PropTypes.func
+  }).isRequired
 };
 
-//function composer(props, onData) {
-//  if (Meteor.subscribe("AccountOrders").ready()) {
-//    onData(null, {});
-//  }
-//}
-//
-//const CartDrawerContainerSubscribed = composeWithTracker(
-//  composer,
-//  //loading
-//)(CartDrawerContainer);
+function mapStateToProps(state) {
+  return {
 
-//export default CartDrawerContainerSubscribed;
-export default CartDrawerContainer;
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    cartActions: bindActionCreators(cartActions, dispatch)
+  };
+}
+
+function composer(props, onData) {
+  const handle = Meteor.subscribe("AccountOrders");
+  if (handle.ready()) {
+    const cart = ReactionCore.Collections.Cart.findOne();
+    onData(null, { cart });
+  }
+}
+
+const CartDrawerContainerWithData = composeWithTracker(
+ composer
+)(CartDrawerContainer);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CartDrawerContainerWithData);
