@@ -71,7 +71,7 @@ class CartDrawerContainer extends Component {
   render() {
     return <CartDrawer {...this.props} />;
   }
-};
+}
 
 CartDrawerContainer.propTypes = {
   cart: PropTypes.shape({
@@ -97,8 +97,10 @@ function mapDispatchToProps(dispatch) {
 
 function composer(props, onData) {
   const handle = Meteor.subscribe("AccountOrders");
-  if (handle.ready()) {
-    const cart = ReactionCore.Collections.Cart.findOne();
+  if (handle.ready() && ReactionCore.Subscriptions.Cart.ready()) {
+    const cart = ReactionCore.Collections.Cart.findOne({}, {
+      fields: { items: 1 }
+    });
     onData(null, { cart });
   }
 }

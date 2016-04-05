@@ -1,12 +1,18 @@
-export const styles = {
-  height: "10vh",
-  width: "100vw"
-};
+import { StyleSheet } from "react-look";
 
-export const emptyCartStyles = {
-  marginTop: "4rem",
-  marginBottom: "7rem"
-};
+export const styles = StyleSheet.create({
+  container: {
+    height: "10vh",
+    width: "100vw",
+    marginBottom: "3rem"
+  },
+  emptyCartHeader: {
+    marginTop: "4rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  }
+});
 
 export const openCartStyles = {
   marginTop: "1rem",

@@ -1,42 +1,44 @@
-// import { _i18n } from "meteor/universe:i18n";
-import { emptyCartStyles as styles } from "../../styles/cartDrawer";
-import React, { Component, PropTypes } from "react";
-import { Link } from "react-router";
+import React, { PropTypes } from "react";
+import { translate } from "react-i18next/lib";
+import FlatButton from "material-ui/lib/flat-button";
+import { styles } from "../../styles/cartDrawer";
 
-//const T = _i18n.createComponent("reaction.core.cartDrawer");
+// we use styles because not to use `!important`
+const emptyCartButton = {
+  width: "100%",
+  margin: "0 1rem 2rem 0",
+  fontSize: 17,
+  lineHeight: "40px"
+};
 
-/**
- * @class EmptyCartDrawer
- * @classdesc
- */
-export default class EmptyCartDrawer extends Component {
-  render() {
-    const { displayCart, pathname, onCartIconClick } = this.props;
-    console.log("EmptyCartDrawer rendering...");
-    return <div></div>;
-    //return (
-    //  <div>
-    //    <div style={ styles }>
-    //      <h1 className="ui center aligned icon header">
-    //        <i className="small frown icon" style={{ fontSize: "2em" }}></i>
-    //        <T>empty</T>
-    //      </h1>
-    //    </div>
-    //    <Link
-    //      to={ pathname }
-    //      query={ !displayCart ? { cart: !displayCart } : {} }
-    //      className="ui teal fluid large button"
-    //      onClick={ onCartIconClick }
-    //    >
-    //      <T>keepShopping</T>
-    //    </Link>
-    //  </div>
-    //);
-  }
-}
+const EmptyCartDrawer = props => {
+  const { cartActions, t } = props;
+  console.log("EmptyCartDrawer rendering...");
+  return (
+   <div>
+     <div className={styles.container}>
+       <h1 className={styles.emptyCartHeader}>
+         <i className="fa fa-frown-o" style={{ fontSize: "1.5em" }} />
+         {t("cartDrawer.empty")}
+       </h1>
+     </div>
+     <FlatButton
+       backgroundColor="#f0ad4e"
+       hoverColor="#DEA048"
+       label={t("cartDrawer.keepShopping")}
+       onTouchTap={cartActions.toggleCart}
+       style={emptyCartButton}
+       labelStyle={{ color: "#fff" }}
+     />
+   </div>
+  );
+};
 
 EmptyCartDrawer.propTypes = {
-  displayCart: PropTypes.bool.isRequired,
-  pathname: PropTypes.string.isRequired,
-  onCartIconClick: PropTypes.func.isRequired
+  cartActions: PropTypes.shape({
+    toggleCart: PropTypes.func
+  }).isRequired,
+  t: PropTypes.func
 };
+
+export default translate("core")(EmptyCartDrawer);
