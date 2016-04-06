@@ -1,29 +1,12 @@
-import React, { Component, PropTypes } from "react";
+import React, { PropTypes } from "react";
 import EmptyCartDrawer from "./EmptyCartDrawer.jsx";
 import OpenCartDrawer from "./OpenCartDrawer.jsx";
-// import { styles } from "../../styles/cartDrawer";
 
 const CartDrawer = props => {
   if (props.cart.cartCount()) {
-    return (
-      <OpenCartDrawer
-        {...props}
-        //cart={ cart }
-        //media={ media }
-        //onRemoveCartItemClick={ onRemoveCartItemClick }
-        //style={ styles }
-      />
-    );
+    return <OpenCartDrawer {...props} />;
   }
-  return (
-    <EmptyCartDrawer
-      {...props}
-      //displayCart={ displayCart }
-      //pathname={ pathname }
-      //onCartIconClick={ onCartIconClick }
-      //style={ styles }
-    />
-  );
+  return <EmptyCartDrawer cartActions={props.cartActions} />;
 };
 
 CartDrawer.propTypes = {
@@ -33,6 +16,7 @@ CartDrawer.propTypes = {
     cartCount: PropTypes.func
   }),
   cartActions: PropTypes.shape({
+    removeCartItem: PropTypes.func,
     toggleCart: PropTypes.func
   }).isRequired,
   locale: PropTypes.shape({
@@ -41,12 +25,6 @@ CartDrawer.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired
-  //checkCartIsEmpty: PropTypes.func.isRequired,
-  //displayCart: PropTypes.bool.isRequired,
-  //pathname: PropTypes.string.isRequired,
-  //onCartIconClick: PropTypes.func.isRequired,
-  //media: PropTypes.func.isRequired,
-  //onRemoveCartItemClick: PropTypes.func.isRequired
 };
 
 export default CartDrawer;

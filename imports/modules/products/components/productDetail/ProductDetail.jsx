@@ -131,15 +131,14 @@ class ProductDetail extends Component {
       return (
         <ProductDetailEdit
           key={index}
-          // field={field}
           options={options}
           product={product}
           productActions={productActions}
           fields={fields}
-        />);
+        />
+      );
     }
 
-    // todo add markdown support here:
     return (
       <div className={options.className}>
         {options.value}
@@ -330,67 +329,6 @@ class ProductDetail extends Component {
         <CommentsContainer sourceId={product._id} />
       </section>
     );
-
-    // return (
-    //  <section className="ui fluid container basic segment">
-    //    { permissions.createProduct && this.renderProductVisibilityAdminBlock() }
-    //    <div className="ui basic segment" itemScope itemType="http://schema.org/Product">
-    //      <div className="ui basic segment">
-    //        <h1 className="ui centered header" itemProp="name">
-    //          { this.renderFieldComponent(titleOptions) }
-    //        </h1>
-    //        <h2 className="ui centered header">
-    //          { this.renderFieldComponent(pageTitleOptions) }
-    //        </h2>
-    //      </div>
-    //      <div className="ui stackable grid">
-    //        <div className="seven wide column">
-    //          <ProductImageGalleryContainer
-    //            product={ selectedProduct }
-    //            selectedVariant={ selectedVariant }
-    //            permissions={ permissions }
-    //          />
-    //          <h3><T>tags</T></h3>
-    //          { this.renderTagsComponent() }
-    //          <h3><T>details</T></h3>
-    //          { this.renderMetaComponent() }
-    //        </div>
-    //        <div className="nine wide column">
-    //
-    //          { /* Price Fixation */ }
-    //          <span itemProp="price" style={ priceStyle }>{ formatPrice(actualPrice()) }</span>
-    //          <div>
-    //            { this.renderFieldComponent(vendorOptions) }
-    //          </div>
-    //
-    //          { /* Social Commentary */ }
-    //          { /* todo fix following code */ }
-    //          { permissions.createProduct
-    //            ? this.renderProductSocialManage()
-    //            : <ProductSocial /> }
-    //
-    //          { /* Description */ }
-    //          { this.renderFieldComponent(descriptionOptions) }
-    //
-    //          { /* Variants & Options */ }
-    //          <div className="ui basic segment">
-    //            <h3 className="ui header"><T>options</T></h3>
-    //            <VariantList />
-    //          </div>
-    //
-    //          { /* Cart Add Block */ }
-    //          <div className="ui basic segment">
-    //            <CartAddButton
-    //              addToCartQuantity={ addToCartQuantity }
-    //              onAddToCartClick={ onAddToCartClick }
-    //              onAddToCartQuantityChange={ onAddToCartQuantityChange }
-    //            />
-    //          </div>
-    //        </div>
-    //      </div>
-    //    </div>
-    //  </section>
-    // );
   }
 }
 

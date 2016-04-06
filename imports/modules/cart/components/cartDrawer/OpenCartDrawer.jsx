@@ -67,6 +67,7 @@ OpenCartDrawer.propTypes = {
     cartCount: PropTypes.func
   }),
   cartActions: PropTypes.shape({
+    removeCartItem: PropTypes.func,
     toggleCart: PropTypes.func
   }).isRequired,
   locale: PropTypes.shape({

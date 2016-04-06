@@ -179,11 +179,14 @@ ProductDetailContainer.propTypes = {
   replace: PropTypes.func
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state/*, ownProps*/) {
+  debugger;
   return {
     locale: state.layout.locale,
     // productId: state.shop.product.productId,
     variantId: state.shop.product.ids.variantId,
+    // selectedVariant: getSelectedVariant(ownProps.params.variantId ||
+    //   state.shop.product.ids.variantId),
     fields: state.shop.product.fields,
     newTag: state.shop.product.newTag,
     tagsIdsArray: state.shop.product.tagsIdsArray,
@@ -212,6 +215,7 @@ function composer(props, onData) {
     // or undefined to `onData` object
     let selectedVariant = {};
     // variant could be undefined if product doesn't have variants
+    // if (typeof props.params.variantId === "string") {}
     if (typeof props.variantId === "string") {
       selectedVariant = getSelectedVariant(props.variantId);
     }

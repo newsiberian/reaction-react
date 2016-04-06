@@ -45,8 +45,11 @@ export const getProduct = (handle, productFields = defaultProductFields) => {
  * @return {Object} currently selected variant object
  */
 export const getSelectedVariant = (variantId, variantFields = defaultVariantFields) => {
+  // `variantId` could be from the previous product, ie then user click on items
+  // in cart several times.
   if (variantId) {
-    return ReactionCore.Collections.Products.findOne({ _id: variantId }, { fields: variantFields });
+    const variant = ReactionCore.Collections.Products.findOne({ _id: variantId }, { fields: variantFields });
+    return variant ? variant : {};
   }
   return {};
 };

@@ -79,6 +79,7 @@ CartDrawerContainer.propTypes = {
     items: PropTypes.array
   }),
   cartActions: PropTypes.shape({
+    removeCartItem: PropTypes.func,
     toggleCart: PropTypes.func
   }).isRequired,
   locale: PropTypes.shape({

@@ -3,7 +3,6 @@ import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
 import { Link } from "react-router";
 import IconButton from "material-ui/lib/icon-button";
-import FontIcon from "material-ui/lib/font-icon";
 import GridTile from "material-ui/lib/grid-list/grid-tile";
 import ContentClear from "material-ui/lib/svg-icons/content/clear";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
@@ -38,7 +37,7 @@ const getMedia = (item) => {
 class CartDrawerItem extends Component {
   render() {
     let image;
-    const { item, t } = this.props;
+    const { cartActions, item, t } = this.props;
     const media = getMedia(item);
     const isObjectFitSupported = checkObjectFitSupported();
 
@@ -78,7 +77,13 @@ class CartDrawerItem extends Component {
           </Link>
         }
         subtitle={<span><b>{item.quantity}</b> {t("cart.pieces")}</span>}
-        actionIcon={<IconButton><ContentClear color="white" /></IconButton>}
+        actionIcon={
+          <IconButton
+            onTouchTap={() => cartActions.removeCartItem(item._id)}
+          >
+            <ContentClear color="white" />
+          </IconButton>
+        }
         style={cardStyles}
         // titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
       >
@@ -115,9 +120,11 @@ class CartDrawerItem extends Component {
 }
 
 CartDrawerItem.propTypes = {
+  cartActions: PropTypes.shape({
+    removeCartItem: PropTypes.func
+  }).isRequired,
   item: PropTypes.object.isRequired,
   t: PropTypes.func
-  // onRemoveCartItemClick: PropTypes.func.isRequired
 };
 
 export default translate("reaction-react")(CartDrawerItem);

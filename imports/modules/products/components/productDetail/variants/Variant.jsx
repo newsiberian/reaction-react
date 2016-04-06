@@ -164,7 +164,7 @@ class Variant extends Component {
     } = this.props;
 
     // this is used while variant is selected variant and we are removing it
-    if (!variant) return null;
+    // if (!variant) return null;
 
     const isAdmin = ReactionCore.hasPermission("createProduct");
     const variantQuantity = getVariantQuantity(variant);
