@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-look";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 
 export const styles = StyleSheet.create({
   container: {
@@ -25,14 +26,19 @@ export const cartButton = {
 
 export const openCartStyles = {
   marginTop: "1rem",
-  marginBottom: "1rem"
+  marginBottom: "1rem",
+  width: ReactionCore.hasDashboardAccess() ? "calc(100vw - 70px)" : "100vw"
 };
 
 export const cardStyles = {
-  display: "flex",
+  // display: "flex",
+  // position: "relative",
+  // margin: "0rem 0.5rem 1rem 0.5rem",
+  marginBottom: "1rem",
+  padding: "0.5px",
   height: 225,
-  width: 235,
-  boxShadow: "0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5",
-  WebkitTransition: "box-shadow 0.1s ease, -webkit-transform 0.1s ease",
-  transition: "box-shadow 0.1s ease, transform 0.1s ease"
+  width: 235
+  // boxShadow: "0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5",
+  // WebkitTransition: "box-shadow 0.1s ease, -webkit-transform 0.1s ease",
+  // transition: "box-shadow 0.1s ease, transform 0.1s ease"
 };

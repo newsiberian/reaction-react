@@ -5,19 +5,20 @@ import Slider from "react-slick";
 import FlatButton from "material-ui/lib/flat-button";
 import CartSubTotals from "./CartSubTotals.jsx";
 import CartDrawerItem from "./CartDrawerItem.jsx";
-import { openCartStyles as styles, cardStyles, cartButton } from "../../styles/cartDrawer";
+import { openCartStyles, cardStyles, cartButton } from "../../styles/cartDrawer";
+import "../../styles/slick.css";
 
 class OpenCartDrawer extends Component {
   componentDidMount() {
-    const elem = document.getElementsByClassName("slick-track");
-    if (elem[0] instanceof HTMLDivElement) {
-      elem[0].classList.add("ui");
-      elem[0].classList.add("cards");
-    }
+    // const elem = document.getElementsByClassName("slick-track");
+    // if (elem[0] instanceof HTMLDivElement) {
+    //   elem[0].classList.add("ui");
+    //   elem[0].classList.add("cards");
+    // }
   }
 
   render() {
-    const { cart, cartActions,  media, t } = this.props;
+    const { cart, cartActions, locale, t } = this.props;
     const slidesToShow = Math.floor(window.innerWidth / cardStyles.width);
     const settings = {
       adaptiveHeight: false,
@@ -33,16 +34,15 @@ class OpenCartDrawer extends Component {
     };
     console.log("OpenCartDrawer rendering...");
     return (
-     <div>
-       <Slider {...settings} style={styles}>
-         <CartSubTotals cart={cart} />
+     <div style={openCartStyles}>
+       <Slider {...settings}>
+         <CartSubTotals cart={cart} locale={locale} />
          {cart.items.map(item => {
            return (
              <CartDrawerItem
                key={item._id}
                item={item}
-               media={media}
-               // onRemoveCartItemClick={onRemoveCartItemClick}
+               cartActions={cartActions}
              />
            );
          })}
@@ -69,7 +69,12 @@ OpenCartDrawer.propTypes = {
   cartActions: PropTypes.shape({
     toggleCart: PropTypes.func
   }).isRequired,
-  media: PropTypes.func.isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   t: PropTypes.func
 };
 

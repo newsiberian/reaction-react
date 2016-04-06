@@ -1,36 +1,28 @@
-//import { _i18n } from "meteor/universe:i18n";
+import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import { tableStyles } from "../../styles/cartSubTotals";
 import { cardStyles } from "../../styles/cartDrawer";
 
-//const T = _i18n.createComponent("reaction.core.cartSubTotals");
-import React, { Component, PropTypes } from "react";
-
-/**
- * @class CartSubTotals
- * @classdesc
- * @todo add shouldComponentUpdate logic
- */
 class CartSubTotals extends Component {
   render() {
-    const { cart } = this.props;
+    const { cart, locale, t } = this.props;
     console.log("CartSubTotals rendering...");
     return (
-      <div className="ui card" style={ cardStyles }>
+      <div className="slick-slide" style={cardStyles}>
         <table
           className="ui very basic very compact collapsing celled table"
-          style={ tableStyles }
+          style={tableStyles}
         >
           <thead>
-            <tr><th colSpan="2">{t("head")}</th></tr>
+            <tr><th colSpan="2">{t("cartSubTotals.head")}</th></tr>
           </thead>
           <tbody>
-            <tr><td>{t("items")}</td><td>{ cart.cartCount() }</td></tr>
-            <tr><td>{t("subtotal")}</td><td>{ formatPrice(cart.cartSubTotal()) }</td></tr>
-            <tr><td>{t("shipping")}</td><td>{ formatPrice(cart.cartShipping()) }</td></tr>
-            <tr><td>{t("tax")}</td><td>{ formatPrice(cart.cartTaxes()) }</td></tr>
-            <tr><td>{t("total")}</td><td>{ formatPrice(cart.cartTotal()) }</td></tr>
+            <tr><td>{t("cartSubTotals.items")}</td><td>{cart.cartCount()}</td></tr>
+            <tr><td>{t("cartSubTotals.subtotal")}</td><td>{formatPrice(cart.cartSubTotal(), locale)}</td></tr>
+            <tr><td>{t("cartSubTotals.shipping")}</td><td>{formatPrice(cart.cartShipping(), locale)}</td></tr>
+            <tr><td>{t("cartSubTotals.tax")}</td><td>{formatPrice(cart.cartTaxes(), locale)}</td></tr>
+            <tr><td>{t("cartSubTotals.total")}</td><td>{formatPrice(cart.cartTotal(), locale)}</td></tr>
           </tbody>
         </table>
       </div>
@@ -39,7 +31,22 @@ class CartSubTotals extends Component {
 }
 
 CartSubTotals.propTypes = {
-  cart: PropTypes.object.isRequired
+  cart: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    items: PropTypes.array,
+    cartCount: PropTypes.func,
+    cartSubTotal: PropTypes.func,
+    cartShipping: PropTypes.func,
+    cartTaxes: PropTypes.func,
+    cartTotal: PropTypes.func
+  }),
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
+  t: PropTypes.func
 };
 
-export default translate("core.cartSubTotals")(CartSubTotals);
+export default translate("core")(CartSubTotals);

@@ -63,6 +63,9 @@
       },
       "productVariant": {
         "variantOptions": "Variant options"
+      },
+      "cart": {
+        "pieces": "pcs."
       }
     }
   }

@@ -1,3 +1,5 @@
+import { StyleSheet } from "react-look";
+
 export const linkStyles = {
   display: "flex",
   height: 225,
@@ -7,13 +9,13 @@ export const linkStyles = {
   transition: "box-shadow 0.1s ease, transform 0.1s ease"
 };
 
-export const fakeImage = {
+export const fakeImage = StyleSheet.create({
   display: "block",
   width: "100%",
   height: "100%",
   backgroundSize: "cover",
   backgroundPosition: "center center"
-};
+});
 
 export const primaryImage = {
   width: "auto",

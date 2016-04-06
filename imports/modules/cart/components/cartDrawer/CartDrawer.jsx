@@ -35,6 +35,12 @@ CartDrawer.propTypes = {
   cartActions: PropTypes.shape({
     toggleCart: PropTypes.func
   }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired
   //checkCartIsEmpty: PropTypes.func.isRequired,
   //displayCart: PropTypes.bool.isRequired,
   //pathname: PropTypes.string.isRequired,

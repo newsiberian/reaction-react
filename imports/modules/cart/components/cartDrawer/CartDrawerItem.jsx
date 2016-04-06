@@ -1,20 +1,44 @@
+import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
+import { StyleSheet } from "react-look";
+import { Link } from "react-router";
+import IconButton from "material-ui/lib/icon-button";
+import FontIcon from "material-ui/lib/font-icon";
+import GridTile from "material-ui/lib/grid-list/grid-tile";
+import ContentClear from "material-ui/lib/svg-icons/content/clear";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import {
   fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
   removeButtonIconStyle
 } from "../../styles/cartDrawerItem";
 import { cardStyles } from "../../styles/cartDrawer";
-import React, { Component, PropTypes } from "react";
-import { Link } from "react-router";
 
-/**
- * @class CartDrawerItems
- * @classdesc
- */
-export default class CartDrawerItem extends Component {
+const c = StyleSheet.combineStyles;
+
+const getMedia = (item) => {
+  // const product = ReactionCore.Collections.Products.findOne(item.productId);
+  const defaultImage = ReactionCore.Collections.Media.findOne({
+    "metadata.variantId": item.variants._id
+  });
+
+  if (defaultImage) {
+    return defaultImage;
+    // if this variant doesn't have a photo, it could mean that his photo could
+    // be found in upper level inside top level variant
+  } else if (item.variants.ancestors.length > 1) {
+    const topVariant = ReactionCore.Collections.Products.findOne({
+      _id: item.variants.ancestors[1]
+    });
+    return ReactionCore.Collections.Media.findOne({
+      "metadata.variantId": topVariant._id
+    });
+  }
+};
+
+class CartDrawerItem extends Component {
   render() {
     let image;
-    const { item, media: getMedia, onRemoveCartItemClick } = this.props;
+    const { item, t } = this.props;
     const media = getMedia(item);
     const isObjectFitSupported = checkObjectFitSupported();
 
@@ -22,51 +46,78 @@ export default class CartDrawerItem extends Component {
       if (media instanceof FS.File) {
         image = (
           <img
-            style={ realImage }
-            src={ media.url({ store: "small" }) }
-            alt={ media.name() }
+            style={realImage}
+            src={media.url({ store: "small" })}
+            alt={media.name()}
           />
         );
       } else {
         image = (
-          <img style={ realImage } src="resources/placeholder.gif" alt="" />
+          <img style={realImage} src="/resources/placeholder.gif" alt="" />
         );
       }
     } else {
       if (media instanceof FS.File) {
         // todo looks like this is a wrong way to get media store from FS.File
-        image = <div style={ [fakeImage, { backgroundImage: `url(${media.url({ store: "small" })})` }] }></div>;
+        image = <div className={c(fakeImage, StyleSheet.create({ backgroundImage: `url(${media.url({ store: "small" })})`}))}></div>;
       } else {
-        image = <div style={ [fakeImage, { backgroundImage: "url(resources/placeholder.gif)" }] }></div>;
+        image = <div className={c(fakeImage, StyleSheet.create({ backgroundImage: "url(resources/placeholder.gif)" }))}></div>;
       }
     }
-// style={ linkStyles }
+
     console.log("CartDrawerItem rendering...");
     return (
-      <div className="ui card" style={ cardStyles }>
-        <div className="image" style={ primaryImage }>
-          { image }
-        </div>
-        <button
-          className="ui basic brown circular icon button"
-          onClick={ () => onRemoveCartItemClick(item._id) }
-          style={ removeButtonStyle }
-        >
-          <i className="big remove icon" style={ removeButtonIconStyle }></i>
-        </button>
-        <div className="center aligned content" style={ titleStyles }>
-          <Link to={ `/shop/product/` }>
-            <span className="ui grey circular label">{ item.quantity }</span>
-            <span>{ item.variants.title }</span>
+      <GridTile
+        className="slick-slide"
+        title={
+          <Link
+            to={`/shop/product/${item.productId}/${item.variants._id}`}
+            style={{ textDecoration: "none", color: "#fff" }}
+          >
+            <span>{item.variants.title}</span>
           </Link>
-        </div>
-      </div>
+        }
+        subtitle={<span><b>{item.quantity}</b> {t("cart.pieces")}</span>}
+        actionIcon={<IconButton><ContentClear color="white" /></IconButton>}
+        style={cardStyles}
+        // titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+      >
+        {image}
+      </GridTile>
     );
+    // return (
+    //   <div className="slick-slide" style={cardStyles}>
+    //     <div style={primaryImage}>
+    //       {image}
+    //     </div>
+    //     <IconButton
+    //       style={removeButtonStyle}
+    //       // onClick={() => this.handleRemoveClick(media._id)}
+    //     >
+    //       <FontIcon className="fa fa-close" />
+    //     </IconButton>
+    //     {/*<button
+    //       // className=""
+    //       onClick={() => onRemoveCartItemClick(item._id)}
+    //       style={removeButtonStyle}
+    //     >
+    //       <i className="big remove icon" style={removeButtonIconStyle} />
+    //     </button>*/}
+    //     <div /*className="center aligned content"*/ style={titleStyles}>
+    //       <Link to={`/shop/product/${item.productId}/${item.variants._id}`}>
+    //         <span className="ui grey circular label">{item.quantity}</span>
+    //         <span>{item.variants.title}</span>
+    //       </Link>
+    //     </div>
+    //   </div>
+    // );
   }
 }
 
 CartDrawerItem.propTypes = {
   item: PropTypes.object.isRequired,
-  media: PropTypes.func.isRequired,
-  onRemoveCartItemClick: PropTypes.func.isRequired
+  t: PropTypes.func
+  // onRemoveCartItemClick: PropTypes.func.isRequired
 };
+
+export default translate("reaction-react")(CartDrawerItem);

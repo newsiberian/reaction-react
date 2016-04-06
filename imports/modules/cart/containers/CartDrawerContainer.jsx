@@ -80,12 +80,18 @@ CartDrawerContainer.propTypes = {
   }),
   cartActions: PropTypes.shape({
     toggleCart: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-
+    locale: state.layout.locale
   };
 }
 
@@ -96,8 +102,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const handle = Meteor.subscribe("AccountOrders");
-  if (handle.ready() && ReactionCore.Subscriptions.Cart.ready()) {
+  // TODO I don't know why orders needed here. It is possible they will be needed
+  // within `checkout`
+  // const handle = Meteor.subscribe("AccountOrders");
+  if (/*handle.ready() && */ReactionCore.Subscriptions.Cart.ready()) {
     const cart = ReactionCore.Collections.Cart.findOne({}, {
       fields: { items: 1 }
     });
