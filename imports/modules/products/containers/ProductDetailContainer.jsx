@@ -180,7 +180,6 @@ ProductDetailContainer.propTypes = {
 };
 
 function mapStateToProps(state/*, ownProps*/) {
-  debugger;
   return {
     locale: state.layout.locale,
     // productId: state.shop.product.productId,

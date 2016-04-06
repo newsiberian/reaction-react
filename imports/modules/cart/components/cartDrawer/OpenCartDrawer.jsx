@@ -9,16 +9,23 @@ import { openCartStyles, cardStyles, cartButton } from "../../styles/cartDrawer"
 import "../../styles/slick.css";
 
 class OpenCartDrawer extends Component {
-  componentDidMount() {
-    // const elem = document.getElementsByClassName("slick-track");
-    // if (elem[0] instanceof HTMLDivElement) {
-    //   elem[0].classList.add("ui");
-    //   elem[0].classList.add("cards");
-    // }
+  // componentDidMount() {
+  //   // const elem = document.getElementsByClassName("slick-track");
+  //   // if (elem[0] instanceof HTMLDivElement) {
+  //   //   elem[0].classList.add("ui");
+  //   //   elem[0].classList.add("cards");
+  //   // }
+  // }
+
+  handleCheckoutClick() {
+    browserHistory.push("/checkout");
+    // additionally we need to close the cart
+    this.props.cartActions.toggleCart();
   }
 
   render() {
     const { cart, cartActions, locale, t } = this.props;
+    // TODO this will no work on SSR
     const slidesToShow = Math.floor(window.innerWidth / cardStyles.width);
     const settings = {
       adaptiveHeight: false,
@@ -27,7 +34,7 @@ class OpenCartDrawer extends Component {
       infinite: false,
       speed: 500,
       slidesToShow: slidesToShow,
-      slidesToScroll: 1,
+      slidesToScroll: slidesToShow,
       swipe: true,
       swipeToSlide: true,
       vertical: false
@@ -51,7 +58,7 @@ class OpenCartDrawer extends Component {
          backgroundColor="#f0ad4e"
          hoverColor="#DEA048"
          label={t("cartDrawer.checkout")}
-         onTouchTap={() => browserHistory.push("/checkout")}
+         onTouchTap={() => this.handleCheckoutClick()}
          style={cartButton}
          labelStyle={{ color: "#fff" }}
        />

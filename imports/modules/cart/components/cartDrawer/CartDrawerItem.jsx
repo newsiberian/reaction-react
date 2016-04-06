@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
-import { Link } from "react-router";
+import { Link, browserHistory } from "react-router";
 import IconButton from "material-ui/lib/icon-button";
 import GridTile from "material-ui/lib/grid-list/grid-tile";
 import ContentClear from "material-ui/lib/svg-icons/content/clear";
@@ -41,40 +41,41 @@ class CartDrawerItem extends Component {
     const media = getMedia(item);
     const isObjectFitSupported = checkObjectFitSupported();
 
-    if (isObjectFitSupported) {
-      if (media instanceof FS.File) {
-        image = (
-          <img
-            style={realImage}
-            src={media.url({ store: "small" })}
-            alt={media.name()}
-          />
-        );
-      } else {
-        image = (
-          <img style={realImage} src="/resources/placeholder.gif" alt="" />
-        );
-      }
+    // if (isObjectFitSupported) {
+    if (media instanceof FS.File) {
+      image = (
+        <img
+          // style={realImage}
+          src={media.url({ store: "small" })}
+          alt={item.variants.title}
+        />
+      );
     } else {
-      if (media instanceof FS.File) {
-        // todo looks like this is a wrong way to get media store from FS.File
-        image = <div className={c(fakeImage, StyleSheet.create({ backgroundImage: `url(${media.url({ store: "small" })})`}))}></div>;
-      } else {
-        image = <div className={c(fakeImage, StyleSheet.create({ backgroundImage: "url(resources/placeholder.gif)" }))}></div>;
-      }
+      image = (
+        <img /*style={realImage}*/ src="/resources/placeholder.gif" alt="" />
+      );
     }
+    // } else {
+    //   if (media instanceof FS.File) {
+    //     // todo looks like this is a wrong way to get media store from FS.File
+    //     image = <div className={c(fakeImage, StyleSheet.create({ backgroundImage: `url(${media.url({ store: "small" })})`}))}></div>;
+    //   } else {
+    //     image = <div className={c(fakeImage, StyleSheet.create({ backgroundImage: "url(resources/placeholder.gif)" }))}></div>;
+    //   }
+    // }
 
     console.log("CartDrawerItem rendering...");
     return (
       <GridTile
         className="slick-slide"
         title={
-          <Link
-            to={`/shop/product/${item.productId}/${item.variants._id}`}
-            style={{ textDecoration: "none", color: "#fff" }}
+          <span
+            onClick={() =>
+              browserHistory.push(`/shop/product/${item.productId}/${item.variants._id}`)}
+            style={{cursor: "pointer"}}
           >
-            <span>{item.variants.title}</span>
-          </Link>
+            {item.variants.title}
+          </span>
         }
         subtitle={<span><b>{item.quantity}</b> {t("cart.pieces")}</span>}
         actionIcon={
