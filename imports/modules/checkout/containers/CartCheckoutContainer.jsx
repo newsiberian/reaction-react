@@ -1,14 +1,14 @@
-import { AutorunMixin, SubscriptionMixin } from '{universe:utilities-react}';
-// import update from 'react/lib/update';
-import Loading from '../../layout/components/Loading';
-import CartCheckout from '../components/CartCheckout';
-import { reactionTemplate } from '/common/helpers/layout';
+import { AutorunMixin, SubscriptionMixin } from "{universe:utilities-react}";
+// import update from "react/lib/update";
+import Loading from "../../layout/components/Loading";
+import CartCheckout from "../components/CartCheckout";
+import { reactionTemplate } from "/common/helpers/layout";
 
 /**
  *
  */
 export default React.createClass({
-  displayName: 'CartCheckoutContainer',
+  displayName: "CartCheckoutContainer",
   propTypes: {},
   mixins: [SubscriptionMixin, AutorunMixin],
 
@@ -17,10 +17,10 @@ export default React.createClass({
   },
 
   autorun() {
-    this.subscribe('Packages');
-    this.subscribe('Products');
-    this.subscribe('Shipping');
-    this.subscribe('AccountOrders');
+    this.subscribe("Packages");
+    this.subscribe("Products");
+    this.subscribe("Shipping");
+    this.subscribe("AccountOrders");
   },
 
   autorunGetCart() {
@@ -31,9 +31,9 @@ export default React.createClass({
     // this run from here because sometimes inside `componentWillMount` cart
     // still could be undefined. If this happens, this mean - we are stuck in
     // "new" phase
-    if (cart && cart.workflow.status === 'new') {
-      Meteor.call('workflow/pushCartWorkflow', 'coreCartWorkflow',
-        'checkoutLogin');
+    if (cart && cart.workflow.status === "new") {
+      Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow",
+        "checkoutLogin");
     }
   },
 
@@ -43,36 +43,36 @@ export default React.createClass({
     const previouslyVisited = _.contains(cartWorkflow.workflow, template);
 
     if (previouslyVisited && !thisStep) {
-      return 'completed step';
+      return "completed step";
     }
     if (thisStep) {
-      return 'active step';
+      return "active step";
     }
-    return 'step';
+    return "step";
   },
 
   getCheckoutStepBadgeClass(workflowStep) {
     if (workflowStep.status === workflowStep.template) {
-      return 'olive';
+      return "olive";
     }/* else if (workflowStep.status === true &&
       workflowStep.status !== workflowStep.template) {
-      return 'green checkmark icon';
+      return "green checkmark icon";
     }*/
-    return '';
+    return "";
   },
 
   setStepIcon(label) {
     switch (label) {
-      case 'login':
-        return 'big user icon';
-      case 'shippingBilling':
-        return 'big mail icon';
-      case 'shippingOptions':
-        return 'big shipping icon';
-      case 'reviewPayment':
-        return 'big payment icon';
-      default:
-        return 'big smile icon';
+    case "login":
+      return "big user icon";
+    case "shippingBilling":
+      return "big mail icon";
+    case "shippingOptions":
+      return "big shipping icon";
+    case "reviewPayment":
+      return "big payment icon";
+    default:
+      return "big smile icon";
     }
   },
 
@@ -80,20 +80,20 @@ export default React.createClass({
    * @method checkoutLoginCompleted
    * @description check whether the user is logged in
    * @param {Object} workflowStep - summary about current step
-   * @returns {boolean} true if we've already past this stage,
+   * @returns {boolean} true if we"ve already past this stage,
    * or if the user is a guest but not anonymous
    */
   checkoutLoginCompleted(workflowStep) {
-    const guestUser = ReactionCore.hasPermission('guest', Meteor.user());
+    const guestUser = ReactionCore.hasPermission("guest", Meteor.user());
     const currentStatus = this.state.cart.workflow.status;
-    const anonUser = Roles.userIsInRole('anonymous', Meteor.user(),
+    const anonUser = Roles.userIsInRole("anonymous", Meteor.user(),
       ReactionCore.getShopId());
 
     return currentStatus !== workflowStep.template && guestUser && !anonUser;
   },
 
   clickContinueGuestHandle() {
-    Meteor.call('workflow/pushCartWorkflow', 'coreCartWorkflow', 'checkoutLogin');
+    Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow", "checkoutLogin");
   },
 
   render() {
