@@ -1,4 +1,6 @@
 import React, { PropTypes } from "react";
+import { Meteor } from "meteor/meteor";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -7,7 +9,12 @@ import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as productActions from "../actions/product";
 import { routerActions } from "react-router-redux";
 
-const ProductsSettingsContainer = props => <Settings {...props} />;
+const ProductsSettingsContainer = props => {
+  if (ReactionCore.hasPermission("createProduct", Meteor.userId())) {
+    return <Settings {...props} />;
+  }
+  return null; // TODO is this correct?
+};
 
 ProductsSettingsContainer.propTypes = {
   layoutSettingsActions: PropTypes.shape({
