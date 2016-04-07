@@ -1,13 +1,15 @@
-import AccountsContainer from "./containers/AccountsContainer.jsx";
-import Combo from "./components/Combo.jsx";
+import AccountsContainer from "./containers/AccountsContainer";
+import ProfileContainer from "./containers/ProfileContainer";
+import Combo from "./components/Combo";
 
 export default {
-  path: "accounts",
+  path: "account",
   component: AccountsContainer,
   childRoutes: [
     { path: "/login", component: Combo },
     //{ path: "/register", component: RegisterBox },
     //{ path: "/reset_password", component: ResetPasswordBox }
+    { path: "profile", component: ProfileContainer }
   ]
 };
 
