@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
+import i18next from "i18next";
 import FlatButton from "material-ui/lib/flat-button";
 import TextField from "material-ui/lib/text-field";
-import i18next from "i18next";
 export const fields = [
-  "email",
+  "oldPassword",
   "password",
   "passwordAgain"
 ];
@@ -13,10 +13,8 @@ export const fields = [
 const validate = values => {
   const errors = {};
 
-  if (!values.email || !values.email.trim()) {
-    errors.email = i18next.t("accountsUI.error.emailRequired");
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
+  if (!values.oldPassword || !values.oldPassword.trim()) {
+    errors.password = i18next.t("accountsUI.error.passwordRequired");
   }
 
   if (!values.password || !values.password.trim()) {
@@ -45,23 +43,19 @@ const styles = {
   }
 };
 
-/**
- * @class RegisterForm
- * @classdesc
- */
-class RegisterForm extends Component {
+class ChangePasswordForm extends Component {
   render() {
     const {
-      fields: { email, password, passwordAgain }, handleSubmit, pristine,
-      submitting, t
-      } = this.props;
+      fields: { oldPassword, password, passwordAgain }, handleSubmit,
+      pristine, submitting, t
+    } = this.props;
     return (
       <form onSubmit={handleSubmit} style={styles.form}>
         <TextField
-          {...email}
-          floatingLabelText={t("accountsUI.email")}
-          errorText={email.touched && email.error}
-          type="email"
+          {...oldPassword}
+          floatingLabelText={t("accountsUI.currentPassword")}
+          errorText={oldPassword.touched && oldPassword.error}
+          type="password"
         />
         <TextField
           {...password}
@@ -77,7 +71,7 @@ class RegisterForm extends Component {
         />
         <FlatButton
           fullWidth={true}
-          label={t("accountsUI.signUpButton")}
+          label={t("app.saveChanges")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}
@@ -88,16 +82,20 @@ class RegisterForm extends Component {
   }
 }
 
-RegisterForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+ChangePasswordForm.propTypes = {
+  fields: PropTypes.shape({
+    oldPassword: PropTypes.object,
+    password: PropTypes.object,
+    passwordAgain: PropTypes.object
+  }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(reduxForm({
-  form: "accountsRegisterForm",
+export default translate(["core", "reaction-react"])(reduxForm({
+  form: "accountsChangePasswordForm",
   fields,
   validate
-})(RegisterForm));
+})(ChangePasswordForm));

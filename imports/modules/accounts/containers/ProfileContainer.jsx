@@ -39,6 +39,7 @@ ProfileContainer.propTypes = {
   location: PropTypes.object.isRequired, // for permission check
   orders: PropTypes.arrayOf(PropTypes.object),
   profileActions: PropTypes.shape({
+    changePassword: PropTypes.func,
     changeProfileFields: PropTypes.func
   }).isRequired,
   replace: PropTypes.func // for permission check

@@ -27,7 +27,7 @@ const styles = {
     alignItems: "flex-start"
   },
   submit: {
-    margin: "1rem 0 1rem 0"
+    marginTop: "2rem"
   }
 };
 
