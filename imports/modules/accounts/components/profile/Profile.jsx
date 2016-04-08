@@ -63,9 +63,15 @@ class Profile extends Component {
         </Paper>
         <Paper className={styles.segment}>
           <DashboardHeader title={t("accountsUI.yourOrders")} />
+          <div className={styles.innerContainer}>
+            {"TODO: implement this component"}
+          </div>
         </Paper>
         <Paper className={styles.segment}>
           <DashboardHeader title={t("accountsUI.addressBook")} />
+          <div className={styles.innerContainer}>
+            {"TODO: implement this component"}
+          </div>
         </Paper>
       </div>
     );
