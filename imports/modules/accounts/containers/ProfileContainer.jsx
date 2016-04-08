@@ -5,7 +5,7 @@ import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { replace } from "react-router-redux";
-import Profile from "../components/Profile";
+import Profile from "../components/profile/Profile";
 
 // const ProfileContainer = props => <Profile {...props} />;
 class ProfileContainer extends Component {

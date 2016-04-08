@@ -4,10 +4,10 @@ import { translate } from "react-i18next/lib";
 //import ListItem from "material-ui/lib/lists/list-item";
 import MenuItem from "material-ui/lib/menus/menu-item";
 import FontIcon from "material-ui/lib/font-icon";
-//import FlatButton from "material-ui/lib/flat-button";
+import Divider from "material-ui/lib/divider";
 import { styles } from "../styles/coreLayout";
-import {/* Link,*/ browserHistory } from "react-router";
-// import SettingsHeader from "/modules/dashboard/components/settings/SettingsHeader";
+import { browserHistory } from "react-router";
+import ContentAdd from "material-ui/lib/svg-icons/content/add";
 
 // fixme fix this component. It not tracks activeLink and looks ugly
 const AdminControlsBar = ({ apps, t }) => (
@@ -15,15 +15,22 @@ const AdminControlsBar = ({ apps, t }) => (
     {apps.map(app => (
       <MenuItem
         key={app.label}
-        //primaryText={app.label}
         children={<FontIcon className={app.icon} />}
         onTouchTap={() => browserHistory.push(app.route)}
-        //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
-        //children={<Link to={app.route} activeStyle={{color: "red"}}><FontIcon className={app.icon} /></Link>}
         style={styles.navButton}
-        title={t(app.i18nKeyTooltip)}
+        title={t(app.i18nKeyLabel)}
       />
     ))}
+    <Divider />
+
+    {/* `createContent` button */}
+    <MenuItem
+      children={<ContentAdd />}
+      // onTouchTap={() => browserHistory.push(app.route)}
+      //containerElement={<Link to={app.route} activeStyle={{backgroundColor: "red"}} onlyActiveOnIndex={true} />}
+      style={styles.navButton}
+      title={t("app.createContent")}
+    />
   </nav>
 );
 

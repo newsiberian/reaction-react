@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from "react";
+import { ReactionCore } from "meteor/reactioncommerce:core";
+import { Accounts } from "meteor/accounts-base";
 import { translate } from "react-i18next/lib";
 import Badge from "material-ui/lib/badge";
 import IconButton from "material-ui/lib/icon-button";
 import FlatButton from "material-ui/lib/flat-button";
-import { Accounts } from "meteor/accounts-base";
 import { isCurrentUser } from "../../../../client/helpers/utilities";
 
 const styles = {
@@ -39,14 +40,20 @@ class UserMenu extends Component {
   }
 
   render() {
-    const { cart, cartActions } = this.props;
+    const { cart, cartActions, push, t } = this.props;
     const userState = this.isLoggedIn();
     return (
       <div>
+        {ReactionCore.hasPermission("account/profile") &&
+          <FlatButton
+            label={t("admin.userAccountDropdown.profileLabel")}
+            onTouchTap={() => push("/account/profile")}
+          />
+        }
         <FlatButton
           // userState.label is undefined on a first load
           label={userState.label || " "}
-          onClick={userState.handleClick}
+          onTouchTap={userState.handleClick}
         />
         <Badge
           badgeContent={cart && cart.cartCount() || 0}
@@ -78,10 +85,6 @@ UserMenu.propTypes = {
   pathname: PropTypes.string.isRequired,
   push: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
-  //languages: PropTypes.array,
-  //cartCount: PropTypes.number.isRequired,
-  //displayCart: PropTypes.bool.isRequired,
-  //onCartIconClick: PropTypes.func.isRequired
 };
 
 export default translate("core")(UserMenu);
