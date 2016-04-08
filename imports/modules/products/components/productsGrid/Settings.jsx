@@ -35,6 +35,7 @@ const ss = StyleSheet.create({
     margin: 10
   }
 });
+
 const styles = {
   headerContainer: {
     display: "flex",

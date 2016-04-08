@@ -21,6 +21,8 @@ const DashboardHeader = props => {
   );
 };
 
-DashboardHeader.propTypes = {};
+DashboardHeader.propTypes = {
+  title: PropTypes.string
+};
 
 export default DashboardHeader;

@@ -5,8 +5,7 @@ import i18next from "i18next";
 import FlatButton from "material-ui/lib/flat-button";
 import TextField from "material-ui/lib/text-field";
 export const fields = [
-  "name",
-  "email"
+  "name"
 ];
 
 const validate = values => {
@@ -17,60 +16,56 @@ const validate = values => {
       field: i18next.t("accountsUI.name")
     });
   }
-  if (!values.email || !values.email.trim()) {
-    errors.email = i18next.t("error.isRequired", {
-      field: i18next.t("accountsUI.email")
-    });
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
-  }
 
   return errors;
 };
 
-/**
- * @class AddMemberForm
- * @classdesc
- */
-class AddMemberForm extends Component {
+const styles = {
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  submit: {
+    margin: "1rem 0 1rem 0"
+  }
+};
+
+class ProfileAboutForm extends Component {
   render() {
-    const {
-      fields: { name, email }, handleSubmit, pristine, submitting, t
-    } = this.props;
+    const { fields: { name }, handleSubmit, pristine, submitting, t } = this.props;
     return (
-      <form onSubmit={handleSubmit} style={{ marginLeft: 20 }}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <TextField
           {...name}
           floatingLabelText={t("accountsUI.name")}
+          hintText={t("profile.namePlaceholder")}
           errorText={name.touched && name.error}
         />
-        <TextField
-          {...email}
-          floatingLabelText={t("accountsUI.email")}
-          errorText={email.touched && email.error}
-          type="email"
-        />
         <FlatButton
-          label={t("accountsUI.info.sendInvitation")}
+          label={t("app.saveChanges")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}
+          style={styles.submit}
         />
       </form>
     );
   }
 }
 
-AddMemberForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+ProfileAboutForm.propTypes = {
+  fields: PropTypes.shape({
+    name: PropTypes.object
+  }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(reduxForm({
-  form: "accountsAddMemberForm",
+export default translate(["core", "reaction-react"])(reduxForm({
+  form: "accountsProfileAboutForm",
   fields,
   validate
-})(AddMemberForm));
+})(ProfileAboutForm));

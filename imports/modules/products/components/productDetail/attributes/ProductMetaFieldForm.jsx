@@ -13,12 +13,12 @@ export const fields = ["key", "value"];
 const validate = values => {
   const errors = {};
 
-  if (!values.key) {
+  if (!values.key || !values.key.trim()) {
     errors.key = i18next.t("error.isRequired", {
       field: i18next.t("productDetail.detailsName")
     });
   }
-  if (!values.value) {
+  if (!values.value || !values.value.trim()) {
     errors.value = i18next.t("error.isRequired", {
       field: i18next.t("productDetail.detailsInfo")
     });

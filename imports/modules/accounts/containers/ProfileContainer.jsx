@@ -6,14 +6,13 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { replace } from "react-router-redux";
 import Profile from "../components/profile/Profile";
+import * as profileActions from "../actions/profile";
 
 // const ProfileContainer = props => <Profile {...props} />;
 class ProfileContainer extends Component {
   componentWillMount() {
     // Check that the user is logged in before the component mounts
     if (!ReactionCore.hasPermission("account/profile", Meteor.userId())) {
-      // this.props.push("/unauthorized");
-      debugger;
       this.props.replace({
         pathname: "/unauthorized",
         state: { prevPath: this.props.location.pathname }
@@ -24,7 +23,6 @@ class ProfileContainer extends Component {
   componentDidUpdate(prevProps) {
     // Navigate to a sign in page if the user isn't authenticated when data changes
     if (!ReactionCore.hasPermission("account/profile", Meteor.userId())) {
-      // this.props.push("/unauthorized");
       this.props.replace({
         pathname: "/unauthorized",
         state: { prevPath: prevProps.location.pathname }
@@ -40,6 +38,9 @@ class ProfileContainer extends Component {
 ProfileContainer.propTypes = {
   location: PropTypes.object.isRequired, // for permission check
   orders: PropTypes.arrayOf(PropTypes.object),
+  profileActions: PropTypes.shape({
+    changeProfileFields: PropTypes.func
+  }).isRequired,
   replace: PropTypes.func // for permission check
 };
 
@@ -49,6 +50,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    profileActions: bindActionCreators(profileActions, dispatch),
     replace: bindActionCreators(replace, dispatch)
   };
 }

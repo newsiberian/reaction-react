@@ -15,10 +15,10 @@ export const fields = [
 const validate = values => {
   const errors = {};
 
-  if (!values.name) {
+  if (!values.name || !values.name.trim()) {
     errors.name = i18next.t("error.nameRequired");
   }
-  if (!values.email) {
+  if (!values.email || !values.email.trim()) {
     errors.email = i18next.t("accountsUI.error.emailRequired");
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");

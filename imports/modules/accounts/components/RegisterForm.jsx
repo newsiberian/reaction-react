@@ -13,13 +13,13 @@ export const fields = [
 const validate = values => {
   const errors = {};
 
-  if (!values.email) {
+  if (!values.email || !values.email.trim()) {
     errors.email = i18next.t("accountsUI.error.emailRequired");
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
   }
 
-  if (!values.password) {
+  if (!values.password || !values.password.trim()) {
     errors.password = i18next.t("accountsUI.error.passwordRequired");
   } else if (values.password.length < 6) {
     errors.password = i18next.t(
@@ -31,7 +31,7 @@ const validate = values => {
       "accountsUI.error.passwordMustContainRequirements"
     );
   }
-  if (values.password && values.password !== values.passwordAgain) {
+  if (values.password && values.password.trim() !== values.passwordAgain) {
     errors.passwordAgain = i18next.t(
       "accountsUI.error.pwdsDontMatch"
     );

@@ -16,6 +16,10 @@
           "email": "Email"
         }
       },
+      "app": {
+        "changesSaved": "Changes Saved",
+        "somethingWentWrong": "Something went wrong: {{err}}"
+      },
       "comments": {
         "editor": {
           "placeholder": "Start typing here...",
@@ -66,6 +70,10 @@
       },
       "cart": {
         "pieces": "pcs."
+      },
+      "profile": {
+        "about": "About",
+        "namePlaceholder": "Your name or nickname"
       }
     }
   }

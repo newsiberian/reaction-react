@@ -15,28 +15,28 @@ export const fields = [
 const validate = values => {
   const errors = {};
 
-  if (!values.OXRAppId) {
+  if (!values.OXRAppId || !values.OXRAppId.trim()) {
     errors.OXRAppId = i18next.t("error.isRequired", {
       field: i18next.t(
         "corePackageConfig.settings.openexchangerates.appId"
       )
     });
   }
-  if (!values.OXRRefreshPeriod) {
+  if (!values.OXRRefreshPeriod || !values.OXRRefreshPeriod.trim()) {
     errors.OXRRefreshPeriod = i18next.t("error.isRequired", {
       field: i18next.t(
         "corePackageConfig.settings.openexchangerates.refreshPeriod"
       )
     });
   }
-  if (!values.googleClientId) {
+  if (!values.googleClientId || !values.googleClientId.trim()) {
     errors.googleClientId = i18next.t("error.isRequired", {
       field: i18next.t(
         "corePackageConfig.settings.google.clientId"
       )
     });
   }
-  if (!values.googleApiKey) {
+  if (!values.googleApiKey || !values.googleApiKey.trim()) {
     errors.googleApiKey = i18next.t("error.isRequired", {
       field: i18next.t("corePackageConfig.settings.google.apiKey")
     });

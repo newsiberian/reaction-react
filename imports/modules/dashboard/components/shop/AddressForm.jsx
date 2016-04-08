@@ -26,37 +26,37 @@ const validate = values => {
   //} else if (values.company && values.company.length > nameLength) {
   //  errors.company = i18next.t("error.mustBeXorLess", { number: nameLength });
   //}
-  if (!values.fullName) {
+  if (!values.fullName || !values.fullName.trim()) {
     errors.fullName = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.fullName")
     });
   }
-  if (!values.address1) {
+  if (!values.address1 || !values.address1.trim()) {
     errors.address1 = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.address1")
     });
   }
-  if (!values.city) {
+  if (!values.city || !values.city.trim()) {
     errors.city = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.city")
     });
   }
-  if (!values.region) {
+  if (!values.region || !values.region.trim()) {
     errors.region = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.region")
     });
   }
-  if (!values.postal) {
+  if (!values.postal || !values.postal.trim()) {
     errors.postal = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.postal")
     });
   }
-  if (!values.country) {
+  if (!values.country || !values.country.trim()) {
     errors.country = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.country")
     });
   }
-  if (!values.phone) {
+  if (!values.phone || !values.phone.trim()) {
     errors.phone = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.phone")
     });

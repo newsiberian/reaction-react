@@ -5,7 +5,7 @@ import SignUp from "./SignUp.jsx";
 
 const styles = {
   base: {
-    height: "80vh",
+    // height: "80vh", // moved to upper component
     display: "flex",
     flexFlow: "row wrap",
     justifyContent: "center",
@@ -41,7 +41,7 @@ class Combo extends Component {
   render() {
     const { accountsActions, prevPath, t } = this.props;
     return (
-      <div style={Object.assign(styles.base)}>
+      <section style={Object.assign(styles.base)}>
         <header style={styles.header}>
           {t("Site name")}
         </header>
@@ -56,7 +56,7 @@ class Combo extends Component {
           prevPath={prevPath}
           styles={styles.signUp}
         />
-      </div>
+      </section>
     );
   }
 }

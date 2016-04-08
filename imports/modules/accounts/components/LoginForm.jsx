@@ -12,11 +12,11 @@ export const fields = [
 const validate = values => {
   const errors = {};
 
-  if (!values.email) {
+  if (!values.email || !values.email.trim()) {
     errors.email = i18next.t("accountsUI.error.invalidEmail");
   }
 
-  if (!values.password) {
+  if (!values.password || !values.password.trim()) {
     errors.password = i18next.t("accountsUI.error.passwordMayNotBeEmpty");
   }
 

@@ -18,12 +18,12 @@ import InlineStyleControls from "./InlineStyleControls.jsx";
 const validate = values => {
   const errors = {};
   if (isAnonymous()) {
-    if (! values.name) {
+    if (! values.name || !values.name.trim()) {
       errors.name = i18next.t("error.isRequired", {
         field: i18next.t("accountsUI.name")
       });
     }
-    if (! values.email) {
+    if (! values.email || !values.email.trim()) {
       errors.email = i18next.t("error.isRequired", {
         field: i18next.t("accountsUI.email")
       });

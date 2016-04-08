@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from "react";
 // import LeftNav from "material-ui/lib/left-nav";
 import ProductsGridItem from "./ProductsGridItem.jsx";
 // import { styles } from "../../styles/productsGrid"
-// import { layoutStyles } from "../../../layout/styles/layout";
+import { layoutStyles } from "../../../layout/styles/layout";
 
 const styles = {
   container: {
@@ -23,7 +23,7 @@ class ProductsGrid extends Component {
 
     console.log("ProductGrid: rendering...");
     return (
-      <div>
+      <div style={layoutStyles.parent}>
         <section className="row" style={styles.container}>
           {products.length && products.map(product => (
             <ProductsGridItem
