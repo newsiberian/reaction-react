@@ -5,7 +5,7 @@ import Dashboard from "../dashboard/routes";
 import NotFound from "./components/NotFound.jsx";
 import UnauthorizedContainer from "./containers/UnauthorizedContainer.jsx";
 // import ProductDetail from "../products/components/productDetail/routes";
-// import Checkout from "/modules/checkout/routes";
+import Checkout from "../checkout/routes";
 
 export default {
   path: "/",
@@ -15,7 +15,7 @@ export default {
     Accounts,
     Shop,
     // ProductDetail,
-    // Checkout,
+    Checkout,
     {
       path: "/unauthorized",
       component: UnauthorizedContainer

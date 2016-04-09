@@ -13,8 +13,7 @@ export default function addressBook(state = initialState, action) {
       currentAddressIndex: action.index
     });
   case types.DESTROY_ADDRESSBOOK:
-    // @see https://github.com/erikras/redux-form/blob/1a43ff4a9873743232515b081cfa1403e223d05a/src/reducer.js#L62
-    return undefined; // `undefined` taken from `redux-form`
+    return Object.assign({}, state, initialState);
   default:
     return state;
   }
