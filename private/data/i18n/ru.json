@@ -74,6 +74,10 @@
       "profile": {
         "about": "О себе",
         "namePlaceholder": "Ваше имя или прозвище"
+      },
+      "addressBook": {
+        "shippingAddress": "Адрес доставки",
+        "billingAddress": "Платёжный адрес"
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { PropTypes } from "react";
 import Checkbox from "material-ui/lib/checkbox";
 
 /**
@@ -6,27 +6,19 @@ import Checkbox from "material-ui/lib/checkbox";
  * @summary It is needed because due to incompatibility between material-ui
  * and redux-form.
  * @see https://github.com/erikras/redux-form/issues/542
+ * @see https://github.com/erikras/redux-form/issues/334
  */
-class CheckboxWrapper extends Component {
-  handleClick(checked) {
-    this.props.onChange(checked);
-  }
-  render() {
-    return (
-      <Checkbox
-        {...this.props}
-        value={this.props.name}
-        checked={this.props.value}
-        onCheck={(e, checked) => this.handleClick(checked)}
-      >
-        {this.props.children}
-      </Checkbox>
-    );
-  }
-}
+const CheckboxWrapper = props => {
+  const newProps = Object.assign({}, props, {
+    value: null,
+    checked: Boolean(props.value), // value is a string, but we need boolean
+    onCheck: (e, checked) => props.onChange(checked)
+  });
+  return <Checkbox {...newProps} />;
+};
 
 CheckboxWrapper.propTypes = {
-  children: PropTypes.node,
+  // children: PropTypes.node,
   onChange: PropTypes.func
 };
 

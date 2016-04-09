@@ -23,6 +23,8 @@ class AddressBookContainer extends Component {
 AddressBookContainer.propTypes = {
   addressBook: PropTypes.arrayOf(PropTypes.object),
   addressBookActions: PropTypes.shape({
+    addAddress: PropTypes.func,
+    removeAddress: PropTypes.func,
     changeCurrentView: PropTypes.func
   }).isRequired,
   addressBookState: PropTypes.shape({

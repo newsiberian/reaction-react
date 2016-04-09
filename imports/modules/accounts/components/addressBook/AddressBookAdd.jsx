@@ -5,48 +5,47 @@ import Subheader from "material-ui/lib/Subheader";
 import AddressBookForm from "./AddressBookForm";
 
 class AddressBookAdd extends Component {
-  render() {
-    // const {
-    //   addressBook, thisAddress, countryOptions, onCheckboxChange, onChange,
-    //   onBlur, onSubmit, onCancelClick
-    // } = this.props;
-    const { addressBook, t } = this.props;
-    // const hasAddressBookEntries = Boolean(addressBook.length);
+  handleSubmit(values) {
+    const { addressBook, addressBookActions } = this.props;
+    if (!addressBook.length) {
+      values.isShippingDefault = true;
+      values.isBillingDefault = true;
+    }
+    addressBookActions.addAddress(values);
+  }
 
+  render() {
+    const { addressBook, addressBookActions, t } = this.props;
+    const hasAddressBookEntries = Boolean(addressBook.length);
+
+    // if this is a first address, we don't show `isShippingDefault` &
+    // `isBillingDefault` fields, because they will be `true` by default
+    const fields = hasAddressBookEntries ?
+      ["country", "fullName", "address1", "address2", "postal", "city",
+        "region", "phone", "isShippingDefault", "isBillingDefault",
+        "isCommercial"] :
+      ["country", "fullName", "address1", "address2", "postal", "city",
+        "region", "phone", "isCommercial"];
+    const initialValues = hasAddressBookEntries ?
+      { isShippingDefault: true, isBillingDefault: true, isCommercial: false } :
+      { isCommercial: false };
     console.log("AddressBookAdd...");
     return (
-      <div className="ui attached segment">
+      <div>
         <Subheader>
-          {Boolean(addressBook.length) ?
+          {hasAddressBookEntries ?
             t("addressBookAdd.addAddress") :
             t("addressBookAdd.createAddress")
           }
         </Subheader>
         <Divider />
         <AddressBookForm
+          addressBookActions={addressBookActions}
+          hasAddressBookEntries={hasAddressBookEntries}
+          initialValues={initialValues}
+          fields={fields}
+          onSubmit={values => this.handleSubmit(values)}
         />
-        {/*<form className="ui form" onSubmit={ event => onSubmit(event) }>
-          <AddressBookForm
-            thisAddress={ thisAddress }
-            countryOptions={ countryOptions }
-            onCheckboxChange={ onCheckboxChange }
-            onChange={ onChange }
-            onBlur={ onBlur }
-          />
-          <div className="field">
-            <button type="submit" className="ui primary button">
-              <T2>saveAndContinue</T2>
-            </button>
-            { hasAddressBookEntries &&
-              <button
-                className="ui button"
-                onClick={ (event) => onCancelClick(event) }
-              >
-                <T2>cancel</T2>
-              </button>
-            }
-          </div>
-        </form>*/}
       </div>
     );
   }
@@ -55,17 +54,10 @@ class AddressBookAdd extends Component {
 AddressBookAdd.propTypes = {
   addressBook: PropTypes.arrayOf(PropTypes.object),
   addressBookActions: PropTypes.shape({
+    addAddress: PropTypes.func,
     changeCurrentView: PropTypes.func
   }).isRequired,
   t: PropTypes.func
-  // addressBook: PropTypes.array.isRequired,
-  // thisAddress: PropTypes.object.isRequired,
-  // countryOptions: PropTypes.func.isRequired,
-  // onCheckboxChange: PropTypes.func.isRequired,
-  // onChange: PropTypes.func.isRequired,
-  // onBlur: PropTypes.func.isRequired,
-  // onSubmit: PropTypes.func.isRequired,
-  // onCancelClick: PropTypes.func.isRequired
 };
 
-export default translate(["core"])(AddressBookAdd);
+export default translate("core")(AddressBookAdd);

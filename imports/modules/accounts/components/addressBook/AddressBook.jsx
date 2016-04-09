@@ -18,6 +18,8 @@ const AddressBook = props => {
   case "addressBookEdit":
     return (
       <AddressBookEdit
+        addressBook={props.addressBook}
+        addressBookActions={props.addressBookActions}
         // thisAddress={thisAddress}
         // countryOptions={countryOptions}
         // onCheckboxChange={onCheckboxChange}
@@ -30,6 +32,8 @@ const AddressBook = props => {
   case "addressBookGrid":
     return (
       <AddressBookGrid
+        addressBook={props.addressBook}
+        addressBookActions={props.addressBookActions}
         // addressBook={ addressBook }
         // onAddAddressClick={ onAddAddressClick }
         // onEditAddressClick={ onEditAddressClick }
@@ -43,14 +47,6 @@ const AddressBook = props => {
       <AddressBookAdd
         addressBook={props.addressBook}
         addressBookActions={props.addressBookActions}
-        // addressBook={ addressBook }
-        // thisAddress={ thisAddress }
-        // countryOptions={ countryOptions }
-        // onCheckboxChange={ onCheckboxChange }
-        // onChange={ onChange }
-        // onBlur={ onBlur }
-        // onSubmit={ onAddSubmit }
-        // onCancelClick={ onCancelClick }
       />
     );
   }
@@ -60,26 +56,13 @@ const AddressBook = props => {
 AddressBook.propTypes = {
   addressBook: PropTypes.arrayOf(PropTypes.object),
   addressBookActions: PropTypes.shape({
+    addAddress: PropTypes.func,
+    removeAddress: PropTypes.func,
     changeCurrentView: PropTypes.func
   }).isRequired,
   addressBookState: PropTypes.shape({
     currentView: PropTypes.string
   }).isRequired
-  // addressBook: PropTypes.array.isRequired,
-  // currentView: PropTypes.string.isRequired,
-  // thisAddress: PropTypes.object.isRequired, // todo describe each field in address
-  // countryOptions: PropTypes.func.isRequired,
-  // onCheckboxChange: PropTypes.func.isRequired,
-  // onChange: PropTypes.func.isRequired,
-  // onBlur: PropTypes.func.isRequired,
-  // onAddSubmit: PropTypes.func.isRequired,
-  // onEditSubmit: PropTypes.func.isRequired,
-  // onCancelClick: PropTypes.func.isRequired,
-  // onAddAddressClick: PropTypes.func.isRequired,
-  // onEditAddressClick: PropTypes.func.isRequired,
-  // onRemoveAddressClick: PropTypes.func.isRequired,
-  // onSelectShippingAddressChange: PropTypes.func.isRequired,
-  // onSelectBillingAddressChange: PropTypes.func.isRequired
 };
 
 export default AddressBook;
