@@ -15,7 +15,9 @@ class AddressBookContainer extends Component {
       this.props.addressBookActions.changeCurrentView("addressBookGrid");
     }
   }
-
+  componentWillUnmount() {
+    this.props.addressBookActions.destroyAddressBook();
+  }
   render() {
     return <AddressBook {...this.props} />;
   }
@@ -28,10 +30,12 @@ AddressBookContainer.propTypes = {
     removeAddress: PropTypes.func,
     changeCurrentView: PropTypes.func,
     changeShippingAddress: PropTypes.func,
-    changeBillingAddress: PropTypes.func
+    changeBillingAddress: PropTypes.func,
+    destroyAddressBook: PropTypes.func
   }).isRequired,
   addressBookState: PropTypes.shape({
-    currentView: PropTypes.string
+    currentView: PropTypes.string,
+    currentAddressIndex: PropTypes.number
   }).isRequired
 };
 

@@ -7,6 +7,7 @@ import AddressBookForm from "./AddressBookForm";
 class AddressBookAdd extends Component {
   handleSubmit(values) {
     const { addressBook, addressBookActions } = this.props;
+    // first address should have these addresses enabled by default
     if (!addressBook.length) {
       values.isShippingDefault = true;
       values.isBillingDefault = true;

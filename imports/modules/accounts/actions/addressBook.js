@@ -4,8 +4,10 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { displayAlert } from "../../layout/actions/alert";
 
-export const changeCurrentView = currentView => {
-  return { type: types.CHANGE_CURRENT_VIEW, currentView };
+export const destroyAddressBook = () => ({ type: types.DESTROY_ADDRESSBOOK });
+
+export const changeCurrentView = (currentView, index = null) => {
+  return { type: types.CHANGE_CURRENT_VIEW, currentView, index };
 };
 
 export const addAddress = values => {
@@ -19,6 +21,23 @@ export const addAddress = values => {
       }
       if (res) {
         dispatch({ type: types.ADD_ADDRESS, values });
+        dispatch(changeCurrentView("addressBookGrid"));
+      }
+    });
+  };
+};
+
+export const updateAddress = values => {
+  return dispatch => {
+    Meteor.call("accounts/addressBookUpdate", values, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("addressBookEdit.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.UPDATE_ADDRESS, values });
         dispatch(changeCurrentView("addressBookGrid"));
       }
     });

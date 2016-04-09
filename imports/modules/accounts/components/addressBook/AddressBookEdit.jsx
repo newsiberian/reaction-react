@@ -1,28 +1,46 @@
-
-import AddressBookForm from './AddressBookForm';
-
 import React, { Component, PropTypes } from "react";
-// const T = _i18n.createComponent('reaction.core.addressBookEdit');
-// const T2 = _i18n.createComponent('reaction.core.app');
+import { translate } from "react-i18next/lib";
+import Divider from "material-ui/lib/divider";
+import Subheader from "material-ui/lib/Subheader";
+import AddressBookForm from "./AddressBookForm";
 
-/**
- * @class AddressBookEdit
- * @classdesc
- */
-export default class AddressBookEdit extends Component {
+
+// const T = _i18n.createComponent("reaction.core.addressBookEdit");
+// const T2 = _i18n.createComponent("reaction.core.app");
+
+class AddressBookEdit extends Component {
+  handleSubmit(values) {
+    const { address, addressBookActions } = this.props;
+    // we need to pass `_id` to update address
+    values._id = address._id;
+    addressBookActions.updateAddress(values);
+  }
+
   render() {
-    const {
-      thisAddress, countryOptions, onCheckboxChange, onChange, onBlur, onSubmit,
-      onCancelClick
-    } = this.props;
+    // const {
+    //   thisAddress, countryOptions, onCheckboxChange, onChange, onBlur, onSubmit,
+    //   onCancelClick
+    // } = this.props;
+    const { address, addressBookActions, t } = this.props;
+    const fields = ["country", "fullName", "address1", "address2", "postal", "city",
+      "region", "phone", "isShippingDefault", "isBillingDefault",
+      "isCommercial"];
 
-    console.log('AddressBookEdit...');
+    console.log("AddressBookEdit...");
     return (
-      <div className="ui attached segment">
-        <h4 className="ui dividing header">
-          <T>editAddress</T>
-        </h4>
-        <form className="ui form" onSubmit={ event => onSubmit(event) }>
+      <div>
+        <Subheader>
+          {t("addressBookEdit.editAddress")}
+        </Subheader>
+        <Divider />
+        <AddressBookForm
+          addressBookActions={addressBookActions}
+          hasAddressBookEntries={true}
+          initialValues={address}
+          fields={fields}
+          onSubmit={values => this.handleSubmit(values)}
+        />
+        {/*<form className="ui form" onSubmit={ event => onSubmit(event) }>
           <AddressBookForm
             thisAddress={ thisAddress }
             countryOptions={ countryOptions }
@@ -41,18 +59,19 @@ export default class AddressBookEdit extends Component {
               <T2>cancel</T2>
             </button>
           </div>
-        </form>
+        </form>*/}
       </div>
     );
   }
 }
 
 AddressBookEdit.propTypes = {
-  thisAddress: PropTypes.object.isRequired,
-  countryOptions: PropTypes.func.isRequired,
-  onCheckboxChange: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onCancelClick: PropTypes.func.isRequired
+  address: PropTypes.object,
+  addressBookActions: PropTypes.shape({
+    updateAddress: PropTypes.func,
+    changeCurrentView: PropTypes.func
+  }).isRequired,
+  t: PropTypes.func
 };
+
+export default translate("core")(AddressBookEdit);

@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
 const Badge = props => {
   let className;
   if (props.style) {
+    // FIXME: this have a bug. This is not apply `style` immediately, but only after
+    // page reload
     className = c(styles.badge, StyleSheet.create(props.style));
   } else {
     className = styles.badge;

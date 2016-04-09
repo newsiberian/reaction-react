@@ -18,7 +18,7 @@ const AddressBook = props => {
   case "addressBookEdit":
     return (
       <AddressBookEdit
-        addressBook={props.addressBook}
+        address={props.addressBook[props.addressBookState.currentAddressIndex]}
         addressBookActions={props.addressBookActions}
         // thisAddress={thisAddress}
         // countryOptions={countryOptions}
@@ -57,7 +57,8 @@ AddressBook.propTypes = {
     changeBillingAddress: PropTypes.func
   }).isRequired,
   addressBookState: PropTypes.shape({
-    currentView: PropTypes.string
+    currentView: PropTypes.string,
+    currentAddressIndex: PropTypes.number
   }).isRequired
 };
 

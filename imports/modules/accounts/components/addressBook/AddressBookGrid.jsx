@@ -100,7 +100,7 @@ class AddressBookGrid extends Component {
                 }
                 <MenuItem
                   primaryText={t("addressBookGrid.edit")}
-                  onTouchTap={() => addressBookActions.changeCurrentView("addressBookEdit")}
+                  onTouchTap={() => addressBookActions.changeCurrentView("addressBookEdit", i)}
                 />
                 <MenuItem
                   primaryText={t("addressBookGrid.removeAddress")}
