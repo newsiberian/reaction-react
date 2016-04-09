@@ -6,6 +6,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import AddressBook from "../components/addressBook/AddressBook";
 import * as addressBookActions from "../actions/addressBook";
+import Loading from "../../layout/components/Loading.jsx";
 
 class AddressBookContainer extends Component {
   componentWillMount() {
@@ -57,7 +58,8 @@ function composer(props, onData) {
 }
 
 const AddressBookContainerWithData = composeWithTracker(
-  composer
+  composer,
+  Loading
 )(AddressBookContainer);
 
 export default connect(

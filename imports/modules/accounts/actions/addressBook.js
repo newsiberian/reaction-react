@@ -27,9 +27,7 @@ export const addAddress = values => {
 
 export const removeAddress = addressId => {
   return dispatch => {
-    debugger;
     Meteor.call("accounts/addressBookRemove", addressId, (err, res) => {
-      debugger;
       if (err) {
         dispatch(displayAlert({
           message: i18next.t("addressBookGrid.cantRemoveThisAddress",
@@ -55,7 +53,6 @@ export const changeShippingAddress = address => {
   return dispatch => {
     Meteor.call("accounts/addressBookUpdate", address, null, "isShippingDefault",
       (err, res) => {
-        debugger;
         if (err) {
           dispatch(displayAlert({
             message: i18next.t("addressBookEdit.somethingWentWrong",
@@ -69,7 +66,8 @@ export const changeShippingAddress = address => {
             userId: Meteor.userId()
           });
         }
-      });
+      }
+    );
   };
 };
 
@@ -77,7 +75,6 @@ export const changeBillingAddress = address => {
   return dispatch => {
     Meteor.call("accounts/addressBookUpdate", address, null, "isBillingDefault",
       (err, res) => {
-        debugger;
         if (err) {
           dispatch(displayAlert({
             message: i18next.t("addressBookEdit.somethingWentWrong",
@@ -91,6 +88,7 @@ export const changeBillingAddress = address => {
             userId: Meteor.userId()
           });
         }
-      });
+      }
+    );
   };
 };

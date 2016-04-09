@@ -28,9 +28,7 @@ const Badge = props => {
   } else {
     className = styles.badge;
   }
-  return (
-    <span className={className}>{props.badgeContent}</span>
-  );
+  return <span className={className}>{props.badgeContent}</span>;
 };
 
 Badge.propTypes = {

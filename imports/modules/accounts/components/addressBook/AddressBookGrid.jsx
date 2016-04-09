@@ -13,7 +13,8 @@ import Subheader from "material-ui/lib/Subheader";
 const styles = {
   address: {
     padding: "1rem",
-    position: "relative"
+    position: "relative",
+    marginBottom: "1rem"
   },
   menu: {
     position: "absolute",
@@ -29,8 +30,8 @@ const styles = {
     right: "2rem",
     padding: 12
   },
-  shippingBadge: {
-    marginRight: 4
+  billingBadge: {
+    marginLeft: 4
   },
   button: {
     minWidth: "50%",
@@ -50,6 +51,7 @@ class AddressBookGrid extends Component {
       <div>
         <FlatButton
           label={t("addressBookGrid.addAddress")}
+          onTouchTap={() => addressBookActions.changeCurrentView("addressBookAdd")}
         />
         <Divider style={styles.dividerGlobal} />
         {Boolean(addressBook && addressBook.length > 1) &&
@@ -65,13 +67,13 @@ class AddressBookGrid extends Component {
                   {address.isShippingDefault &&
                     <Badge
                       badgeContent={t("addressBook.shippingAddress")}
-                      style={address.isBillingDefault ? styles.shippingBadge : {}}
                     />
                   }
                   {address.isBillingDefault &&
                     <Badge
                       badgeContent={t("addressBook.billingAddress")}
                       backgroundColor="#007E33"
+                      style={styles.billingBadge}
                     />
                   }
                 </div>
