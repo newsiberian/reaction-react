@@ -7,6 +7,7 @@ import Paper from "material-ui/lib/paper";
 import DashboardHeader from "../../../dashboard/components/DashboardHeader.jsx";
 import ProfileAboutForm from "./ProfileAboutForm.jsx";
 import ChangePasswordForm from "./ChangePasswordForm.jsx";
+import AddressBookContainer from "../../containers/AddressBookContainer.jsx";
 
 const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
@@ -70,7 +71,7 @@ class Profile extends Component {
         <Paper className={styles.segment}>
           <DashboardHeader title={t("accountsUI.addressBook")} />
           <div className={styles.innerContainer}>
-            {"TODO: implement this component"}
+            <AddressBookContainer />
           </div>
         </Paper>
       </div>

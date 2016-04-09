@@ -1,9 +1,9 @@
-import { _i18n } from "meteor/universe:i18n";
+
 import AddressBookForm from './AddressBookForm';
 
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.addressBookEdit');
-const T2 = _i18n.createComponent('reaction.core.app');
+// const T = _i18n.createComponent('reaction.core.addressBookEdit');
+// const T2 = _i18n.createComponent('reaction.core.app');
 
 /**
  * @class AddressBookEdit

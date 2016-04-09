@@ -1,29 +1,31 @@
-import { _i18n } from "meteor/universe:i18n";
-import AddressBookForm from './AddressBookForm';
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.addressBookAdd');
-const T2 = _i18n.createComponent('reaction.core.app');
+import { translate } from "react-i18next/lib";
+import Divider from "material-ui/lib/divider";
+import Subheader from "material-ui/lib/Subheader";
+import AddressBookForm from "./AddressBookForm";
 
-/**
- * @class AddressBookAdd
- * @classdesc
- */
-export default class AddressBookAdd extends Component {
+class AddressBookAdd extends Component {
   render() {
-    const {
-      addressBook, thisAddress, countryOptions, onCheckboxChange, onChange,
-      onBlur, onSubmit, onCancelClick
-    } = this.props;
-    const hasAddressBookEntries = addressBook.length > 0;
+    // const {
+    //   addressBook, thisAddress, countryOptions, onCheckboxChange, onChange,
+    //   onBlur, onSubmit, onCancelClick
+    // } = this.props;
+    const { addressBook, t } = this.props;
+    // const hasAddressBookEntries = Boolean(addressBook.length);
 
-    console.log('AddressBookAdd...');
+    console.log("AddressBookAdd...");
     return (
       <div className="ui attached segment">
-        <h4 className="ui dividing header">
-          { hasAddressBookEntries ? <T>addAddress</T> : <T>createAddress</T> }
-        </h4>
-        <form className="ui form" onSubmit={ event => onSubmit(event) }>
+        <Subheader>
+          {Boolean(addressBook.length) ?
+            t("addressBookAdd.addAddress") :
+            t("addressBookAdd.createAddress")
+          }
+        </Subheader>
+        <Divider />
+        <AddressBookForm
+        />
+        {/*<form className="ui form" onSubmit={ event => onSubmit(event) }>
           <AddressBookForm
             thisAddress={ thisAddress }
             countryOptions={ countryOptions }
@@ -44,19 +46,26 @@ export default class AddressBookAdd extends Component {
               </button>
             }
           </div>
-        </form>
+        </form>*/}
       </div>
     );
   }
 }
 
 AddressBookAdd.propTypes = {
-  addressBook: PropTypes.array.isRequired,
-  thisAddress: PropTypes.object.isRequired,
-  countryOptions: PropTypes.func.isRequired,
-  onCheckboxChange: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onCancelClick: PropTypes.func.isRequired
+  addressBook: PropTypes.arrayOf(PropTypes.object),
+  addressBookActions: PropTypes.shape({
+    changeCurrentView: PropTypes.func
+  }).isRequired,
+  t: PropTypes.func
+  // addressBook: PropTypes.array.isRequired,
+  // thisAddress: PropTypes.object.isRequired,
+  // countryOptions: PropTypes.func.isRequired,
+  // onCheckboxChange: PropTypes.func.isRequired,
+  // onChange: PropTypes.func.isRequired,
+  // onBlur: PropTypes.func.isRequired,
+  // onSubmit: PropTypes.func.isRequired,
+  // onCancelClick: PropTypes.func.isRequired
 };
+
+export default translate(["core"])(AddressBookAdd);

@@ -1,174 +1,81 @@
-import { _i18n } from "meteor/universe:i18n";
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.address');
+import { translate } from "react-i18next/lib";
+import { reduxForm } from "redux-form";
+import i18next from "i18next";
+import FlatButton from "material-ui/lib/flat-button";
+import TextField from "material-ui/lib/text-field";
+export const fields = [
+  "country",
+  "fullName",
+  "address1",
+  "address2",
+  "postal",
+  "city",
+  "region",
+  "phone",
+  "isShippingDefault",
+  "isBillingDefault",
+  "isCommercial"
+];
 
-/**
- * @class AddressBookForm
- * @classdesc
- */
-export default class AddressBookForm extends Component {
+const validate = values => {
+  const errors = {};
+
+  if (!values.name || !values.name.trim()) {
+    errors.name = i18next.t("error.isRequired", {
+      field: i18next.t("accountsUI.name")
+    });
+  }
+
+  return errors;
+};
+
+const styles = {
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  submit: {
+    marginTop: "2rem"
+  }
+};
+
+class AddressBookForm extends Component {
   render() {
-    const { thisAddress, countryOptions, onCheckboxChange,
-      onChange, onBlur } = this.props;
+    const { fields: { country, fullName, address1,  }, handleSubmit, pristine, submitting, t } = this.props;
     return (
-      <div className="field">
-        <div className="eight wide field">
-          <label><T>country</T></label>
-          <select
-            className="ui dropdown"
-            name="country"
-            value={ thisAddress.country || 'def' }
-            onChange={ event => onChange(event) }
-          >
-            <option value="def">
-              { i18n.__('reaction.core.address.selectOne') }
-            </option>
-            { countryOptions().map(country => {
-              return (
-                <option
-                  key={ country.value }
-                  value={ country.value }
-                >
-                  { country.label }
-                </option>
-                );
-            }) }
-          </select>
-        </div>
-        <div className="eight wide field">
-          <label><T>fullName</T></label>
-          <input
-            type="text"
-            name="fullName"
-            placeholder={ i18n.__('reaction.core.address.fullName') }
-            value={ thisAddress.fullName }
-            onChange={ event => onChange(event) }
-            onBlur={ event => onBlur(event) }
-          />
-        </div>
-        <div className="two fields">
-          <div className="field">
-            <label><T>address1</T></label>
-            <input
-              type="text"
-              name="address1"
-              placeholder={ i18n.__('reaction.core.address.address1') }
-              value={ thisAddress.address1 }
-              onChange={ event => onChange(event) }
-              onBlur={ event => onBlur(event) }
-            />
-          </div>
-          <div className="field">
-            <label><T>address2</T></label>
-            <input
-              type="text"
-              name="address2"
-              placeholder={ i18n.__('reaction.core.address.address2') }
-              value={ thisAddress.address2 }
-              onChange={ event => onChange(event) }
-              onBlur={ event => onBlur(event) }
-            />
-          </div>
-        </div>
-        <div className="three fields">
-          <div className="field">
-            <label><T>postal</T></label>
-            <input
-              type="text"
-              name="postal"
-              placeholder={ i18n.__('reaction.core.address.postal') }
-              value={ thisAddress.postal }
-              onChange={ event => onChange(event) }
-              onBlur={ event => onBlur(event) }
-            />
-          </div>
-          <div className="field">
-            <label><T>city</T></label>
-            <input
-              type="text"
-              name="city"
-              placeholder={ i18n.__('reaction.core.address.city') }
-              value={ thisAddress.city }
-              onChange={ event => onChange(event) }
-              onBlur={ event => onBlur(event) }
-            />
-          </div>
-          <div className="field">
-            <label><T>region</T></label>
-            <input
-              type="text"
-              name="region"
-              placeholder={ i18n.__('reaction.core.address.region') }
-              value={ thisAddress.region }
-              onChange={ event => onChange(event) }
-              onBlur={ event => onBlur(event) }
-            />
-          </div>
-        </div>
-        <div className="six wide field">
-          <label><T>phone</T></label>
-          <input
-            type="text"
-            name="phone"
-            placeholder={ i18n.__('reaction.core.address.phone') }
-            value={ thisAddress.phone }
-            onChange={ event => onChange(event) }
-            onBlur={ event => onBlur(event) }
-          />
-        </div>
-        <div className="ui segment">
-          <div className="inline field">
-            <div className="ui checkbox">
-              <input
-                id="isShippingDefault"
-                className="hidden"
-                tabIndex="0"
-                type="checkbox"
-                checked={ thisAddress.isShippingDefault }
-                onChange={ () => onCheckboxChange('isShippingDefault') }
-              />
-                <label htmlFor="isShippingDefault">
-                  <T>isShippingDefault</T>
-                </label>
-            </div>
-          </div>
-          <div className="inline field">
-            <div className="ui checkbox">
-              <input
-                id="isBillingDefault"
-                className="hidden"
-                tabIndex="1"
-                type="checkbox"
-                checked={ thisAddress.isBillingDefault }
-                onChange={ () => onCheckboxChange('isBillingDefault') }
-              />
-              <label htmlFor="isBillingDefault"><T>isBillingDefault</T></label>
-            </div>
-          </div>
-          <div className="inline field">
-            <div className="ui checkbox">
-              <input
-                id="isCommercial"
-                className="hidden"
-                tabIndex="2"
-                type="checkbox"
-                checked={ thisAddress.isCommercial }
-                onChange={ () => onCheckboxChange('isCommercial') }
-              />
-              <label htmlFor="isCommercial"><T>isCommercial</T></label>
-            </div>
-          </div>
-        </div>
-      </div>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <TextField
+          {...name}
+          floatingLabelText={t("accountsUI.name")}
+          hintText={t("profile.namePlaceholder")}
+          errorText={name.touched && name.error}
+        />
+        <FlatButton
+          label={t("app.saveChanges")}
+          primary={true}
+          type="submit"
+          disabled={pristine || submitting}
+          style={styles.submit}
+        />
+      </form>
     );
   }
 }
 
 AddressBookForm.propTypes = {
-  thisAddress: PropTypes.object.isRequired,
-  countryOptions: PropTypes.func.isRequired,
-  onCheckboxChange: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired
+  fields: PropTypes.shape({
+    name: PropTypes.object
+  }).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
 };
+
+export default translate("core")(reduxForm({
+  form: "accountsAddressBookForm",
+  fields,
+  validate
+})(AddressBookForm));

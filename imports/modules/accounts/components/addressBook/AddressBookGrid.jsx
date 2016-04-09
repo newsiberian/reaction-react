@@ -1,8 +1,8 @@
-import { _i18n } from "meteor/universe:i18n";
-import { buttonStyles } from '../../styles/addressBookGrid';
+
+// import { buttonStyles } from '../../styles/addressBookGrid';
 
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.addressBookGrid');
+// const T = _i18n.createComponent('reaction.core.addressBookGrid');
 
 /**
  * @class AddressBookGrid
