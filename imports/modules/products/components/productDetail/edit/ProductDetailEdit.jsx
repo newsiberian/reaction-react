@@ -4,7 +4,6 @@ import { translate } from "react-i18next/lib";
 import look, { StyleSheet } from "react-look";
 
 const c = StyleSheet.combineStyles;
-
 const styles = StyleSheet.create({
   onChange: {
     backgroundColor: props => {

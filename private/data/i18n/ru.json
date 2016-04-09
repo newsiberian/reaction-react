@@ -77,7 +77,8 @@
       },
       "addressBook": {
         "shippingAddress": "Адрес доставки",
-        "billingAddress": "Платёжный адрес"
+        "billingAddress": "Платёжный адрес",
+        "selectShippingAddressAndBillingAddress": "Выберите адрес доставки и платёжный адрес"
       }
     }
   }

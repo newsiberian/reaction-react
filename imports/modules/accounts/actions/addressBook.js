@@ -27,6 +27,7 @@ export const addAddress = values => {
 
 export const removeAddress = addressId => {
   return dispatch => {
+    debugger;
     Meteor.call("accounts/addressBookRemove", addressId, (err, res) => {
       debugger;
       if (err) {

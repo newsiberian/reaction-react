@@ -77,7 +77,8 @@
       },
       "addressBook": {
         "shippingAddress": "Shipping Address",
-        "billingAddress": "Billing Address"
+        "billingAddress": "Billing Address",
+        "selectShippingAddressAndBillingAddress": "Select a shipping and a billing addresses"
       }
     }
   }

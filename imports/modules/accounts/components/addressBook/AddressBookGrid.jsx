@@ -52,14 +52,11 @@ class AddressBookGrid extends Component {
           label={t("addressBookGrid.addAddress")}
         />
         <Divider style={styles.dividerGlobal} />
-        <div className="ui basic segment">
-          <h4 className="ui left floated green header">
-            {t("addressBookGrid.selectShippingAddress")}
-          </h4>
-          <h4 className="ui right floated blue header">
-            {t("addressBookGrid.selectBillingAddress")}
-          </h4>
-        </div>
+        {Boolean(addressBook && addressBook.length > 1) &&
+          <Subheader>
+            {t("addressBook.selectShippingAddressAndBillingAddress")}
+          </Subheader>
+        }
         {Boolean(addressBook.length) && addressBook.map((address, i) => {
           return (
             <Paper key={i} zDepth={2} style={styles.address}>
@@ -85,31 +82,27 @@ class AddressBookGrid extends Component {
                 targetOrigin={{horizontal: "right", vertical: "top"}}
                 style={styles.menu}
               >
-                {address.isShippingDefault &&
+                {!address.isShippingDefault &&
                   <MenuItem
                     title={t("address.isShippingDefault")}
                     primaryText={t("addressBook.shippingAddress")}
-                    onItemTouchTap={() =>
-                      addressBookActions.changeShippingAddress(address)}
+                    onTouchTap={() => addressBookActions.changeShippingAddress(address)}
                   />
                 }
-                {address.isBillingDefault &&
+                {!address.isBillingDefault &&
                   <MenuItem
                     title={t("address.isBillingDefault")}
                     primaryText={t("addressBook.billingAddress")}
-                    onItemTouchTap={() =>
-                      addressBookActions.changeBillingAddress(address)}
+                    onTouchTap={() => addressBookActions.changeBillingAddress(address)}
                   />
                 }
                 <MenuItem
                   primaryText={t("addressBookGrid.edit")}
-                  onItemTouchTap={() =>
-                    addressBookActions.changeCurrentView("addressBookEdit")}
+                  onTouchTap={() => addressBookActions.changeCurrentView("addressBookEdit")}
                 />
                 <MenuItem
                   primaryText={t("addressBookGrid.removeAddress")}
-                  onItemTouchTap={() =>
-                    addressBookActions.removeAddress(address._id)}
+                  onTouchTap={() => addressBookActions.removeAddress(address._id)}
                 />
               </IconMenu>
               <div style={styles.innerContainer}>
@@ -137,12 +130,6 @@ AddressBookGrid.propTypes = {
     changeBillingAddress: PropTypes.func
   }).isRequired,
   t: PropTypes.func
-  // addressBook: PropTypes.array.isRequired,
-  // onAddAddressClick: PropTypes.func.isRequired,
-  // onEditAddressClick: PropTypes.func.isRequired,
-  // onRemoveAddressClick: PropTypes.func.isRequired,
-  // onSelectShippingAddressChange: PropTypes.func.isRequired,
-  // onSelectBillingAddressChange: PropTypes.func.isRequired
 };
 
 export default translate(["core", "reaction-react"])(AddressBookGrid);
