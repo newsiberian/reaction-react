@@ -25,7 +25,9 @@ AddressBookContainer.propTypes = {
   addressBookActions: PropTypes.shape({
     addAddress: PropTypes.func,
     removeAddress: PropTypes.func,
-    changeCurrentView: PropTypes.func
+    changeCurrentView: PropTypes.func,
+    changeShippingAddress: PropTypes.func,
+    changeBillingAddress: PropTypes.func
   }).isRequired,
   addressBookState: PropTypes.shape({
     currentView: PropTypes.string

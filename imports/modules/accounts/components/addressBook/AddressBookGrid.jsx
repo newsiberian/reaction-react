@@ -9,7 +9,6 @@ import MenuItem from "material-ui/lib/menus/menu-item";
 import MoreVertIcon from "material-ui/lib/svg-icons/navigation/more-vert";
 import Paper from "material-ui/lib/paper";
 import Subheader from "material-ui/lib/Subheader";
-import { buttonStyles } from "../../styles/addressBookGrid";
 
 const styles = {
   address: {
@@ -23,10 +22,6 @@ const styles = {
   },
   dividerGlobal: {
     marginTop: "1rem"
-  },
-  divider: {
-    marginLeft: "-1rem",
-    marginRight: "-1rem"
   },
   badges: {
     position: "absolute",
@@ -48,11 +43,6 @@ const styles = {
 
 class AddressBookGrid extends Component {
   render() {
-    // const {
-    //   addressBook, onAddAddressClick, onEditAddressClick,
-    //   onRemoveAddressClick, onSelectShippingAddressChange,
-    //   onSelectBillingAddressChange
-    // } = this.props;
     const { addressBook, addressBookActions, t } = this.props;
 
     console.log("AddressBookGrid...");
@@ -84,6 +74,7 @@ class AddressBookGrid extends Component {
                   {address.isBillingDefault &&
                     <Badge
                       badgeContent={t("addressBook.billingAddress")}
+                      backgroundColor="#007E33"
                     />
                   }
                 </div>
@@ -94,6 +85,22 @@ class AddressBookGrid extends Component {
                 targetOrigin={{horizontal: "right", vertical: "top"}}
                 style={styles.menu}
               >
+                {address.isShippingDefault &&
+                  <MenuItem
+                    title={t("address.isShippingDefault")}
+                    primaryText={t("addressBook.shippingAddress")}
+                    onItemTouchTap={() =>
+                      addressBookActions.changeShippingAddress(address)}
+                  />
+                }
+                {address.isBillingDefault &&
+                  <MenuItem
+                    title={t("address.isBillingDefault")}
+                    primaryText={t("addressBook.billingAddress")}
+                    onItemTouchTap={() =>
+                      addressBookActions.changeBillingAddress(address)}
+                  />
+                }
                 <MenuItem
                   primaryText={t("addressBookGrid.edit")}
                   onItemTouchTap={() =>
@@ -113,35 +120,6 @@ class AddressBookGrid extends Component {
                   <br/>{address.phone}
                 </p>
               </div>
-              <Divider style={styles.divider} />
-              <div className="ui horizontal segments">
-                <FlatButton
-                  label={t("app.saveChanges")}
-                  style={styles.button}
-                />
-                <FlatButton
-                  label={t("app.saveChanges")}
-                  style={styles.button}
-                />
-                {/*<div className="ui center aligned green segment">
-                  <div
-                    className="ui toggle checkbox"
-                    // onChange={ onSelectShippingAddressChange }
-                  >
-                    <input name="public" type="checkbox" />
-                    <label></label>
-                  </div>
-                </div>
-                <div className="ui center aligned blue segment">
-                  <div
-                    className="ui toggle checkbox"
-                    // onChange={ onSelectBillingAddressChange }
-                  >
-                    <input name="public" type="checkbox" />
-                    <label></label>
-                  </div>
-                </div>*/}
-              </div>
             </Paper>
           );
         })}
@@ -154,7 +132,9 @@ AddressBookGrid.propTypes = {
   addressBook: PropTypes.arrayOf(PropTypes.object),
   addressBookActions: PropTypes.shape({
     removeAddress: PropTypes.func,
-    changeCurrentView: PropTypes.func
+    changeCurrentView: PropTypes.func,
+    changeShippingAddress: PropTypes.func,
+    changeBillingAddress: PropTypes.func
   }).isRequired,
   t: PropTypes.func
   // addressBook: PropTypes.array.isRequired,

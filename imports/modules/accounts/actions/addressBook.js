@@ -1,5 +1,6 @@
 import * as types from "../constants";
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { displayAlert } from "../../layout/actions/alert";
 
@@ -46,5 +47,49 @@ export const removeAddress = addressId => {
         }
       }
     });
+  };
+};
+
+export const changeShippingAddress = address => {
+  return dispatch => {
+    Meteor.call("accounts/addressBookUpdate", address, null, "isShippingDefault",
+      (err, res) => {
+        debugger;
+        if (err) {
+          dispatch(displayAlert({
+            message: i18next.t("addressBookEdit.somethingWentWrong",
+              { err: err.reason ? err.reason : err.message })
+          }));
+        }
+        if (res) {
+          dispatch({
+            type: types.CHANGE_SHIPPING_ADDRESS,
+            addressId: address._id,
+            userId: Meteor.userId()
+          });
+        }
+      });
+  };
+};
+
+export const changeBillingAddress = address => {
+  return dispatch => {
+    Meteor.call("accounts/addressBookUpdate", address, null, "isBillingDefault",
+      (err, res) => {
+        debugger;
+        if (err) {
+          dispatch(displayAlert({
+            message: i18next.t("addressBookEdit.somethingWentWrong",
+              { err: err.reason ? err.reason : err.message })
+          }));
+        }
+        if (res) {
+          dispatch({
+            type: types.CHANGE_BILLING_ADDRESS,
+            addressId: address._id,
+            userId: Meteor.userId()
+          });
+        }
+      });
   };
 };

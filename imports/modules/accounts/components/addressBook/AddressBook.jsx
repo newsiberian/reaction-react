@@ -34,12 +34,6 @@ const AddressBook = props => {
       <AddressBookGrid
         addressBook={props.addressBook}
         addressBookActions={props.addressBookActions}
-        // addressBook={ addressBook }
-        // onAddAddressClick={ onAddAddressClick }
-        // onEditAddressClick={ onEditAddressClick }
-        // onRemoveAddressClick={ onRemoveAddressClick }
-        // onSelectShippingAddressChange={ onSelectShippingAddressChange }
-        // onSelectBillingAddressChange={ onSelectBillingAddressChange }
       />
     );
   default:
@@ -58,7 +52,9 @@ AddressBook.propTypes = {
   addressBookActions: PropTypes.shape({
     addAddress: PropTypes.func,
     removeAddress: PropTypes.func,
-    changeCurrentView: PropTypes.func
+    changeCurrentView: PropTypes.func,
+    changeShippingAddress: PropTypes.func,
+    changeBillingAddress: PropTypes.func
   }).isRequired,
   addressBookState: PropTypes.shape({
     currentView: PropTypes.string

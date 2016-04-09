@@ -26,9 +26,6 @@ class AddressBookAdd extends Component {
         "isCommercial"] :
       ["country", "fullName", "address1", "address2", "postal", "city",
         "region", "phone", "isCommercial"];
-    const initialValues = hasAddressBookEntries ?
-      { isShippingDefault: true, isBillingDefault: true, isCommercial: false } :
-      { isCommercial: false };
     console.log("AddressBookAdd...");
     return (
       <div>
@@ -42,7 +39,6 @@ class AddressBookAdd extends Component {
         <AddressBookForm
           addressBookActions={addressBookActions}
           hasAddressBookEntries={hasAddressBookEntries}
-          initialValues={initialValues}
           fields={fields}
           onSubmit={values => this.handleSubmit(values)}
         />
