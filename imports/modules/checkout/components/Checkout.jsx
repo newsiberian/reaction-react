@@ -1,30 +1,25 @@
-import { reactionTemplate } from '/common/helpers/layout';
-import CheckoutProgressBar from './CheckoutProgressBar';
-import CheckoutStep from './CheckoutStep';
-import EmptyCheckoutCart from './EmptyCheckoutCart';
-
 import React, { Component, PropTypes } from "react";
+import { reactionTemplate } from "../../../client/helpers/layout";
+import CheckoutProgressBar from "./CheckoutProgressBar";
+import CheckoutStep from "./CheckoutStep";
+import EmptyCheckoutCart from "./EmptyCheckoutCart";
 
-/**
- * @class CartCheckout
- * @classdesc
- */
-export default class CartCheckout extends Component {
+class Checkout extends Component {
   render() {
     const {
       cart, checkoutLoginCompleted, checkoutStepBadgeClass, progressbarStatus,
       setStepIcon, onClickContinueGuest
     } = this.props;
 
-    if (typeof cart.items !== 'object' ||
-      (typeof cart.items === 'object' && cart.items.length === 0)) {
+    if (typeof cart.items !== "object" ||
+      (typeof cart.items === "object" && cart.items.length === 0)) {
       return <EmptyCheckoutCart />;
     }
     const options = {
       hash: {
         id: cart._id,
         shopId: cart.shopId,
-        workflow: 'coreCartWorkflow'
+        workflow: "coreCartWorkflow"
       }
     };
     const coreCartWorkflow = reactionTemplate(options);
@@ -33,7 +28,7 @@ export default class CartCheckout extends Component {
       // checkoutAddressBook: checkoutAddressBookCompleted
     };
 
-    console.log('CartCheckout...');
+    console.log("Checkout...");
     // todo refactor
     // fixme: `onClickContinueGuest` this will be sent in every components instead of first
     return (
@@ -50,7 +45,7 @@ export default class CartCheckout extends Component {
         <div className="two column stackable ui grid">
           <div className="ten wide column">
             { coreCartWorkflow.map(checkoutStep => {
-              return (checkoutStep.container === 'checkout-steps-main' &&
+              return (checkoutStep.container === "checkout-steps-main" &&
                 <CheckoutStep
                   key={ checkoutStep.position }
                   checkoutStep={ checkoutStep }
@@ -64,7 +59,7 @@ export default class CartCheckout extends Component {
           </div>
           <div className="six wide column">
             { coreCartWorkflow.map(checkoutStep => {
-              return (checkoutStep.container === 'checkout-steps-side' &&
+              return (checkoutStep.container === "checkout-steps-side" &&
                 <CheckoutStep
                   key={ checkoutStep.position }
                   checkoutStep={ checkoutStep }
@@ -82,7 +77,7 @@ export default class CartCheckout extends Component {
   }
 }
 
-CartCheckout.propTypes = {
+Checkout.propTypes = {
   cart: PropTypes.object.isRequired,
   checkoutLoginCompleted: PropTypes.func.isRequired,
   checkoutStepBadgeClass: PropTypes.func,
@@ -90,3 +85,5 @@ CartCheckout.propTypes = {
   setStepIcon: PropTypes.func,
   onClickContinueGuest: PropTypes.func
 };
+
+export default Checkout;

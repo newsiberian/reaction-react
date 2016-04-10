@@ -1,6 +1,6 @@
-import CartCheckoutContainer from "./containers/CartCheckoutContainer";
+import CheckoutContainer from "./containers/CheckoutContainer";
 
 export default {
   path: "/checkout",
-  component: CartCheckoutContainer
+  component: CheckoutContainer
 };

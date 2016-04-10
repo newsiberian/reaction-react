@@ -1,11 +1,11 @@
-import { _i18n } from "meteor/universe:i18n";
-import { InlineLoginBox } from '{universe:accounts-ui}';
-import CheckoutStepBadge from './CheckoutStepBadge';
-import CheckoutLoggedIn from './CheckoutLoggedIn';
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.checkoutLogin');
-const T2 = _i18n.createComponent('reaction.core.accountsUI');
+// import { InlineLoginBox } from "{universe:accounts-ui}";
+import CheckoutStepBadge from "./CheckoutStepBadge";
+import CheckoutLoggedIn from "./CheckoutLoggedIn";
+
+
+// const T = _i18n.createComponent("reaction.core.checkoutLogin");
+// const T2 = _i18n.createComponent("reaction.core.accountsUI");
 
 /**
  * @class CheckoutLogin
@@ -18,10 +18,10 @@ export default class CheckoutLogin extends Component {
       onClickContinueGuest
     } = this.props;
     const isLoginCompleted = checkoutStepCompleted(checkoutStep);
-    const iconClassName = isLoginCompleted ? 'green checkmark icon' :
+    const iconClassName = isLoginCompleted ? "green checkmark icon" :
       `${ badgeClass } ${ iconClass }`;
 
-    console.log('CheckoutLogin...');
+    console.log("CheckoutLogin...");
     return (
       <div className="ui segments">
         <div className="ui top attached header">
@@ -35,7 +35,7 @@ export default class CheckoutLogin extends Component {
             <div className="ui two column very relaxed grid">
               <div className="column">
                 <div className="ui basic segment">
-                  <div style={{ textAlign: 'justify' }}>
+                  <div style={{ textAlign: "justify" }}>
                     <T>guestMessage</T>
                   </div>
                   <button

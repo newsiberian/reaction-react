@@ -1,9 +1,9 @@
-import { _i18n } from "meteor/universe:i18n";
-import { iconStyles } from '../styles/checkoutStep';
-import AddressBookContainer from '/modules/accounts/containers/AddressBookContainer';
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.addressBookGrid');
+import { iconStyles } from "../styles/checkoutStep";
+import AddressBookContainer from "../../../modules/accounts/containers/AddressBookContainer";
+
+
+// const T = _i18n.createComponent("reaction.core.addressBookGrid");
 
 /**
  * @class CheckoutAddressBook
@@ -12,9 +12,9 @@ const T = _i18n.createComponent('reaction.core.addressBookGrid');
 export default class CheckoutAddressBook extends Component {
   render() {
     const { checkoutStep, badgeClass, iconClass } = this.props;
-    const iconClassName = checkoutStep.status === true ? 'green checkmark icon' :
+    const iconClassName = checkoutStep.status === true ? "green checkmark icon" :
       `${ badgeClass } ${ iconClass }`;
-    console.log('CheckoutAddressBook...');
+    console.log("CheckoutAddressBook...");
     return (
       <div className="ui segments">
         <div className="ui top attached header">

@@ -1,12 +1,6 @@
-import { _i18n } from "meteor/universe:i18n";
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.cartCheckout');
+// const T = _i18n.createComponent('reaction.core.cartCheckout');
 
-/**
- * @class EmptyCheckoutCart
- * @classdesc
- */
 export default class EmptyCheckoutCart extends Component {
   render() {
     return (

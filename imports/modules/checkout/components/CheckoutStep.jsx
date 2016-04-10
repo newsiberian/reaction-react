@@ -1,9 +1,10 @@
-import CheckoutLogin from './CheckoutLogin';
-import CheckoutAddressBook from './CheckoutAddressBook';
-import CoreCheckoutShipping from './CoreCheckoutShipping';
-import CheckoutReview from './CheckoutReview';
-import CheckoutPayment from './CheckoutPayment';
-import CheckoutStepBadge from './CheckoutStepBadge';
+import React, { Component, PropTypes } from "react";
+import CheckoutLogin from "./CheckoutLogin";
+import CheckoutAddressBook from "./CheckoutAddressBook";
+import CoreCheckoutShipping from "./CoreCheckoutShipping";
+import CheckoutReview from "./CheckoutReview";
+import CheckoutPayment from "./CheckoutPayment";
+import CheckoutStepBadge from "./CheckoutStepBadge";
 
 const components = {
   [CheckoutLogin.name]: CheckoutLogin,
@@ -12,7 +13,7 @@ const components = {
   [CheckoutReview.name]: CheckoutReview,
   [CheckoutPayment.name]: CheckoutPayment
 };
-import React, { Component, PropTypes } from "react";
+
 
 /**
  * @class CheckoutStep
@@ -34,7 +35,7 @@ export default class CheckoutStep extends Component {
     const badgeClass = checkoutStepBadgeClass(checkoutStep);
     const iconClass = setStepIcon(checkoutStep.label.toCamelCase());
 
-    console.log('CheckoutStep...');
+    console.log("CheckoutStep...");
     if (isPending || isCompleted) {
       return (
         <StepComponent

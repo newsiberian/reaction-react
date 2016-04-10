@@ -1,8 +1,8 @@
-import { _i18n } from "meteor/universe:i18n";
-import { reactionTemplate } from '/common/helpers/layout';
-
-const T = _i18n.createComponent('reaction.core.checkoutProgressBar');
 import React, { Component, PropTypes } from "react";
+import { reactionTemplate } from "../../../client/helpers/layout";
+
+// const T = _i18n.createComponent("reaction.core.checkoutProgressBar");
+
 
 /**
  * @class CheckoutProgressBar
@@ -15,12 +15,12 @@ export default class CheckoutProgressBar extends Component {
       hash: {
         id: cartId,
         shopId: shopId,
-        workflow: 'coreCartWorkflow'
+        workflow: "coreCartWorkflow"
       }
     };
     const coreCartWorkflow = reactionTemplate(options);
 
-    console.log('CheckoutProgressBar...');
+    console.log("CheckoutProgressBar...");
     return (
       <div className="ui tablet stackable small steps">
         { coreCartWorkflow.map(workflow => {

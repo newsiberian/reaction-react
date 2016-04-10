@@ -1,7 +1,5 @@
-import { _i18n } from "meteor/universe:i18n";
-
 import React, { Component, PropTypes } from "react";
-const T = _i18n.createComponent('reaction.core.checkoutLogin');
+// const T = _i18n.createComponent('reaction.core.checkoutLogin');
 
 /**
  * @class CheckoutLoggedIn

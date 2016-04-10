@@ -6,6 +6,7 @@ import account from "../../modules/accounts/reducers";
 import dashboard from "../../modules/dashboard/reducers";
 import shop from "../../modules/products/reducers";
 import cart from "../../modules/cart/reducers";
+import checkout from "../../modules/checkout/reducers";
 import comments from "../../modules/comments/reducers";
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   dashboard,
   shop,
   cart,
+  checkout,
   comments,
   form: formReducer,
   routing: routerReducer
