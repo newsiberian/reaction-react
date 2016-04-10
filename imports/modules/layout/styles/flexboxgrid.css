@@ -296,6 +296,8 @@
     width: 40rem;
   }
 
+
+  .col-xsm,
   .col-xsm-6 {
     box-sizing: border-box;
     -webkit-box-flex: 0;
@@ -304,6 +306,17 @@
     flex: 0 0 auto;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
+  }
+
+  .col-xsm {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
   }
 
   .col-xsm-6 {

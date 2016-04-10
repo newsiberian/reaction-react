@@ -41,7 +41,7 @@ class Profile extends Component {
     return (
       <div className={c(styles.container, "container-fluid")}>
         <Paper className={styles.segment}>
-          <DashboardHeader title={t("profile.about")} />
+          <DashboardHeader label={t("profile.about")} />
           <div className={styles.innerContainer}>
             <ProfileAboutForm
               initialValues={{
@@ -52,7 +52,7 @@ class Profile extends Component {
           </div>
         </Paper>
         <Paper className={styles.segment}>
-          <DashboardHeader title={t("accountsUI.changePassword")} />
+          <DashboardHeader label={t("accountsUI.changePassword")} />
           <div className={styles.innerContainer}>
             <ChangePasswordForm
               // initialValues={{
@@ -63,13 +63,13 @@ class Profile extends Component {
           </div>
         </Paper>
         <Paper className={styles.segment}>
-          <DashboardHeader title={t("accountsUI.yourOrders")} />
+          <DashboardHeader label={t("accountsUI.yourOrders")} />
           <div className={styles.innerContainer}>
             {"TODO: implement this component"}
           </div>
         </Paper>
         <Paper className={styles.segment}>
-          <DashboardHeader title={t("accountsUI.addressBook")} />
+          <DashboardHeader label={t("accountsUI.addressBook")} />
           <div className={styles.innerContainer}>
             <AddressBookContainer />
           </div>

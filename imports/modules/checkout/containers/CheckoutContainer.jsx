@@ -9,15 +9,15 @@ import { Tracker } from "meteor/tracker";
 import Loading from "../../layout/components/Loading";
 import Checkout from "../components/Checkout";
 import * as checkoutActions from "../actions/checkout";
-import { reactionTemplate } from "../../../client/helpers/layout";
+// import { reactionTemplate } from "../../../client/helpers/layout";
 
 class CheckoutContainer extends Component {
   // componentWillMount() {
   //   if (ReactionCore.Subscriptions.Cart.ready()) {
   //     const cart = ReactionCore.Collections.Cart.findOne();
-  //     if (cart.workflow && cart.workflow.status === "new") {
+  //     if (cart.workflow && cart.workflow.status) {
   //       // if user logged in as normal user, we must pass it through the first stage
-  //       checkoutActions.changeCartWorkflow("checkoutLogin", cart._id);
+  //       checkoutActions.changeCartWorkflow(cart.workflow.status, cart._id);
   //     }
   //   }
   // }
@@ -28,15 +28,18 @@ class CheckoutContainer extends Component {
 }
 
 CheckoutContainer.propTypes = {
+  activeStep: PropTypes.number.isRequired,
   cart: PropTypes.object,
   checkoutActions: PropTypes.shape({
-    changeCartWorkflow: PropTypes.func
+    changeCartWorkflow: PropTypes.func,
+    updateCartWorkflow: PropTypes.func,
+    destroyCheckout: PropTypes.func
   }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    // addressBookState: state.account.addressBook
+    activeStep: state.checkout.activeStep
   };
 }
 
@@ -47,15 +50,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  if (ReactionCore.Subsriptions.Cart.ready()) {
+  if (ReactionCore.Subscriptions.Cart.ready()) {
     const cart = ReactionCore.Collections.Cart.findOne();
     // we no need to track changes within this function
     // TODO test this
     Tracker.nonreactive(() => {
-      debugger;
-      if (cart.workflow && cart.workflow.status === "new") {
-        // if user logged in as normal user, we must pass it through the first stage
-        props.checkoutActions.changeCartWorkflow("checkoutLogin", cart._id);
+      if (cart.workflow && typeof cart.workflow.status === "string") {
+        if (cart.workflow.status !== "new") {
+          props.checkoutActions.changeCartWorkflow(cart.workflow.status, cart._id);
+        } else {
+          // if user logged in as normal user, we must pass it through the first stage
+          props.checkoutActions.updateCartWorkflow("checkoutLogin", cart._id);
+        }
       }
     });
     onData(null, { cart });

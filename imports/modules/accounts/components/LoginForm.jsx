@@ -29,7 +29,8 @@ const styles = {
     flexDirection: "column"
   },
   submit: {
-    marginTop: "2rem"
+    marginTop: "2rem",
+    width: "100%"
   }
 };
 
@@ -57,7 +58,7 @@ class LoginForm extends Component {
           type="password"
         />
         <FlatButton
-          fullWidth={true}
+          // fullWidth={true}
           label={t("accountsUI.signIn")}
           primary={true}
           type="submit"

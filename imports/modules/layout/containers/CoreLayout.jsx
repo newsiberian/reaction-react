@@ -188,7 +188,7 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   // we don't need to use this directly here, so we don't check this `ready`.
   // We need this sometimes to get ReactionCore.Collections.Accounts info
-  Meteor.subscribe("Accounts", Meteor.userId());
+  ReactionCore.Subscriptions.Account = Meteor.subscribe("Accounts", Meteor.userId());
   onData(null, {});
 }
 

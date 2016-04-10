@@ -1,16 +1,29 @@
-import React, { Component, PropTypes } from "react";
-// const T = _i18n.createComponent('reaction.core.cartCheckout');
+import React, { PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 
-export default class EmptyCheckoutCart extends Component {
-  render() {
-    return (
-      <div className="ui text container">
-        <h1 className="ui center aligned header" style={{ marginTop: '4rem' }}>
-          <T>surprise</T>&nbsp;<small><T>emptyCheckoutCart</T></small>
-        </h1>
-      </div>
-    );
+const styles = {
+  container: {
+    minHeight: "80vh"
+  },
+  header: {
+    marginTop: "4rem",
+    textAlign: "center"
   }
-}
+};
 
-EmptyCheckoutCart.propTypes = {};
+const EmptyCheckoutCart = props => {
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.header}>
+        {props.t("cartCheckout.surprise")}&nbsp;
+        <small>{props.t("cartCheckout.emptyCheckoutCart")}</small>
+      </h1>
+    </div>
+  );
+};
+
+EmptyCheckoutCart.propTypes = {
+  t: PropTypes.func
+};
+
+export default translate("core")(EmptyCheckoutCart);

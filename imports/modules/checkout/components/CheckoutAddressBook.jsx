@@ -1,29 +1,23 @@
 import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 import { iconStyles } from "../styles/checkoutStep";
 import AddressBookContainer from "../../../modules/accounts/containers/AddressBookContainer";
 
-
-// const T = _i18n.createComponent("reaction.core.addressBookGrid");
-
-/**
- * @class CheckoutAddressBook
- * @classdesc
- */
-export default class CheckoutAddressBook extends Component {
+class CheckoutAddressBook extends Component {
   render() {
-    const { checkoutStep, badgeClass, iconClass } = this.props;
+    const { checkoutStep, badgeClass, iconClass, t } = this.props;
     const iconClassName = checkoutStep.status === true ? "green checkmark icon" :
-      `${ badgeClass } ${ iconClass }`;
+      `${badgeClass} ${iconClass}`;
     console.log("CheckoutAddressBook...");
     return (
       <div className="ui segments">
         <div className="ui top attached header">
-          <i className={ iconClassName }></i>
+          <i className={iconClassName} />
           <div className="content">
-            <T>chooseAddress</T>
+            {t("addressBookGrid.chooseAddress")}
           </div>
         </div>
-        <AddressBookContainer accountId={ Meteor.userId() } />
+        <AddressBookContainer />
       </div>
     );
   }
@@ -33,5 +27,8 @@ CheckoutAddressBook.propTypes = {
   // checkoutStepCompleted: PropTypes.func.isRequired,
   checkoutStep: PropTypes.object.isRequired,
   badgeClass: PropTypes.string.isRequired,
-  iconClass: PropTypes.string.isRequired
+  iconClass: PropTypes.string.isRequired,
+  t: PropTypes.func
 };
+
+export default translate("core")(CheckoutAddressBook);

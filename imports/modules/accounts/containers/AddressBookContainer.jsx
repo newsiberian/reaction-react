@@ -53,12 +53,14 @@ function mapDispatchToProps(dispatch) {
 
 function composer(props, onData) {
   // we subscribe to "Accounts" within CoreLayout container
-  const account = ReactionCore.Collections.Accounts.findOne({
-    userId: Accounts.userId()
-  }, { fields: { "profile.addressBook": 1 } });
-  const addressBook = account.profile && account.profile.addressBook || [];
+  if (ReactionCore.Subscriptions.Account.ready()) {
+    const account = ReactionCore.Collections.Accounts.findOne({
+      userId: Accounts.userId()
+    }, { fields: { "profile.addressBook": 1 } });
+    const addressBook = account.profile && account.profile.addressBook || [];
 
-  onData(null, { addressBook });
+    onData(null, { addressBook });
+  }
 }
 
 const AddressBookContainerWithData = composeWithTracker(

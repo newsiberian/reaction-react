@@ -1,4 +1,5 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { Roles } from "meteor/alanning:roles";
 import { Accounts } from "meteor/accounts-base";
 import { ReactionServiceHelper } from "./utilities";
 import { Gravatar } from "meteor/jparker:gravatar";

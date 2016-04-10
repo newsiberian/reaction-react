@@ -20,7 +20,7 @@ class Management extends Component {
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
           { /* header section */ }
-          <DashboardHeader title={t("admin.dashboard.accountsLabel")} />
+          <DashboardHeader label={t("admin.dashboard.accountsLabel")} />
 
           { /* main section */ }
           <div className="container-fluid" style={styles.base}>

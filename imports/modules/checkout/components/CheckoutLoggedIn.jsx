@@ -1,17 +1,18 @@
-import React, { Component, PropTypes } from "react";
-// const T = _i18n.createComponent('reaction.core.checkoutLogin');
+import React, { PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 
-/**
- * @class CheckoutLoggedIn
- * @classdesc
- */
-export default class CheckoutLoggedIn extends Component {
-  render() {
-    console.log('CheckoutLoggedIn...');
-    return (
-      <div className="ui attached segment">
-        <h3 className="ui header" style={{ padding: '1rem' }}><T>welcome</T></h3>
-      </div>
-    );
-  }
-}
+const CheckoutLoggedIn = props => {
+  return (
+    <div className="ui attached segment">
+      <h3 className="ui header" style={{ padding: "1rem" }}>
+        {props.t("checkoutLogin.welcome")}
+      </h3>
+    </div>
+  );
+};
+
+CheckoutLoggedIn.propTypes = {
+  t: PropTypes.func
+};
+
+export default translate("core")(CheckoutLoggedIn);

@@ -9,20 +9,16 @@ const styles = {
   paddingLeft: "1rem"
 };
 
-/**
- * @class dashboardHeader
- * @classdesc
- */
 const DashboardHeader = props => {
   return (
     <header style={styles}>
-      <h3>{props.title}</h3>
+      <h3>{props.label}</h3>
     </header>
   );
 };
 
 DashboardHeader.propTypes = {
-  title: PropTypes.string
+  label: PropTypes.string
 };
 
 export default DashboardHeader;

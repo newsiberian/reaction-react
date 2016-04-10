@@ -41,7 +41,8 @@ const styles = {
     alignItems: "flex-start"
   },
   submit: {
-    marginTop: "2rem"
+    marginTop: "2rem",
+    width: "100%"
   }
 };
 
@@ -76,7 +77,7 @@ class RegisterForm extends Component {
           type="password"
         />
         <FlatButton
-          fullWidth={true}
+          // fullWidth={true}
           label={t("accountsUI.signUpButton")}
           primary={true}
           type="submit"

@@ -53,7 +53,7 @@ class DashboardGrid extends Component {
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
           {/* header section */}
-          <DashboardHeader title={t("app.settings")} />
+          <DashboardHeader label={t("app.settings")} />
 
           {/* main section */}
           <div className="container-fluid" style={styles.base}>

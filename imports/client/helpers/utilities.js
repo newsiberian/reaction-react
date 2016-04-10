@@ -1,4 +1,5 @@
 import { ReactionCore } from "meteor/reactioncommerce:core";
+import { Roles } from "meteor/alanning:roles";
 import { Accounts } from "meteor/accounts-base";
 import { ServiceConfiguration } from "meteor/service-configuration";
 import { _ } from "meteor/underscore";

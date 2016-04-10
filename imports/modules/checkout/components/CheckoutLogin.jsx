@@ -1,56 +1,81 @@
 import React, { Component, PropTypes } from "react";
+import { translate } from "react-i18next/lib";
 // import { InlineLoginBox } from "{universe:accounts-ui}";
 import CheckoutStepBadge from "./CheckoutStepBadge";
 import CheckoutLoggedIn from "./CheckoutLoggedIn";
+import SignIn from "../../accounts/components/SignIn.jsx";
+import LoginForm from "../../accounts/components/LoginForm.jsx";
+import FlatButton from "material-ui/lib/flat-button";
+import VerticalDivider from "../../layout/components/VerticalDivider.jsx";
+import Header from "../../layout/components/Header.jsx";
 
+const styles = {
+  badge: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "2rem",
+    height: "2rem",
+    borderRadius: "50%",
+    backgroundColor: "#00dcdd",
+    color: "#fff",
+    fontSize: 16,
+    fontWidth: "bold",
+    marginRight: "1rem"
+  },
+  column: {
+    padding: "2rem",
+    display: "flex",
+    justifyContent: "center"
+  },
+  continueAsGuest: {
+    marginTop: "1rem",
+    width: "100%"
+  }
+};
 
-// const T = _i18n.createComponent("reaction.core.checkoutLogin");
-// const T2 = _i18n.createComponent("reaction.core.accountsUI");
-
-/**
- * @class CheckoutLogin
- * @classdesc
- */
-export default class CheckoutLogin extends Component {
+class CheckoutLogin extends Component {
   render() {
     const {
-      checkoutStepCompleted, checkoutStep, badgeClass, iconClass,
-      onClickContinueGuest
+      checkoutStepCompleted, checkoutStep, badgeClass, iconClass, t
+      /*onClickContinueGuest*/
     } = this.props;
     const isLoginCompleted = checkoutStepCompleted(checkoutStep);
     const iconClassName = isLoginCompleted ? "green checkmark icon" :
-      `${ badgeClass } ${ iconClass }`;
+      `${badgeClass} ${iconClass}`;
 
     console.log("CheckoutLogin...");
     return (
-      <div className="ui segments">
-        <div className="ui top attached header">
-          <i className={ iconClassName }></i>
-          <div className="content">
-            { isLoginCompleted ? <T>loginCompleted</T> : <T>guestOrLogin</T> }
-          </div>
-        </div>
-        { isLoginCompleted ? <CheckoutLoggedIn /> :
-          <div className="ui attached segment">
-            <div className="ui two column very relaxed grid">
-              <div className="column">
+      <div>
+        <Header
+          label={isLoginCompleted ?
+            t("checkoutLogin.loginCompleted") :
+            t("checkoutLogin.guestOrLogin")}
+          labelStyle={{ fontSize: 16, fontWidth: 300 }}
+          style={{ minHeight: 50 }}
+        >
+          <i style={styles.badge}>{1}</i>
+        </Header>
+        
+        {isLoginCompleted ? <CheckoutLoggedIn /> :
+          <div>
+            <div className="row" style={{ position: "relative" }}>
+              <div className="col-xs-12 col-sm" style={styles.column}>
                 <div className="ui basic segment">
                   <div style={{ textAlign: "justify" }}>
-                    <T>guestMessage</T>
+                    {t("checkoutLogin.guestMessage")}
                   </div>
-                  <button
-                    className="ui fluid primary button"
-                    onClick={ () => onClickContinueGuest() }
-                  >
-                    <T>continueAsGuest</T>
-                  </button>
+                  <FlatButton
+                    // fullWidth={true}
+                    label={t("checkoutLogin.continueAsGuest")}
+                    // onTouchTap={}
+                    style={styles.continueAsGuest}
+                  />
                 </div>
               </div>
-              <div className="ui vertical divider">
-                <T2>or</T2>
-              </div>
-              <div className="column">
-                <InlineLoginBox />
+              <VerticalDivider label={t("accountsUI.or")} />
+              <div className="col-xs-12 col-sm" style={styles.column}>
+                <LoginForm />
               </div>
             </div>
           </div>
@@ -61,9 +86,12 @@ export default class CheckoutLogin extends Component {
 }
 
 CheckoutLogin.propTypes = {
-  checkoutStepCompleted: PropTypes.func.isRequired,
+  checkoutStepCompleted: PropTypes.func,
   checkoutStep: PropTypes.object.isRequired,
   badgeClass: PropTypes.string.isRequired,
   iconClass: PropTypes.string.isRequired,
-  onClickContinueGuest: PropTypes.func.isRequired
+  // onClickContinueGuest: PropTypes.func.isRequired
+  t: PropTypes.func
 };
+
+export default translate("core")(CheckoutLogin);
