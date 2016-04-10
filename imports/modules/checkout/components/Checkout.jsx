@@ -68,7 +68,10 @@ class Checkout extends Component {
     //   cart, checkoutLoginCompleted, checkoutStepBadgeClass, progressbarStatus,
     //   setStepIcon, onClickContinueGuest
     // } = this.props;
-    const { activeStep, cart, checkoutActions, t } = this.props;
+    const {
+      accountsActions, actionType, activeStep, cart, checkoutActions,
+      inlineActions, t
+    } = this.props;
 
     if (typeof cart.items !== "object" ||
       (typeof cart.items === "object" && !cart.items.length)) {
@@ -129,7 +132,10 @@ class Checkout extends Component {
             return (
               <Paper key={checkoutStep.position}>
               <CheckoutStep
-                checkoutStep={checkoutStep}
+                accountsActions={accountsActions} // for the first step
+                actionType={actionType} // for the first step
+                inlineActions={inlineActions} // for the first step
+                checkoutStep={checkoutStep} // for all steps
                 checkoutStepCompleted={checkoutStepsCompleted[checkoutStep.template]}
                 // checkoutStepBadgeClass={checkoutStepBadgeClass}
                 // setStepIcon={setStepIcon}
@@ -192,10 +198,21 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
+  accountsActions: PropTypes.shape({
+    createUser: PropTypes.func,
+    login: PropTypes.func,
+    loginWithService: PropTypes.func,
+    logout: PropTypes.func
+  }).isRequired,
+  actionType: PropTypes.string.isRequired,
   activeStep: PropTypes.number.isRequired,
   cart: PropTypes.object.isRequired,
   checkoutActions: PropTypes.shape({
     changeCartWorkflow: PropTypes.func
+  }).isRequired,
+  inlineActions: PropTypes.shape({
+    changeActionType: PropTypes.func,
+    destroyInline: PropTypes.func
   }).isRequired,
   t: PropTypes.func
   // checkoutLoginCompleted: PropTypes.func.isRequired,

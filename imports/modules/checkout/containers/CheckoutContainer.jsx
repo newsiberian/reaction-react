@@ -8,7 +8,9 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Tracker } from "meteor/tracker";
 import Loading from "../../layout/components/Loading";
 import Checkout from "../components/Checkout";
+import * as accountsActions from "../../accounts/actions/accounts";
 import * as checkoutActions from "../actions/checkout";
+import * as inlineActions from "../../accounts/actions/inline";
 // import { reactionTemplate } from "../../../client/helpers/layout";
 
 class CheckoutContainer extends Component {
@@ -28,24 +30,38 @@ class CheckoutContainer extends Component {
 }
 
 CheckoutContainer.propTypes = {
+  accountsActions: PropTypes.shape({
+    createUser: PropTypes.func,
+    login: PropTypes.func,
+    loginWithService: PropTypes.func,
+    logout: PropTypes.func
+  }).isRequired,
+  actionType: PropTypes.string.isRequired,
   activeStep: PropTypes.number.isRequired,
   cart: PropTypes.object,
   checkoutActions: PropTypes.shape({
     changeCartWorkflow: PropTypes.func,
     updateCartWorkflow: PropTypes.func,
     destroyCheckout: PropTypes.func
+  }).isRequired,
+  inlineActions: PropTypes.shape({
+    changeActionType: PropTypes.func,
+    destroyInline: PropTypes.func
   }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
+    actionType: state.account.inline.actionType,
     activeStep: state.checkout.activeStep
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    checkoutActions: bindActionCreators(checkoutActions, dispatch)
+    accountsActions: bindActionCreators(accountsActions, dispatch),
+    checkoutActions: bindActionCreators(checkoutActions, dispatch),
+    inlineActions: bindActionCreators(inlineActions, dispatch)
   };
 }
 

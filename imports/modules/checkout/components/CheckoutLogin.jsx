@@ -3,8 +3,9 @@ import { translate } from "react-i18next/lib";
 // import { InlineLoginBox } from "{universe:accounts-ui}";
 import CheckoutStepBadge from "./CheckoutStepBadge";
 import CheckoutLoggedIn from "./CheckoutLoggedIn";
-import SignIn from "../../accounts/components/SignIn.jsx";
-import LoginForm from "../../accounts/components/LoginForm.jsx";
+// import SignIn from "../../accounts/components/SignIn.jsx";
+// import LoginForm from "../../accounts/components/LoginForm.jsx";
+import Inline from "../../accounts/components/Inline.jsx";
 import FlatButton from "material-ui/lib/flat-button";
 import VerticalDivider from "../../layout/components/VerticalDivider.jsx";
 import Header from "../../layout/components/Header.jsx";
@@ -37,7 +38,8 @@ const styles = {
 class CheckoutLogin extends Component {
   render() {
     const {
-      checkoutStepCompleted, checkoutStep, badgeClass, iconClass, t
+      checkoutStepCompleted, checkoutStep, badgeClass, iconClass, t,
+      accountsActions, actionType, inlineActions
       /*onClickContinueGuest*/
     } = this.props;
     const isLoginCompleted = checkoutStepCompleted(checkoutStep);
@@ -75,7 +77,11 @@ class CheckoutLogin extends Component {
               </div>
               <VerticalDivider label={t("accountsUI.or")} />
               <div className="col-xs-12 col-sm" style={styles.column}>
-                <LoginForm />
+                <Inline
+                  accountsActions={accountsActions}
+                  actionType={actionType}
+                  inlineActions={inlineActions}
+                />
               </div>
             </div>
           </div>
@@ -86,10 +92,21 @@ class CheckoutLogin extends Component {
 }
 
 CheckoutLogin.propTypes = {
+  accountsActions: PropTypes.shape({
+    createUser: PropTypes.func,
+    login: PropTypes.func,
+    loginWithService: PropTypes.func,
+    logout: PropTypes.func
+  }).isRequired,
+  actionType: PropTypes.string.isRequired,
   checkoutStepCompleted: PropTypes.func,
   checkoutStep: PropTypes.object.isRequired,
   badgeClass: PropTypes.string.isRequired,
   iconClass: PropTypes.string.isRequired,
+  inlineActions: PropTypes.shape({
+    changeActionType: PropTypes.func,
+    destroyInline: PropTypes.func
+  }).isRequired,
   // onClickContinueGuest: PropTypes.func.isRequired
   t: PropTypes.func
 };
