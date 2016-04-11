@@ -3,6 +3,7 @@ import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { Roles } from "meteor/alanning:roles";
+import Helmet from "react-helmet";
 import Paper from 'material-ui/lib/paper';
 import Stepper from "material-ui/lib/Stepper/Stepper";
 import Step from "material-ui/lib/Stepper/HorizontalStep";
@@ -94,6 +95,15 @@ class Checkout extends Component {
     return (
       <div className="container-fluid" style={styles.container}>
         <section>
+          {/* Headers */}
+          <Helmet
+            title={t("pageTitles.checkout")}
+            titleTemplate={`${ReactionCore.getShopName()} • ${t("pageTitles.checkout")}`}
+            meta={[
+              {charset: "utf-8"}
+            ]}
+          />
+          
           {/*<Stepper
             horizontal={true}
             activeStep={activeStep}
@@ -222,4 +232,4 @@ Checkout.propTypes = {
   // onClickContinueGuest: PropTypes.func
 };
 
-export default translate("core")(Checkout);
+export default translate(["core", "reaction-react"])(Checkout);

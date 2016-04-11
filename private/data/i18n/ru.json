@@ -4,6 +4,9 @@
   "ns": "reaction-react",
   "translation": {
     "reaction-react": {
+      "pageTitles": {
+        "checkout": "Оформление заказа"
+      },
       "admin": {
         "dashboard": {
           "reactUiLabel": "React UI",
