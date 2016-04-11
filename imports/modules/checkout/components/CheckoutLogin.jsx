@@ -9,21 +9,9 @@ import Inline from "../../accounts/components/Inline.jsx";
 import FlatButton from "material-ui/lib/flat-button";
 import VerticalDivider from "../../layout/components/VerticalDivider.jsx";
 import Header from "../../layout/components/Header.jsx";
+import { iconStyles } from "../styles/checkoutStep";
 
 const styles = {
-  badge: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "2rem",
-    height: "2rem",
-    borderRadius: "50%",
-    backgroundColor: "#00dcdd",
-    color: "#fff",
-    fontSize: 16,
-    fontWidth: "bold",
-    marginRight: "1rem"
-  },
   column: {
     padding: "2rem",
     display: "flex",
@@ -56,9 +44,9 @@ class CheckoutLogin extends Component {
           labelStyle={{ fontSize: 16, fontWidth: 300 }}
           style={{ minHeight: 50 }}
         >
-          <i style={styles.badge}>{1}</i>
+          <i style={iconStyles}>{1}</i>
         </Header>
-        
+
         {isLoginCompleted ? <CheckoutLoggedIn /> :
           <div>
             <div className="row" style={{ position: "relative" }}>

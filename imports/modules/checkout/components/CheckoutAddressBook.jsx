@@ -1,33 +1,43 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { iconStyles } from "../styles/checkoutStep";
 import AddressBookContainer from "../../../modules/accounts/containers/AddressBookContainer";
+import Header from "../../layout/components/Header.jsx";
+import { iconStyles } from "../styles/checkoutStep";
+
+const styles = {
+  addressContainer: {
+    padding: "1rem"
+  }
+};
 
 class CheckoutAddressBook extends Component {
   render() {
     const { checkoutStep, badgeClass, iconClass, t } = this.props;
-    const iconClassName = checkoutStep.status === true ? "green checkmark icon" :
-      `${badgeClass} ${iconClass}`;
+    // const iconClassName = checkoutStep.status === true ? "green checkmark icon" :
+    //   `${badgeClass} ${iconClass}`;
     console.log("CheckoutAddressBook...");
     return (
-      <div className="ui segments">
-        <div className="ui top attached header">
-          <i className={iconClassName} />
-          <div className="content">
-            {t("addressBookGrid.chooseAddress")}
-          </div>
+      <div>
+        <Header
+          label={t("addressBookGrid.chooseAddress")}
+          labelStyle={{ fontSize: 16, fontWidth: 300 }}
+          style={{ minHeight: 50 }}
+        >
+          <i style={iconStyles}>{2}</i>
+        </Header>
+        <div style={styles.addressContainer}>
+          <AddressBookContainer />
         </div>
-        <AddressBookContainer />
       </div>
     );
   }
 }
 
 CheckoutAddressBook.propTypes = {
-  // checkoutStepCompleted: PropTypes.func.isRequired,
-  checkoutStep: PropTypes.object.isRequired,
-  badgeClass: PropTypes.string.isRequired,
-  iconClass: PropTypes.string.isRequired,
+  // checkoutStepCompleted: PropTypes.func,
+  // checkoutStep: PropTypes.object.isRequired,
+  // badgeClass: PropTypes.string.isRequired,
+  // iconClass: PropTypes.string.isRequired,
   t: PropTypes.func
 };
 
