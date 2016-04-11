@@ -12,7 +12,8 @@ components.getComponent = (name) =>  components[name];
 
 components.registerComponent("CheckoutLogin", require("./CheckoutLogin").default);
 components.registerComponent("CheckoutAddressBook", require("./CheckoutAddressBook").default);
-components.registerComponent("CoreCheckoutShipping", require("./CoreCheckoutShipping").default);
+// `CoreCheckoutShipping` named differently. looks like missed in reaction.
+components.registerComponent("CoreCheckoutShipping", require("./CheckoutShipping").default);
 components.registerComponent("CheckoutReview", require("./CheckoutReview").default);
 components.registerComponent("CheckoutPayment", require("./CheckoutPayment").default);
 // const components = {

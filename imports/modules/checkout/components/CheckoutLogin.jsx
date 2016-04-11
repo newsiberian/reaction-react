@@ -41,7 +41,7 @@ class CheckoutLogin extends Component {
           label={isLoginCompleted ?
             t("checkoutLogin.loginCompleted") :
             t("checkoutLogin.guestOrLogin")}
-          labelStyle={{ fontSize: 16, fontWidth: 300 }}
+          labelStyle={{ fontSize: 16, fontWidth: 200 }}
           style={{ minHeight: 50 }}
         >
           <i style={iconStyles}>{1}</i>

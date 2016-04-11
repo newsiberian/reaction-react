@@ -19,7 +19,7 @@ const CheckoutAddressBook = props => {
     <div>
       <Header
         label={props.t("addressBookGrid.chooseAddress")}
-        labelStyle={{ fontSize: 16, fontWidth: 300 }}
+        labelStyle={{ fontSize: 16, fontWidth: 200 }}
         style={{ minHeight: 50 }}
       >
         <i style={iconStyles}>{2}</i>
