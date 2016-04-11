@@ -96,7 +96,8 @@ CheckoutLogin.propTypes = {
     createUser: PropTypes.func,
     login: PropTypes.func,
     loginWithService: PropTypes.func,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    sendResetPasswordLink: PropTypes.func
   }).isRequired,
   actionType: PropTypes.string.isRequired,
   checkoutActions: PropTypes.shape({

@@ -3,6 +3,7 @@ import { routerActions } from "react-router-redux";
 import { displayAlert } from "../../layout/actions/alert";
 import { Accounts } from "meteor/accounts-base";
 import i18next from "i18next";
+import { reset } from "redux-form";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { performOAuthLogin } from "../../../client/helpers/accounts";
 
@@ -95,5 +96,29 @@ export const logout = id => {
       }
     });
     dispatch({ type: types.LOGOUT, userId: id });
+  };
+};
+
+export const sendResetPasswordLink = (values) => {
+  return dispatch => {
+    Accounts.forgotPassword(values, (err) => {
+      if (err) {
+        let message;
+        if (err.reason && err.reason === "User not found") {
+          message = i18next.t("accountsUI.error.userNotFound");
+        } else {
+          message = i18next.t("addressBookEdit.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message });
+        }
+        dispatch(displayAlert({ message: message }));
+      } else {
+        dispatch(displayAlert({
+          message: i18next.t("accountsUI.info.passwordResetSend")
+        }));
+        dispatch({ type: types.SEND_RESET_PASSWORD_LINK, email: values.email });
+        // reset form after successful link send
+        dispatch(reset("accountsForgotPasswordForm"));
+      }
+    });
   };
 };

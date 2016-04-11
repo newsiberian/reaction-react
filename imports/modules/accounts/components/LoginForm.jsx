@@ -24,7 +24,7 @@ const validate = values => {
 };
 
 const styles = {
-  base: {
+  form: {
     display: "flex",
     flexDirection: "column"
   },
@@ -34,17 +34,13 @@ const styles = {
   }
 };
 
-/**
- * @class LoginForm
- * @classdesc
- */
 class LoginForm extends Component {
   render() {
     const {
       fields: { email, password }, handleSubmit, pristine, submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit} style={styles.base}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <TextField
           {...email}
           floatingLabelText={t("accountsUI.email")}
@@ -75,7 +71,7 @@ LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 export default translate("core")(reduxForm({

@@ -34,7 +34,8 @@ CheckoutContainer.propTypes = {
     createUser: PropTypes.func,
     login: PropTypes.func,
     loginWithService: PropTypes.func,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    sendResetPasswordLink: PropTypes.func
   }).isRequired,
   actionType: PropTypes.string.isRequired,
   activeStep: PropTypes.number.isRequired,

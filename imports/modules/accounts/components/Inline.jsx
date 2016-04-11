@@ -11,10 +11,11 @@ const styles = StyleSheet.create({
     color: "#4183c4",
     textDecoration: "none",
     cursor: "pointer"
-    // backfaceVisibility: "hidden",
-    // backgroundColor: "#4183c4",
-    // bottom: 1,
-    // content: "",
+    // TODO make a good link styles, when :before will be available
+    // ":hover": {
+    //   // backgroundColor: "rgba(0, 50, 100, 0.12)",
+    //   outline: "0 none"
+    // }
   }
 });
 
@@ -25,6 +26,7 @@ components.getComponent = (name) =>  components[name];
 
 components.registerComponent("login", require("./LoginForm").default);
 components.registerComponent("register", require("./RegisterForm").default);
+components.registerComponent("forgotPassword", require("./ForgotPasswordForm").default);
 
 class Inline extends Component {
   handleSubmit(values) {
@@ -37,6 +39,7 @@ class Inline extends Component {
       accountsActions.createUser("Register", values);
       break;
     case "forgotPassword":
+      accountsActions.sendResetPasswordLink(values);
       break;
     default:
       break;
@@ -51,6 +54,7 @@ class Inline extends Component {
         <div className={styles.linkContainer}>
           <span
             className={styles.link}
+            onClick={() => inlineActions.changeActionType("forgotPassword")}
           >
             {t("accountsUI.forgotPassword")}
           </span>
@@ -64,6 +68,17 @@ class Inline extends Component {
         </div>
       );
     case "register":
+      return (
+        <div className={styles.linkContainer}>
+          <span
+            className={styles.link}
+            onClick={() => inlineActions.changeActionType("login")}
+          >
+            {t("accountsUI.signIn")}
+          </span>
+        </div>
+      );
+    case "forgotPassword":
       return (
         <div className={styles.linkContainer}>
           <span
@@ -98,7 +113,8 @@ Inline.propTypes = {
     createUser: PropTypes.func,
     login: PropTypes.func,
     loginWithService: PropTypes.func,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    sendResetPasswordLink: PropTypes.func
   }).isRequired,
   actionType: PropTypes.string.isRequired,
   inlineActions: PropTypes.shape({
