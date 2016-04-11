@@ -10,28 +10,26 @@ const styles = {
   }
 };
 
-class CheckoutAddressBook extends Component {
-  render() {
-    const { checkoutStep, badgeClass, iconClass, t } = this.props;
-    // const iconClassName = checkoutStep.status === true ? "green checkmark icon" :
-    //   `${badgeClass} ${iconClass}`;
-    console.log("CheckoutAddressBook...");
-    return (
-      <div>
-        <Header
-          label={t("addressBookGrid.chooseAddress")}
-          labelStyle={{ fontSize: 16, fontWidth: 300 }}
-          style={{ minHeight: 50 }}
-        >
-          <i style={iconStyles}>{2}</i>
-        </Header>
-        <div style={styles.addressContainer}>
-          <AddressBookContainer />
-        </div>
+const CheckoutAddressBook = props => {
+  // const { /*checkoutStep, badgeClass, iconClass,*/ t } = this.props;
+  // const iconClassName = checkoutStep.status === true ? "green checkmark icon" :
+  //   `${badgeClass} ${iconClass}`;
+  console.log("CheckoutAddressBook...");
+  return (
+    <div>
+      <Header
+        label={props.t("addressBookGrid.chooseAddress")}
+        labelStyle={{ fontSize: 16, fontWidth: 300 }}
+        style={{ minHeight: 50 }}
+      >
+        <i style={iconStyles}>{2}</i>
+      </Header>
+      <div style={styles.addressContainer}>
+        <AddressBookContainer />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 CheckoutAddressBook.propTypes = {
   // checkoutStepCompleted: PropTypes.func,
