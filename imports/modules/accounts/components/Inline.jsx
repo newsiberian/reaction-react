@@ -1,5 +1,23 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
+import { StyleSheet } from "react-look";
+
+const styles = StyleSheet.create({
+  linkContainer: {
+    margin: "0.5rem 0.5rem 0.5rem 0.5rem"
+  },
+  link: {
+    background: "rgba(0, 0, 0, 0) none repeat scroll 0 0",
+    color: "#4183c4",
+    textDecoration: "none",
+    cursor: "pointer"
+    // backfaceVisibility: "hidden",
+    // backgroundColor: "#4183c4",
+    // bottom: 1,
+    // content: "",
+  }
+});
+
 
 const components = {};
 components.registerComponent = (name, component) => (components[name] = component);
@@ -25,6 +43,28 @@ class Inline extends Component {
     }
   }
 
+  renderLinks() {
+    const { actionType, t } = this.props;
+    switch (actionType) {
+    case "login":
+      return (
+        <div className={styles.linkContainer}>
+          <span className={styles.link}>{t("accountsUI.forgotPassword")}</span>
+          {" • "}
+          <span className={styles.link}>{t("accountsUI.signUp")}</span>
+        </div>
+      );
+    case "register":
+      return (
+        <div className={styles.linkContainer}>
+          <span className={styles.link}>{t("accountsUI.signIn")}</span>
+        </div>
+      );
+    default:
+      return null; // should be never fired
+    }
+  }
+
   render() {
     const { actionType, t } = this.props;
     const InlineForm = components.getComponent(actionType);
@@ -33,6 +73,7 @@ class Inline extends Component {
         <InlineForm
           onSubmit={values => this.handleSubmit(values)}
         />
+        {this.renderLinks()}
       </div>
     );
   }
