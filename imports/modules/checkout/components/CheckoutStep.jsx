@@ -51,8 +51,8 @@ const setStepIcon = label => {
 export default class CheckoutStep extends Component {
   render() {
     const {
-      checkoutStepCompleted, checkoutStep,/*, checkoutStepBadgeClass, setStepIcon,
-      onClickContinueGuest*/ accountsActions, actionType, inlineActions
+      checkoutActions, checkoutStepCompleted, checkoutStep,/*, checkoutStepBadgeClass, */
+      accountsActions, actionType, inlineActions
     } = this.props;
     const isCompleted = checkoutStep.status ? checkoutStep.status : false;
     const isPending = checkoutStep.status === checkoutStep.template ?
@@ -72,6 +72,7 @@ export default class CheckoutStep extends Component {
           accountsActions={accountsActions} // for the first step
           actionType={actionType} // for the first step
           inlineActions={inlineActions} // for the first step
+          checkoutActions={checkoutActions} // for the first step
           checkoutStepCompleted={checkoutStepCompleted}
           checkoutStep={checkoutStep}
           badgeClass={badgeClass}
@@ -97,6 +98,10 @@ CheckoutStep.propTypes = {
     logout: PropTypes.func
   }).isRequired,
   actionType: PropTypes.string.isRequired,
+  checkoutActions: PropTypes.shape({
+    changeCartWorkflow: PropTypes.func,
+    continueAsGuest: PropTypes.func
+  }).isRequired,
   checkoutStepCompleted: PropTypes.func,
   checkoutStep: PropTypes.object.isRequired,
   inlineActions: PropTypes.shape({

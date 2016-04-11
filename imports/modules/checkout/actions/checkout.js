@@ -1,6 +1,8 @@
 import * as types from "../constants";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Meteor } from "meteor/meteor";
+import { displayAlert } from "../../layout/actions/alert";
+// import i18next from "i18next";
 
 const getActiveStep = status => {
   switch (status) {
@@ -27,9 +29,36 @@ export const changeCartWorkflow = status => {
 
 export const updateCartWorkflow = (status, cartId) => {
   return dispatch => {
-    Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow", status, cartId);
-    // we don't put dispatch within Method, because it is not clear, what to
-    // expect on return. Method too complicated.
-    dispatch({ type: types.UPDATE_CART_WORKFLOW, activeStep: getActiveStep(status) });
+    Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow", status, cartId,
+      (err/* , res */) => {
+        if (err) {
+          dispatch(displayAlert({
+            message: i18next.t("addressBookEdit.somethingWentWrong",
+              { err: err.reason ? err.reason : err.message })
+          }));
+        }
+        // we don't put dispatch within Method, because it is not clear, what to
+        // expect on return. Method too complicated.
+        dispatch({ type: types.UPDATE_CART_WORKFLOW, activeStep: getActiveStep(status) });
+      }
+    );
+  };
+};
+
+export const continueAsGuest = () => {
+  return dispatch => {
+    Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow", "checkoutLogin",
+      (err/* , res */) => {
+        if (err) {
+          dispatch(displayAlert({
+            message: i18next.t("addressBookEdit.somethingWentWrong",
+              { err: err.reason ? err.reason : err.message })
+          }));
+        }
+        // we don't put dispatch within Method, because it is not clear, what to
+        // expect on return. Method too complicated.
+        dispatch({ type: types.CONTINUE_AS_GUEST });
+      }
+    );
   };
 };

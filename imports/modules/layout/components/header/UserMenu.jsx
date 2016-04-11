@@ -56,7 +56,7 @@ class UserMenu extends Component {
           onTouchTap={userState.handleClick}
         />
         <Badge
-          badgeContent={cart && cart.cartCount() || 0}
+          badgeContent={(cart && cart.cartCount()) || 0}
           primary={true}
           secondary={false}
           badgeStyle={styles.badge}
@@ -77,7 +77,7 @@ UserMenu.propTypes = {
   cart: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     items: PropTypes.array
-  }).isRequired,
+  }), // could be undefined
   cartActions: PropTypes.shape({
     getCartCount: PropTypes.func
   }).isRequired,

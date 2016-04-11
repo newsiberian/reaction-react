@@ -39,7 +39,7 @@ class CheckoutLogin extends Component {
   render() {
     const {
       checkoutStepCompleted, checkoutStep, badgeClass, iconClass, t,
-      accountsActions, actionType, inlineActions
+      accountsActions, actionType, inlineActions, checkoutActions
       /*onClickContinueGuest*/
     } = this.props;
     const isLoginCompleted = checkoutStepCompleted(checkoutStep);
@@ -70,7 +70,7 @@ class CheckoutLogin extends Component {
                   <FlatButton
                     // fullWidth={true}
                     label={t("checkoutLogin.continueAsGuest")}
-                    // onTouchTap={}
+                    onTouchTap={checkoutActions.continueAsGuest}
                     style={styles.continueAsGuest}
                   />
                 </div>
@@ -99,6 +99,10 @@ CheckoutLogin.propTypes = {
     logout: PropTypes.func
   }).isRequired,
   actionType: PropTypes.string.isRequired,
+  checkoutActions: PropTypes.shape({
+    changeCartWorkflow: PropTypes.func,
+    continueAsGuest: PropTypes.func
+  }).isRequired,
   checkoutStepCompleted: PropTypes.func,
   checkoutStep: PropTypes.object.isRequired,
   badgeClass: PropTypes.string.isRequired,

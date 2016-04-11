@@ -42,7 +42,8 @@ CheckoutContainer.propTypes = {
   checkoutActions: PropTypes.shape({
     changeCartWorkflow: PropTypes.func,
     updateCartWorkflow: PropTypes.func,
-    destroyCheckout: PropTypes.func
+    destroyCheckout: PropTypes.func,
+    continueAsGuest: PropTypes.func
   }).isRequired,
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
@@ -68,19 +69,24 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   if (ReactionCore.Subscriptions.Cart.ready()) {
     const cart = ReactionCore.Collections.Cart.findOne();
-    // we no need to track changes within this function
-    // TODO test this
-    Tracker.nonreactive(() => {
-      if (cart.workflow && typeof cart.workflow.status === "string") {
-        if (cart.workflow.status !== "new") {
-          props.checkoutActions.changeCartWorkflow(cart.workflow.status, cart._id);
-        } else {
-          // if user logged in as normal user, we must pass it through the first stage
-          props.checkoutActions.updateCartWorkflow("checkoutLogin", cart._id);
+    // `cart` could be undefined in case when we login to existent user from
+    // checkout page. At first moment subscription still old and user doesn't
+    // have a `cart`
+    if (cart) {
+      // we no need to track changes within this function
+      // TODO test this
+      Tracker.nonreactive(() => {
+        if (cart.workflow && typeof cart.workflow.status === "string") {
+          if (cart.workflow.status !== "new") {
+            props.checkoutActions.changeCartWorkflow(cart.workflow.status, cart._id);
+          } else {
+            // if user logged in as normal user, we must pass it through the first stage
+            props.checkoutActions.updateCartWorkflow("checkoutLogin", cart._id);
+          }
         }
-      }
-    });
-    onData(null, { cart });
+      });
+      onData(null, { cart });
+    }
   }
 }
 

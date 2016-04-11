@@ -145,6 +145,7 @@ class Checkout extends Component {
                 accountsActions={accountsActions} // for the first step
                 actionType={actionType} // for the first step
                 inlineActions={inlineActions} // for the first step
+                checkoutActions={checkoutActions} // for the first step
                 checkoutStep={checkoutStep} // for all steps
                 checkoutStepCompleted={checkoutStepsCompleted[checkoutStep.template]}
                 // checkoutStepBadgeClass={checkoutStepBadgeClass}
@@ -218,7 +219,8 @@ Checkout.propTypes = {
   activeStep: PropTypes.number.isRequired,
   cart: PropTypes.object.isRequired,
   checkoutActions: PropTypes.shape({
-    changeCartWorkflow: PropTypes.func
+    changeCartWorkflow: PropTypes.func,
+    continueAsGuest: PropTypes.func
   }).isRequired,
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
