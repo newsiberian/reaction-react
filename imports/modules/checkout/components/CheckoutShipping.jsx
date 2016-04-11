@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-// import getReactionApps from "../../../client/helpers/apps";
 import Header from "../../layout/components/Header.jsx";
 import CheckoutShippingContainer from "../../shipping/containers/CheckoutShippingContainer.jsx";
 import { iconStyles } from "../styles/checkoutStep";
@@ -21,16 +20,13 @@ class CheckoutShipping extends Component {
           <i style={iconStyles}>{3}</i>
         </Header>
         <CheckoutShippingContainer />
-        {getReactionApps({ provides: "shippingMethod", enabled: true }).map(
-          // FIXME: something stupid here. We don't need to call container
-          // several times
-          // shippingMethod =>
-        )}
       </div>
     );
   }
 }
 
-CheckoutShipping.propTypes = {};
+CheckoutShipping.propTypes = {
+  t: PropTypes.func
+};
 
 export default translate("core")(CheckoutShipping);

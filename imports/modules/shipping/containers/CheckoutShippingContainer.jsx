@@ -14,7 +14,7 @@ class CheckoutShippingContainer extends Component {
 }
 
 CheckoutShippingContainer.propTypes = {
-  shippingMethodCount: PropTypes.number,
+  shippingConfigured: PropTypes.number,
   shippingMethods: PropTypes.arrayOf(PropTypes.object)
 };
 

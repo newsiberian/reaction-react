@@ -18,7 +18,7 @@ const AdminControlsBarContainer = props => {
 };
 
 AdminControlsBarContainer.propTypes = {
-  apps: PropTypes.array.isRequired,
+  apps: PropTypes.array.isRequired
   //routerActions: PropTypes.object.isRequired
 };
 
