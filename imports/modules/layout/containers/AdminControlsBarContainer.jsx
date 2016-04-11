@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch) {
 function composer(props, onData) {
   // admin nav shortcuts
   const apps = getReactionApps({ provides: "shortcut", enabled: true });
-  onData(null, { apps: apps });
+  onData(null, { apps });
 }
 
 //const AdminControlsBarContainerWithData = composeWithTracker(
