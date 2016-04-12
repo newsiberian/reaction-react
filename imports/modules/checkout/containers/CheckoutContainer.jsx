@@ -11,6 +11,7 @@ import Checkout from "../components/Checkout";
 import * as accountsActions from "../../accounts/actions/accounts";
 import * as checkoutActions from "../actions/checkout";
 import * as inlineActions from "../../accounts/actions/inline";
+import { destroyCheckoutShipping } from "../../shipping/actions/shipping";
 // import { reactionTemplate } from "../../../client/helpers/layout";
 
 class CheckoutContainer extends Component {
@@ -23,6 +24,10 @@ class CheckoutContainer extends Component {
   //     }
   //   }
   // }
+  componentWillUnmount() {
+    // shipping cleanup
+    this.props.destroyCheckoutShipping();
+  }
 
   render() {
     return <Checkout {...this.props} />;
@@ -46,6 +51,7 @@ CheckoutContainer.propTypes = {
     destroyCheckout: PropTypes.func,
     continueAsGuest: PropTypes.func
   }).isRequired,
+  destroyCheckoutShipping: PropTypes.func,
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
     destroyInline: PropTypes.func
@@ -70,7 +76,8 @@ function mapDispatchToProps(dispatch) {
   return {
     accountsActions: bindActionCreators(accountsActions, dispatch),
     checkoutActions: bindActionCreators(checkoutActions, dispatch),
-    inlineActions: bindActionCreators(inlineActions, dispatch)
+    inlineActions: bindActionCreators(inlineActions, dispatch),
+    destroyCheckoutShipping: bindActionCreators(destroyCheckoutShipping, dispatch),
   };
 }
 

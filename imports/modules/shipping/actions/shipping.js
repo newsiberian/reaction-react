@@ -31,5 +31,5 @@ export const changeSelected = selectedIndex => {
   return { type: types.CHANGE_SELECTED, selectedIndex };
 };
 
-// TODO maybe this could be call from within Checkout Container?
+// this is calls from checkout module / CheckoutContainer
 export const destroyCheckoutShipping = () => ({ type: types.DESTROY_CHECKOUT_SHIPPING });

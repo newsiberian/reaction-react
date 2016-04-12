@@ -4,6 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../client/helpers/i18n";
 import { getMedia } from "../../../client/helpers/cart";
 import look, { StyleSheet } from "react-look";
+import Divider from 'material-ui/lib/divider';
 import Table from "material-ui/lib/table/table";
 import TableHeaderColumn from "material-ui/lib/table/table-header-column";
 import TableRow from "material-ui/lib/table/table-row";
@@ -83,6 +84,10 @@ class CheckoutReview extends Component {
               })}
             </TableBody>
           </Table>
+          <Divider />
+          <div className="row">
+            <div className="col-xs-offset-6 col-xs-6">test</div>
+          </div>
         </div>
       </div>
     );
