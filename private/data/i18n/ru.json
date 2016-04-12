@@ -82,6 +82,13 @@
         "shippingAddress": "Адрес доставки",
         "billingAddress": "Платёжный адрес",
         "selectShippingAddressAndBillingAddress": "Выберите адрес доставки и платёжный адрес"
+      },
+      "checkoutReview": {
+        "title": "Название",
+        "price": "Цена",
+        "quantity": "Количество",
+        "deliveryDetails": "Детали доставки",
+        "subtotal": "Подытог"
       }
     }
   }

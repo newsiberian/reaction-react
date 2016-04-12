@@ -82,6 +82,13 @@
         "shippingAddress": "Shipping Address",
         "billingAddress": "Billing Address",
         "selectShippingAddressAndBillingAddress": "Select a shipping and a billing addresses"
+      },
+      "checkoutReview": {
+        "title": "Product title",
+        "price": "Price",
+        "quantity": "Quantity",
+        "deliveryDetails": "Delivery Details",
+        "subtotal": "Subtotal"
       }
     }
   }

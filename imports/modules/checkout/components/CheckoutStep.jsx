@@ -53,7 +53,7 @@ export default class CheckoutStep extends Component {
   render() {
     const {
       checkoutActions, checkoutStepCompleted, checkoutStep,/*, checkoutStepBadgeClass, */
-      accountsActions, actionType, inlineActions
+      accountsActions, actionType, inlineActions, locale
     } = this.props;
     const isCompleted = checkoutStep.status ? checkoutStep.status : false;
     const isPending = checkoutStep.status === checkoutStep.template ?
@@ -78,6 +78,7 @@ export default class CheckoutStep extends Component {
           checkoutStep={checkoutStep}
           badgeClass={badgeClass}
           iconClass={iconClass}
+          locale={locale} // for the 4th step
           // onClickContinueGuest={onClickContinueGuest}
         />
       );
@@ -109,6 +110,12 @@ CheckoutStep.propTypes = {
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
     destroyInline: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired
   // checkoutStepBadgeClass: PropTypes.func.isRequired,
   // setStepIcon: PropTypes.func.isRequired,

@@ -4,9 +4,6 @@ import Header from "../../layout/components/Header.jsx";
 import CheckoutShippingContainer from "../../shipping/containers/CheckoutShippingContainer.jsx";
 import { iconStyles } from "../styles/checkoutStep";
 
-/**
- * Checkout Module's component
- */
 class CheckoutShipping extends Component {
   render() {
     const { t } = this.props;

@@ -94,9 +94,7 @@ class UsersGroup extends Component {
             style={styles.body}
           >
             {usersGroup.map((user, index) => (
-              <TableRow
-                key={index}
-              >
+              <TableRow key={index}>
                 <TableRowColumn>
                   {<Avatar src={getGravatar(user, 40)} />}
                 </TableRowColumn>

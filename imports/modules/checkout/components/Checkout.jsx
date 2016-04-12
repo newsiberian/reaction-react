@@ -71,7 +71,7 @@ class Checkout extends Component {
     // } = this.props;
     const {
       accountsActions, actionType, activeStep, cart, checkoutActions,
-      inlineActions, t
+      inlineActions, locale, t
     } = this.props;
 
     if (typeof cart.items !== "object" ||
@@ -148,6 +148,7 @@ class Checkout extends Component {
                 checkoutActions={checkoutActions} // for the first step
                 checkoutStep={checkoutStep} // for all steps
                 checkoutStepCompleted={checkoutStepsCompleted[checkoutStep.template]}
+                locale={locale} // for the 4th step
                 // checkoutStepBadgeClass={checkoutStepBadgeClass}
                 // setStepIcon={setStepIcon}
                 // onClickContinueGuest={onClickContinueGuest}
@@ -226,6 +227,12 @@ Checkout.propTypes = {
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
     destroyInline: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired,
   t: PropTypes.func
   // checkoutLoginCompleted: PropTypes.func.isRequired,

@@ -49,13 +49,20 @@ CheckoutContainer.propTypes = {
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
     destroyInline: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
     actionType: state.account.inline.actionType,
-    activeStep: state.checkout.activeStep
+    activeStep: state.checkout.activeStep,
+    locale: state.layout.locale
   };
 }
 

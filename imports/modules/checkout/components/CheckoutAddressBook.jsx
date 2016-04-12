@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import AddressBookContainer from "../../../modules/accounts/containers/AddressBookContainer";
 import Header from "../../layout/components/Header.jsx";

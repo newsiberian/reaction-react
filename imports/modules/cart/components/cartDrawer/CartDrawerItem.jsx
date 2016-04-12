@@ -7,6 +7,7 @@ import IconButton from "material-ui/lib/icon-button";
 import GridTile from "material-ui/lib/grid-list/grid-tile";
 import ContentClear from "material-ui/lib/svg-icons/content/clear";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
+import { getMedia } from "../../../../client/helpers/cart";
 // import {
 //   fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
 //   removeButtonIconStyle
@@ -14,24 +15,6 @@ import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import { cardStyles } from "../../styles/cartDrawer";
 
 // const c = StyleSheet.combineStyles;
-
-const getMedia = (item) => {
-  // const product = ReactionCore.Collections.Products.findOne(item.productId);
-  const defaultImage = ReactionCore.Collections.Media.findOne({
-    "metadata.variantId": item.variants._id
-  });
-
-  if (defaultImage) {
-    return defaultImage;
-    // if this variant doesn't have a photo, it could mean that his photo could
-    // be found in upper level inside top level variant
-  } else if (item.variants.ancestors.length > 1) {
-    // we could take an image from topVariant if it is presents
-    return ReactionCore.Collections.Media.findOne({
-      "metadata.variantId": item.variants.ancestors[1]
-    });
-  }
-};
 
 class CartDrawerItem extends Component {
   render() {
