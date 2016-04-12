@@ -4,7 +4,8 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../client/helpers/i18n";
 import { getMedia } from "../../../client/helpers/cart";
 import look, { StyleSheet } from "react-look";
-import Divider from 'material-ui/lib/divider';
+import { Link } from "react-router";
+import Divider from "material-ui/lib/divider";
 import Table from "material-ui/lib/table/table";
 import TableHeaderColumn from "material-ui/lib/table/table-header-column";
 import TableRow from "material-ui/lib/table/table-row";
@@ -14,6 +15,7 @@ import TableBody from "material-ui/lib/table/table-body";
 import Header from "../../layout/components/Header.jsx";
 import { iconStyles } from "../styles/checkoutStep";
 
+const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
   reviewContainer: {
     padding: "1rem"
@@ -29,6 +31,9 @@ const styles = StyleSheet.create({
   },
   titleRow: {
     width: "50%"
+  },
+  totalContainer: {
+    marginTop: "2rem"
   }
 });
 
@@ -73,10 +78,12 @@ class CheckoutReview extends Component {
                       <img src={src} alt={item.variants.title} className={styles.image} />
                     </TableRowColumn>
                     <TableRowColumn className={styles.titleRow}>
-                      {item.variants.title}
+                      <Link to={`/shop/product/${item.productId}/${item.variants._id}`}>
+                        {item.variants.title}
+                      </Link>
                     </TableRowColumn>
                     <TableRowColumn>
-                      {formatPrice(item.variants.price, locale)}
+                      <b>{formatPrice(item.variants.price, locale)}</b>
                     </TableRowColumn>
                     <TableRowColumn>{item.quantity}</TableRowColumn>
                   </TableRow>
@@ -85,7 +92,7 @@ class CheckoutReview extends Component {
             </TableBody>
           </Table>
           <Divider />
-          <div className="row">
+          <div className={c(styles.totalContainer, "row")}>
             <div className="col-xs-offset-6 col-xs-6">test</div>
           </div>
         </div>
