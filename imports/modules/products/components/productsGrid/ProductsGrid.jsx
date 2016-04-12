@@ -10,7 +10,8 @@ const styles = {
     marginTop: "1rem",
     marginBottom: "1rem",
     marginLeft: "2rem",
-    marginRight: "2rem"
+    marginRight: "2rem",
+    flex: "1 1 auto"
   }
 };
 

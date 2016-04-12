@@ -4,7 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import accounting from "accounting";
+import accounting from "accounting-js";
 import i18next from "i18next";
 // import { moment } from "meteor/momentjs:moment";
 // import "../../../locales/ru";

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { StyleSheet } from "react-look";
 import { Link, browserHistory } from "react-router";
 import IconButton from "material-ui/lib/icon-button";
@@ -25,11 +26,9 @@ const getMedia = (item) => {
     // if this variant doesn't have a photo, it could mean that his photo could
     // be found in upper level inside top level variant
   } else if (item.variants.ancestors.length > 1) {
-    const topVariant = ReactionCore.Collections.Products.findOne({
-      _id: item.variants.ancestors[1]
-    });
+    // we could take an image from topVariant if it is presents
     return ReactionCore.Collections.Media.findOne({
-      "metadata.variantId": topVariant._id
+      "metadata.variantId": item.variants.ancestors[1]
     });
   }
 };

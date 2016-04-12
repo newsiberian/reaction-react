@@ -5,26 +5,41 @@ import { connect } from "react-redux";
 import { Meteor } from "meteor/meteor";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import getReactionApps from "../../../client/helpers/apps";
-import CheckoutShipping from "../components/CheckoutShipping.jsx";
+import Shipping from "../components/checkout/Shipping.jsx";
+import * as shippingActions from "../actions/shipping";
 
 class CheckoutShippingContainer extends Component {
   render() {
-    return <CheckoutShipping {...this.props} />;
+    return <Shipping {...this.props} />;
   }
 }
 
 CheckoutShippingContainer.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
+  selectedIndex: PropTypes.number.isRequired,
+  shippingActions: PropTypes.shape({
+    setShipmentMethod: PropTypes.func,
+    destroyCheckoutShipping: PropTypes.func
+  }).isRequired,
   shippingConfigured: PropTypes.number,
   shippingMethods: PropTypes.arrayOf(PropTypes.object)
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    locale: state.layout.locale,
+    selectedIndex: state.shipping.checkout.selectedIndex
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    // accountsActions: bindActionCreators(accountsActions, dispatch),
+    shippingActions: bindActionCreators(shippingActions, dispatch)
   };
 }
 

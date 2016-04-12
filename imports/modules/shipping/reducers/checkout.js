@@ -1,16 +1,17 @@
 import * as types from "../constants";
 
 const initialState = {
-  activeStep: -1
+  selectedIndex: -1
 };
 
+// keep in mind, this is SHIPPING checkout
 export default function checkout(state = initialState, action) {
   switch (action.type) {
-  case types.CHANGE_CART_WORKFLOW:
+  case types.SET_SHIPMENT_METHOD:
     return Object.assign({}, state, {
-      activeStep: action.activeStep
+      selectedIndex: action.selectedIndex
     });
-  case types.DESTROY_CHECKOUT:
+  case types.DESTROY_CHECKOUT_SHIPPING:
     return Object.assign({}, state, initialState);
   default:
     return state;

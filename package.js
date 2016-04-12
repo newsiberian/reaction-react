@@ -39,7 +39,7 @@ Package.onUse(function (api) {
   api.use("momentjs:moment");
   api.use("risul:moment-timezone");
 
-  api.use("reactioncommerce:core@0.12.0"); // todo do we need this?
+  api.use("reactioncommerce:core@0.13.0"); // todo do we need this?
   api.use("sunlark:reaction-comments-core");
 
   api.mainModule("server/main.js", "server");
