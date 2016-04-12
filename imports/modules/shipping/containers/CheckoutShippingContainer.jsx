@@ -9,6 +9,22 @@ import Shipping from "../components/checkout/Shipping.jsx";
 import * as shippingActions from "../actions/shipping";
 
 class CheckoutShippingContainer extends Component {
+  componentWillMount() { // maybe Will?
+    // if method already selected, we need to load it to store. This could happens
+    // if user pressed F5 during checkout process or this is not first his visit
+    // to checkout page
+    if (this.props.shippingMethods.length || !this.props.shippingConfigured) {
+      const cart = ReactionCore.Collections.Cart.findOne();
+      if (cart && cart.shipping && cart.shipping.length) {
+        const shipmentQuotes = cart.shipping[0].shipmentQuotes;
+        const shipmentMethodId = cart.shipping[0].shipmentMethod._id;
+        const selectedIndex = shipmentQuotes
+          .findIndex(quote => quote.method._id === shipmentMethodId);
+        this.props.shippingActions.changeSelected(selectedIndex);
+      }
+    }
+  }
+
   render() {
     return <Shipping {...this.props} />;
   }
@@ -23,6 +39,7 @@ CheckoutShippingContainer.propTypes = {
   }).isRequired,
   selectedIndex: PropTypes.number.isRequired,
   shippingActions: PropTypes.shape({
+    changeSelected: PropTypes.func,
     setShipmentMethod: PropTypes.func,
     destroyCheckoutShipping: PropTypes.func
   }).isRequired,

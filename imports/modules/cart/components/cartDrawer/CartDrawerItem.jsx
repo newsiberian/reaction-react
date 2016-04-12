@@ -7,13 +7,13 @@ import IconButton from "material-ui/lib/icon-button";
 import GridTile from "material-ui/lib/grid-list/grid-tile";
 import ContentClear from "material-ui/lib/svg-icons/content/clear";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
-import {
-  fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
-  removeButtonIconStyle
-} from "../../styles/cartDrawerItem";
+// import {
+//   fakeImage, primaryImage, realImage, titleStyles, removeButtonStyle,
+//   removeButtonIconStyle
+// } from "../../styles/cartDrawerItem";
 import { cardStyles } from "../../styles/cartDrawer";
 
-const c = StyleSheet.combineStyles;
+// const c = StyleSheet.combineStyles;
 
 const getMedia = (item) => {
   // const product = ReactionCore.Collections.Products.findOne(item.productId);
@@ -54,6 +54,7 @@ class CartDrawerItem extends Component {
         <img /*style={realImage}*/ src="/resources/placeholder.gif" alt="" />
       );
     }
+    // TODO test this in IE
     // } else {
     //   if (media instanceof FS.File) {
     //     // todo looks like this is a wrong way to get media store from FS.File

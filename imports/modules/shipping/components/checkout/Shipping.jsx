@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../../client/helpers/i18n";
-import Avatar from 'material-ui/lib/avatar';
+import Avatar from "material-ui/lib/avatar";
 import List from "material-ui/lib/lists/list";
 import ListItem from "material-ui/lib/lists/list-item";
 import { SelectableContainerEnhance } from "material-ui/lib/hoc/selectable-enhance";
@@ -18,18 +18,16 @@ const styles = {
   }
 };
 
-function wrapState(ComposedComponent) {
-  const StateWrapper = React.createClass({
-    // getInitialState() {
-    //   return {selectedIndex: -1};
-    // },
-    // handleUpdateSelectedIndex(event, index) {
-    //   this.setState({
-    //     selectedIndex: index
-    //   });
-    // },
+// HOC
+const wrapState = ComposedComponent =>
+  class extends Component {
+    handleSelect(index) {
+      const { shippingActions, shipmentQuotes } = this.props;
+      shippingActions.setShipmentMethod(index, shipmentQuotes[index].method);
+    }
+
     render() {
-      const { selectedIndex, shippingActions } = this.props;
+      const { selectedIndex } = this.props;
       return (
         <ComposedComponent
           {...this.props}
@@ -37,14 +35,13 @@ function wrapState(ComposedComponent) {
           // valueLink={{value: this.state.selectedIndex, requestChange: this.handleUpdateSelectedIndex}}
           valueLink={{
             value: selectedIndex,
-            requestChange: (event, index, method) => shippingActions.setShipmentMethod(index, method)
+            requestChange: (event, index) => this.handleSelect(index)
           }}
         />
       );
     }
-  });
-  return StateWrapper;
-}
+  };
+
 
 SelectableList = wrapState(SelectableList);
 
@@ -77,15 +74,16 @@ class Shipping extends Component {
       return (
         <div>
           <SelectableList
+            // we have to pass several props to HOC to let `em operate with data
             selectedIndex={selectedIndex}
             shippingActions={shippingActions}
+            shipmentQuotes={shipmentQuotes}
           >
             {shipmentQuotes.map((shipmentQuote, index) => {
               return (
                 <ListItem
                   key={shipmentQuote.method._id}
                   value={index}
-                  method={shipmentQuote.method}
                   primaryText={shipmentQuote.method.label}
                   secondaryText={formatPrice(shipmentQuote.method.rate, locale)}
                   // we could put logo of transport company here

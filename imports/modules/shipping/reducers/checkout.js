@@ -7,7 +7,8 @@ const initialState = {
 // keep in mind, this is SHIPPING checkout
 export default function checkout(state = initialState, action) {
   switch (action.type) {
-  case types.SET_SHIPMENT_METHOD:
+  case types.CHANGE_SELECTED: // for initial loading
+  case types.SET_SHIPMENT_METHOD: // for manual selecting
     return Object.assign({}, state, {
       selectedIndex: action.selectedIndex
     });

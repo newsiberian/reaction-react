@@ -31,28 +31,28 @@ const styles = {
 // type: HOC
 export const ActionBarWrapper = (ComposedComponent, options) =>
   class extends Component {
-  render() {
-    const { layoutSettingsActions, handleSettingsClose, t } = this.props;
-    return (
-      <div style={styles.base}>
-        <Toolbar style={styles.toolbar}>
-          <ToolbarTitle
-            text={t(options.title)}
-            title={t(options.title)}
-            style={styles.title}
-          />
-          <ToolbarGroup float="right" style={styles.group}>
-            <IconButton
-              //onClick={() => handleSettingsClose()}
-              onClick={() => layoutSettingsActions.closeSettings()}
-              style={styles.closeButton}
-            >
-              <NavigationClose />
-            </IconButton>
-          </ToolbarGroup>
-        </Toolbar>
-        <ComposedComponent {...this.props} />
-      </div>
-    );
-  }
-};
+    render() {
+      const { layoutSettingsActions, handleSettingsClose, t } = this.props;
+      return (
+        <div style={styles.base}>
+          <Toolbar style={styles.toolbar}>
+            <ToolbarTitle
+              text={t(options.title)}
+              title={t(options.title)}
+              style={styles.title}
+            />
+            <ToolbarGroup float="right" style={styles.group}>
+              <IconButton
+                //onClick={() => handleSettingsClose()}
+                onClick={() => layoutSettingsActions.closeSettings()}
+                style={styles.closeButton}
+              >
+                <NavigationClose />
+              </IconButton>
+            </ToolbarGroup>
+          </Toolbar>
+          <ComposedComponent {...this.props} />
+        </div>
+      );
+    }
+  };
