@@ -67,8 +67,11 @@ export const continueAsGuest = () => {
 
 export const submitPayment = paymentMethod => {
   return dispatch => {
+    // this is old cart. To the time then callback will be invoked, this cart
+    // will be removed from mongodb. We need _id from this cart.
+    const cart = ReactionCore.Collections.Cart.findOne();
+
     cartMethods.submitPayment.call({ paymentMethod }, (err, res) => {
-      debugger;
       if (err) {
         dispatch(displayAlert({
           message: i18next.t("checkoutPayment.failedToPlaceOrder",
@@ -77,10 +80,7 @@ export const submitPayment = paymentMethod => {
       }
       if (res) {
         dispatch({ type: types.SUBMIT_PAYMENT });
-        dispatch(routerActions.push({
-          pathname: "/checkout/completed",
-          query: { _id: ReactionCore.Collections.Cart.findOne()._id }
-        }));
+        dispatch(routerActions.push(`/cart/completed/${cart._id}`));
       }
     });
   };

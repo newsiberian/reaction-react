@@ -76,6 +76,7 @@ export default class CheckoutStep extends Component {
           checkoutActions={checkoutActions} // for the first step
           checkoutStepCompleted={checkoutStepCompleted}
           checkoutStep={checkoutStep}
+          // TODO fix this bagdes or remove them
           badgeClass={badgeClass}
           iconClass={iconClass}
           locale={locale} // for the 4th step

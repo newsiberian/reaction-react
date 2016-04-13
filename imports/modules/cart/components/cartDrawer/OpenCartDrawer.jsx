@@ -18,7 +18,7 @@ class OpenCartDrawer extends Component {
   // }
 
   handleCheckoutClick() {
-    browserHistory.push("/checkout");
+    browserHistory.push("/cart/checkout");
     // additionally we need to close the cart
     this.props.cartActions.toggleCart();
   }
