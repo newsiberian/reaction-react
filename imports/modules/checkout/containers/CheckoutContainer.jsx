@@ -49,7 +49,8 @@ CheckoutContainer.propTypes = {
     changeCartWorkflow: PropTypes.func,
     updateCartWorkflow: PropTypes.func,
     destroyCheckout: PropTypes.func,
-    continueAsGuest: PropTypes.func
+    continueAsGuest: PropTypes.func,
+    submitPayment: PropTypes.func
   }).isRequired,
   destroyCheckoutShipping: PropTypes.func,
   inlineActions: PropTypes.shape({

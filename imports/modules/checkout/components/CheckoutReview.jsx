@@ -5,6 +5,7 @@ import { formatPrice } from "../../../client/helpers/i18n";
 import { getMedia } from "../../../client/helpers/cart";
 import look, { StyleSheet } from "react-look";
 import { Link } from "react-router";
+import FlatButton from "material-ui/lib/flat-button";
 import Divider from "material-ui/lib/divider";
 import Table from "material-ui/lib/table/table";
 import TableHeaderColumn from "material-ui/lib/table/table-header-column";
@@ -17,7 +18,7 @@ import { iconStyles } from "../styles/checkoutStep";
 
 const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
-  reviewContainer: {
+  container: {
     padding: "1rem"
   },
   image: {
@@ -41,7 +42,7 @@ const rowHeight = {
   height: 35.5
 };
 
-const CheckoutReview = ({ locale, t }) => {
+const CheckoutReview = ({ checkoutActions, locale, t }) => {
   // TODO check will this be reactive?
   const cart = ReactionCore.Collections.Cart.findOne();
   return (
@@ -53,7 +54,7 @@ const CheckoutReview = ({ locale, t }) => {
       >
         <i style={iconStyles}>{4}</i>
       </Header>
-      <div className={styles.reviewContainer}>
+      <div className={styles.container}>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
@@ -95,7 +96,10 @@ const CheckoutReview = ({ locale, t }) => {
         </Table>
         <Divider />
         <div className={c(styles.totalContainer, "row")}>
-          <div className="col-xs-offset-6 col-xs-6">
+          <div className="col-xs-12 col-sm-6">
+            {"TODO: Delivery info should be here"}
+          </div>
+          <div className="col-sm-offset-6 col-xs-12 col-sm-6">
             <Table
               displaySelectAll={false}
               adjustForCheckbox={false}
@@ -156,6 +160,17 @@ const CheckoutReview = ({ locale, t }) => {
                 </TableRow>
               </TableBody>
             </Table>
+            <FlatButton
+              label={t("checkoutReview.continue")}
+              primary={true}
+              // Not sure this `disabled` rules are correct
+              // the goal is not allow to user to press the button after he already
+              // pressed it once or before he came to this step
+              disabled={cart.workflow.workflow.length < 3 ||
+                cart.workflow.workflow.length >= 4}
+              onTouchTap={() =>
+                checkoutActions.updateCartWorkflow("checkoutReview", cart._id)}
+            />
           </div>
         </div>
       </div>
@@ -164,6 +179,9 @@ const CheckoutReview = ({ locale, t }) => {
 };
 
 CheckoutReview.propTypes = {
+  checkoutActions: PropTypes.shape({
+    updateCartWorkflow: PropTypes.func
+  }).isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
     language: PropTypes.string,

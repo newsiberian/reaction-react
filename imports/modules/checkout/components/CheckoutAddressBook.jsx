@@ -5,7 +5,7 @@ import Header from "../../layout/components/Header.jsx";
 import { iconStyles } from "../styles/checkoutStep";
 
 const styles = {
-  addressContainer: {
+  container: {
     padding: "1rem"
   }
 };
@@ -24,7 +24,7 @@ const CheckoutAddressBook = props => {
       >
         <i style={iconStyles}>{2}</i>
       </Header>
-      <div style={styles.addressContainer}>
+      <div style={styles.container}>
         <AddressBookContainer />
       </div>
     </div>

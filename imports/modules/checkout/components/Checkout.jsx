@@ -222,7 +222,9 @@ Checkout.propTypes = {
   cart: PropTypes.object.isRequired,
   checkoutActions: PropTypes.shape({
     changeCartWorkflow: PropTypes.func,
-    continueAsGuest: PropTypes.func
+    continueAsGuest: PropTypes.func,
+    submitPayment: PropTypes.func,
+    updateCartWorkflow: PropTypes.func
   }).isRequired,
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,

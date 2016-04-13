@@ -2,7 +2,9 @@ import * as types from "../constants";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Meteor } from "meteor/meteor";
 import { displayAlert } from "../../layout/actions/alert";
-// import i18next from "i18next";
+import * as cartMethods from "../../../api/cart/methods";
+import { routerActions } from "react-router-redux";
+import i18next from "i18next";
 
 const getActiveStep = status => {
   switch (status) {
@@ -60,5 +62,28 @@ export const continueAsGuest = () => {
         dispatch({ type: types.CONTINUE_AS_GUEST });
       }
     );
+  };
+};
+
+export const submitPayment = paymentMethod => {
+  return dispatch => {
+    cartMethods.submitPayment.call({ paymentMethod }, (err, res) => {
+      debugger;
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("checkoutPayment.failedToPlaceOrder",
+            { err: err.reason ? err.reason : err.message })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.SUBMIT_PAYMENT });
+        Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow",
+          "paymentSubmitted");
+        dispatch(routerActions.push({
+          pathname: "/checkout/completed",
+          query: { _id: ReactionCore.Collections.Cart.findOne()._id }
+        }));
+      }
+    });
   };
 };
