@@ -61,6 +61,8 @@ const cartShippingMethods = () => {
 };
 
 class Shipping extends Component {
+  // REMINDER: We can't have reactivity here, I'm not sure exactly why, by I think
+  // this is because of this cart objects are blackboxed. That's fine.
   render() {
     const {
       locale, selectedIndex, shippingActions, shippingConfigured, shippingMethods, t

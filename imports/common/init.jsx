@@ -8,6 +8,7 @@ import { I18nextProvider } from "react-i18next/lib";
 import { DynamicPrefixer, LookRoot, Presets } from "react-look";
 import injectTapEventPlugin from "react-tap-event-plugin";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
+import { loadLocale } from "../modules/layout/actions/locale";
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -23,6 +24,9 @@ Meteor.startup(() => {
 
   const config = Presets["react-dom"];
   config.prefixer = new DynamicPrefixer({userAgent: navigator.userAgent});
+
+  // initial load locale. This is the same as ReactionCore.Locale
+  store.dispatch(loadLocale());
 
   render(
     <I18nextProvider i18n={i18next}>

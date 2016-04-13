@@ -26,7 +26,6 @@ export const loadLocale = () => {
 
 export const changeLocale = () => {
   return dispatch => {
-
     dispatch({ type: types.CHANGE_LOCALE_SETTINGS, locale });
   };
 };

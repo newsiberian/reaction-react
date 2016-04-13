@@ -87,11 +87,6 @@ class CoreLayout extends Component {
     };
   }
 
-  componentWillMount() {
-    // initial load locale. This is the same as ReactionCore.Locale
-    this.props.localeActions.loadLocale();
-  }
-
   getChildContext() {
     return {
       muiTheme: modifyRawTheme({}, "Open Sans")
