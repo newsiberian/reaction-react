@@ -10,12 +10,9 @@ export const submitPayment = new ValidatedMethod({
     paymentMethod: { type: ReactionCore.Schemas.PaymentMethod }
   }).validator(),
   run({ paymentMethod }) {
-    const checkoutCart = ReactionCore.Collections.Cart.findOne({
-      userId: Meteor.userId()
+    const cart = ReactionCore.Collections.Cart.findOne({
+      userId: this.userId
     });
-
-    // Object.assign doesn't clone `cartShipping` etc methods
-    const cart = _.clone(checkoutCart);
     const cartId = cart._id;
     const invoice = {
       shipping: cart.cartShipping(),

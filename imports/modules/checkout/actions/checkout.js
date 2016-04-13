@@ -77,8 +77,6 @@ export const submitPayment = paymentMethod => {
       }
       if (res) {
         dispatch({ type: types.SUBMIT_PAYMENT });
-        Meteor.call("workflow/pushCartWorkflow", "coreCartWorkflow",
-          "paymentSubmitted");
         dispatch(routerActions.push({
           pathname: "/checkout/completed",
           query: { _id: ReactionCore.Collections.Cart.findOne()._id }
