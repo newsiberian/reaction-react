@@ -5,7 +5,8 @@
   "translation": {
     "reaction-react": {
       "pageTitles": {
-        "checkout": "Оформление заказа"
+        "checkout": "Оформление заказа",
+        "yourOrder": "Ваш заказ"
       },
       "admin": {
         "dashboard": {

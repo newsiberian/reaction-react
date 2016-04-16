@@ -31,7 +31,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  debugger;
   if (Meteor.subscribe("CompletedCartOrder", Meteor.userId(),
     props.params._id).ready()) {
     const order = ReactionCore.Collections.Orders.findOne({
