@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import ContentClear from "material-ui/lib/svg-icons/content/clear";
-import Divider from "material-ui/lib/divider";
-import IconButton from "material-ui/lib/icon-button";
-import FlatButton from "material-ui/lib/flat-button";
-import Paper from "material-ui/lib/paper";
-import TextField from "material-ui/lib/text-field";
-import Checkbox from "material-ui/lib/checkbox";
-import Subheader from "material-ui/lib/Subheader";
+import ContentClear from "material-ui/svg-icons/content/clear";
+import Divider from "material-ui/Divider";
+import IconButton from "material-ui/IconButton";
+import FlatButton from "material-ui/FlatButton";
+import Paper from "material-ui/Paper";
+import TextField from "material-ui/TextField";
+import Checkbox from "material-ui/Checkbox";
+import Subheader from "material-ui/Subheader";
 
 const styles = {
   variantEditForm: {

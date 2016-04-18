@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import FlatButton from "material-ui/lib/flat-button";
-import Paper from "material-ui/lib/paper";
-import TextField from "material-ui/lib/text-field";
-import ContentAdd from "material-ui/lib/svg-icons/content/add";
-import ContentRemove from "material-ui/lib/svg-icons/content/remove";
+import FlatButton from "material-ui/FlatButton";
+import Paper from "material-ui/Paper";
+import TextField from "material-ui/TextField";
+import ContentAdd from "material-ui/svg-icons/content/add";
+import ContentRemove from "material-ui/svg-icons/content/remove";
 import {
   addToCartStyle, numberPickerButtonsStyle, numberPickerStyle
 } from "../../styles/productDetail";

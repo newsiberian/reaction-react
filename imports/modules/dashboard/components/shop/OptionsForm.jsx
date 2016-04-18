@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 //import { reduxForm } from "redux-form";
-import FlatButton from "material-ui/lib/flat-button";
 //import Divider from "material-ui/lib/divider";
-import Toggle from "material-ui/lib/toggle";
+import Toggle from "material-ui/Toggle";
 //export const fields = [
 //  "allowGuestCheckout"
 //];

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { browserHistory } from "react-router";
 import Slider from "react-slick";
-import FlatButton from "material-ui/lib/flat-button";
+import FlatButton from "material-ui/FlatButton";
 import CartSubTotals from "./CartSubTotals.jsx";
 import CartDrawerItem from "./CartDrawerItem.jsx";
 import { openCartStyles, cardStyles, cartButton } from "../../styles/cartDrawer";

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import FlatButton from "material-ui/lib/flat-button";
-import FontIcon from "material-ui/lib/font-icon";
+import FlatButton from "material-ui/FlatButton";
+import FontIcon from "material-ui/FontIcon";
 
 const styles = {
   buttonGroup: {

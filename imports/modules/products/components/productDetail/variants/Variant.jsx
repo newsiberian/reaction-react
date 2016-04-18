@@ -5,8 +5,8 @@ import look, { StyleSheet } from "react-look";
 import { _ } from "meteor/underscore";
 import { formatPrice } from "../../../../../client/helpers/i18n";
 import { getChildVariants, getVariantQuantity, getVariantPriceRange } from "../../../../../client/helpers/products";
-import FlatButton from "material-ui/lib/flat-button";
-import ContentCreate from "material-ui/lib/svg-icons/content/create";
+import FlatButton from "material-ui/FlatButton";
+import ContentCreate from "material-ui/svg-icons/content/create";
 import VariantForm from "./VariantForm.jsx";
 
 const c = StyleSheet.combineStyles;

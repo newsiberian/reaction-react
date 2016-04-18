@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import List from "material-ui/lib/lists/list";
-import ListItem from "material-ui/lib/lists/list-item";
-import Toggle from "material-ui/lib/toggle";
-import Divider from "material-ui/lib/divider";
-import Subheader from "material-ui/lib/Subheader";
+import List from "material-ui/List/List";
+import ListItem from "material-ui/List/ListItem";
+import Toggle from "material-ui/Toggle";
+import Divider from "material-ui/Divider";
+import Subheader from "material-ui/Subheader";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import LocalizationForm from "./LocalizationForm.jsx";

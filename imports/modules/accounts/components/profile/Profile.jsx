@@ -3,7 +3,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
-import Paper from "material-ui/lib/paper";
+import Paper from "material-ui/Paper";
 import DashboardHeader from "../../../dashboard/components/DashboardHeader.jsx";
 import ProfileAboutForm from "./ProfileAboutForm.jsx";
 import ChangePasswordForm from "./ChangePasswordForm.jsx";

@@ -2,10 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../../client/helpers/i18n";
-import Avatar from "material-ui/lib/avatar";
-import List from "material-ui/lib/lists/list";
-import ListItem from "material-ui/lib/lists/list-item";
-import { SelectableContainerEnhance } from "material-ui/lib/hoc/selectable-enhance";
+import Avatar from "material-ui/Avatar";
+import { List, ListItem, MakeSelectable } from "material-ui/List";
 let SelectableList = SelectableContainerEnhance(List);
 
 const styles = {

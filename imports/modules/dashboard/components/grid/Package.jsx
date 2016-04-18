@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from "react";
-import Card from "material-ui/lib/card/card";
-import CardActions from "material-ui/lib/card/card-actions";
-import CardHeader from "material-ui/lib/card/card-header";
-import FlatButton from "material-ui/lib/flat-button";
-import CardText from "material-ui/lib/card/card-text";
-import FontIcon from "material-ui/lib/font-icon";
+import Card from "material-ui/Card/Card";
+import CardActions from "material-ui/Card/CardActions";
+import CardHeader from "material-ui/Card/CardHeader";
+import FlatButton from "material-ui/FlatButton";
+import CardText from "material-ui/Card/CardText";
+import FontIcon from "material-ui/FontIcon";
 import getReactionApps from "../../../../client/helpers/apps";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { translate } from "react-i18next/lib";

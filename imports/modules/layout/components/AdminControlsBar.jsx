@@ -2,12 +2,12 @@ import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 //import List from "material-ui/lib/lists/list";
 //import ListItem from "material-ui/lib/lists/list-item";
-import MenuItem from "material-ui/lib/menus/menu-item";
-import FontIcon from "material-ui/lib/font-icon";
-import Divider from "material-ui/lib/divider";
+import MenuItem from "material-ui/MenuItem";
+import FontIcon from "material-ui/FontIcon";
+import Divider from "material-ui/Divider";
+import ContentAdd from "material-ui/svg-icons/content/add";
 import { styles } from "../styles/coreLayout";
 import { browserHistory } from "react-router";
-import ContentAdd from "material-ui/lib/svg-icons/content/add";
 
 // fixme fix this component. It not tracks activeLink and looks ugly
 const AdminControlsBar = ({ apps, t }) => (

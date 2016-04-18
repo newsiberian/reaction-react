@@ -3,17 +3,17 @@ import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
-import Avatar from "material-ui/lib/avatar";
-import Divider from "material-ui/lib/divider";
-import FontIcon from "material-ui/lib/font-icon";
-import List from "material-ui/lib/lists/list";
-import ListItem from "material-ui/lib/lists/list-item";
-import Paper from "material-ui/lib/paper";
-import RaisedButton from "material-ui/lib/raised-button";
-import Subheader from "material-ui/lib/Subheader";
+import Avatar from "material-ui/Avatar";
+import Divider from "material-ui/Divider";
+import FontIcon from "material-ui/FontIcon";
+import List from "material-ui/List/List";
+import ListItem from "material-ui/List/ListItem";
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
+import Subheader from "material-ui/Subheader";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import { getTag } from "../../../../client/helpers/products";
-import { red500 } from "material-ui/lib/styles/colors";
+import { red500 } from "material-ui/styles/colors";
 
 const c = StyleSheet.combineStyles;
 const ss = StyleSheet.create({

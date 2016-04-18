@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { Card, CardTitle, CardText } from "material-ui/lib/card";
-import FontIcon from "material-ui/lib/font-icon";
-import Toggle from "material-ui/lib/toggle";
+import { Card, CardTitle, CardText } from "material-ui/Card";
+import FontIcon from "material-ui/FontIcon";
+import Toggle from "material-ui/Toggle";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import ServiceForm from "./ServiceForm.jsx";

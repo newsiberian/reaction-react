@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import Badge from "../../../layout/components/Badge.jsx";
-import Divider from "material-ui/lib/divider";
-import FlatButton from "material-ui/lib/flat-button";
-import IconButton from "material-ui/lib/icon-button";
-import IconMenu from "material-ui/lib/menus/icon-menu";
-import MenuItem from "material-ui/lib/menus/menu-item";
-import MoreVertIcon from "material-ui/lib/svg-icons/navigation/more-vert";
-import Paper from "material-ui/lib/paper";
-import Subheader from "material-ui/lib/Subheader";
+import Divider from "material-ui/Divider";
+import FlatButton from "material-ui/FlatButton";
+import IconButton from "material-ui/IconButton";
+import IconMenu from "material-ui/IconMenu";
+import MenuItem from "material-ui/MenuItem";
+import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+import Paper from "material-ui/Paper";
+import Subheader from "material-ui/Subheader";
 
 const styles = {
   address: {

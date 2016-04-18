@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import SelectField from "material-ui/lib/select-field";
+import SelectField from "material-ui/SelectField";
 
 /**
  * SelectFieldWrapper

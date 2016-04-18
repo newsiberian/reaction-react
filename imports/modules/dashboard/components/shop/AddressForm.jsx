@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
-import TextField from "material-ui/lib/text-field";
-import FlatButton from "material-ui/lib/flat-button";
+import TextField from "material-ui/TextField";
+import FlatButton from "material-ui/FlatButton";
 import i18next from "i18next";
 import { styles } from "../../styles/settings";
 export const fields = [

@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
-import ListItem from "material-ui/lib/lists/list-item";
-import Toggle from "material-ui/lib/toggle";
+import ListItem from "material-ui/List/ListItem";
+import Toggle from "material-ui/Toggle";
 import { styles } from "../../styles/settings";
 
 /**

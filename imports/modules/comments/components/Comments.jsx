@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { isAnonymous } from "../../../client/helpers/permissions";
-import Card from "material-ui/lib/card/card";
-import CardHeader from "material-ui/lib/card/card-header";
-import CardText from "material-ui/lib/card/card-text";
+import Card from "material-ui/Card/Card";
+import CardHeader from "material-ui/Card/CardHeader";
+import CardText from "material-ui/Card/CardText";
 import { StyleSheet } from "react-look";
 import CommentEditor from "./CommentEditor.jsx";
 import Comment from "./Comment.jsx";

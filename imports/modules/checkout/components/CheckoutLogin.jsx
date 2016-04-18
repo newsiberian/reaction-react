@@ -6,7 +6,7 @@ import CheckoutLoggedIn from "./CheckoutLoggedIn";
 // import SignIn from "../../accounts/components/SignIn.jsx";
 // import LoginForm from "../../accounts/components/LoginForm.jsx";
 import Inline from "../../accounts/components/Inline.jsx";
-import FlatButton from "material-ui/lib/flat-button";
+import FlatButton from "material-ui/FlatButton";
 import VerticalDivider from "../../layout/components/VerticalDivider.jsx";
 import Header from "../../layout/components/Header.jsx";
 import { iconStyles } from "../styles/checkoutStep";

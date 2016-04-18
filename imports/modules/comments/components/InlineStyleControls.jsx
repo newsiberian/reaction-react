@@ -1,10 +1,10 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import FlatButton from "material-ui/lib/flat-button";
-import EditorFormatBold from "material-ui/lib/svg-icons/editor/format-bold";
-import EditorFormatItalic from "material-ui/lib/svg-icons/editor/format-italic";
-import EditorFormatUnderlined from "material-ui/lib/svg-icons/editor/format-underlined";
-import ActionCode from "material-ui/lib/svg-icons/action/code";
+import FlatButton from "material-ui/FlatButton";
+import EditorFormatBold from "material-ui/svg-icons/editor/format-bold";
+import EditorFormatItalic from "material-ui/svg-icons/editor/format-italic";
+import EditorFormatUnderlined from "material-ui/svg-icons/editor/format-underlined";
+import ActionCode from "material-ui/svg-icons/action/code";
 
 const INLINE_STYLES = [
   { label: "bold", style: "BOLD", icon: EditorFormatBold },

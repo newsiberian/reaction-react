@@ -1,13 +1,13 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import FlatButton from "material-ui/lib/flat-button";
-import EditorFormatQuote from "material-ui/lib/svg-icons/editor/format-quote";
-import EditorFormatListBulleted from "material-ui/lib/svg-icons/editor/format-list-bulleted";
-import EditorFormatListNumbered from "material-ui/lib/svg-icons/editor/format-list-numbered";
-import EditorFormatAlignCenter from "material-ui/lib/svg-icons/editor/format-align-center";
-import EditorFormatAlignJustify from "material-ui/lib/svg-icons/editor/format-align-justify";
-import EditorFormatAlignLeft from "material-ui/lib/svg-icons/editor/format-align-left";
-import EditorFormatAlignRight from "material-ui/lib/svg-icons/editor/format-align-right";
+import FlatButton from "material-ui/FlatButton";
+import EditorFormatQuote from "material-ui/svg-icons/editor/format-quote";
+import EditorFormatListBulleted from "material-ui/svg-icons/editor/format-list-bulleted";
+import EditorFormatListNumbered from "material-ui/svg-icons/editor/format-list-numbered";
+import EditorFormatAlignCenter from "material-ui/svg-icons/editor/format-align-center";
+import EditorFormatAlignJustify from "material-ui/svg-icons/editor/format-align-justify";
+import EditorFormatAlignLeft from "material-ui/svg-icons/editor/format-align-left";
+import EditorFormatAlignRight from "material-ui/svg-icons/editor/format-align-right";
 // import EditorTitle from "material-ui/lib/svg-icons/editor/title";
 
 const BLOCK_TYPES = [

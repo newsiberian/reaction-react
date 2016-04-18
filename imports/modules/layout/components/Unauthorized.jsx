@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import SignIn from "../../accounts/components/SignIn.jsx";
-import FontIcon from "material-ui/lib/font-icon";
+import FontIcon from "material-ui/FontIcon";
 
 const styles = {
   container: {

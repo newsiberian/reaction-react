@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { StyleSheet } from "react-look";
-import FlatButton from "material-ui/lib/flat-button";
+import FlatButton from "material-ui/FlatButton";
 import Header from "../../layout/components/Header.jsx";
 import { iconStyles } from "../styles/checkoutStep";
 

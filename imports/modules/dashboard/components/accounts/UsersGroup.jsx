@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import Paper from "material-ui/lib/paper";
-import Avatar from "material-ui/lib/avatar";
-import Table from "material-ui/lib/table/table";
-import TableHeaderColumn from "material-ui/lib/table/table-header-column";
-import TableRow from "material-ui/lib/table/table-row";
-import TableHeader from "material-ui/lib/table/table-header";
-import TableRowColumn from "material-ui/lib/table/table-row-column";
-import TableBody from "material-ui/lib/table/table-body";
-import FlatButton from "material-ui/lib/flat-button";
+import Paper from "material-ui/Paper";
+import Avatar from "material-ui/Avatar";
+import Table from "material-ui/Table/Table";
+import TableHeaderColumn from "material-ui/Table/TableHeaderColumn";
+import TableRow from "material-ui/Table/TableRow";
+import TableHeader from "material-ui/Table/TableHeader";
+import TableRowColumn from "material-ui/Table/TableRowColumn";
+import TableBody from "material-ui/Table/TableBody";
+import FlatButton from "material-ui/FlatButton";
 import { displayName, getGravatar } from "../../../../client/helpers/accounts";
 
 const styles = {

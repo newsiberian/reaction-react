@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import i18next from "i18next";
 import { reduxForm } from "redux-form";
-import TextField from "material-ui/lib/text-field";
-import FlatButton from "material-ui/lib/flat-button";
-import ActionDone from "material-ui/lib/svg-icons/action/done";
-import ContentClear from "material-ui/lib/svg-icons/content/clear";
-import { blue500, grey400 } from "material-ui/lib/styles/colors";
+import TextField from "material-ui/TextField";
+import FlatButton from "material-ui/FlatButton";
+import ActionDone from "material-ui/svg-icons/action/done";
+import ContentClear from "material-ui/svg-icons/content/clear";
+import { blue500, grey400 } from "material-ui/styles/colors";
 
 export const fields = ["key", "value"];
 

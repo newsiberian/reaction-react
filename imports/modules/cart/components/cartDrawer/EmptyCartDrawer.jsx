@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import FlatButton from "material-ui/lib/flat-button";
+import FlatButton from "material-ui/FlatButton";
 import { cartButton, styles } from "../../styles/cartDrawer";
 
 const EmptyCartDrawer = props => {

@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import Checkbox from "material-ui/lib/checkbox";
+import Checkbox from "material-ui/Checkbox";
 
 /**
  * CheckboxWrapper

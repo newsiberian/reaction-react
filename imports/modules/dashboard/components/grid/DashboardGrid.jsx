@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import LeftNav from "material-ui/lib/left-nav";
-import Divider from "material-ui/lib/divider";
+import Divider from "material-ui/Divider";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import Package from "./Package.jsx";
 import DashboardHeader from "../DashboardHeader.jsx";

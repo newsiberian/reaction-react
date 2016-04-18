@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from "react";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { translate } from "react-i18next/lib";
-import Badge from "material-ui/lib/badge";
-import IconButton from "material-ui/lib/icon-button";
-import FlatButton from "material-ui/lib/flat-button";
+import Badge from "material-ui/Badge";
+import IconButton from "material-ui/IconButton";
+import FlatButton from "material-ui/FlatButton";
 import { isCurrentUser } from "../../../../client/helpers/utilities";
 
 const styles = {

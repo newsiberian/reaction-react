@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
-import FlatButton from "material-ui/RaisedButton";
+import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
 import i18next from "i18next";
 export const fields = [
@@ -12,7 +12,9 @@ const validate = values => {
   const errors = {};
 
   if (!values.email || !values.email.trim()) {
-    errors.email = i18next.t("accountsUI.error.invalidEmail");
+    errors.email = i18next.t("accountsUI.error.emailRequired");
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = i18next.t("accountsUI.error.emailDoesntMatchTheCriteria");
   }
 
   return errors;
@@ -21,7 +23,8 @@ const validate = values => {
 const styles = {
   form: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: "flex-start"
   },
   submit: {
     marginTop: "2rem",
@@ -29,9 +32,12 @@ const styles = {
   }
 };
 
-class ForgotPasswordForm extends Component {
+class GuestEmailForm extends Component {
   render() {
-    const { fields: { email }, handleSubmit, pristine, submitting, t } = this.props;
+    const {
+      fields: { email }, handleSubmit, pristine,
+      submitting, t
+    } = this.props;
     return (
       <form onSubmit={handleSubmit} style={styles.form}>
         <TextField
@@ -42,7 +48,7 @@ class ForgotPasswordForm extends Component {
         />
         <FlatButton
           // fullWidth={true}
-          label={t("accountsUI.resetYourPassword")}
+          label={t("accountsUI.signUpButton")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}
@@ -53,16 +59,16 @@ class ForgotPasswordForm extends Component {
   }
 }
 
-ForgotPasswordForm.propTypes = {
+GuestEmailForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  t: PropTypes.func
+  t: PropTypes.func.isRequired
 };
 
 export default translate("core")(reduxForm({
-  form: "accountsForgotPasswordForm",
+  form: "checkoutGuestEmailForm",
   fields,
   validate
-})(ForgotPasswordForm));
+})(RegisterForm));

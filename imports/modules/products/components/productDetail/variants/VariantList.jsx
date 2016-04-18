@@ -3,9 +3,9 @@ import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { getVariantQuantity, getTopVariants, getChildVariants } from "../../../../../client/helpers/products";
 import Variant from "./Variant.jsx";
-import FlatButton from "material-ui/lib/flat-button";
-import Subheader from "material-ui/lib/Subheader";
-import ContentAdd from "material-ui/lib/svg-icons/content/add";
+import FlatButton from "material-ui/FlatButton";
+import Subheader from "material-ui/Subheader";
+import ContentAdd from "material-ui/svg-icons/content/add";
 
 const styles = {
   list: {

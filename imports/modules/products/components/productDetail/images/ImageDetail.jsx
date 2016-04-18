@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 import { DragSource, DropTarget } from "react-dnd";
-import Paper from "material-ui/lib/paper";
-import IconButton from "material-ui/lib/icon-button";
-import FontIcon from "material-ui/lib/font-icon";
+import Paper from "material-ui/Paper";
+import IconButton from "material-ui/IconButton";
+import FontIcon from "material-ui/FontIcon";
 
 const styles = {
   fluidImageContainer: {

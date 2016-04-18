@@ -3,7 +3,7 @@ import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { StyleSheet } from "react-look";
 import Helmet from "react-helmet";
-import Paper from "material-ui/lib/paper";
+import Paper from "material-ui/Paper";
 
 const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
@@ -42,7 +42,9 @@ class Completed extends Component {
           {"."}
         </p>
         {!Boolean(order.email) &&
-          <Paper></Paper>
+          <Paper>
+
+          </Paper>
         }
       </div>
     );

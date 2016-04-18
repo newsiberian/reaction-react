@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { reduxForm } from "redux-form";
-import FlatButton from "material-ui/lib/flat-button";
+import FlatButton from "material-ui/FlatButton";
+import MenuItem from "material-ui/MenuItem";
 import SelectFieldWrapper from
   "../../../layout/components/SelectFieldWrapper.jsx";
-import MenuItem from "material-ui/lib/menus/menu-item";
 import getReactionApps from "../../../../client/helpers/apps";
 import i18next from "i18next";
 import { styles } from "../../styles/settings";

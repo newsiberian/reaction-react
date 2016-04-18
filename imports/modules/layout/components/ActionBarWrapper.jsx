@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from "react";
-import Toolbar from "material-ui/lib/toolbar/toolbar";
-import ToolbarGroup from "material-ui/lib/toolbar/toolbar-group";
-import ToolbarTitle from "material-ui/lib/toolbar/toolbar-title";
-import IconButton from "material-ui/lib/icon-button";
-import NavigationClose from "material-ui/lib/svg-icons/navigation/close";
+import Toolbar from "material-ui/Toolbar/Toolbar";
+import ToolbarGroup from "material-ui/Toolbar/ToolbarGroup";
+import ToolbarTitle from "material-ui/Toolbar/ToolbarTitle";
+import IconButton from "material-ui/IconButton";
+import NavigationClose from "material-ui/svg-icons/navigation/close";
 
 const styles = {
   base: {

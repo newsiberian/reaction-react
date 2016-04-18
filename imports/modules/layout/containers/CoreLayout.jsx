@@ -2,9 +2,9 @@ import { composeWithTracker } from "react-komposer";
 import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
-import LeftNav from "material-ui/lib/left-nav";
-import Snackbar from "material-ui/lib/snackbar";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import Drawer from "material-ui/Drawer";
+import Snackbar from "material-ui/Snackbar";
 import { Meteor } from "meteor/meteor";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 // import ThemeManager from "material-ui/lib/styles/theme-manager";
@@ -112,7 +112,7 @@ class CoreLayout extends Component {
 
         { /* action bar section */ }
         {settings.open &&
-          <LeftNav
+          <Drawer
             disableSwipeToOpen={true}
             docked={true}
             width={300}
@@ -127,7 +127,7 @@ class CoreLayout extends Component {
               payload={settings.payload} // todo add description to this
               params={params}
             />
-          </LeftNav>
+          </Drawer>
         }
 
         {/* Admin Controls Bar */}

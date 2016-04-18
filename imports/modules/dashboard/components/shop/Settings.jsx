@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import { Card, CardTitle, CardText } from "material-ui/lib/card";
+import { Card, CardTitle, CardText } from "material-ui/Card";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import OptionsForm from "./OptionsForm.jsx";

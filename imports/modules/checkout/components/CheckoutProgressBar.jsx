@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from "react";
-import Stepper from "material-ui/lib/Stepper/Stepper";
+import Stepper from "material-ui/Stepper/Stepper";
 import Step from "material-ui/lib/Stepper/HorizontalStep";
 import FontIcon from "material-ui/lib/font-icon";
-import RaisedButton from "material-ui/lib/raised-button";
-import FlatButton from "material-ui/lib/flat-button";
+import RaisedButton from "material-ui/RadioButton";
+import FlatButton from "material-ui/FlatButton";
 import { reactionTemplate } from "../../../client/helpers/layout";
 
 // const T = _i18n.createComponent("reaction.core.checkoutProgressBar");

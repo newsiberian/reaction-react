@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import Paper from "material-ui/lib/paper";
+import Paper from "material-ui/Paper";
 import ProductMetaFieldForm from "./ProductMetaFieldForm.jsx";
 
 const styles = {

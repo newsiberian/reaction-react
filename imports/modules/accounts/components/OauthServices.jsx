@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
-import RaisedButton from "material-ui/lib/raised-button";
-import FontIcon from "material-ui/lib/font-icon";
-import Colors from "material-ui/lib/styles/colors";
+import RaisedButton from "material-ui/RaisedButton";
+import FontIcon from "material-ui/FontIcon";
+import Colors from "material-ui/styles/colors";
 import { ReactionServiceHelper } from "../../../client/helpers/utilities";
 import styles from "../styles/signStyles";
 
