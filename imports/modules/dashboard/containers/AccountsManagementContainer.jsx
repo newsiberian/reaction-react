@@ -104,8 +104,8 @@ const getUsers = () => {
 };
 
 function composer(props, onData) {
-  const handler = Meteor.subscribe("ShopMembers");
-  if (handler.ready()) {
+  const handle = Meteor.subscribe("ShopMembers");
+  if (handle.ready()) {
     const users = getUsers();
     onData(null, {
       members: users.members,

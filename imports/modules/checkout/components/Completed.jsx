@@ -25,7 +25,7 @@ const getOrderStatus = order => {
 
 class Completed extends Component {
   render() {
-    const { order, t } = this.props;
+    const { checkoutActions, order, t } = this.props;
     debugger;
     return (
       <div className={c(styles.container, "container-fluid")}>
@@ -42,12 +42,13 @@ class Completed extends Component {
           {t(getOrderStatus(order))}
           {"."}
         </p>
-        {!Boolean(order.email) &&
+        {!Boolean(order.email) ?
           <Paper>
             <GuestEmailForm
-              onSubmit={}
+              onSubmit={values => checkoutActions.addOrderEmail(order.cartId, values.email)}
             />
-          </Paper>
+          </Paper> :
+          `${t("cartCompleted.trackYourDelivery")} ${orders.email}`
         }
       </div>
     );
@@ -55,6 +56,9 @@ class Completed extends Component {
 }
 
 Completed.propTypes = {
+  checkoutActions: PropTypes.shape({
+    addOrderEmail: PropTypes.func
+  }).isRequired,
   order: PropTypes.object.isRequired,
   t: PropTypes.func
 };

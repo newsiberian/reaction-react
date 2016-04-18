@@ -34,8 +34,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const handler = Meteor.subscribe("AllComments");
-  if (handler.ready()) {
+  const handle = Meteor.subscribe("AllComments");
+  if (handle.ready()) {
     const comments = getAllComments();
 
     onData(null, { comments });

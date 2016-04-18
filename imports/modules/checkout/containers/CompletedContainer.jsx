@@ -15,6 +15,9 @@ class CompletedContainer extends Component {
 }
 
 CompletedContainer.propTypes = {
+  checkoutActions: PropTypes.shape({
+    addOrderEmail: PropTypes.func
+  }).isRequired,
   order: PropTypes.object.isRequired
 };
 
