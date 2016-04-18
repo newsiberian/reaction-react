@@ -85,3 +85,19 @@ export const submitPayment = paymentMethod => {
     });
   };
 };
+
+export const addOrderEmail = (cartId, email) => {
+  return dispatch => {
+    Meteor.call("orders/addOrderEmail", cartId, email, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("addressBookEdit.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.ADD_ORDER_EMAIL, cartId });
+      }
+    });
+  };
+};
