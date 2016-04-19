@@ -71,4 +71,4 @@ export default translate("core")(reduxForm({
   form: "checkoutGuestEmailForm",
   fields,
   validate
-})(RegisterForm));
+})(GuestEmailForm));

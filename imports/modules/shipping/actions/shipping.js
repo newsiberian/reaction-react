@@ -100,3 +100,19 @@ export const updateShippingProvider = (providerId, values) => {
     });
   };
 };
+
+export const removeShippingProvider = providerId => {
+  return dispatch => {
+    Meteor.call("removeShippingProvider", providerId, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.REMOVE_SHIPPING_PROVIDER, providerId });
+      }
+    });
+  };
+};

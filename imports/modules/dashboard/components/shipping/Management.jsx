@@ -55,6 +55,10 @@ class Management extends Component {
                                 }
                               })}
                             />
+                            <FlatButton
+                              label={t("app.delete")}
+                              onTouchTap={() => shippingProviders.removeShippingProvider(provider._id)}
+                            />
                           </TableHeaderColumn>
                         </TableRow>
                         <TableRow>
@@ -135,7 +139,8 @@ class Management extends Component {
 
 Management.propTypes = {
   shippingActions: PropTypes.shape({
-    deleteShippingMethod: PropTypes.func
+    deleteShippingMethod: PropTypes.func,
+    removeShippingProvider: PropTypes.func
   }).isRequired,
   shippingProviders: PropTypes.arrayOf(PropTypes.object),
   layoutSettingsActions: PropTypes.shape({

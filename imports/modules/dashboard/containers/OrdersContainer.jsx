@@ -8,24 +8,17 @@ import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as shippingActions from "../../shipping/actions/shipping";
 import { routerActions } from "react-router-redux";
 import Loading from "../../layout/components/Loading.jsx";
-import Management from "../components/shipping/Management.jsx";
+import Orders from "../components/orders/Orders.jsx";
 
-class ShippingManagementContainer extends Component {
+class OrdersContainer extends Component {
   render() {
     return (
-      <Management {...this.props} />
+      <Orders {...this.props} />
     );
   }
 }
 
-ShippingManagementContainer.propTypes = {
-  shippingActions: PropTypes.shape({
-    addShippingMethod: PropTypes.func,
-    deleteShippingMethod: PropTypes.func,
-    editShippingMethod: PropTypes.func,
-    removeShippingProvider: PropTypes.func
-  }).isRequired,
-  shippingProviders: PropTypes.arrayOf(PropTypes.object),
+OrdersContainer.propTypes = {
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
@@ -46,9 +39,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
-    routerActions: bindActionCreators(routerActions, dispatch),
-    shippingActions: bindActionCreators(shippingActions, dispatch)
+    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch)
   };
 }
 
@@ -62,12 +53,12 @@ function composer(props, onData) {
   }
 }
 
-const ShippingManagementContainerWithData = composeWithTracker(
+const OrdersContainerWithData = composeWithTracker(
   composer,
   Loading
-)(ShippingManagementContainer);
+)(OrdersContainer);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ShippingManagementContainerWithData);
+)(OrdersContainerWithData);
