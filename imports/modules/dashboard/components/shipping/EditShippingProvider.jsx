@@ -4,17 +4,25 @@ import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import EditShippingProviderForm from "./EditShippingProviderForm.jsx";
 
-const EditShippingProvider = props => (
+const EditShippingProvider = ({ provider, shippingActions }) => (
   <div>
-    <h3>{"provider.name"}</h3>
+    <h3>{provider.name}</h3>
     <EditShippingProviderForm
-      onSubmit={values => props.submitAddMemberForm(values)}
+      initialValues={{
+        name: provider.name,
+        label: provider.label,
+        enabled: provider.enabled
+      }}
+      onSubmit={values => shippingActions.updateShippingProvider(provider._id, values)}
     />
   </div>
 );
 
 EditShippingProvider.propTypes = {
-  submitAddMemberForm: PropTypes.func.isRequired // actionCreator
+  provider: PropTypes.object.isRequired,
+  shippingActions: PropTypes.shape({
+    updateShippingProvider: PropTypes.func
+  }).isRequired
 };
 
 const options = {

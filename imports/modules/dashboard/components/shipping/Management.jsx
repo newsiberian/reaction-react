@@ -50,7 +50,9 @@ class Management extends Component {
                               label={t("controls.edit")}
                               onTouchTap={() => layoutSettingsActions.openSettings({
                                 name: "EditShippingProvider",
-                                payload: {}
+                                payload: {
+                                  providerId: provider._id
+                                }
                               })}
                             />
                           </TableHeaderColumn>

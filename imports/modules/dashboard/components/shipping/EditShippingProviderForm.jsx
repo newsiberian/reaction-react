@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import i18next from "i18next";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
+import Toggle from "material-ui/Toggle";
 export const fields = [
   "name",
   "label",
@@ -42,12 +43,15 @@ class EditShippingProviderForm extends Component {
         />
         <TextField
           {...label}
-          floatingLabelText={t("accountsUI.email")}
-          errorText={email.touched && email.error}
-          type="email"
+          floatingLabelText={t("shipping.label")}
+          errorText={label.touched && label.error}
+        />
+        <Toggle
+          {...enabled}
+          label={t("shipping.enabled")}
         />
         <FlatButton
-          label={t("accountsUI.info.sendInvitation")}
+          label={t("app.save")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}
@@ -57,7 +61,7 @@ class EditShippingProviderForm extends Component {
   }
 }
 
-AddMemberForm.propTypes = {
+EditShippingProviderForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
@@ -66,7 +70,7 @@ AddMemberForm.propTypes = {
 };
 
 export default translate(["core", "reaction-react"])(reduxForm({
-  form: "accountsAddMemberForm",
+  form: "shippingEditShippingProviderForm",
   fields,
   validate
-})(AddMemberForm));
+})(EditShippingProviderForm));

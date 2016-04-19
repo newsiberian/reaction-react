@@ -10,8 +10,8 @@ export const setShipmentMethod = (selectedIndex, method) => {
     Meteor.call("cart/setShipmentMethod", cart._id, method, (err, res) => {
       if (err) {
         dispatch(displayAlert({
-          message: i18next.t("addressBookEdit.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message })
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
         }));
       }
       // TODO we don't get `res` in this method
@@ -36,13 +36,13 @@ export const destroyCheckoutShipping = () => ({ type: types.DESTROY_CHECKOUT_SHI
 
 export const addShippingMethod = () => {
   return dispatch => {
-    
+    dispatch({ type: types.ADD_SHIPPING_METHOD });
   };
 };
 
 export const editShippingMethod = () => {
   return dispatch => {
-
+    dispatch({ type: types.EDIT_SHIPPING_METHOD });
   };
 };
 
@@ -51,12 +51,28 @@ export const deleteShippingMethod = (providerId, method) => {
     Meteor.call("removeShippingMethod", providerId, method, (err, res) => {
       if (err) {
         dispatch(displayAlert({
-          message: i18next.t("addressBookEdit.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message })
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
         }));
       }
       if (res) {
         dispatch({ type: types.DELETE_SHIPPING_METHOD, providerId });
+      }
+    });
+  };
+};
+
+export const updateShippingProvider = (providerId, values) => {
+  return dispatch => {
+    Meteor.call("updateShippingProvider", values, providerId, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.UPDATE_SHIPPING_PROVIDER, providerId });
       }
     });
   };
