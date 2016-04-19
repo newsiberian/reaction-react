@@ -4,6 +4,9 @@
   "ns": "reaction-react",
   "translation": {
     "reaction-react": {
+      "controls": {
+        "edit": "Редактировать"
+      },
       "pageTitles": {
         "checkout": "Оформление заказа",
         "yourOrder": "Ваш заказ"
@@ -94,6 +97,21 @@
       },
       "completed": {
         "askForEmail": "Здравстуйте. Пожалуйста, оставьте свой email, для того, чтобы с вами можно было связаться по оформлению заказа, а также чтобы получать информацию о состоянии заказа."
+      },
+      "shipping": {
+        "name": "Название",
+        "label": "Ярлык",
+        "group": "Группа",
+        "cost": "Стоимость",
+        "handling": "Обработка",
+        "rate": "Тариф",
+        "enabled": "Включено",
+        "addShippingMethod": "Добавить тариф",
+        "edit": "Редактировать",
+        "delete": "Удалить"
+      },
+      "errors": {
+        "somethingWentWrong": "Что-то пошло не так: {{err}}"
       }
     }
   }

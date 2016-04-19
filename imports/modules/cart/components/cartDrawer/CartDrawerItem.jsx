@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { StyleSheet } from "react-look";
+// import { StyleSheet } from "react-look";
 import { Link, browserHistory } from "react-router";
 import IconButton from "material-ui/IconButton";
-import GridTile from "material-ui/GridList/grid-tile";
+import GridTile from "material-ui/GridList/GridTile";
 import ContentClear from "material-ui/svg-icons/content/clear";
 import { checkObjectFitSupported } from "../../../../client/helpers/utilities";
 import { getMedia } from "../../../../client/helpers/cart";

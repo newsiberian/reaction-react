@@ -4,6 +4,9 @@
   "ns": "reaction-react",
   "translation": {
     "reaction-react": {
+      "controls": {
+        "edit": "Edit"
+      },
       "pageTitles": {
         "checkout": "Checkout",
         "yourOrder": "Your order"
@@ -94,6 +97,21 @@
       },
       "completed": {
         "askForEmail": "Hello. Please leave your email, so that you can be contacted while ordering, as well as to obtain information on the status of the order."
+      },
+      "shipping": {
+        "name": "Name",
+        "label": "Label",
+        "group": "Group",
+        "cost": "Cost",
+        "handling": "Handling",
+        "rate": "Rate",
+        "enabled": "Enabled",
+        "addShippingMethod": "Add Shipping Method",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "errors": {
+        "somethingWentWrong": "Something went wrong: {{err}}"
       }
     }
   }

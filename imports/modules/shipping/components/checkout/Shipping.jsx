@@ -4,7 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import Avatar from "material-ui/Avatar";
 import { List, ListItem, MakeSelectable } from "material-ui/List";
-let SelectableList = SelectableContainerEnhance(List);
+let SelectableList = MakeSelectable(List);
 
 const styles = {
   container: {

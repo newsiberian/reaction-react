@@ -33,3 +33,31 @@ export const changeSelected = selectedIndex => {
 
 // this is calls from checkout module / CheckoutContainer
 export const destroyCheckoutShipping = () => ({ type: types.DESTROY_CHECKOUT_SHIPPING });
+
+export const addShippingMethod = () => {
+  return dispatch => {
+    
+  };
+};
+
+export const editShippingMethod = () => {
+  return dispatch => {
+
+  };
+};
+
+export const deleteShippingMethod = (providerId, method) => {
+  return dispatch => {
+    Meteor.call("removeShippingMethod", providerId, method, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("addressBookEdit.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.DELETE_SHIPPING_METHOD, providerId });
+      }
+    });
+  };
+};

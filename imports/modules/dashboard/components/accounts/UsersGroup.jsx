@@ -72,7 +72,7 @@ class UsersGroup extends Component {
                 {groupName === "shopMembers" &&
                   <FlatButton
                     label={t("accountsUI.addMember")}
-                    onClick={() => layoutSettingsActions.openSettings({
+                    onTouchTap={() => layoutSettingsActions.openSettings({
                       name: "AccountsAddMemberContainer",
                       payload: {}
                     })}
