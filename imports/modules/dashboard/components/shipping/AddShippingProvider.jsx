@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
-import EditShippingProviderForm from "./EditShippingProviderForm.jsx";
+import ProviderForm from "./ProviderForm.jsx";
 
 const AddShippingProvider = ({ shippingActions }) => (
   <div>
     <h3>{provider.name}</h3>
-    <EditShippingProviderForm
+    <ProviderForm
       // initialValues={{
       //   name: provider.name,
       //   label: provider.label,

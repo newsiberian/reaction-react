@@ -69,7 +69,9 @@ class Management extends Component {
                               label={"shipping.addShippingMethod"}
                               onTouchTap={() => layoutSettingsActions.openSettings({
                                 name: "AddShippingMethod",
-                                payload: {}
+                                payload: {
+                                  providerId: provider._id
+                                }
                               })}
                             />
                           </TableHeaderColumn>
@@ -77,22 +79,34 @@ class Management extends Component {
                       </TableHeader>
                       <TableBody>
                         {Boolean(provider.methods && provider.methods.length) &&
-                        provider.methods.map(rate => (
+                        provider.methods.map(method => (
                           <TableRow>
-                            <TableRowColumn>rate.name</TableRowColumn>
-                            <TableRowColumn>rate.label</TableRowColumn>
-                            <TableRowColumn>rate.group</TableRowColumn>
-                            <TableRowColumn>formatPrice(rate.cost, locale)</TableRowColumn>
-                            <TableRowColumn>formatPrice(rate.handling, locale)</TableRowColumn>
-                            <TableRowColumn>formatPrice(rate.rate, locale)</TableRowColumn>
+                            <TableRowColumn>method.name</TableRowColumn>
+                            <TableRowColumn>method.label</TableRowColumn>
+                            <TableRowColumn>method.group</TableRowColumn>
+                            <TableRowColumn>formatPrice(method.cost, locale)</TableRowColumn>
+                            <TableRowColumn>formatPrice(method.handling, locale)</TableRowColumn>
+                            <TableRowColumn>formatPrice(method.rate, locale)</TableRowColumn>
                             <TableRowColumn>
-                              {rate.enabled ? <ActionDone /> : <ContentClear />}
+                              {method.enabled ? <ActionDone /> : <ContentClear />}
                             </TableRowColumn>
                             <TableRowColumn>
-                              <IconButton tooltip={t("shipping.edit")}>
+                              <IconButton
+                                tooltip={t("shipping.edit")}
+                                onTouchTap={() => layoutSettingsActions.openSettings({
+                                  name: "EditMethodProvider",
+                                  payload: {
+                                    providerId: provider._id,
+                                    methodId: method._id
+                                  }
+                                })}
+                              >
                                 <ActionSettings />
                               </IconButton>
-                              <IconButton tooltip={t("shipping.delete")}>
+                              <IconButton
+                                tooltip={t("shipping.delete")}
+                                onTouchTap={() => shippingActions.deleteShippingMethod(method._id)}
+                              >
                                 <ActionDeleteForever />
                               </IconButton>
                             </TableRowColumn>
@@ -120,6 +134,9 @@ class Management extends Component {
 }
 
 Management.propTypes = {
+  shippingActions: PropTypes.shape({
+    deleteShippingMethod: PropTypes.func
+  }).isRequired,
   shippingProviders: PropTypes.arrayOf(PropTypes.object),
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func

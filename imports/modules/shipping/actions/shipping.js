@@ -2,6 +2,7 @@ import * as types from "../constants";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Meteor } from "meteor/meteor";
 import { displayAlert } from "../../layout/actions/alert";
+import { closeSettings } from "../../layout/actions/settings";
 // import i18next from "i18next";
 
 export const setShipmentMethod = (selectedIndex, method) => {
@@ -34,15 +35,37 @@ export const changeSelected = selectedIndex => {
 // this is calls from checkout module / CheckoutContainer
 export const destroyCheckoutShipping = () => ({ type: types.DESTROY_CHECKOUT_SHIPPING });
 
-export const addShippingMethod = () => {
+export const addShippingMethod = (providerId, method) => {
   return dispatch => {
-    dispatch({ type: types.ADD_SHIPPING_METHOD });
+    Meteor.call("addShippingMethod", method, providerId, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.ADD_SHIPPING_METHOD, providerId, method });
+        dispatch(closeSettings());
+        // todo maybe we should add alerts here and there in this file.
+      }
+    });
   };
 };
 
-export const editShippingMethod = () => {
+export const editShippingMethod = (providerId, origMethod, updatedMethod) => {
   return dispatch => {
-    dispatch({ type: types.EDIT_SHIPPING_METHOD });
+    Meteor.call("updateShippingMethods", providerId, origMethod, updatedMethod, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.EDIT_SHIPPING_METHOD, providerId, methodId: updatedMethod._id });
+      }
+    });
   };
 };
 

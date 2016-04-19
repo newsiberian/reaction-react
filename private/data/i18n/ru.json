@@ -111,7 +111,8 @@
         "delete": "Удалить"
       },
       "errors": {
-        "somethingWentWrong": "Что-то пошло не так: {{err}}"
+        "somethingWentWrong": "Что-то пошло не так: {{err}}",
+        "theValueMustNotBeNegative": "Значение не должно быть отрицательным"
       }
     }
   }

@@ -57,7 +57,7 @@ function composer(props, onData) {
     const shippingProviders = ReactionCore.Collections.Shipping.find({
       shopId: ReactionCore.getShopId()
     });
-    onData(null, { shippingActions });
+    onData(null, { shippingProviders });
   }
 }
 

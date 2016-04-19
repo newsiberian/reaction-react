@@ -7,7 +7,7 @@ import look, { StyleSheet } from "react-look";
 import { Link } from "react-router";
 import FlatButton from "material-ui/FlatButton";
 import Divider from "material-ui/Divider";
-import Table from "material-ui/Table/table";
+import Table from "material-ui/Table/Table";
 import TableHeaderColumn from "material-ui/Table/TableHeaderColumn";
 import TableRow from "material-ui/Table/TableRow";
 import TableHeader from "material-ui/Table/TableHeader";

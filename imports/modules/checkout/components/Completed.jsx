@@ -4,7 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { StyleSheet } from "react-look";
 import Helmet from "react-helmet";
 import Paper from "material-ui/Paper";
-import GuestEmailForm from "GuestEmailForm.jsx";
+import GuestEmailForm from "./GuestEmailForm.jsx";
 
 const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({

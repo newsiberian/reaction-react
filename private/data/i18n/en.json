@@ -111,7 +111,8 @@
         "delete": "Delete"
       },
       "errors": {
-        "somethingWentWrong": "Something went wrong: {{err}}"
+        "somethingWentWrong": "Something went wrong: {{err}}",
+        "theValueMustNotBeNegative": "The value must not be negative"
       }
     }
   }

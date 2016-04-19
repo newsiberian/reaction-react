@@ -29,7 +29,7 @@ const validate = values => {
   return errors;
 };
 
-class EditShippingProviderForm extends Component {
+class ProviderForm extends Component {
   render() {
     const {
       fields: { name, label, enabled }, handleSubmit, pristine, submitting, t
@@ -61,7 +61,7 @@ class EditShippingProviderForm extends Component {
   }
 }
 
-EditShippingProviderForm.propTypes = {
+ProviderForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
@@ -70,7 +70,7 @@ EditShippingProviderForm.propTypes = {
 };
 
 export default translate(["core", "reaction-react"])(reduxForm({
-  form: "shippingEditShippingProviderForm",
+  form: "shippingProviderForm",
   fields,
   validate
-})(EditShippingProviderForm));
+})(ProviderForm));
