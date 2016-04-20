@@ -56,7 +56,9 @@ class Orders extends Component {
                             }
                             <RaisedButton
                               label={t("orders.start")}
-                              
+                              primary={true}
+                              fullWidth={true}
+                              onTouchTap={() => ordersActions.startOrderProcessing(order)}
                             />
                           </div>
                           <div className="col-xs-12 col-sm-3">
@@ -101,7 +103,8 @@ Orders.propTypes = {
   }).isRequired,
   location: PropTypes.object.isRequired,
   ordersActions: PropTypes.shape({
-    changeOrdersFilter: PropTypes.func
+    changeOrdersFilter: PropTypes.func,
+    startOrderProcessing: PropTypes.func
   }).isRequired,
   t: PropTypes.func.isRequired
 };

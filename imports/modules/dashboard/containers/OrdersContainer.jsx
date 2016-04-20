@@ -102,7 +102,8 @@ OrdersContainer.propTypes = {
   }).isRequired,
   location: PropTypes.object,
   ordersActions: PropTypes.shape({
-    changeOrdersFilter: PropTypes.func
+    changeOrdersFilter: PropTypes.func,
+    startOrderProcessing: PropTypes.func
   }).isRequired,
   routerActions: PropTypes.shape({
     push: PropTypes.func

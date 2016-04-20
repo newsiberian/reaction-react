@@ -16,6 +16,7 @@ export const startOrderProcessing = order => {
         }
         if (res) {
           dispatch({ type: types.START_ORDER_PROCESSING, orderId: order._id });
+          dispatch(changeOrdersFilter("processing"));
         }
       }));
     }
