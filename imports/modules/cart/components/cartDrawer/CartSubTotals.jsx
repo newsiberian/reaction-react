@@ -103,7 +103,7 @@ const CartSubTotals = ({ cart, locale, t }) => {
   return (
     <div className="slick-slide" style={cardStyles}>
       <table
-        className="ui very basic very compact collapsing celled table"
+        // className="ui very basic very compact collapsing celled table"
         style={tableStyles}
       >
         <thead>

@@ -5,13 +5,19 @@ import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
 import { layoutStyles } from "../../../layout/styles/layout";
+import { moment } from "meteor/momentjs:moment";
 import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
+import OrderSummary from "./OrderSummary.jsx";
 
 const styles = {
   base: {
     paddingTop: "1rem",
     paddingBottom: "1rem"
   }
+};
+
+const getOrderAge = createdAt => {
+  return moment(createdAt).fromNow().format("DD MMM, YYYY hh:mm:ss A");
 };
 
 class Orders extends Component {
@@ -38,8 +44,15 @@ class Orders extends Component {
                           <div className="col-xs-12 col-sm-6">
                             <OrderDetailsContainer userId={order.userId} />
                           </div>
-                          <div className="col-xs-12 col-sm-3"></div>
-                          <div className="col-xs-12 col-sm-3"></div>
+                          <div className="col-xs-12 col-sm-3">
+                            {`${t("order.created")} ${getOrderAge(order.createdAt)}`}
+                            {order.shippingTracking &&
+                              <p>t("orderShipping.tracking"): TODO: add link to shippmentTracking</p>
+                            }
+                          </div>
+                          <div className="col-xs-12 col-sm-3">
+                            <OrderSummary order={order} />
+                          </div>
                         </div>
 
                         <div>
