@@ -110,6 +110,9 @@
         "edit": "Редактировать",
         "delete": "Удалить"
       },
+      "orders": {
+        "start": "В работу"
+      },
       "errors": {
         "somethingWentWrong": "Что-то пошло не так: {{err}}",
         "theValueMustNotBeNegative": "Значение не должно быть отрицательным"

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import Paper from "material-ui/Paper";
 import FontIcon from "material-ui/FontIcon";
+import RaisedButton from "material-ui/RaisedButton";
 import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
@@ -53,6 +54,10 @@ class Orders extends Component {
                             {order.shippingTracking &&
                               <p>t("orderShipping.tracking"): TODO: add link to shippmentTracking</p>
                             }
+                            <RaisedButton
+                              label={t("orders.start")}
+                              
+                            />
                           </div>
                           <div className="col-xs-12 col-sm-3">
                             <OrderSummary order={order} locale={locale} />
@@ -101,4 +106,4 @@ Orders.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default translate("core")(Orders);
+export default translate(["core", "reaction-react"])(Orders);

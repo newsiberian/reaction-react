@@ -110,6 +110,9 @@
         "edit": "Edit",
         "delete": "Delete"
       },
+      "orders": {
+        "start": "Start"
+      },
       "errors": {
         "somethingWentWrong": "Something went wrong: {{err}}",
         "theValueMustNotBeNegative": "The value must not be negative"
