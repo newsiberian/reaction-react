@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 
-const OrderSummary = ({ order, t }) => {
+const OrderSummary = ({ locale, order, t }) => {
   return (
     <div>
       {Boolean(order.billing && order.billing.length) && order.billing.map(billing => (
@@ -28,6 +28,12 @@ const OrderSummary = ({ order, t }) => {
 };
 
 OrderSummary.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   order: PropTypes.object.isRequired,
   t: PropTypes.func
 };

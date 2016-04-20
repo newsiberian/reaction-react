@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
 import Paper from "material-ui/Paper";
+import FontIcon from "material-ui/FontIcon";
 import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
@@ -8,6 +9,7 @@ import { layoutStyles } from "../../../layout/styles/layout";
 import { moment } from "meteor/momentjs:moment";
 import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
 import OrderSummary from "./OrderSummary.jsx";
+import OrderItemsContainer from "../../containers/OrderItemsContainer.jsx";
 
 const styles = {
   base: {
@@ -40,6 +42,8 @@ class Orders extends Component {
                   {Boolean(orders && orders.length) ?
                     orders.map(order => (
                       <Paper key={order._id}>
+
+                        {/* Order basic info */}
                         <div className="row">
                           <div className="col-xs-12 col-sm-6">
                             <OrderDetailsContainer userId={order.userId} />
@@ -51,16 +55,22 @@ class Orders extends Component {
                             }
                           </div>
                           <div className="col-xs-12 col-sm-3">
-                            <OrderSummary order={order} />
+                            <OrderSummary order={order} locale={locale} />
                           </div>
                         </div>
 
+                        {/* Order items list */}
                         <div>
-
+                          <OrderItemsContainer locale={locale} item={item} />
                         </div>
                       </Paper>
                     )) :
-                    <div></div>
+                    <div>
+                      <h1>
+                        <FontIcon className="fa fa-sun" />
+                        {t("order.ordersNotFound")}
+                      </h1>
+                    </div>
                   }
                 </div>
               </Tab>
@@ -77,6 +87,12 @@ Orders.propTypes = {
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
+  }).isRequired,
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
   }).isRequired,
   location: PropTypes.object.isRequired,
   ordersActions: PropTypes.shape({
