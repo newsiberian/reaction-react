@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next/lib";
+import Paper from "material-ui/Paper";
 import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
 import { layoutStyles } from "../../../layout/styles/layout";
-import UsersGroup from "./UsersGroup.jsx";
+import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
 
 const styles = {
   base: {
@@ -19,7 +20,7 @@ class Orders extends Component {
     return (
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
-          { /* header section */ }
+          {/* header section */}
           <DashboardHeader label={t("admin.dashboard.accountsLabel")} />
           <Tabs>
             {orderFilters.map((filter, index) => (
@@ -28,11 +29,23 @@ class Orders extends Component {
                 label={getCount(filter.name) + " " + t(`order.filter.${filter.name}`)}
                 onActive={() => ordersActions.changeOrdersFilter(filter.name)}
               >
-                { /* main section */ }
+                {/* main section */}
                 <div className="container-fluid" style={styles.base}>
                   {Boolean(orders && orders.length) ?
                     orders.map(order => (
-                      
+                      <Paper key={order._id}>
+                        <div className="row">
+                          <div className="col-xs-12 col-sm-6">
+                            <OrderDetailsContainer userId={order.userId} />
+                          </div>
+                          <div className="col-xs-12 col-sm-3"></div>
+                          <div className="col-xs-12 col-sm-3"></div>
+                        </div>
+
+                        <div>
+
+                        </div>
+                      </Paper>
                     )) :
                     <div></div>
                   }
