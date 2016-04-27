@@ -92,7 +92,7 @@
         "price": "Цена",
         "quantity": "Количество",
         "deliveryDetails": "Детали доставки",
-        "subtotal": "Подытог",
+        "subtotal": "Сумма",
         "continue": "Продолжить"
       },
       "completed": {

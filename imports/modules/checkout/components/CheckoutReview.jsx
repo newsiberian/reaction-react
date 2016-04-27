@@ -45,6 +45,10 @@ const rowHeight = {
 const CheckoutReview = ({ checkoutActions, locale, t }) => {
   // TODO check will this be reactive?
   const cart = ReactionCore.Collections.Cart.findOne();
+
+  // we using this variables two times, so we get them once from here
+  const cartShipping = cart.cartShipping();
+  const cartTaxes = cart.cartTaxes();
   return (
     <div>
       <Header
@@ -130,26 +134,30 @@ const CheckoutReview = ({ checkoutActions, locale, t }) => {
                     {formatPrice(cart.cartSubTotal(), locale)}
                   </TableRowColumn>
                 </TableRow>
-                <TableRow
-                  displayBorder={false}
-                  selectable={false}
-                  style={rowHeight}
-                >
-                  <TableRowColumn style={rowHeight}>
-                    {t("cartSubTotals.shipping")}
-                  </TableRowColumn>
-                  <TableRowColumn style={rowHeight}>
-                    {formatPrice(cart.cartShipping(), locale)}
-                  </TableRowColumn>
-                </TableRow>
-                <TableRow selectable={false} style={rowHeight}>
-                  <TableRowColumn style={rowHeight}>
-                    {t("cartSubTotals.tax")}
-                  </TableRowColumn>
-                  <TableRowColumn style={rowHeight}>
-                    {formatPrice(cart.cartTaxes(), locale)}
-                  </TableRowColumn>
-                </TableRow>
+                {Boolean(+cartShipping) &&
+                  <TableRow
+                    displayBorder={false}
+                    selectable={false}
+                    style={rowHeight}
+                  >
+                    <TableRowColumn style={rowHeight}>
+                      {t("cartSubTotals.shipping")}
+                    </TableRowColumn>
+                    <TableRowColumn style={rowHeight}>
+                      {formatPrice(cartShipping, locale)}
+                    </TableRowColumn>
+                  </TableRow>
+                }
+                {Boolean(+cartTaxes) &&
+                  <TableRow selectable={false} style={rowHeight}>
+                    <TableRowColumn style={rowHeight}>
+                      {t("cartSubTotals.tax")}
+                    </TableRowColumn>
+                    <TableRowColumn style={rowHeight}>
+                      {formatPrice(cartTaxes, locale)}
+                    </TableRowColumn>
+                  </TableRow>
+                }
                 <TableRow selectable={false} style={rowHeight}>
                   <TableRowColumn style={rowHeight}>
                     <b>{t("cartSubTotals.total")}</b>
