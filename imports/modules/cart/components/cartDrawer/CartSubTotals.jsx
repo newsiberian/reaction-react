@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import { tableStyles } from "../../styles/cartSubTotals";
 import { cardStyles } from "../../styles/cartDrawer";

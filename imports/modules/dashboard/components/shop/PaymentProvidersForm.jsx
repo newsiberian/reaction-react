@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { reduxForm } from "redux-form";
 import FlatButton from "material-ui/FlatButton";
 import MenuItem from "material-ui/MenuItem";

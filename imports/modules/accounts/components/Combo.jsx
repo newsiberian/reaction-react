@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import SignIn from "./SignIn.jsx";
 import SignUp from "./SignUp.jsx";
 

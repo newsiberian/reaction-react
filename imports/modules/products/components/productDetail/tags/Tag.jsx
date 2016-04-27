@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { StyleSheet } from "react-look";
 import { DragSource, DropTarget } from "react-dnd";
 

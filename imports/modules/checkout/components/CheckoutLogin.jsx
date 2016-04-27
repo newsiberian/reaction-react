@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 // import { InlineLoginBox } from "{universe:accounts-ui}";
 import CheckoutStepBadge from "./CheckoutStepBadge";
 import CheckoutLoggedIn from "./CheckoutLoggedIn";

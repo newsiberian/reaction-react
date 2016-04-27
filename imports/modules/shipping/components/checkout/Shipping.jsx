@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import Avatar from "material-ui/Avatar";

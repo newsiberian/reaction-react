@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import Badge from "material-ui/Badge";
 import IconButton from "material-ui/IconButton";
 import FlatButton from "material-ui/FlatButton";
@@ -64,8 +64,9 @@ class UserMenu extends Component {
           <IconButton
             iconClassName="fa fa-shopping-cart"
             onClick={() => cartActions.toggleCart()}
-            tooltip="Cart"
-            tooltipPosition="bottom-center"
+            // TODO bugger in v. 0.15.0-beta.2
+            // tooltip="Cart"
+            // tooltipPosition="bottom-center"
           />
         </Badge>
       </div>

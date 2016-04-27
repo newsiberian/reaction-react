@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import OrderDetails from "../OrderDetails.jsx";
 import Avatar from "material-ui/Avatar";
 // import { StyleSheet } from "react-look";

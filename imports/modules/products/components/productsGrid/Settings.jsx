@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { StyleSheet } from "react-look";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";

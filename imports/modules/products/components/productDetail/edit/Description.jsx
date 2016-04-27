@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
 import { getBlockStyle } from "../../../../../client/helpers/comments";
 import shallowCompare from "react-addons-shallow-compare";

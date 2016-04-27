@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import FontIcon from "material-ui/FontIcon";
 
 const styles = {

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 //import { reduxForm } from "redux-form";
 //import Divider from "material-ui/lib/divider";
 import Toggle from "material-ui/Toggle";

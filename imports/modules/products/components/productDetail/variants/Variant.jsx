@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import look, { StyleSheet } from "react-look";
 import { _ } from "meteor/underscore";

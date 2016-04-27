@@ -7,7 +7,7 @@ import CardText from "material-ui/Card/CardText";
 import FontIcon from "material-ui/FontIcon";
 import getReactionApps from "../../../../client/helpers/apps";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 
 const styles = {
   base: {

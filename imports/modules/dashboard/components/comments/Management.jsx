@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { layoutStyles } from "../../../layout/styles/layout";
 // import ReactDataGrid from "react-data-grid/addons";
 import Griddle from "griddle-react";

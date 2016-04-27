@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import SignIn from "../../accounts/components/SignIn.jsx";
 import FontIcon from "material-ui/FontIcon";
 

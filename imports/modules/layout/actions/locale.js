@@ -2,7 +2,7 @@ import * as types from "../constants";
 import { Meteor } from "meteor/meteor";
 // import { Session } from "meteor/session";
 // import { Tracker } from "meteor/tracker";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
 import { displayAlert } from "../../layout/actions/alert";
 import { moment } from "meteor/momentjs:moment";
 import { getLang } from "../../../client/helpers/i18n";

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { getVariantQuantity, getTopVariants, getChildVariants } from "../../../../../client/helpers/products";
 import Variant from "./Variant.jsx";

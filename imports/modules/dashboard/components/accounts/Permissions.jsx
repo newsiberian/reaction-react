@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { Roles } from "meteor/alanning:roles";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import Avatar from "material-ui/Avatar";

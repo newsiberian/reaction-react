@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { isAnonymous } from "../../../client/helpers/permissions";
 import Card from "material-ui/Card/Card";
 import CardHeader from "material-ui/Card/CardHeader";

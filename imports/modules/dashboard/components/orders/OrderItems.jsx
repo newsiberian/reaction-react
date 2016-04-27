@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 // import Avatar from "material-ui/Avatar";
 import Badge from "../../../layout/components/Badge.jsx";
 // import { StyleSheet } from "react-look";

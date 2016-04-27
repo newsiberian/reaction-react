@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 //import List from "material-ui/lib/lists/list";
 //import ListItem from "material-ui/lib/lists/list-item";
 import MenuItem from "material-ui/MenuItem";

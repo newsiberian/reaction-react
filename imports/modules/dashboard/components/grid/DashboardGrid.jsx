@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import Divider from "material-ui/Divider";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import Package from "./Package.jsx";

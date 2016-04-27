@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { ReactionCore } from "meteor/reactioncommerce:core";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import { reduxForm } from "redux-form";
 import { displayAlert } from "../../layout/actions/alert";

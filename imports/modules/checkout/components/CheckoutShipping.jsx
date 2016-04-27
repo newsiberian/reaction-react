@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import Header from "../../layout/components/Header.jsx";
 import CheckoutShippingContainer from "../../shipping/containers/CheckoutShippingContainer.jsx";
 import { iconStyles } from "../styles/checkoutStep";

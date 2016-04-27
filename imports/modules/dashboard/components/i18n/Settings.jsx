@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
 import Toggle from "material-ui/Toggle";

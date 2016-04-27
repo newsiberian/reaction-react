@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { StyleSheet } from "react-look";
 import Paper from "material-ui/Paper";
 import DashboardHeader from "../../../dashboard/components/DashboardHeader.jsx";

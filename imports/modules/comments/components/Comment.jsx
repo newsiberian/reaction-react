@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
 import CommentEditor from "./CommentEditor.jsx";

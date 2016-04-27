@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import { reactionTemplate } from "../../../../../client/helpers/layout";
 import { Card, CardTitle, CardText } from "material-ui/Card";
 import Divider from "material-ui/Divider";

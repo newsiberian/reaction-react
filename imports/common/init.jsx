@@ -4,7 +4,7 @@ import React from "react";
 import Root from "./containers/Root";
 import configureStore from "./store";
 import i18next from "../client/helpers/i18n";
-import { I18nextProvider } from "react-i18next/lib";
+import { I18nextProvider } from "react-i18next";
 import { DynamicPrefixer, LookRoot, Presets } from "react-look";
 import injectTapEventPlugin from "react-tap-event-plugin";
 // import { ReactionCore } from "meteor/reactioncommerce:core";

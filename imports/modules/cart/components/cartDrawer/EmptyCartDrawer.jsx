@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { translate } from "react-i18next/lib";
+import { translate } from "react-i18next";
 import FlatButton from "material-ui/FlatButton";
 import { cartButton, styles } from "../../styles/cartDrawer";
 
