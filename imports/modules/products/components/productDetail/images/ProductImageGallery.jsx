@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { StyleSheet } from "react-look";
-import Lightbox from "react-images";
+import Lightbox from "react-images-look";
 //import { FS } from "meteor/cfs:base-package";
 import Dropzone from "react-dropzone";
 import { arrayCompare, arrayShallowCompare } from "../../../../../client/helpers/utilities";
