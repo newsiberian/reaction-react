@@ -103,7 +103,7 @@ const CheckoutReview = ({ checkoutActions, locale, t }) => {
             <Table
               displaySelectAll={false}
               adjustForCheckbox={false}
-              height="225"
+              height="225px"
             >
               <TableBody displayRowCheckbox={false}>
                 <TableRow

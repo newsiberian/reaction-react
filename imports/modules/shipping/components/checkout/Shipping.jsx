@@ -18,24 +18,23 @@ const styles = {
 
 // HOC
 const wrapState = ComposedComponent =>
-  class extends Component {
+  class SelectableList extends Component {
     handleSelect(index) {
       const { shippingActions, shipmentQuotes } = this.props;
       shippingActions.setShipmentMethod(index, shipmentQuotes[index].method);
     }
 
     render() {
-      const { selectedIndex } = this.props;
+      const { children, selectedIndex } = this.props;
       return (
         <ComposedComponent
-          {...this.props}
-          {...this.state}
-          // valueLink={{value: this.state.selectedIndex, requestChange: this.handleUpdateSelectedIndex}}
-          valueLink={{
-            value: selectedIndex,
-            requestChange: (event, index) => this.handleSelect(index)
-          }}
-        />
+          // {...this.props}
+          // {...this.state}
+          value={selectedIndex}
+          onChange={(event, index) => this.handleSelect(index)}
+        >
+          {children}
+        </ComposedComponent>
       );
     }
   };
@@ -67,10 +66,11 @@ class Shipping extends Component {
     } = this.props;
 
     if (shippingMethods.length || !shippingConfigured) {
-      // this is odd part. I"m not understand why we are taking shipping quites
+      // this is odd part. I"m not understand why we are taking shipping quotes
       // from within cart, not from Shipping collection. Need to deeply look at
       // this logic
       const shipmentQuotes = cartShippingMethods();
+      debugger;
       return (
         <div>
           <SelectableList
