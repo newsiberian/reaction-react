@@ -94,7 +94,7 @@ function composer(props, onData) {
       Tracker.nonreactive(() => {
         if (cart.workflow && typeof cart.workflow.status === "string") {
           if (cart.workflow.status !== "new") {
-            props.checkoutActions.changeCartWorkflow(cart.workflow.status, cart._id);
+            props.checkoutActions.changeCartWorkflow(cart.workflow.status);
           } else {
             // if user logged in as normal user, we must pass it through the first stage
             props.checkoutActions.updateCartWorkflow("checkoutLogin", cart._id);

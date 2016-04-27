@@ -4,9 +4,8 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Accounts } from "meteor/accounts-base";
 import { Roles } from "meteor/alanning:roles";
 import Helmet from "react-helmet";
-import Paper from 'material-ui/Paper';
-// import Stepper from "material-ui/Stepper/Stepper";
-// import Step from "material-ui/Stepper/HorizontalStep";
+import Paper from "material-ui/Paper";
+import { Step, Stepper, StepLabel } from "material-ui/Stepper";
 import FontIcon from "material-ui/FontIcon";
 // import RaisedButton from "material-ui/RadioButton";
 // import FlatButton from "material-ui/FlatButton";
@@ -65,10 +64,6 @@ class Checkout extends Component {
   }
 
   render() {
-    // const {
-    //   cart, checkoutLoginCompleted, checkoutStepBadgeClass, progressbarStatus,
-    //   setStepIcon, onClickContinueGuest
-    // } = this.props;
     const {
       accountsActions, actionType, activeStep, cart, checkoutActions,
       inlineActions, locale, t
@@ -104,10 +99,8 @@ class Checkout extends Component {
             ]}
           />
 
-          {/*<Stepper
-            horizontal={true}
+          <Stepper
             activeStep={activeStep}
-            // onStepHeaderTouch={this.selectStep}
             updateCompletedStatus={step => this.updateCompletedSteps(step)}
             createIcon={this.createIcon}
           >
@@ -116,46 +109,31 @@ class Checkout extends Component {
                 <Step
                   key={checkoutStep.position}
                   orderStepLabel={checkoutStep.position}
-                  stepLabel={t(`checkoutProgressBar.${checkoutStep.label.toCamelCase()}`)}
-                  // actions={[
-                  //   <RaisedButton
-                  //     key={0}
-                  //     label="Continue"
-                  //     primary={true}
-                  //     onClick={this.continue}
-                  //   />,
-                  //   <FlatButton key={1} label="Cancel" />
-                  // ]}
                 >
-                  <CheckoutStep
-                    checkoutStep={checkoutStep}
-                    checkoutStepCompleted={checkoutStepsCompleted[checkoutStep.template]}
-                    // checkoutStepBadgeClass={checkoutStepBadgeClass}
-                    // setStepIcon={setStepIcon}
-                    // onClickContinueGuest={onClickContinueGuest}
-                  />
+                  <StepLabel>
+                    {t(`checkoutProgressBar.${checkoutStep.label.toCamelCase()}`)}
+                  </StepLabel>
                 </Step>
               );
             })}
-          </Stepper>*/}
-          {coreCartWorkflow.map(checkoutStep => {
-            return (
-              <Paper key={checkoutStep.position}>
+          </Stepper>
+
+          {activeStep > -1 &&
+            <Paper>
               <CheckoutStep
                 accountsActions={accountsActions} // for the first step
                 actionType={actionType} // for the first step
                 inlineActions={inlineActions} // for the first step
                 checkoutActions={checkoutActions} // for the first step
-                checkoutStep={checkoutStep} // for all steps
-                checkoutStepCompleted={checkoutStepsCompleted[checkoutStep.template]}
+                checkoutStep={coreCartWorkflow[activeStep]} // for all steps
+                checkoutStepCompleted={checkoutStepsCompleted[coreCartWorkflow[activeStep].template]}
                 locale={locale} // for the 4th step
                 // checkoutStepBadgeClass={checkoutStepBadgeClass}
                 // setStepIcon={setStepIcon}
                 // onClickContinueGuest={onClickContinueGuest}
               />
-              </Paper>
-            );
-          })}
+            </Paper>
+          }
         </section>
       </div>
     );

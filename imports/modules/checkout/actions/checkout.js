@@ -9,15 +9,15 @@ import i18next from "i18next";
 const getActiveStep = status => {
   switch (status) {
   case "checkoutLogin":
-    return 1;
+    return 0;
   case "checkoutAddressBook":
-    return 2;
+    return 1;
   case "coreCheckoutShipping":
-    return 3;
+    return 2;
   case "checkoutReview":
-    return 4;
+    return 3;
   case "checkoutPayment":
-    return 5;
+    return 4;
   default:
     return -1;
   }
