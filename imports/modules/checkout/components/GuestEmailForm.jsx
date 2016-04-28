@@ -21,11 +21,6 @@ const validate = values => {
 };
 
 const styles = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start"
-  },
   submit: {
     marginTop: "2rem",
     width: "100%"
@@ -39,21 +34,26 @@ class GuestEmailForm extends Component {
       submitting, t
     } = this.props;
     return (
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <TextField
-          {...email}
-          floatingLabelText={t("accountsUI.email")}
-          errorText={email.touched && email.error}
-          type="email"
-        />
-        <FlatButton
-          // fullWidth={true}
-          label={t("accountsUI.signUpButton")}
-          primary={true}
-          type="submit"
-          disabled={pristine || submitting}
-          style={styles.submit}
-        />
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-xs">
+            <TextField
+              {...email}
+              floatingLabelText={t("accountsUI.email")}
+              errorText={email.touched && email.error}
+              type="email"
+            />
+          </div>
+          <div className="col-xs">
+            <FlatButton
+              label={t("accountsUI.signUpButton")}
+              primary={true}
+              type="submit"
+              disabled={pristine || submitting}
+              style={styles.submit}
+            />
+          </div>
+        </div>
       </form>
     );
   }

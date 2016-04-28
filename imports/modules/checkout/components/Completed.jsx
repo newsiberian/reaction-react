@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     minHeight: "80vh",
     maxWidth: 1200
+  },
+  paper: {
+    padding: "1rem"
   }
 });
 
@@ -42,7 +45,8 @@ class Completed extends Component {
           {"."}
         </p>
         {!Boolean(order.email) ?
-          <Paper>
+          <Paper className={styles.paper}>
+            <p>{t("cartCompleted.registerGuest")}</p>
             <GuestEmailForm
               onSubmit={values => checkoutActions.addOrderEmail(order.cartId, values.email)}
             />
