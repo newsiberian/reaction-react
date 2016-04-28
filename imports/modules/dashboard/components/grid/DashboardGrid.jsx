@@ -21,7 +21,7 @@ const styles = {
   header: {
     minHeight: "3rem",
     fontSize: "1.5rem",
-    fontWidth: "500",
+    fontWidth: 500,
     paddingTop: 15,
     paddingLeft: 10,
     textTransform: "capitalize"
