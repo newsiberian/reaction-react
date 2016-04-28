@@ -70,7 +70,6 @@ class Shipping extends Component {
       // from within cart, not from Shipping collection. Need to deeply look at
       // this logic
       const shipmentQuotes = cartShippingMethods();
-      debugger;
       return (
         <div>
           <SelectableList

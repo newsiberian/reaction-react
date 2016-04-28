@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { composeWithTracker } from "react-komposer";
+import { composeAll, composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Meteor } from "meteor/meteor";
@@ -16,11 +16,15 @@ class CheckoutShippingContainer extends Component {
     if (this.props.shippingMethods.length || !this.props.shippingConfigured) {
       const cart = ReactionCore.Collections.Cart.findOne();
       if (cart && cart.shipping && cart.shipping.length) {
-        const shipmentQuotes = cart.shipping[0].shipmentQuotes;
-        const shipmentMethodId = cart.shipping[0].shipmentMethod._id;
-        const selectedIndex = shipmentQuotes
-          .findIndex(quote => quote.method._id === shipmentMethodId);
-        this.props.shippingActions.changeSelected(selectedIndex);
+        if (cart.shipping[0].shipmentQuotes && cart.shipping[0].shipmentMethod) {
+          const shipmentQuotes = cart.shipping[0].shipmentQuotes;
+          const shipmentMethodId = cart.shipping[0].shipmentMethod._id;
+          const selectedIndex = shipmentQuotes
+            .findIndex(quote => quote.method._id === shipmentMethodId);
+          this.props.shippingActions.changeSelected(selectedIndex);
+        } else if (!cart.shipping[0].shipmentMethod) {
+          this.props.shippingActions.destroyCheckoutShipping();
+        }
       }
     }
   }
