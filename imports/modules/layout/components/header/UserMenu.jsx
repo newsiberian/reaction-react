@@ -64,9 +64,8 @@ class UserMenu extends Component {
           <IconButton
             iconClassName="fa fa-shopping-cart"
             onClick={() => cartActions.toggleCart()}
-            // TODO bugger in v. 0.15.0-beta.2
-            // tooltip="Cart"
-            // tooltipPosition="bottom-center"
+            tooltip="Cart"
+            tooltipPosition="bottom-center"
           />
         </Badge>
       </div>

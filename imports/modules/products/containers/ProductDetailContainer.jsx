@@ -12,7 +12,7 @@ import * as productActions from "../actions/product";
 import * as tagActions from "../actions/tag";
 import Loading from "../../layout/components/Loading";
 import ProductDetail from "../components/productDetail/ProductDetail";
-//import Unauthorized from "../../layout/components/Unauthorized";
+// import Unauthorized from "../../layout/components/Unauthorized";
 // import ProductNotFound from "../../layout/components/ProductNotFound";
 // import NotFound from "../../layout/components/NotFound";
 
