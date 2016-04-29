@@ -52,7 +52,7 @@ class CartDrawerItem extends Component {
           <span
             onClick={() =>
               browserHistory.push(`/shop/product/${item.productId}/${item.variants._id}`)}
-            style={{cursor: "pointer", whiteSpace: "pre-wrap"}}
+            style={{cursor: "pointer", whiteSpace: "pre-wrap", fontSize: 15}}
             title={`${item.title} ${item.variants.title}`}
           >
             {item.title}
@@ -60,7 +60,7 @@ class CartDrawerItem extends Component {
             <small>{item.variants.title}</small>
           </span>
         }
-        subtitle={<span><b>{item.quantity}</b> {t("cart.pieces")}</span>}
+        subtitle={<span style={{fontSize: 15}}><b>{item.quantity}</b> {t("cart.pieces")}</span>}
         actionIcon={
           <IconButton
             onTouchTap={() => cartActions.removeCartItem(item._id)}
