@@ -37,13 +37,6 @@ const orderFilters = [{
 }];
 
 class Orders extends Component {
-  handleClick(event, orderId) {
-    this.props.layoutSettingsActions.openSettings({
-      name: "OrdersWorkflowContainer",
-      payload: { orderId: orderId }
-    });
-  }
-
   render() {
     const {
       getCount, layoutSettingsActions, locale, orders, ordersActions, t
@@ -67,7 +60,10 @@ class Orders extends Component {
                       <Paper
                         key={order._id}
                         style={styles.item}
-                        onTouchTap={event => this.handleClick(event, order._id)}
+                        onTouchTap={() => layoutSettingsActions.openSettings({
+                          name: "OrdersWorkflowContainer",
+                          payload: { orderId: order._id }
+                        })}
                       >
 
                         {/* Order basic info */}
