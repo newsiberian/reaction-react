@@ -4,7 +4,7 @@ import { formatPrice } from "../../../../client/helpers/i18n";
 
 const OrderSummary = ({ locale, order, t }) => {
   return (
-    <div>
+    <div style={{ float: "right" }}>
       {Boolean(order.billing && order.billing.length) && order.billing.map(billing => (
         <table
           key={billing._id}

@@ -3,7 +3,7 @@ import { translate } from "react-i18next";
 import Paper from "material-ui/Paper";
 import FontIcon from "material-ui/FontIcon";
 import RaisedButton from "material-ui/RaisedButton";
-import Divider from 'material-ui/Divider';
+import Divider from "material-ui/Divider";
 import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
@@ -21,6 +21,10 @@ const styles = {
   item: {
     marginTop: "1rem",
     marginBottom: "1rem"
+  },
+  row: {
+    margin: 0,
+    padding: "0.5rem"
   }
 };
 
@@ -31,11 +35,6 @@ const orderFilters = [{
 }, {
   name: "completed"
 }];
-
-// const getOrderAge = createdAt => {
-//   // return moment(createdAt).fromNow();
-//   return moment(createdAt).format("DD MMM, YYYY HH:mm:ss");
-// };
 
 class Orders extends Component {
   render() {
@@ -61,12 +60,13 @@ class Orders extends Component {
                       <Paper key={order._id} style={styles.item}>
 
                         {/* Order basic info */}
-                        <div className="row">
+                        <div className="row" style={styles.row}>
                           <div className="col-xs-12 col-sm-6">
                             <OrderDetailsContainer order={order} />
                           </div>
                           <div className="col-xs-12 col-sm-3">
-                            {`${t("order.created")} ${moment(order.createdAt).fromNow()}`}
+                            {`${t("order.created")} ${moment(order.createdAt).fromNow()
+                              }. ${moment(order.createdAt).format("DD MMM, YYYY HH:mm:ss")}`}
                             {order.shippingTracking &&
                               <p>{t("orderShipping.tracking")}: TODO: add link to shippmentTracking</p>
                             }
@@ -84,7 +84,7 @@ class Orders extends Component {
 
                         <Divider />
                         {/* Order items list */}
-                        <div className="row">
+                        <div className="row" style={styles.row}>
                           {order.items && order.items.map(item => (
                             <OrderItemsContainer key={item._id} item={item} locale={locale} />
                           ))}

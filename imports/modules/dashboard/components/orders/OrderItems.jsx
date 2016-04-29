@@ -8,33 +8,37 @@ import Badge from "../../../layout/components/Badge.jsx";
 const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
   container: {
-    // padding: "1rem"
     flex: "1 1 auto", // to stretch container to 100% width
     display: "flex",
     alignItems: "center",
-    padding: "1rem"
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem"
   },
   image: { height: 80, width: "auto" },
-  price: { marginRight: "1rem", textAlign: "right" }
+  price: { textAlign: "right" }
 });
 
 class OrderItems extends Component {
   render() {
     const { item, locale, media, t } = this.props;
     return (
-      <div className={styles.container}>
-        <img
-          className={styles.image}
-          src={media ? media.url({ store: "thumbnail" }) : "/resources/placeholder.gif"}
-          alt={item.variants.title}
-        />
-        <div className="col-xs">
-          {item.variants.title}
-        </div>
-        <div className={c(styles.price, "col-xs")}>
-          <Badge badgeContent={item.quantity} />
-          {": "}
-          {formatPrice(item.variants.price, locale)}
+      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div className={c("row", styles.container)}>
+          <img
+            className={styles.image}
+            src={media ? media.url({ store: "thumbnail" }) : "/resources/placeholder.gif"}
+            alt={item.variants.title}
+          />
+          <div className="col-xs">
+            {item.title}
+            {" "}
+            <small>{item.variants.title}</small>
+          </div>
+          <div className={c(styles.price, "col-xs")}>
+            <Badge badgeContent={item.quantity} />
+            {": "}
+            {formatPrice(item.variants.price, locale)}
+          </div>
         </div>
       </div>
     );

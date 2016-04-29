@@ -86,7 +86,9 @@ const CheckoutReview = ({ checkoutActions, locale, t }) => {
                   </TableRowColumn>
                   <TableRowColumn className={styles.titleRow}>
                     <Link to={`/shop/product/${item.productId}/${item.variants._id}`}>
-                      {item.variants.title}
+                      {item.title}
+                      {" "}
+                      <small>{item.variants.title}</small>
                     </Link>
                   </TableRowColumn>
                   <TableRowColumn>

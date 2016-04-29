@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
-import { ReactionCore } from "meteor/reactioncommerce:core";
-// import { StyleSheet } from "react-look";
-import { Link, browserHistory } from "react-router";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
+import { browserHistory } from "react-router";
 import IconButton from "material-ui/IconButton";
 import GridTile from "material-ui/GridList/GridTile";
 import ContentClear from "material-ui/svg-icons/content/clear";
@@ -13,8 +12,6 @@ import { getMedia } from "../../../../client/helpers/cart";
 //   removeButtonIconStyle
 // } from "../../styles/cartDrawerItem";
 import { cardStyles } from "../../styles/cartDrawer";
-
-// const c = StyleSheet.combineStyles;
 
 class CartDrawerItem extends Component {
   render() {
@@ -55,9 +52,12 @@ class CartDrawerItem extends Component {
           <span
             onClick={() =>
               browserHistory.push(`/shop/product/${item.productId}/${item.variants._id}`)}
-            style={{cursor: "pointer"}}
+            style={{cursor: "pointer", whiteSpace: "pre-wrap"}}
+            title={`${item.title} ${item.variants.title}`}
           >
-            {item.variants.title}
+            {item.title}
+            {" "}
+            <small>{item.variants.title}</small>
           </span>
         }
         subtitle={<span><b>{item.quantity}</b> {t("cart.pieces")}</span>}

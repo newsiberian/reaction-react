@@ -25,7 +25,8 @@ class OrderDetails extends Component {
               {order.shipping[0].address.address1}
               {order.shipping[0].address.address2 && order.shipping[0].address.address2}, {
               order.shipping[0].address.postal}, {order.shipping[0].address.country}, {
-              order.shipping[0].address.region}, <b>{order.shipping[0].address.city}</b><br />
+              order.shipping[0].address.region}, <b>{order.shipping[0].address.city}</b>
+              <br />
               <abbr title={t("address.phone")}>{t("address.phone")}: </abbr>{order.shipping[0].address.phone}
             </address>
           </div>
