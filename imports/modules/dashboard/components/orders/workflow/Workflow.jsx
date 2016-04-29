@@ -44,7 +44,7 @@ class Workflow extends Component {
                 titleStyle={styles.title}
               />
               {orderWorkflow.map((workflow, i) => {
-                const WorkflowComponent = components.getComponent(workflow);
+                const WorkflowComponent = components.getComponent(workflow.template);
                 return (
                   <CardText
                     key={i}

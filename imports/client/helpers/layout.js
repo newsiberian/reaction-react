@@ -38,7 +38,9 @@ export function reactionTemplate(options) {
   const currentCart = ReactionCore.Collections.Cart.findOne({
     userId: Meteor.userId()
   });
-  currentId = currentCart && currentCart._id;
+
+  // if we are working with order we don't need cartId we need orderId
+  currentId = options.hash.id || (currentCart && currentCart._id);
 
   // The currentCollection must have workflow schema attached.
   // layoutConfigCollection is the collection defined in Shops.workflow

@@ -24,7 +24,9 @@ OrderWorkflowContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    locale: state.layout.locale
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -34,7 +36,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const order = ReactionCore.Collections.Orders.findOne(props.orderId);
+  const order = ReactionCore.Collections.Orders.findOne(props.payload.orderId);
   onData(null, { order });
 }
 

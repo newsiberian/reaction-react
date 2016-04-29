@@ -14,7 +14,7 @@ class OrderDetails extends Component {
     const { order, t, userProfile } = this.props;
     return (
       <div>
-        {userProfile.picture && <Avatar src={userProfile.picture} />}
+        {Boolean(userProfile && userProfile.picture) && <Avatar src={userProfile.picture} />}
         <b>{userProfile.name && userProfile.name}</b>
 
         {/* Shipping address */}
