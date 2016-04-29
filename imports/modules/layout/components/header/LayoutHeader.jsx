@@ -15,6 +15,21 @@ const styles = {
   }
 };
 
+const getSiteName = () => {
+  // TODO check without this after reaction v12
+  if (ReactionCore.Subscriptions.Shops.ready()) {
+    // we could have else here, but I think this is not necessary. Let it render
+    // undefined for a moment...
+    return ReactionCore.Collections.Shops.findOne({
+      _id: ReactionCore.shopId
+    }, {
+      fields: {
+        name: 1
+      }
+    }).name;
+  }
+};
+
 // TODO babel @deco not supported in 1.3
 // @Radium
 /**
@@ -22,21 +37,6 @@ const styles = {
  * @classdesc
  */
 export default class LayoutHeader extends Component {
-  getSiteName() {
-    // TODO check without this after reaction v12
-    if (ReactionCore.Subscriptions.Shops.ready()) {
-      // we could have else here, but I think this is not necessary. Let it render
-      // undefined for a moment...
-      return ReactionCore.Collections.Shops.findOne({
-        _id: ReactionCore.shopId
-      }, {
-        fields: {
-          name: 1
-        }
-      }).name;
-    }
-  }
-
   render() {
     const {
       accountsActions, cart, cartActions, displayCart, pathname, routerActions
@@ -45,7 +45,7 @@ export default class LayoutHeader extends Component {
     //  languages, pathname, cartCount, displayCart, onCartIconClick, siteName
     //} = this.props;
     //const title = <span style={styles.title}>{this.getSitename()}</span>;
-    const title = <Link to="/" style={styles.title}>{this.getSiteName()}</Link>;
+    const title = <Link to="/" style={styles.title}>{getSiteName()}</Link>;
     //const cartIcon = (
     //  <Badge
     //    badgeContent={cart.cartCount() || 0}
