@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import ReactionCore from "meteor/reactioncommerce:core";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { composeWithTracker } from "react-komposer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -7,7 +7,6 @@ import EditShippingProvider from "../components/shipping/EditShippingProvider.js
 import Loading from "../../layout/components/Loading.jsx";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as shippingActions from "../../shipping/actions/shipping";
-
 
 const EditShippingProviderContainer = props => <EditShippingProvider {...props} />;
 

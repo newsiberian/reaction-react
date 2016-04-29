@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ReactionCore } from "meteor/reactioncommerce:core";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
 import permissions from "./permissions";
 import packages from "./packages";
 import coreSettings from "./coreSettings";

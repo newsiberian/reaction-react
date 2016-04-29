@@ -52,13 +52,13 @@ const makeQuery = filter => {
       "shipping.shipped": true
     };
   default:
-    break;
+    return {};
   }
 };
 
 const getOrders = filter => {
   const query = makeQuery(filter);
-  return ReactionCore.Collections.Orders.find(query);
+  return ReactionCore.Collections.Orders.find(query).fetch();
 };
 
 class OrdersContainer extends Component {
@@ -101,6 +101,7 @@ OrdersContainer.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   location: PropTypes.object,
+  orders: PropTypes.arrayOf(PropTypes.object),
   ordersActions: PropTypes.shape({
     changeOrdersFilter: PropTypes.func,
     startOrderProcessing: PropTypes.func

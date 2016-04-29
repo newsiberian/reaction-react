@@ -3,6 +3,7 @@
 import Dashboard from "./containers/Dashboard.jsx";
 import DashboardGridContainer from "./containers/DashboardGridContainer.jsx";
 import AccountsManagementContainer from "./containers/AccountsManagementContainer.jsx";
+import OrdersContainer from "./containers/OrdersContainer.jsx";
 import CommentsManagementContainer from "./containers/CommentsManagementContainer.jsx";
 
 // People sais this is not reactive, so we implement the same but in component's
@@ -30,6 +31,10 @@ export default {
     {
       path: "accounts",
       component: AccountsManagementContainer
+    },
+    {
+      path: "orders",
+      component: OrdersContainer
     },
     {
       path: "comments",

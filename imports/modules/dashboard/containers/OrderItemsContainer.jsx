@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import ReactionCore from "meteor/reactioncommerce:core";
+// import { ReactionCore } from "meteor/reactioncommerce:core";
 import { composeWithTracker } from "react-komposer";
 // import { bindActionCreators } from "redux";
 // import { connect } from "react-redux";
@@ -19,7 +19,7 @@ OrderItemsContainer.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired,
-  media: PropTypes.instanceof(FS.File)
+  media: PropTypes.instanceOf(FS.File)
 };
 
 // function mapStateToProps(state) {

@@ -80,7 +80,7 @@ Workflow.propTypes = {
   layoutSettingsActions: PropTypes.shape({
     closeSettings: PropTypes.func
   }).isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func
 };
 
 const options = {

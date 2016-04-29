@@ -3,6 +3,7 @@ import { translate } from "react-i18next";
 import Paper from "material-ui/Paper";
 import FontIcon from "material-ui/FontIcon";
 import RaisedButton from "material-ui/RaisedButton";
+import Divider from 'material-ui/Divider';
 import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
@@ -16,16 +17,31 @@ const styles = {
   base: {
     paddingTop: "1rem",
     paddingBottom: "1rem"
+  },
+  item: {
+    marginTop: "1rem",
+    marginBottom: "1rem"
   }
 };
 
-const getOrderAge = createdAt => {
-  return moment(createdAt).fromNow().format("DD MMM, YYYY hh:mm:ss A");
-};
+const orderFilters = [{
+  name: "new"
+}, {
+  name: "processing"
+}, {
+  name: "completed"
+}];
+
+// const getOrderAge = createdAt => {
+//   // return moment(createdAt).fromNow();
+//   return moment(createdAt).format("DD MMM, YYYY HH:mm:ss");
+// };
 
 class Orders extends Component {
   render() {
-    const { layoutSettingsActions, ordersActions, t } = this.props;
+    const {
+      getCount, layoutSettingsActions, locale, orders, ordersActions, t
+    } = this.props;
     return (
       <div style={layoutStyles.parent}>
         <section style={layoutStyles.section}>
@@ -42,17 +58,17 @@ class Orders extends Component {
                 <div className="container-fluid" style={styles.base}>
                   {Boolean(orders && orders.length) ?
                     orders.map(order => (
-                      <Paper key={order._id}>
+                      <Paper key={order._id} style={styles.item}>
 
                         {/* Order basic info */}
                         <div className="row">
                           <div className="col-xs-12 col-sm-6">
-                            <OrderDetailsContainer userId={order.userId} />
+                            <OrderDetailsContainer order={order} />
                           </div>
                           <div className="col-xs-12 col-sm-3">
-                            {`${t("order.created")} ${getOrderAge(order.createdAt)}`}
+                            {`${t("order.created")} ${moment(order.createdAt).fromNow()}`}
                             {order.shippingTracking &&
-                              <p>t("orderShipping.tracking"): TODO: add link to shippmentTracking</p>
+                              <p>{t("orderShipping.tracking")}: TODO: add link to shippmentTracking</p>
                             }
                             <RaisedButton
                               label={t("orders.start")}
@@ -66,9 +82,12 @@ class Orders extends Component {
                           </div>
                         </div>
 
+                        <Divider />
                         {/* Order items list */}
-                        <div>
-                          <OrderItemsContainer locale={locale} item={item} />
+                        <div className="row">
+                          {order.items && order.items.map(item => (
+                            <OrderItemsContainer key={item._id} item={item} locale={locale} />
+                          ))}
                         </div>
                       </Paper>
                     )) :
@@ -102,6 +121,7 @@ Orders.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   location: PropTypes.object.isRequired,
+  orders: PropTypes.arrayOf(PropTypes.object),
   ordersActions: PropTypes.shape({
     changeOrdersFilter: PropTypes.func,
     startOrderProcessing: PropTypes.func

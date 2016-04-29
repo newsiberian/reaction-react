@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import ReactionCore from "meteor/reactioncommerce:core";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { composeWithTracker } from "react-komposer";
 // import { bindActionCreators } from "redux";
 // import { connect } from "react-redux";
@@ -12,7 +12,7 @@ import OrderDetails from "../components/orders/OrderDetails.jsx";
 const OrderDetailsContainer = props => <OrderDetails {...props} />;
 
 OrderDetailsContainer.propTypes = {
-  userId: PropTypes.string.isRequired,
+  order: PropTypes.object.isRequired,
   userProfile: PropTypes.object.isRequired
 };
 
@@ -29,12 +29,8 @@ OrderDetailsContainer.propTypes = {
 // }
 
 function composer(props, onData) {
-  const handle = Meteor.subscribe("UserProfile", props.userId);
-
-  if (handle.ready()) {
-    const user = ReactionCore.Collections.Accounts.findOne(props.userId);
-    onData(null, { userProfile: user.profile });
-  }
+  const user = ReactionCore.Collections.Accounts.findOne({ userId: props.order.userId });
+  onData(null, { userProfile: user ? user.profile : {} });
 }
 
 // const OrderDetailsContainerWithData = composeWithTracker(
