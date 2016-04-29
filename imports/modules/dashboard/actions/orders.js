@@ -7,7 +7,7 @@ export const changeOrdersFilter = filter => ({ type: types.CHANGE_ORDER_FILTER, 
 export const startOrderProcessing = order => {
   return dispatch => {
     if (order.workflow.status === "new") {
-      Meteor.call("workflow/pushOrderWorkflow", "coreOrderWorkflow", "processing", order, (err, res => {
+      Meteor.call("workflow/pushOrderWorkflow", "coreOrderWorkflow", "processing", order, (err, res) => {
         if (err) {
           dispatch(displayAlert({
             message: i18next.t("errors.somethingWentWrong",
@@ -18,7 +18,7 @@ export const startOrderProcessing = order => {
           dispatch({ type: types.START_ORDER_PROCESSING, orderId: order._id });
           dispatch(changeOrdersFilter("processing"));
         }
-      }));
+      });
     }
   };
 };

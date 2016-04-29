@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const order = ReactionCore.Collections.Orders.findOne(props._id);
+  const order = ReactionCore.Collections.Orders.findOne(props.orderId);
   onData(null, { order });
 }
 

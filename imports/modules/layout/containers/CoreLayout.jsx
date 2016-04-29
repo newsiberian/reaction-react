@@ -38,7 +38,7 @@ components.registerComponent(
 );
 components.registerComponent(
   "AccountsSettingsContainer",
-  require("../../dashboard/containers/AccountsSettingsContainer.jsx").default
+  require("../../dashboard/containers/AccountsSettingsContainer").default
 );
 components.registerComponent(
   "ShopSettingsContainer",
@@ -54,7 +54,11 @@ components.registerComponent(
 );
 components.registerComponent(
   "CommentsSettingsContainer",
-  require("../../dashboard/containers/CommentsSettingsContainer.jsx").default
+  require("../../dashboard/containers/CommentsSettingsContainer").default
+);
+components.registerComponent(
+  "OrdersWorkflowContainer",
+  require("../../dashboard/containers/OrdersWorkflowContainer").default
 );
 
 function modifyRawTheme(muiTheme, newFontFamily) {

@@ -14,10 +14,7 @@ const components = {};
 components.registerComponent = (name, component) => (components[name] = component);
 components.getComponent = (name) =>  components[name];
 
-components.registerComponent(
-  "coreOrderShippingSummary",
-  require("./ShippingSummary").default
-);
+components.registerComponent("coreOrderShippingSummary", require("./ShippingSummary").default);
 
 class Workflow extends Component {
   render() {
@@ -41,13 +38,13 @@ class Workflow extends Component {
               // onExpandChange={() => settingsActions.toggleCard("general")}
             >
               <CardTitle
-                title={`${t("app.order.fullfilment")} ${++index}`}
+                title={`${t("app.order.fullfilment")} ${index + 1}`}
                 actAsExpander={true}
                 showExpandableButton={true}
                 titleStyle={styles.title}
               />
               {orderWorkflow.map((workflow, i) => {
-                const Component = components.getComponent(workflow);
+                const WorkflowComponent = components.getComponent(workflow);
                 return (
                   <CardText
                     key={i}
@@ -57,7 +54,7 @@ class Workflow extends Component {
                     <Header
                       label={t(`${workflow.template}.${workflow.label}`)}
                     />
-                    <Component order={order} />
+                    <WorkflowComponent order={order} />
                   </CardText>
                 );
               })}

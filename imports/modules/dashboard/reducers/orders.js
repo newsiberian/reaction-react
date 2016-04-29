@@ -1,7 +1,7 @@
 import * as types from "../constants";
 import { combineReducers } from "redux";
 
-const filter = (state = "none", action) => {
+const filter = (state = "new", action) => {
   switch (action.type) {
   case types.CHANGE_ORDER_FILTER:
     return action.filter;

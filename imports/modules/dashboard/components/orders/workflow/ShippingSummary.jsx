@@ -16,7 +16,7 @@ class ShippingSummary extends Component {
     return (
       <div>
         <strong>{t("orderShipping.shipTo")}</strong>
-        <OrderDetails userId={} />
+        <OrderDetails /*userId={}*/ />
       </div>
     );
   }

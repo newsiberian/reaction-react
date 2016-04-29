@@ -46,7 +46,9 @@ class UserMenu extends Component {
       <div>
         {ReactionCore.hasPermission("account/profile") &&
           <FlatButton
-            label={t("admin.userAccountDropdown.profileLabel")}
+            // on a first load buttons loads faster then translation, so we are
+            // seen a warning
+            label={t("admin.userAccountDropdown.profileLabel") || "Профиль"}
             onTouchTap={() => push("/account/profile")}
           />
         }
