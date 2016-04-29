@@ -15,7 +15,7 @@ class OrderDetails extends Component {
     return (
       <div>
         {Boolean(userProfile && userProfile.picture) && <Avatar src={userProfile.picture} />}
-        <b>{userProfile.name && userProfile.name}</b>
+        {Boolean(userProfile && userProfile.name) && <b>{userProfile.name}</b>}
 
         {/* Shipping address */}
         {Boolean(order.shipping && order.shipping[0].address) &&
