@@ -84,7 +84,10 @@ const CheckoutReview = ({ checkoutActions, locale, t }) => {
                   <TableRowColumn className={styles.imageRow}>
                     <img src={src} alt={item.variants.title} className={styles.image} />
                   </TableRowColumn>
-                  <TableRowColumn className={styles.titleRow}>
+                  <TableRowColumn
+                    className={styles.titleRow}
+                    style={{whiteSpace: "pre-wrap"}}
+                  >
                     <Link to={`/shop/product/${item.productId}/${item.variants._id}`}>
                       {item.title}
                       {" "}
