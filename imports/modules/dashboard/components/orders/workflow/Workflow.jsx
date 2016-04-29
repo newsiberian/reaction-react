@@ -15,6 +15,8 @@ components.registerComponent = (name, component) => (components[name] = componen
 components.getComponent = (name) =>  components[name];
 
 components.registerComponent("coreOrderShippingSummary", require("./ShippingSummary").default);
+components.registerComponent("coreOrderShippingInvoice", require("./ShippingInvoice").default);
+components.registerComponent("coreOrderShippingTracking", require("./ShippingTracking").default);
 
 class Workflow extends Component {
   render() {
@@ -38,7 +40,7 @@ class Workflow extends Component {
               // onExpandChange={() => settingsActions.toggleCard("general")}
             >
               <CardTitle
-                title={`${t("app.order.fullfilment")} ${index + 1}`}
+                title={`${t("orderWorkflow.fulfillment")} ${index + 1}`}
                 actAsExpander={true}
                 showExpandableButton={true}
                 titleStyle={styles.title}
@@ -52,7 +54,8 @@ class Workflow extends Component {
                     style={styles.cardText}
                   >
                     <Header
-                      label={t(`${workflow.template}.${workflow.label}`)}
+                      label={t(`orderWorkflow.${workflow.label.toCamelCase()}`)}
+                      style={{paddingLeft: 0, minHeight: 40}}
                     />
                     <WorkflowComponent order={order} />
                   </CardText>
@@ -81,7 +84,7 @@ Workflow.propTypes = {
 };
 
 const options = {
-  title: "admin.settings.localizationAndI18NLabel"
+  title: "orderWorkflow.orderDetails"
 };
 
 // translate needed to pass `t` to `ActionBarWrapper`

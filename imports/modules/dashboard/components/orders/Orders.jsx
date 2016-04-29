@@ -73,7 +73,7 @@ class Orders extends Component {
                           </div>
                           <div className="col-xs-12 col-sm-3">
                             {`${t("order.created")} ${moment(order.createdAt).fromNow()
-                              }. ${moment(order.createdAt).format("DD MMM, YYYY HH:mm:ss")}`}
+                              } - ${moment(order.createdAt).format("DD MMM, YYYY HH:mm:ss")}`}
                             {order.shippingTracking &&
                               <p>{t("orderShipping.tracking")}: TODO: add link to shippmentTracking</p>
                             }
