@@ -30,7 +30,7 @@ const validate = values => {
       field: i18next.t("corePackageConfig.settings.mail.host")
     });
   }
-  if (!values.port || !values.port.trim()) {
+  if (!values.port || !values.port.toString().trim()) {
     errors.port = i18next.t("error.isRequired", {
       field: i18next.t("corePackageConfig.settings.mail.port")
     });

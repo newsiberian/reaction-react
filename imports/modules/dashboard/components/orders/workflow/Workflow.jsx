@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
 import { reactionTemplate } from "../../../../../client/helpers/layout";
 import { Card, CardTitle, CardText } from "material-ui/Card";
-import Divider from "material-ui/Divider";
-import Subheader from "material-ui/Subheader";
+// import Divider from "material-ui/Divider";
+// import Subheader from "material-ui/Subheader";
 import Header from "../../../../layout/components/Header.jsx";
 import { ActionBarWrapper } from
   "../../../../layout/components/ActionBarWrapper.jsx";
@@ -20,7 +20,7 @@ components.registerComponent("coreOrderShippingTracking", require("./ShippingTra
 
 class Workflow extends Component {
   render() {
-    const { order, t } = this.props;
+    const { locale, order, ordersActions, t } = this.props;
     const options = {
       hash: {
         id: order._id,
@@ -33,39 +33,45 @@ class Workflow extends Component {
       <div>
         {/* `order.shipping` object called "fulfillment" in reaction. We should
           keep this in mind */}
-        {Boolean(order.shipping && order.shipping.length) && order.shipping.map((shipment, index) => {
-          return (
-            <Card
-              key={shipment._id}
-              // expanded={activeCard === "general"}
-              initiallyExpanded={true}
-              // onExpandChange={() => settingsActions.toggleCard("general")}
-            >
-              <CardTitle
-                title={`${t("orderWorkflow.fulfillment")} ${index + 1}`}
-                actAsExpander={true}
-                showExpandableButton={true}
-                titleStyle={styles.title}
-              />
-              {orderWorkflow.map((workflow, i) => {
-                const WorkflowComponent = components.getComponent(workflow.template);
-                return (
-                  <CardText
-                    key={i}
-                    expandable={true}
-                    style={styles.cardText}
-                  >
-                    <Header
-                      label={t(`orderWorkflow.${workflow.label.toCamelCase()}`)}
-                      style={{paddingLeft: 0, minHeight: 40}}
-                    />
-                    <WorkflowComponent order={order} />
-                  </CardText>
-                );
-              })}
-            </Card>
-          );
-        })}
+        {Boolean(order.shipping && order.shipping.length) &&
+          order.shipping.map((fulfillment, index) => {
+            return (
+              <Card
+                key={fulfillment._id}
+                // expanded={activeCard === "general"}
+                initiallyExpanded={true}
+                // onExpandChange={() => settingsActions.toggleCard("general")}
+              >
+                <CardTitle
+                  title={`${t("orderWorkflow.fulfillment")} ${index + 1}`}
+                  actAsExpander={true}
+                  showExpandableButton={true}
+                  titleStyle={styles.title}
+                />
+                {orderWorkflow.map((workflow, i) => {
+                  const WorkflowComponent = components.getComponent(workflow.template);
+                  return (
+                    <CardText
+                      key={i}
+                      expandable={true}
+                      style={styles.cardText}
+                    >
+                      <Header
+                        label={t(`orderWorkflow.${workflow.label.toCamelCase()}`)}
+                        style={{paddingLeft: 0, minHeight: 40}}
+                      />
+                      <WorkflowComponent
+                        order={order}
+                        ordersActions={ordersActions}
+                        locale={locale}
+                      />
+                    </CardText>
+                  );
+                })}
+              </Card>
+            );
+          }
+        )}
       </div>
     );
   }
@@ -81,6 +87,9 @@ Workflow.propTypes = {
   }).isRequired,
   layoutSettingsActions: PropTypes.shape({
     closeSettings: PropTypes.func
+  }).isRequired,
+  ordersActions: PropTypes.shape({
+    approvePayment: PropTypes.func
   }).isRequired,
   t: PropTypes.func
 };

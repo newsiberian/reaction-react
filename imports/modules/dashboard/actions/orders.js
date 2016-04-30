@@ -22,3 +22,23 @@ export const startOrderProcessing = order => {
     }
   };
 };
+
+export const approvePayment = (order, values) => {
+  const discount = values.discount;
+  debugger;
+  return dispatch => {
+    Meteor.call("orders/approvePayment", order, discount, (err, res) => {
+      debugger;
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+        }));
+      }
+      if (res) {
+        // dispatch({ type: types.START_ORDER_PROCESSING, orderId: order._id });
+        // dispatch(changeOrdersFilter("processing"));
+      }
+    });
+  };
+};

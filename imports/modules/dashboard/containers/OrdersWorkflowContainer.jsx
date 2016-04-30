@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Workflow from "../components/orders/workflow/Workflow.jsx";
 // import Loading from "../../layout/components/Loading.jsx";
 import * as layoutSettingsActions from "../../layout/actions/settings";
-// import * as shippingActions from "../../shipping/actions/shipping";
+import * as ordersActions from "../actions/orders";
 
 const OrderWorkflowContainer = props => <Workflow {...props} />;
 
@@ -20,6 +20,9 @@ OrderWorkflowContainer.propTypes = {
   }).isRequired,
   layoutSettingsActions: PropTypes.shape({
     closeSettings: PropTypes.func
+  }).isRequired,
+  ordersActions: PropTypes.shape({
+    approvePayment: PropTypes.func
   }).isRequired
 };
 
@@ -31,7 +34,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch)
+    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
+    ordersActions: bindActionCreators(ordersActions, dispatch)
   };
 }
 
