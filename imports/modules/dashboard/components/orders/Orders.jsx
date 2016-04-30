@@ -20,7 +20,8 @@ const styles = {
   },
   item: {
     marginTop: "1rem",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    cursor: "pointer"
   },
   row: {
     margin: 0,

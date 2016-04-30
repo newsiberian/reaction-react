@@ -6,20 +6,25 @@ import { formatPrice } from "../../../../../client/helpers/i18n";
 import { getMedia } from "../../../../../client/helpers/cart";
 import Divider from "material-ui/Divider";
 import FlatButton from "material-ui/FlatButton";
-// import TextField from "material-ui/TextField";
 import InvoiceCaptureForm from "./InvoiceCaptureForm.jsx";
 
 const styles = {
   row: { padding: "0.5rem" },
   rowRight: { padding: "0.5rem", textAlign: "right" },
   image: { height: 40, width: "auto" },
-  price: { textAlign: "right" }
+  price: { textAlign: "right" },
+  button: { marginTop: "0.5rem", marginBottom: "0.5rem", width: "100%" }
 };
 
 const canMakeAdjustments = order => {
   const status = order.billing[0].paymentMethod.status;
-  return status === "approved" || status === "completed";
+  return !(status === "approved" || status === "completed");
 };
+
+// const isPaymentPendingApproval = order => {
+//   const status = order.billing[0].paymentMethod.status;
+//   return status === "created" || status === "adjustments" || status === "error";
+// };
 
 const isPaymentCaptured = order =>
   order.billing[0].paymentMethod.status === "completed";
@@ -62,17 +67,12 @@ class ShippingInvoice extends Component {
         <div>
           <div className="row" style={styles.rowRight}>
             <div className="col-xs">
-              <b>{t("cartSubTotals.subtotal")}</b>
+              {t("cartSubTotals.subtotal")}
             </div>
             <div className="col-xs">
               {formatPrice(invoice.subtotal, locale)}
             </div>
           </div>
-          {/*<TextField
-            disabled={true}
-            floatingLabelText={`${t("cartSubTotals.subtotal")}, ${locale.shopCurrency.symbol}`}
-            defaultValue={invoice.subtotal}
-          />*/}
           {canMakeAdjustments(order) ?
             <InvoiceCaptureForm
               locale={locale}
@@ -118,26 +118,6 @@ class ShippingInvoice extends Component {
                   <b>{formatPrice(invoice.total, locale)}</b>
                 </div>
               </div>
-              {/*<TextField
-                disabled={true}
-                floatingLabelText={`${t("cartSubTotals.shipping")}, ${locale.shopCurrency.symbol}`}
-                defaultValue={invoice.shipping}
-              />
-              <TextField
-                disabled={true}
-                floatingLabelText={`${t("cartSubTotals.tax")}, ${locale.shopCurrency.symbol}`}
-                defaultValue={invoice.taxes}
-              />
-              <TextField
-                disabled={true}
-                floatingLabelText={`${t("cartSubTotals.discount")}, ${locale.shopCurrency.symbol}`}
-                defaultValue={invoice.discounts}
-              />
-              <TextField
-                disabled={true}
-                floatingLabelText={`${t("cartSubTotals.total")}, ${locale.shopCurrency.symbol}`}
-                defaultValue={invoice.total}
-              />*/}
             </div>
           }
         </div>
@@ -146,13 +126,19 @@ class ShippingInvoice extends Component {
           <div>
             <FlatButton
               label={t("app.print")}
+              // TODO: implement PDF support
+              style={styles.button}
             />
             <FlatButton
               label={t("order.makeAdjustments")}
+              onTouchTap={() => ordersActions.makeAdjustments(order)}
+              style={styles.button}
             />
             <FlatButton
               label={t("order.capturePayment")}
               primary={true}
+              onTouchTap={() => ordersActions.capturePayment(order._id)}
+              style={styles.button}
             />
           </div>
         }
@@ -170,7 +156,9 @@ ShippingInvoice.propTypes = {
   }).isRequired,
   order: PropTypes.object.isRequired,
   ordersActions: PropTypes.shape({
-    approvePayment: PropTypes.func
+    approvePayment: PropTypes.func,
+    capturePayment: PropTypes.func,
+    makeAdjustments: PropTypes.func
   }).isRequired,
   t: PropTypes.func
 };

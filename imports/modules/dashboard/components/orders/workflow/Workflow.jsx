@@ -89,7 +89,9 @@ Workflow.propTypes = {
     closeSettings: PropTypes.func
   }).isRequired,
   ordersActions: PropTypes.shape({
-    approvePayment: PropTypes.func
+    approvePayment: PropTypes.func,
+    capturePayment: PropTypes.func,
+    makeAdjustments: PropTypes.func
   }).isRequired,
   t: PropTypes.func
 };

@@ -51,10 +51,26 @@ export const approvePayment = (order, values) => {
   };
 };
 
+export const capturePayment = orderId => {
+  return dispatch => {
+    Meteor.call("orders/capturePayments", orderId, (err, res) => {
+      debugger;
+      if (err) {
+        dispatch(displayAlert({
+          message: i18next.t("errors.somethingWentWrong",
+            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+        }));
+      }
+      if (res) {
+        dispatch({ type: types.CAPTURE_PAYMENT, orderId });
+      }
+    });
+  };
+};
+
 export const makeAdjustments = order => {
   return dispatch => {
     Meteor.call("orders/makeAdjustmentsToInvoice", order, (err, res) => {
-      debugger;
       if (err) {
         dispatch(displayAlert({
           message: i18next.t("errors.somethingWentWrong",

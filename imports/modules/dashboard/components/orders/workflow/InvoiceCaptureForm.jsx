@@ -12,21 +12,14 @@ export const fields = [
 
 const validate = values => {
   const errors = {};
-  if (!values.shipping) {
-    errors.shipping = i18next.t("error.isRequired", {
-      field: i18next.t("cartSubTotals.shipping")
-    });
-  } else if (!Number.isFinite(+values.shipping)) {
+
+  if (!Number.isFinite(+values.shipping)) {
     errors.shipping = i18next.t("error.mustBeNumber", {
       field: i18next.t("cartSubTotals.shipping")
     });
   }
 
-  if (!values.taxes) {
-    errors.taxes = i18next.t("error.isRequired", {
-      field: i18next.t("cartSubTotals.tax")
-    });
-  } else if (!Number.isFinite(+values.taxes)) {
+  if (!Number.isFinite(+values.taxes)) {
     errors.taxes = i18next.t("error.mustBeNumber", {
       field: i18next.t("cartSubTotals.tax")
     });
