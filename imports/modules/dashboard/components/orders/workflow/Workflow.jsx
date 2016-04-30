@@ -31,6 +31,8 @@ class Workflow extends Component {
     const orderWorkflow = reactionTemplate(options);
     return (
       <div>
+        {/* `order.shipping` object called "fulfillment" in reaction. We should
+          keep this in mind */}
         {Boolean(order.shipping && order.shipping.length) && order.shipping.map((shipment, index) => {
           return (
             <Card
