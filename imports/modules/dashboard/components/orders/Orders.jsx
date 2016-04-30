@@ -77,12 +77,14 @@ class Orders extends Component {
                             {order.shippingTracking &&
                               <p>{t("orderShipping.tracking")}: TODO: add link to shippmentTracking</p>
                             }
-                            <RaisedButton
-                              label={t("orders.start")}
-                              primary={true}
-                              fullWidth={true}
-                              onTouchTap={() => ordersActions.startOrderProcessing(order)}
-                            />
+                            {filter.name === "new" &&
+                              <RaisedButton
+                                label={t("orders.start")}
+                                primary={true}
+                                fullWidth={true}
+                                onTouchTap={() => ordersActions.startOrderProcessing(order)}
+                              />
+                            }
                           </div>
                           <div className="col-xs-12 col-sm-3">
                             <OrderSummary order={order} locale={locale} />
