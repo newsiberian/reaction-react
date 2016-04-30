@@ -12,27 +12,27 @@ export const fields = [
 
 const validate = values => {
   const errors = {};
-  if (!values.shipping || !values.shipping.toString().trim()) {
+  if (!values.shipping) {
     errors.shipping = i18next.t("error.isRequired", {
       field: i18next.t("cartSubTotals.shipping")
     });
-  } else if (!Number.isInteger(+values.shipping)) {
+  } else if (!Number.isFinite(+values.shipping)) {
     errors.shipping = i18next.t("error.mustBeNumber", {
       field: i18next.t("cartSubTotals.shipping")
     });
   }
 
-  if (!values.taxes || !values.taxes.toString().trim()) {
+  if (!values.taxes) {
     errors.taxes = i18next.t("error.isRequired", {
       field: i18next.t("cartSubTotals.tax")
     });
-  } else if (!Number.isInteger(+values.taxes)) {
+  } else if (!Number.isFinite(+values.taxes)) {
     errors.taxes = i18next.t("error.mustBeNumber", {
       field: i18next.t("cartSubTotals.tax")
     });
   }
 
-  if (!Number.isInteger(+values.discounts)) {
+  if (!Number.isFinite(+values.discounts)) {
     errors.discounts = i18next.t("error.mustBeNumber", {
       field: i18next.t("cartSubTotals.discount")
     });

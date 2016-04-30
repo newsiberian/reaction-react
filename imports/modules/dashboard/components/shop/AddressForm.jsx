@@ -56,7 +56,7 @@ const validate = values => {
       field: i18next.t("shop.addressBook.country")
     });
   }
-  if (!values.phone || !values.phone.toString().trim()) {
+  if (!values.phone) {
     errors.phone = i18next.t("error.isRequired", {
       field: i18next.t("shop.addressBook.phone")
     });

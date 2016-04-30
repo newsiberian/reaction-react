@@ -5,11 +5,13 @@ import { formatPrice } from "../../../../../client/helpers/i18n";
 // through top level container (OrderItemsContainer)
 import { getMedia } from "../../../../../client/helpers/cart";
 import Divider from "material-ui/Divider";
-import TextField from "material-ui/TextField";
+import FlatButton from "material-ui/FlatButton";
+// import TextField from "material-ui/TextField";
 import InvoiceCaptureForm from "./InvoiceCaptureForm.jsx";
 
 const styles = {
   row: { padding: "0.5rem" },
+  rowRight: { padding: "0.5rem", textAlign: "right" },
   image: { height: 40, width: "auto" },
   price: { textAlign: "right" }
 };
@@ -18,6 +20,12 @@ const canMakeAdjustments = order => {
   const status = order.billing[0].paymentMethod.status;
   return status === "approved" || status === "completed";
 };
+
+const isPaymentCaptured = order =>
+  order.billing[0].paymentMethod.status === "completed";
+
+const isPaymentApproved = order =>
+  order.billing[0].paymentMethod.status === "approved";
 
 class ShippingInvoice extends Component {
   render() {
@@ -52,12 +60,20 @@ class ShippingInvoice extends Component {
         }
         <Divider />
         <div>
-          <TextField
+          <div className="row" style={styles.rowRight}>
+            <div className="col-xs">
+              <b>{t("cartSubTotals.subtotal")}</b>
+            </div>
+            <div className="col-xs">
+              {formatPrice(invoice.subtotal, locale)}
+            </div>
+          </div>
+          {/*<TextField
             disabled={true}
             floatingLabelText={`${t("cartSubTotals.subtotal")}, ${locale.shopCurrency.symbol}`}
             defaultValue={invoice.subtotal}
-          />
-          {canMakeAdjustments ?
+          />*/}
+          {canMakeAdjustments(order) ?
             <InvoiceCaptureForm
               locale={locale}
               total={invoice.total || 0}
@@ -69,7 +85,40 @@ class ShippingInvoice extends Component {
               onSubmit={values => ordersActions.approvePayment(order, values)}
             /> :
             <div>
-              <TextField
+              <div className="row" style={styles.rowRight}>
+                <div className="col-xs">
+                  {t("cartSubTotals.shipping")}
+                </div>
+                <div className="col-xs">
+                  {formatPrice(invoice.shipping, locale)}
+                </div>
+              </div>
+              <div className="row" style={styles.rowRight}>
+                <div className="col-xs">
+                  {t("cartSubTotals.tax")}
+                </div>
+                <div className="col-xs">
+                  {formatPrice(invoice.taxes, locale)}
+                </div>
+              </div>
+              <div className="row" style={styles.rowRight}>
+                <div className="col-xs">
+                  {t("cartSubTotals.discount")}
+                </div>
+                <div className="col-xs">
+                  {formatPrice(invoice.discounts, locale)}
+                </div>
+              </div>
+              <Divider />
+              <div className="row" style={styles.rowRight}>
+                <div className="col-xs">
+                  <b>{t("cartSubTotals.total")}</b>
+                </div>
+                <div className="col-xs">
+                  <b>{formatPrice(invoice.total, locale)}</b>
+                </div>
+              </div>
+              {/*<TextField
                 disabled={true}
                 floatingLabelText={`${t("cartSubTotals.shipping")}, ${locale.shopCurrency.symbol}`}
                 defaultValue={invoice.shipping}
@@ -88,10 +137,25 @@ class ShippingInvoice extends Component {
                 disabled={true}
                 floatingLabelText={`${t("cartSubTotals.total")}, ${locale.shopCurrency.symbol}`}
                 defaultValue={invoice.total}
-              />
+              />*/}
             </div>
           }
         </div>
+        <Divider />
+        {isPaymentApproved(order) &&
+          <div>
+            <FlatButton
+              label={t("app.print")}
+            />
+            <FlatButton
+              label={t("order.makeAdjustments")}
+            />
+            <FlatButton
+              label={t("order.capturePayment")}
+              primary={true}
+            />
+          </div>
+        }
       </div>
     );
   }
