@@ -71,6 +71,29 @@ export const capturePayment = orderId => {
   };
 };
 
+export const refundPayment = (order, values) => {
+  return dispatch => {
+    const paymentMethod = order.billing[0].paymentMethod;
+    const refund = +values.refund;
+
+    if (confirm(i18next.t("order.applyRefundToThisOrder", { refund: refund }))) {
+      Meteor.call("orders/refunds/create", order._id, paymentMethod, refund,
+        (err, res) => {
+          if (err) {
+            dispatch(displayAlert({
+              message: i18next.t("errors.somethingWentWrong",
+                { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
+            }));
+          }
+          if (res) {
+            dispatch({ type: types.REFUND_PAYMENT, orderId: order._id });
+          }
+        }
+      );
+    }
+  };
+};
+
 export const makeAdjustments = order => {
   return dispatch => {
     Meteor.call("orders/makeAdjustmentsToInvoice", order, (err, res) => {

@@ -91,6 +91,7 @@ Workflow.propTypes = {
   ordersActions: PropTypes.shape({
     approvePayment: PropTypes.func,
     capturePayment: PropTypes.func,
+    refundPayment: PropTypes.func,
     makeAdjustments: PropTypes.func
   }).isRequired,
   t: PropTypes.func

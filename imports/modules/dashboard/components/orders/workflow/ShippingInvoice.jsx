@@ -12,6 +12,11 @@ import InvoiceRefundForm from "./InvoiceRefundForm.jsx";
 const styles = {
   row: { padding: "0.5rem" },
   rowRight: { padding: "0.5rem", textAlign: "right" },
+  rowCaptured: {
+    padding: "0.5rem",
+    textAlign: "right",
+    color: "#3c763d"
+  },
   image: { height: 40, width: "auto" },
   price: { textAlign: "right" },
   button: { marginTop: "0.5rem", marginBottom: "0.5rem", width: "100%" }
@@ -33,6 +38,21 @@ const isPaymentCaptured = order =>
 const isPaymentApproved = order =>
   order.billing[0].paymentMethod.status === "approved";
 
+// TODO: Ask Aaron how this part should work
+// /**
+//  * Get the total after all refunds
+//  * @return {Number} the amount after all refunds
+//  */
+// const adjustedTotal = order => {
+//   const paymentMethod = order.billing[0].paymentMethod;
+//   const refunds = Template.instance().refunds.get();
+//   let refundTotal = 0;
+//   _.each(refunds, function (item) {
+//     refundTotal += item.amount;
+//   });
+//   return paymentMethod.amount - refundTotal;
+// };
+
 class ShippingInvoice extends Component {
   render() {
     const { locale, order, ordersActions, t } = this.props;
@@ -49,7 +69,7 @@ class ShippingInvoice extends Component {
                   src={media ? media.url({ store: "thumbnail" }) : "/resources/placeholder.gif"}
                   alt={item.variants.title}
                 />
-                <div className="col-xs">
+                <div className="col-xs-6">
                   {item.title}
                   {" "}
                   <small>{item.variants.title}</small>
@@ -67,7 +87,7 @@ class ShippingInvoice extends Component {
         <Divider />
         <div>
           <div className="row" style={styles.rowRight}>
-            <div className="col-xs">
+            <div className="col-xs-7">
               {t("cartSubTotals.subtotal")}
             </div>
             <div className="col-xs">
@@ -87,7 +107,7 @@ class ShippingInvoice extends Component {
             /> :
             <div>
               <div className="row" style={styles.rowRight}>
-                <div className="col-xs">
+                <div className="col-xs-7">
                   {t("cartSubTotals.shipping")}
                 </div>
                 <div className="col-xs">
@@ -95,7 +115,7 @@ class ShippingInvoice extends Component {
                 </div>
               </div>
               <div className="row" style={styles.rowRight}>
-                <div className="col-xs">
+                <div className="col-xs-7">
                   {t("cartSubTotals.tax")}
                 </div>
                 <div className="col-xs">
@@ -103,7 +123,7 @@ class ShippingInvoice extends Component {
                 </div>
               </div>
               <div className="row" style={styles.rowRight}>
-                <div className="col-xs">
+                <div className="col-xs-7">
                   {t("cartSubTotals.discount")}
                 </div>
                 <div className="col-xs">
@@ -111,14 +131,26 @@ class ShippingInvoice extends Component {
                 </div>
               </div>
               <Divider />
-              <div className="row" style={styles.rowRight}>
-                <div className="col-xs">
-                  <b>{t("cartSubTotals.total")}</b>
+              {isPaymentCaptured ?
+                <div className="row" style={styles.rowCaptured}>
+                  <div className="col-xs-7">
+                    <i className="fa fa-check-circle" />
+                    {" "}
+                    <b>{t("order.capturedTotal")}</b>
+                  </div>
+                  <div className="col-xs">
+                    <b>{formatPrice(invoice.total, locale)}</b>
+                  </div>
+                </div> :
+                <div className="row" style={styles.rowRight}>
+                  <div className="col-xs">
+                    <b>{t("cartSubTotals.total")}</b>
+                  </div>
+                  <div className="col-xs">
+                    <b>{formatPrice(invoice.total, locale)}</b>
+                  </div>
                 </div>
-                <div className="col-xs">
-                  <b>{formatPrice(invoice.total, locale)}</b>
-                </div>
-              </div>
+              }
             </div>
           }
         </div>
@@ -144,7 +176,12 @@ class ShippingInvoice extends Component {
           </div>
         }
         {isPaymentCaptured &&
-          
+          <InvoiceRefundForm
+            locale={locale}
+            amount={order.billing[0].paymentMethod.amount || 0}
+            initialValues={{refund: 0}}
+            onSubmit={values => ordersActions.refundPayment(order, values)}
+          />
         }
       </div>
     );
@@ -162,6 +199,7 @@ ShippingInvoice.propTypes = {
   ordersActions: PropTypes.shape({
     approvePayment: PropTypes.func,
     capturePayment: PropTypes.func,
+    refundPayment: PropTypes.func,
     makeAdjustments: PropTypes.func
   }).isRequired,
   t: PropTypes.func
