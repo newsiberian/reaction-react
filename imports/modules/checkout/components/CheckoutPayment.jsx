@@ -1,7 +1,12 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
 import { StyleSheet } from "react-look";
+import { Random } from "meteor/random";
+import getReactionApps from "../../../client/helpers/apps";
+import { Card, CardActions, CardHeader } from "material-ui/Card";
 import FlatButton from "material-ui/FlatButton";
+import Avatar from "material-ui/Avatar";
+import FontIcon from "material-ui/FontIcon";
 import Header from "../../layout/components/Header.jsx";
 import { iconStyles } from "../styles/checkoutStep";
 
@@ -13,8 +18,9 @@ const styles = StyleSheet.create({
 
 // this is temporary way to make stuff work till we start using payment processors
 const temporaryPaymentMethod = {
-  processor: "Сбербанк",
-  transactionId: "fakeToo",
+  processor: "Generic",
+  method: "Sberbank Payment",
+  transactionId: Random.id(),
   status: "created",
   mode: "authorize",
   createdAt: new Date
@@ -23,6 +29,9 @@ const temporaryPaymentMethod = {
 class CheckoutPayment extends Component {
   render() {
     const { checkoutActions, t } = this.props;
+    const paymentProviders = getReactionApps({
+      provides: "paymentMethod", enabled: true
+    });
     return (
       <div>
         <Header
@@ -33,13 +42,40 @@ class CheckoutPayment extends Component {
           <i style={iconStyles}>{5}</i>
         </Header>
         <div className={styles.container}>
-          <FlatButton
-            label={t("checkoutPayment.completeYourOrder")}
-            primary={true}
-            onTouchTap={() =>
-                checkoutActions.submitPayment(temporaryPaymentMethod)}
-            style={{ width: "100%" }}
-          />
+          {paymentProviders.length ? paymentProviders.map((provider, index) => {
+            return (
+              <Card key={index}>
+                <CardHeader
+                  title={t(provider.i18nKeyLabel)}
+                  avatar={
+                    <Avatar
+                      icon={
+                        <FontIcon
+                          className="fa fa-credit-card-alt"
+                          style={{marginLeft: 4.5}}
+                        />
+                      }
+                    />
+                  }
+                  actAsExpander={true}
+                  showExpandableButton={true}
+                />
+                <CardActions expandable={true}>
+                  <FlatButton
+                    label={t("checkoutPayment.completeYourOrder")}
+                    primary={true}
+                    onTouchTap={() =>
+                      checkoutActions.submitPayment(temporaryPaymentMethod)}
+                    style={{ width: "100%" }}
+                  />
+                </CardActions>
+              </Card>
+            );
+          }) :
+            <div>
+              {t("checkoutPayment.noPaymentMethods")}
+            </div>
+          }
         </div>
       </div>
     );

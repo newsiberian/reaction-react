@@ -15,7 +15,8 @@
         "dashboard": {
           "reactUiLabel": "React UI",
           "reactUiTitle": "React UI",
-          "reactUiDescription": "Интерфейс ReactJS для Reaction"
+          "reactUiDescription": "Интерфейс ReactJS для Reaction",
+          "sberbankPaymentLabel": "Платёж через Сбербанк"
         },
         "accounts": {
           "avatar": "Аватар",

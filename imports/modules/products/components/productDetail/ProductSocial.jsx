@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import ReactionApps from "../../../../client/helpers/apps";
+import getReactionApps from "../../../../client/helpers/apps";
 
 export default class ProductSocial extends Component {
   render() {
