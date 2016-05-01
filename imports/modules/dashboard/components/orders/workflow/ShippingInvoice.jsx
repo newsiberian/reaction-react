@@ -38,21 +38,6 @@ const isPaymentCaptured = order =>
 const isPaymentApproved = order =>
   order.billing[0].paymentMethod.status === "approved";
 
-// TODO: Ask Aaron how this part should work
-// /**
-//  * Get the total after all refunds
-//  * @return {Number} the amount after all refunds
-//  */
-// const adjustedTotal = order => {
-//   const paymentMethod = order.billing[0].paymentMethod;
-//   const refunds = Template.instance().refunds.get();
-//   let refundTotal = 0;
-//   _.each(refunds, function (item) {
-//     refundTotal += item.amount;
-//   });
-//   return paymentMethod.amount - refundTotal;
-// };
-
 class ShippingInvoice extends Component {
   render() {
     const { locale, order, ordersActions, t } = this.props;
@@ -131,7 +116,7 @@ class ShippingInvoice extends Component {
                 </div>
               </div>
               <Divider />
-              {isPaymentCaptured ?
+              {isPaymentCaptured(order) ?
                 <div className="row" style={styles.rowCaptured}>
                   <div className="col-xs-7">
                     <i className="fa fa-check-circle" />
@@ -175,7 +160,7 @@ class ShippingInvoice extends Component {
             />
           </div>
         }
-        {isPaymentCaptured &&
+        {isPaymentCaptured(order) &&
           <InvoiceRefundForm
             locale={locale}
             amount={order.billing[0].paymentMethod.amount || 0}
