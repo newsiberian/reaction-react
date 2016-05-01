@@ -23,7 +23,8 @@ const temporaryPaymentMethod = {
   transactionId: Random.id(),
   status: "created",
   mode: "authorize",
-  createdAt: new Date
+  createdAt: new Date,
+  transactions: []
 };
 
 class CheckoutPayment extends Component {

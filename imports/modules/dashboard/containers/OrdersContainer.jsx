@@ -58,7 +58,9 @@ const makeQuery = filter => {
 
 const getOrders = filter => {
   const query = makeQuery(filter);
-  return ReactionCore.Collections.Orders.find(query).fetch();
+  return ReactionCore.Collections.Orders.find(query, {
+    sort: { updatedAt: -1 }
+  }).fetch();
 };
 
 class OrdersContainer extends Component {

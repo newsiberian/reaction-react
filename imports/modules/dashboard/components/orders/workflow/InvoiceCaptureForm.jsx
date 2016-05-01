@@ -68,7 +68,7 @@ class InvoiceCaptureForm extends Component {
           type="submit"
           // we don't need `pristine` here
           disabled={submitting}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: "1rem" }}
         />
       </form>
     );
