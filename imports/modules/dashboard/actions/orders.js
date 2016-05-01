@@ -54,16 +54,19 @@ export const approvePayment = (order, values) => {
 export const capturePayment = orderId => {
   return dispatch => {
     Meteor.call("orders/capturePayments", orderId, (err, res) => {
-      debugger;
       if (err) {
         dispatch(displayAlert({
           message: i18next.t("errors.somethingWentWrong",
             { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
         }));
       }
-      if (res) {
-        dispatch({ type: types.CAPTURE_PAYMENT, orderId });
-      }
+      // TODO currently `orders/capturePayments` method do not return any results
+      // or errors. It should be refactored in future.
+
+      // if (res) {
+      //   dispatch({ type: types.CAPTURE_PAYMENT, orderId });
+      // }
+      dispatch({ type: types.CAPTURE_PAYMENT, orderId });
     });
   };
 };

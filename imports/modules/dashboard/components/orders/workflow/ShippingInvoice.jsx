@@ -7,6 +7,7 @@ import { getMedia } from "../../../../../client/helpers/cart";
 import Divider from "material-ui/Divider";
 import FlatButton from "material-ui/FlatButton";
 import InvoiceCaptureForm from "./InvoiceCaptureForm.jsx";
+import InvoiceRefundForm from "./InvoiceRefundForm.jsx";
 
 const styles = {
   row: { padding: "0.5rem" },
@@ -141,6 +142,9 @@ class ShippingInvoice extends Component {
               style={styles.button}
             />
           </div>
+        }
+        {isPaymentCaptured &&
+          
         }
       </div>
     );
