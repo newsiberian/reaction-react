@@ -8,10 +8,10 @@ import EditorFormatAlignCenter from "material-ui/svg-icons/editor/format-align-c
 import EditorFormatAlignJustify from "material-ui/svg-icons/editor/format-align-justify";
 import EditorFormatAlignLeft from "material-ui/svg-icons/editor/format-align-left";
 import EditorFormatAlignRight from "material-ui/svg-icons/editor/format-align-right";
-// import EditorTitle from "material-ui/lib/svg-icons/editor/title";
+import EditorTitle from "material-ui/svg-icons/editor/title";
 
 const BLOCK_TYPES = [
-  { label: "h1", style: "header-one" },
+  { label: "h1", style: "header-one", icon: EditorTitle },
   // { label: "h2", style: "header-two" },
   // { label: "h3", style: "header-three" },
   // { label: "H4", style: "header-four" },
@@ -42,10 +42,10 @@ const BlockStyleControls = props => {
       {BLOCK_TYPES.map(type =>
         <FlatButton
           key={type.label}
-          label={props.t(`comments.editor.${type.label}`)}
+          // label={props.t(`comments.editor.${type.label}`)}
           // TODO uncomment this when all icons will be known
-          // title={props.t(`comments.editor.${type.label}`)}
-          // icon={<type.icon />}
+          title={props.t(`comments.editor.${type.label}`)}
+          icon={<type.icon />}
           onClick={() => props.onClick(type.style)}
           style={type.style === blockType ? styles : {}}
         />
