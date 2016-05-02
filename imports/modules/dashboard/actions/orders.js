@@ -2,9 +2,11 @@ import * as types from "../constants";
 import { displayAlert } from "../../layout/actions/alert";
 import i18next from "i18next";
 
-export const changeOrdersFilter = filter => ({ type: types.CHANGE_ORDER_FILTER, filter });
+export const changeOrdersFilter = filter =>
+  ({ type: types.CHANGE_ORDER_FILTER, filter });
 
-export const changeTrackingEditVisibility = () => ({ type: types.CHANGE_TRACKING_EDIT_VISIBILITY });
+export const changeTrackingEditVisibility = visible =>
+  ({ type: types.CHANGE_TRACKING_EDIT_VISIBILITY, visible });
 
 export const startOrderProcessing = order => {
   return dispatch => {
@@ -101,7 +103,6 @@ export const updateShipmentTracking = (order, shipment, values) => {
   return dispatch => {
     Meteor.call("orders/updateShipmentTracking", order, shipment, values.trackingNumber,
       (err, res) => {
-        debugger;
         if (err) {
           dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
         }
@@ -111,6 +112,7 @@ export const updateShipmentTracking = (order, shipment, values) => {
             orderId: order._id,
             tracking: values.trackingNumber
           });
+          dispatch(changeTrackingEditVisibility(false));
         }
       }
     );

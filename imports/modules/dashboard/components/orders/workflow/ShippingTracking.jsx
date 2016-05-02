@@ -5,7 +5,7 @@ import FlatButton from "material-ui/FlatButton";
 import AddTrackingForm from "./AddTrackingForm.jsx";
 
 const styles = {
-  rowRight: { padding: "0.5rem", textAlign: "right" },
+  row: { padding: "0.5rem" },
   button: { marginTop: "0.5rem", marginBottom: "0.5rem", width: "100%" }
 };
 
@@ -36,14 +36,14 @@ class ShippingTracking extends Component {
               ordersActions.updateShipmentTracking(order, shipment, values)}
           /> :
           <div>
-            <div className="row" style={styles.rowRight}>
-              <div className="col-xs-7">
-                {t("orderShipping.tracking")}
+            <div className="row" style={styles.row}>
+              <div className="col-xs-12">
+                <b>{t("orderShipping.tracking")}{":"}</b>
               </div>
               <div className="col-xs">
                 <FlatButton
                   label={shipment.tracking}
-                  onTouchTap={ordersActions.changeTrackingEditVisibility}
+                  onTouchTap={() => ordersActions.changeTrackingEditVisibility(true)}
                   style={styles.button}
                 />
               </div>

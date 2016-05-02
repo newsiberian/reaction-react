@@ -10,11 +10,11 @@ const filter = (state = "new", action) => {
   }
 };
 
-const trackingEdit = (state = { visible: true }, action) => {
+const trackingEdit = (state = { visible: false }, action) => {
   switch (action.type) {
   case types.CHANGE_TRACKING_EDIT_VISIBILITY:
     return Object.assign({}, state, {
-      visible: !action.visible
+      visible: action.visible
     });
   default:
     return state;
