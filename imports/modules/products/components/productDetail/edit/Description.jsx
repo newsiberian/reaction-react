@@ -7,6 +7,27 @@ import look, { StyleSheet } from "react-look";
 
 // const c = StyleSheet.combineStyles;
 
+// "entityMap": {},
+// "blocks": [
+//   {
+//     "key" : "sign" , "text" : "Sign in as administrator to edit." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "datjs" , "text" : "\nYou can clone this product from the product grid." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "312at" , "text" : "\nYou can upload images click or drag in image box on the left here." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "60mn0" , "text" : "\nTag this product below, and then add tag in navigation." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "8hsht" , "text" : "\nClick the bookmark in the tag to set product url." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "cr6oq" , "text" : "\nOption variants, price, quantity, and child variants are created by clicking on the variant below, clone the variant to add more options." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "ebkod" , "text" : "\nDetails can be added below the image for more specific product information." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }, {
+//     "key" : "1ujck" , "text" : "\n Login next to the cart, and then click the dashboard icon for more tools." , "type" : "unstyled" , "depth" : 0 , "inlineStyleRanges" : [ ] , "entityRanges" : [ ]
+//   }
+// ]
+
 const styles = StyleSheet.create({
   onChange: {
     backgroundColor: props => {
@@ -27,7 +48,7 @@ class Description extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createWithContent(
-        ContentState.createFromBlockArray(convertFromRaw(props.description))
+        convertFromRaw(props.description)
       )
     };
     this.onChange = editorState => this.setState({ editorState });
@@ -43,7 +64,7 @@ class Description extends Component {
     if(shallowCompare(this, nextProps.description)) {
       this.setState({
         editorState: EditorState.createWithContent(
-          ContentState.createFromBlockArray(convertFromRaw(nextProps.description))
+          convertFromRaw(nextProps.description)
         )
       });
     }

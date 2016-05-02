@@ -107,6 +107,17 @@ const CheckoutReview = ({ checkoutActions, locale, t }) => {
         <div className={c(styles.totalContainer, "row")}>
           <div className="col-xs-12 col-sm-6">
             {"TODO: Delivery info should be here"}
+            {"TODO: comments to order"}
+            {Boolean(cart.notes && cart.notes.length) && cart.notes.map(note => (
+              <Card>
+                <CardHeader
+                  title="URL Avatar"
+                  subtitle="Subtitle"
+                  avatar="http://lorempixel.com/100/100/nature/"
+                />
+                <CardText>{note.content}</CardText>
+              </Card>
+            ))}
           </div>
           <div className="col-sm-offset-6 col-xs-12 col-sm-6">
             <Table

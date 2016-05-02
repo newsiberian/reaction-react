@@ -44,7 +44,7 @@ class Comment extends Component {
 
     this.state = {
       editorState: EditorState.createWithContent(
-        ContentState.createFromBlockArray(convertFromRaw(props.comment.content))
+        convertFromRaw(props.comment.content)
       ),
       editable: false, // Only admin could edit users comments
       showReplyForm: false
@@ -75,7 +75,7 @@ class Comment extends Component {
     if(changed) {
       this.setState({
         editorState: EditorState.createWithContent(
-          ContentState.createFromBlockArray(convertFromRaw(nextProps.comment.content))
+          convertFromRaw(nextProps.comment.content)
         )
       });
     }
