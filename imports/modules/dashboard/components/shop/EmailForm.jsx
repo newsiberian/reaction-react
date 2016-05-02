@@ -15,16 +15,16 @@ export const fields = [
 const validate = values => {
   const errors = {};
 
-  if (!values.user || !values.user.trim()) {
-    errors.user = i18next.t("error.isRequired", {
-      field: i18next.t("corePackageConfig.settings.mail.user")
-    });
-  }
-  if (!values.password || !values.password.trim()) {
-    errors.password = i18next.t("error.isRequired", {
-      field: i18next.t("corePackageConfig.settings.mail.password")
-    });
-  }
+  // if (!values.user || !values.user.trim()) {
+  //   errors.user = i18next.t("error.isRequired", {
+  //     field: i18next.t("corePackageConfig.settings.mail.user")
+  //   });
+  // }
+  // if (!values.password || !values.password.trim()) {
+  //   errors.password = i18next.t("error.isRequired", {
+  //     field: i18next.t("corePackageConfig.settings.mail.password")
+  //   });
+  // }
   if (!values.host || !values.host.trim()) {
     errors.host = i18next.t("error.isRequired", {
       field: i18next.t("corePackageConfig.settings.mail.host")
