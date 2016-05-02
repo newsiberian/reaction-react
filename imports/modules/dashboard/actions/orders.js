@@ -119,14 +119,14 @@ export const updateShipmentTracking = (order, shipment, values) => {
   };
 };
 
-export const shipmentShipped = order => {
+export const shipmentShipped = (order, fulfillment) => {
   return dispatch => {
-    Meteor.call("orders/shipmentShipped", order, (err, res) => {
-      debugger;
+    Meteor.call("orders/shipmentShipped", order, fulfillment, (err, res) => {
       if (err) {
         dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
-      if (res) {
+      // `res` here is a complex object with 4 variables
+      if (res.workflow === 1) {
         dispatch({
           type: types.SHIPMENT_SHIPPED,
           orderId: order._id
@@ -139,7 +139,6 @@ export const shipmentShipped = order => {
 export const shipmentPacked = (order, fulfillment) => {
   return dispatch => {
     Meteor.call("orders/shipmentPacked", order, fulfillment, true, (err, res) => {
-      debugger;
       if (err) {
         dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
@@ -149,6 +148,20 @@ export const shipmentPacked = (order, fulfillment) => {
           orderId: order._id,
           fulfillmentId: fulfillment._id
         });
+      }
+    });
+  };
+};
+
+export const sendNotification = order => {
+  return dispatch => {
+    Meteor.call("orders/sendNotification", order, (err, res) => {
+      debugger;
+      if (err) {
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+      }
+      if (res) {
+        dispatch({ type: types.SEND_NOTIFICATION, orderId: order._id });
       }
     });
   };

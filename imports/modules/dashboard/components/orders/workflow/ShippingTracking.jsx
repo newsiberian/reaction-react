@@ -56,8 +56,7 @@ class ShippingTracking extends Component {
             <p>{t("orderShipping.itemsHaveBeenShipped")}</p>
             <FlatButton
               label={t("orderShipping.resendNotification")}
-              // onTouchTap={values =>
-              //   ordersActions.updateShipmentTracking(order, shipment, values)}
+              onTouchTap={() => ordersActions.sendNotification(order)}
               style={styles.button}
             />
           </div>
@@ -67,7 +66,7 @@ class ShippingTracking extends Component {
             <p>{t("orderShipping.shippingNotifyCustomer")}</p>
             <FlatButton
               label={t("orderShipping.shipped")}
-              onTouchTap={() => ordersActions.shipmentShipped(order)}
+              onTouchTap={() => ordersActions.shipmentShipped(order, fulfillment)}
               style={styles.button}
             />
           </div> :
@@ -89,7 +88,8 @@ ShippingTracking.propTypes = {
     changeTrackingEditVisibility: PropTypes.func,
     updateShipmentTracking: PropTypes.func,
     shipmentShipped: PropTypes.func,
-    shipmentPacked: PropTypes.func
+    shipmentPacked: PropTypes.func,
+    sendNotification: PropTypes.func
   }).isRequired,
   t: PropTypes.func,
   trackingEditVisibility: PropTypes.bool

@@ -28,6 +28,7 @@ OrderWorkflowContainer.propTypes = {
     makeAdjustments: PropTypes.func,
     shipmentShipped: PropTypes.func,
     shipmentPacked: PropTypes.func,
+    sendNotification: PropTypes.func,
     changeTrackingEditVisibility: PropTypes.func,
     updateShipmentTracking: PropTypes.func
   }).isRequired,
