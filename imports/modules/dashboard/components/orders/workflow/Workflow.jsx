@@ -20,7 +20,7 @@ components.registerComponent("coreOrderShippingTracking", require("./ShippingTra
 
 class Workflow extends Component {
   render() {
-    const { locale, order, ordersActions, t } = this.props;
+    const { locale, order, ordersActions, t, trackingEditVisibility } = this.props;
     const options = {
       hash: {
         id: order._id,
@@ -63,7 +63,9 @@ class Workflow extends Component {
                       <WorkflowComponent
                         order={order}
                         ordersActions={ordersActions}
+                        fulfillment={fulfillment}
                         locale={locale}
+                        trackingEditVisibility={trackingEditVisibility}
                       />
                     </CardText>
                   );
@@ -92,9 +94,12 @@ Workflow.propTypes = {
     approvePayment: PropTypes.func,
     capturePayment: PropTypes.func,
     refundPayment: PropTypes.func,
-    makeAdjustments: PropTypes.func
+    makeAdjustments: PropTypes.func,
+    changeTrackingEditVisibility: PropTypes.func,
+    updateShipmentTracking: PropTypes.func
   }).isRequired,
-  t: PropTypes.func
+  t: PropTypes.func,
+  trackingEditVisibility: PropTypes.bool
 };
 
 const options = {

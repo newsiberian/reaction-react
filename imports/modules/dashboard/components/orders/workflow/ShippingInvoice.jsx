@@ -27,11 +27,6 @@ const canMakeAdjustments = order => {
   return !(status === "approved" || status === "completed");
 };
 
-// const isPaymentPendingApproval = order => {
-//   const status = order.billing[0].paymentMethod.status;
-//   return status === "created" || status === "adjustments" || status === "error";
-// };
-
 const isPaymentCaptured = order =>
   order.billing[0].paymentMethod.status === "completed";
 

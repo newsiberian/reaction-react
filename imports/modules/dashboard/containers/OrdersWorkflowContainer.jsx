@@ -25,13 +25,17 @@ OrderWorkflowContainer.propTypes = {
     approvePayment: PropTypes.func,
     capturePayment: PropTypes.func,
     refundPayment: PropTypes.func,
-    makeAdjustments: PropTypes.func
-  }).isRequired
+    makeAdjustments: PropTypes.func,
+    changeTrackingEditVisibility: PropTypes.func,
+    updateShipmentTracking: PropTypes.func
+  }).isRequired,
+  trackingEditVisibility: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
-    locale: state.layout.locale
+    locale: state.layout.locale,
+    trackingEditVisibility: state.dashboard.orders.trackingEdit.visible
   };
 }
 

@@ -10,6 +10,18 @@ const filter = (state = "new", action) => {
   }
 };
 
+const trackingEdit = (state = { visible: true }, action) => {
+  switch (action.type) {
+  case types.CHANGE_TRACKING_EDIT_VISIBILITY:
+    return Object.assign({}, state, {
+      visible: !action.visible
+    });
+  default:
+    return state;
+  }
+};
+
 export default combineReducers({
-  filter
+  filter,
+  trackingEdit
 });

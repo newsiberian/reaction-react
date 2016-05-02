@@ -4,16 +4,15 @@ import i18next from "i18next";
 
 export const changeOrdersFilter = filter => ({ type: types.CHANGE_ORDER_FILTER, filter });
 
+export const changeTrackingEditVisibility = () => ({ type: types.CHANGE_TRACKING_EDIT_VISIBILITY });
+
 export const startOrderProcessing = order => {
   return dispatch => {
     if (order.workflow.status === "new") {
       Meteor.call("workflow/pushOrderWorkflow", "coreOrderWorkflow", "processing",
         order, (err, res) => {
           if (err) {
-            dispatch(displayAlert({
-              message: i18next.t("errors.somethingWentWrong",
-                { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-            }));
+            dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
           }
           if (res) {
             dispatch({ type: types.START_ORDER_PROCESSING, orderId: order._id });
@@ -39,10 +38,7 @@ export const approvePayment = (order, values) => {
   return dispatch => {
     Meteor.call("orders/approvePayment", order, discount, (err, res) => {
       if (err) {
-        dispatch(displayAlert({
-          message: i18next.t("errors.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-        }));
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
       if (res) {
         dispatch({ type: types.APPROVE_PAYMENT, orderId: order._id });
@@ -55,10 +51,7 @@ export const capturePayment = orderId => {
   return dispatch => {
     Meteor.call("orders/capturePayments", orderId, (err, res) => {
       if (err) {
-        dispatch(displayAlert({
-          message: i18next.t("errors.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-        }));
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
       // TODO currently `orders/capturePayments` method do not return any results
       // or errors. It should be refactored in future.
@@ -80,10 +73,7 @@ export const refundPayment = (order, values) => {
       Meteor.call("orders/refunds/create", order._id, paymentMethod, refund,
         (err, res) => {
           if (err) {
-            dispatch(displayAlert({
-              message: i18next.t("errors.somethingWentWrong",
-                { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-            }));
+            dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
           }
           if (res) {
             dispatch({ type: types.REFUND_PAYMENT, orderId: order._id });
@@ -98,14 +88,31 @@ export const makeAdjustments = order => {
   return dispatch => {
     Meteor.call("orders/makeAdjustmentsToInvoice", order, (err, res) => {
       if (err) {
-        dispatch(displayAlert({
-          message: i18next.t("errors.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-        }));
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
       if (res) {
         dispatch({ type: types.MAKE_ADJUSTMENTS, orderId: order._id });
       }
     });
+  };
+};
+
+export const updateShipmentTracking = (order, shipment, values) => {
+  return dispatch => {
+    Meteor.call("orders/updateShipmentTracking", order, shipment, values.trackingNumber,
+      (err, res) => {
+        debugger;
+        if (err) {
+          dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+        }
+        if (res) {
+          dispatch({
+            type: types.UPDATE_TRACKING,
+            orderId: order._id,
+            tracking: values.trackingNumber
+          });
+        }
+      }
+    );
   };
 };
