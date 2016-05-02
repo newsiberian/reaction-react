@@ -24,7 +24,8 @@ const isCompleted = (order, fulfillment) => {
 class ShippingTracking extends Component {
   render() {
     const { fulfillment, order, ordersActions, t, trackingEditVisibility } = this.props;
-    const shipment = order.shipping[0];
+    // for consistent with reaction
+    const shipment = fulfillment;
     return (
       <div>
         {allowEditTracking(shipment, trackingEditVisibility) ?
@@ -52,7 +53,7 @@ class ShippingTracking extends Component {
         }
         {isCompleted(order, fulfillment) &&
           <div>
-            {t("orderShipping.itemsHaveBeenShipped")}
+            <p>{t("orderShipping.itemsHaveBeenShipped")}</p>
             <FlatButton
               label={t("orderShipping.resendNotification")}
               // onTouchTap={values =>
@@ -60,6 +61,21 @@ class ShippingTracking extends Component {
               style={styles.button}
             />
           </div>
+        }
+        {isShipmentReady(shipment) ?
+          <div>
+            <p>{t("orderShipping.shippingNotifyCustomer")}</p>
+            <FlatButton
+              label={t("orderShipping.shipped")}
+              onTouchTap={() => ordersActions.shipmentShipped(order)}
+              style={styles.button}
+            />
+          </div> :
+          <FlatButton
+            label={t("orderShipping.shipmentPacked")}
+            onTouchTap={() => ordersActions.shipmentPacked(order, fulfillment)}
+            style={styles.button}
+          />
         }
       </div>
     );
@@ -71,7 +87,9 @@ ShippingTracking.propTypes = {
   order: PropTypes.object.isRequired,
   ordersActions: PropTypes.shape({
     changeTrackingEditVisibility: PropTypes.func,
-    updateShipmentTracking: PropTypes.func
+    updateShipmentTracking: PropTypes.func,
+    shipmentShipped: PropTypes.func,
+    shipmentPacked: PropTypes.func
   }).isRequired,
   t: PropTypes.func,
   trackingEditVisibility: PropTypes.bool

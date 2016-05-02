@@ -118,3 +118,38 @@ export const updateShipmentTracking = (order, shipment, values) => {
     );
   };
 };
+
+export const shipmentShipped = order => {
+  return dispatch => {
+    Meteor.call("orders/shipmentShipped", order, (err, res) => {
+      debugger;
+      if (err) {
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+      }
+      if (res) {
+        dispatch({
+          type: types.SHIPMENT_SHIPPED,
+          orderId: order._id
+        });
+      }
+    });
+  };
+};
+
+export const shipmentPacked = (order, fulfillment) => {
+  return dispatch => {
+    Meteor.call("orders/shipmentPacked", order, fulfillment, true, (err, res) => {
+      debugger;
+      if (err) {
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+      }
+      if (res) {
+        dispatch({
+          type: types.SHIPMENT_PACKED,
+          orderId: order._id,
+          fulfillmentId: fulfillment._id
+        });
+      }
+    });
+  };
+};

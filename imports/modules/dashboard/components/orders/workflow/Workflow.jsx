@@ -95,6 +95,8 @@ Workflow.propTypes = {
     capturePayment: PropTypes.func,
     refundPayment: PropTypes.func,
     makeAdjustments: PropTypes.func,
+    shipmentShipped: PropTypes.func,
+    shipmentPacked: PropTypes.func,
     changeTrackingEditVisibility: PropTypes.func,
     updateShipmentTracking: PropTypes.func
   }).isRequired,
