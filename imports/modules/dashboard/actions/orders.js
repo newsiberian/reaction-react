@@ -126,7 +126,7 @@ export const shipmentShipped = (order, fulfillment) => {
         dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
       // `res` here is a complex object with 4 variables
-      if (res.workflow === 1) {
+      if (res.workflowResult === 1) {
         dispatch({
           type: types.SHIPMENT_SHIPPED,
           orderId: order._id

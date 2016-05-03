@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-look";
-import { ReactionCore } from "meteor/reactioncommerce:core";
 
 export const styles = StyleSheet.create({
   container: {
@@ -26,8 +25,7 @@ export const cartButton = {
 
 export const openCartStyles = {
   marginTop: "1rem",
-  marginBottom: "1rem",
-  width: ReactionCore.hasDashboardAccess() ? "calc(100vw - 70px)" : "100vw"
+  marginBottom: "1rem"
 };
 
 export const cardStyles = {

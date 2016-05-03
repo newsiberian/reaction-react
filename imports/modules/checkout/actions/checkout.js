@@ -101,3 +101,25 @@ export const addOrderEmail = (cartId, email) => {
     });
   };
 };
+
+export const changeCartNote = content => {
+  return { type: types.CHANGE_CART_NOTE, content };
+};
+
+export const updateCartNote = content => {
+  return dispatch => {
+    cartMethods.updateCartNotes.call({ content }, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+      }
+      if (res) {
+        dispatch({ type: types.UPDATE_CART_NOTE, content });
+      }
+    });
+  };
+};
+
+// this needed to rollback `isChanged` field state to remove animation effect
+export const rollbackNoteState = () => {
+  return { type: types.ROLLBACK_CART_NOTE_STATE };
+};

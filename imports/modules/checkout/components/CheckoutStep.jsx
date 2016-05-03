@@ -52,7 +52,7 @@ const setStepIcon = label => {
 export default class CheckoutStep extends Component {
   render() {
     const {
-      checkoutActions, checkoutStepCompleted, checkoutStep,/*, checkoutStepBadgeClass, */
+      checkoutActions, checkoutStepCompleted, checkoutStep, note,
       accountsActions, actionType, inlineActions, locale
     } = this.props;
     const isCompleted = checkoutStep.status ? checkoutStep.status : false;
@@ -81,6 +81,7 @@ export default class CheckoutStep extends Component {
           badgeClass={badgeClass}
           iconClass={iconClass}
           locale={locale} // for the 4th step
+          note={note} // for the 4th step
           // onClickContinueGuest={onClickContinueGuest}
         />
       );
@@ -107,7 +108,10 @@ CheckoutStep.propTypes = {
     changeCartWorkflow: PropTypes.func,
     continueAsGuest: PropTypes.func,
     submitPayment: PropTypes.func,
-    updateCartWorkflow: PropTypes.func
+    updateCartWorkflow: PropTypes.func,
+    changeCartNote: PropTypes.func,
+    updateCartNote: PropTypes.func,
+    rollbackNoteState: PropTypes.func
   }).isRequired,
   checkoutStepCompleted: PropTypes.func,
   checkoutStep: PropTypes.object.isRequired,
@@ -120,7 +124,11 @@ CheckoutStep.propTypes = {
     language: PropTypes.string,
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
-  }).isRequired
+  }).isRequired,
+  note: PropTypes.shape({
+    content: PropTypes.string,
+    isChanged: PropTypes.bool
+  })
   // checkoutStepBadgeClass: PropTypes.func.isRequired,
   // setStepIcon: PropTypes.func.isRequired,
   // onClickContinueGuest: PropTypes.func

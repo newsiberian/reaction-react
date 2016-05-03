@@ -66,7 +66,7 @@ class Checkout extends Component {
   render() {
     const {
       accountsActions, actionType, activeStep, cart, checkoutActions,
-      inlineActions, locale, t
+      inlineActions, locale, note, t
     } = this.props;
 
     if (typeof cart.items !== "object" ||
@@ -127,6 +127,7 @@ class Checkout extends Component {
                 checkoutActions={checkoutActions} // for the first step
                 checkoutStep={coreCartWorkflow[activeStep]} // for all steps
                 checkoutStepCompleted={checkoutStepsCompleted[coreCartWorkflow[activeStep].template]}
+                note={note}
                 locale={locale} // for the 4th step
                 // checkoutStepBadgeClass={checkoutStepBadgeClass}
                 // setStepIcon={setStepIcon}
@@ -202,7 +203,10 @@ Checkout.propTypes = {
     changeCartWorkflow: PropTypes.func,
     continueAsGuest: PropTypes.func,
     submitPayment: PropTypes.func,
-    updateCartWorkflow: PropTypes.func
+    updateCartWorkflow: PropTypes.func,
+    changeCartNote: PropTypes.func,
+    updateCartNote: PropTypes.func,
+    rollbackNoteState: PropTypes.func
   }).isRequired,
   inlineActions: PropTypes.shape({
     changeActionType: PropTypes.func,
@@ -214,6 +218,10 @@ Checkout.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired,
+  note: PropTypes.shape({
+    content: PropTypes.string,
+    isChanged: PropTypes.bool
+  }),
   t: PropTypes.func
   // checkoutLoginCompleted: PropTypes.func.isRequired,
   // checkoutStepBadgeClass: PropTypes.func,

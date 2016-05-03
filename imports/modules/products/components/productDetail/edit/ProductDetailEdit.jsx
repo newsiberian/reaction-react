@@ -27,10 +27,10 @@ class ProductDetailEdit extends Component {
       this.props.fields[this.props.options.field];
   }
 
-  handleChange(event, field) {
-    const { product, productActions } = this.props;
-    productActions.changeProductField(product._id, field, event.target.value);
-  }
+  // handleChange(event, field) {
+  //   const { product, productActions } = this.props;
+  //   productActions.changeProductField(product._id, field, event.target.value);
+  // }
 
   handleBlur(event, field) {
     const { product, productActions } = this.props;
@@ -50,7 +50,8 @@ class ProductDetailEdit extends Component {
         type="text"
         className={c(className, styles.onChange)}
         defaultValue={product[field]}
-        onChange={event => this.handleChange(event, field)}
+        // onChange no needed for uncontrolled input
+        // onChange={event => this.handleChange(event, field)}
         onBlur={event => this.handleBlur(event, field)}
         placeholder={t(`productDetailEdit.${field}`)}
       />

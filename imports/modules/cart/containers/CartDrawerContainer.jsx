@@ -107,8 +107,9 @@ function composer(props, onData) {
   // within `checkout`
   // const handle = Meteor.subscribe("AccountOrders");
   if (/*handle.ready() && */ReactionCore.Subscriptions.Cart.ready()) {
+    // `shipping` needed for cartTransform methods
     const cart = ReactionCore.Collections.Cart.findOne({}, {
-      fields: { items: 1 }
+      fields: { items: 1, shipping: 1 }
     });
     onData(null, { cart });
   }

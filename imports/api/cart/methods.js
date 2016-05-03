@@ -57,3 +57,42 @@ export const submitPayment = new ValidatedMethod({
     return ReactionCore.Collections.Cart.update(selector, update);
   }
 });
+
+export const updateCartNotes = new ValidatedMethod({
+  name: "updateCartNotes",
+  validate: new SimpleSchema({
+    content: { type: String }
+  }).validator(),
+  run({ content }) {
+    const cart = ReactionCore.Collections.Cart.findOne({ userId: this.userId });
+    let query;
+    let selector;
+
+    // if note already presents, we update it, otherwise add new
+    if (cart.notes && cart.notes.length) {
+      query = {
+        "_id": cart._id,
+        "notes._id": cart.notes[0]._id
+      };
+      selector = {
+        $set: {
+          "notes.$.content": content
+        }
+      };
+    } else {
+      query = { _id: cart._id };
+      selector = {
+        $addToSet: {
+          notes: {
+            _id: Random.id(),
+            content,
+            userId: this.userId,
+            createdAt: new Date
+          }
+        }
+      };
+    }
+
+    return ReactionCore.Collections.Cart.update(query, selector);
+  }
+});

@@ -94,7 +94,9 @@
         "quantity": "Quantity",
         "deliveryDetails": "Delivery Details",
         "subtotal": "Subtotal",
-        "continue": "Continue"
+        "continue": "Continue",
+        "commentToTheOrder": "Comments to the order",
+        "letUsKnowAboutWishes": "Let us know about your wishes on order"
       },
       "completed": {
         "askForEmail": "Hello. Please leave your email, so that you can be contacted while ordering, as well as to obtain information on the status of the order."

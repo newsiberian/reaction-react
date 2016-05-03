@@ -50,7 +50,10 @@ CheckoutContainer.propTypes = {
     updateCartWorkflow: PropTypes.func,
     destroyCheckout: PropTypes.func,
     continueAsGuest: PropTypes.func,
-    submitPayment: PropTypes.func
+    submitPayment: PropTypes.func,
+    changeCartNote: PropTypes.func,
+    updateCartNote: PropTypes.func,
+    rollbackNoteState: PropTypes.func
   }).isRequired,
   destroyCheckoutShipping: PropTypes.func,
   inlineActions: PropTypes.shape({
@@ -62,13 +65,18 @@ CheckoutContainer.propTypes = {
     language: PropTypes.string,
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
-  }).isRequired
+  }).isRequired,
+  note: PropTypes.shape({
+    content: PropTypes.string,
+    isChanged: PropTypes.bool
+  })
 };
 
 function mapStateToProps(state) {
   return {
     actionType: state.account.inline.actionType,
-    activeStep: state.checkout.activeStep,
+    activeStep: state.checkout.checkout.activeStep,
+    note: state.checkout.note,
     locale: state.layout.locale
   };
 }

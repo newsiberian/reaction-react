@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
 import { browserHistory } from "react-router";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import Slider from "react-slick";
 import FlatButton from "material-ui/FlatButton";
 import CartSubTotals from "./CartSubTotals.jsx";
@@ -41,7 +42,12 @@ class OpenCartDrawer extends Component {
     };
     console.log("OpenCartDrawer rendering...");
     return (
-     <div style={openCartStyles}>
+     <div
+       style={{
+         ...openCartStyles,
+         width: ReactionCore.hasDashboardAccess() ? "calc(100vw - 70px)" : "100vw"
+       }}
+     >
        <Slider {...settings}>
          <CartSubTotals cart={cart} locale={locale} />
          {cart.items.map(item => {
