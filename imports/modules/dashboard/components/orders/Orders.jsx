@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
+import { moment } from "meteor/momentjs:moment";
 import Paper from "material-ui/Paper";
 import FontIcon from "material-ui/FontIcon";
 import RaisedButton from "material-ui/RaisedButton";
@@ -8,7 +9,6 @@ import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
 // import { ReactionCore } from "meteor/reactioncommerce:core";
 import { layoutStyles } from "../../../layout/styles/layout";
-import { moment } from "meteor/momentjs:moment";
 import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
 import OrderSummary from "./OrderSummary.jsx";
 import OrderItemsContainer from "../../containers/OrderItemsContainer.jsx";

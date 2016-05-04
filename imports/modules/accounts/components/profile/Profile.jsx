@@ -4,10 +4,12 @@ import { Accounts } from "meteor/accounts-base";
 import { translate } from "react-i18next";
 import { StyleSheet } from "react-look";
 import Paper from "material-ui/Paper";
-import DashboardHeader from "../../../dashboard/components/DashboardHeader.jsx";
+// import DashboardHeader from "../../../dashboard/components/DashboardHeader.jsx";
+import Header from "../../../layout/components/Header.jsx";
 import ProfileAboutForm from "./ProfileAboutForm.jsx";
 import ChangePasswordForm from "./ChangePasswordForm.jsx";
 import AddressBookContainer from "../../containers/AddressBookContainer.jsx";
+import OrderList from "./OrdersList.jsx";
 
 const c = StyleSheet.combineStyles;
 const styles = StyleSheet.create({
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
 
 class Profile extends Component {
   render() {
-    const { profileActions, t } = this.props;
+    const { orders, profileActions, t } = this.props;
     // this won't be reactive. It's ok.
     const account = ReactionCore.Collections.Accounts.findOne({
       _id: Accounts.userId()
@@ -41,7 +43,7 @@ class Profile extends Component {
     return (
       <div className={c(styles.container, "container-fluid")}>
         <Paper className={styles.segment}>
-          <DashboardHeader label={t("profile.about")} />
+          <Header label={t("profile.about")} />
           <div className={styles.innerContainer}>
             <ProfileAboutForm
               initialValues={{
@@ -52,7 +54,7 @@ class Profile extends Component {
           </div>
         </Paper>
         <Paper className={styles.segment}>
-          <DashboardHeader label={t("accountsUI.changePassword")} />
+          <Header label={t("accountsUI.changePassword")} />
           <div className={styles.innerContainer}>
             <ChangePasswordForm
               // initialValues={{
@@ -63,13 +65,13 @@ class Profile extends Component {
           </div>
         </Paper>
         <Paper className={styles.segment}>
-          <DashboardHeader label={t("accountsUI.yourOrders")} />
+          <Header label={t("accountsUI.yourOrders")} />
           <div className={styles.innerContainer}>
-            {"TODO: implement this component"}
+            <OrderList orders={orders} />
           </div>
         </Paper>
         <Paper className={styles.segment}>
-          <DashboardHeader label={t("accountsUI.addressBook")} />
+          <Header label={t("accountsUI.addressBook")} />
           <div className={styles.innerContainer}>
             <AddressBookContainer />
           </div>
@@ -80,6 +82,7 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
+  orders: PropTypes.arrayOf(PropTypes.object),
   profileActions: PropTypes.shape({
     changePassword: PropTypes.func,
     changeProfileFields: PropTypes.func

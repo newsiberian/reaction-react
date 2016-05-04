@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { replace } from "react-router-redux";
 import Profile from "../components/profile/Profile";
+import Loading from "../../layout/components/Loading.jsx";
 import * as profileActions from "../actions/profile";
 
 // const ProfileContainer = props => <Profile {...props} />;
@@ -64,8 +65,8 @@ function composer(props, onData) {
     }, {
       sort: {
         createdAt: -1
-      },
-      limit: 25 // TODO why limited?
+      }// ,
+      // limit: 25 // TODO why limited?
     }).fetch();
 
     onData(null, { orders });
@@ -73,7 +74,8 @@ function composer(props, onData) {
 }
 
 const ProfileContainerWithData = composeWithTracker(
-  composer
+  composer,
+  Loading
 )(ProfileContainer);
 
 export default connect(
