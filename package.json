@@ -5,7 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "accounting-js": "^1.1.1",
-    "draft-js": "^0.6.0",
+    "draft-js": "^0.7.0",
     "griddle-react": "^0.5.1",
     "history": "^2.1.1",
     "i18next": "^2.5.1",
