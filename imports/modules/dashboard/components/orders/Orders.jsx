@@ -12,6 +12,7 @@ import { moment } from "meteor/momentjs:moment";
 import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
 import OrderSummary from "./OrderSummary.jsx";
 import OrderItemsContainer from "../../containers/OrderItemsContainer.jsx";
+import OrderNotes from "./OrderNotes.jsx";
 
 const styles = {
   base: {
@@ -40,7 +41,7 @@ const orderFilters = [{
 class Orders extends Component {
   render() {
     const {
-      getCount, layoutSettingsActions, locale, orders, ordersActions, t
+      getCount, layoutSettingsActions, locale, note, orders, ordersActions, t
     } = this.props;
     return (
       <div style={layoutStyles.parent}>
@@ -92,6 +93,14 @@ class Orders extends Component {
                           </div>
                         </div>
 
+                        {/* Order notes */}
+                        <Divider />
+                        <OrderNotes
+                          note={note}
+                          order={order}
+                          ordersActions={ordersActions}
+                        />
+
                         <Divider />
                         {/* Order items list */}
                         <div className="row" style={styles.row}>
@@ -131,10 +140,15 @@ Orders.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   location: PropTypes.object.isRequired,
+  note: PropTypes.shape({
+    isChanged: PropTypes.bool
+  }),
   orders: PropTypes.arrayOf(PropTypes.object),
   ordersActions: PropTypes.shape({
     changeOrdersFilter: PropTypes.func,
-    startOrderProcessing: PropTypes.func
+    startOrderProcessing: PropTypes.func,
+    updateOrderNote: PropTypes.func,
+    rollbackOrderState: PropTypes.func
   }).isRequired,
   t: PropTypes.func.isRequired
 };

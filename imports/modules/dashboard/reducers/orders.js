@@ -21,7 +21,23 @@ const trackingEdit = (state = { visible: false }, action) => {
   }
 };
 
+export default function note(state = { isChanged: false }, action) {
+  switch (action.type) {
+  case types.UPDATE_ORDER_NOTE:
+    return Object.assign({}, state, {
+      isChanged: true
+    });
+  case types.ROLLBACK_ORDER_NOTE_STATE:
+    return Object.assign({}, state, {
+      isChanged: false
+    });
+  default:
+    return state;
+  }
+}
+
 export default combineReducers({
   filter,
+  note,
   trackingEdit
 });

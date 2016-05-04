@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as ordersActions from "../actions/orders";
+import * as checkoutActions from "../../checkout/actions/checkout";
 import { routerActions } from "react-router-redux";
 import Loading from "../../layout/components/Loading.jsx";
 import Orders from "../components/orders/Orders.jsx";
@@ -103,10 +104,15 @@ OrdersContainer.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   location: PropTypes.object,
+  note: PropTypes.shape({
+    isChanged: PropTypes.bool
+  }),
   orders: PropTypes.arrayOf(PropTypes.object),
   ordersActions: PropTypes.shape({
     changeOrdersFilter: PropTypes.func,
-    startOrderProcessing: PropTypes.func
+    startOrderProcessing: PropTypes.func,
+    updateOrderNote: PropTypes.func,
+    rollbackOrderState: PropTypes.func
   }).isRequired,
   routerActions: PropTypes.shape({
     push: PropTypes.func
@@ -116,7 +122,8 @@ OrdersContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     locale: state.layout.locale,
-    filter: state.dashboard.orders.filter
+    filter: state.dashboard.orders.filter,
+    note: state.dashboard.orders.note
   };
 }
 

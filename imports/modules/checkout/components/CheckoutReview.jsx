@@ -56,10 +56,6 @@ const rowHeight = {
 };
 
 class CheckoutReview extends Component {
-  handleChange(event) {
-    this.props.checkoutActions.changeCartNote(event.target.value);
-  }
-
   handleBlur(event) {
     const content = event.target.value;
     if (content !== "") {
@@ -249,7 +245,6 @@ CheckoutReview.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   note: PropTypes.shape({
-    content: PropTypes.string,
     isChanged: PropTypes.bool
   }),
   t: PropTypes.func

@@ -114,7 +114,11 @@
         "delete": "Удалить"
       },
       "orders": {
-        "start": "В работу"
+        "start": "В работу",
+        "customerNotes": "Заметка покупателя",
+        "managerNotes": "Заметка администратора",
+        "noteToOrder": "Заметка к заказу",
+        "noteToOrderPlaceholder": "Будет видима только в админке"
       },
       "errors": {
         "somethingWentWrong": "Что-то пошло не так: {{err}}",

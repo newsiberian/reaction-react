@@ -67,7 +67,6 @@ CheckoutContainer.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   note: PropTypes.shape({
-    content: PropTypes.string,
     isChanged: PropTypes.bool
   })
 };

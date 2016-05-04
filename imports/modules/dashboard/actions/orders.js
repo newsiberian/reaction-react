@@ -1,5 +1,6 @@
 import * as types from "../constants";
 import { displayAlert } from "../../layout/actions/alert";
+import * as orderMethods from "../../../api/orders/methods";
 import i18next from "i18next";
 
 export const changeOrdersFilter = filter =>
@@ -165,4 +166,22 @@ export const sendNotification = order => {
       }
     });
   };
+};
+
+export const updateOrderNote = content => {
+  return dispatch => {
+    orderMethods.updateOrderNotes.call({ content }, (err, res) => {
+      if (err) {
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+      }
+      if (res) {
+        dispatch({ type: types.UPDATE_ORDER_NOTE, content });
+      }
+    });
+  };
+};
+
+// this needed to rollback `isChanged` field state to remove animation effect
+export const rollbackOrderState = () => {
+  return { type: types.ROLLBACK_ORDER_NOTE_STATE };
 };

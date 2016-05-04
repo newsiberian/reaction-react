@@ -114,7 +114,11 @@
         "delete": "Delete"
       },
       "orders": {
-        "start": "Start"
+        "start": "Start",
+        "customerNotes": "Customer Notes",
+        "managerNotes": "Manager Notes",
+        "noteToOrder": "Note to Order",
+        "noteToOrderPlaceholder": "Will be visible only in dashboard"
       },
       "errors": {
         "somethingWentWrong": "Something went wrong: {{err}}",

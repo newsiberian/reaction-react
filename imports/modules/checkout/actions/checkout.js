@@ -102,9 +102,9 @@ export const addOrderEmail = (cartId, email) => {
   };
 };
 
-export const changeCartNote = content => {
-  return { type: types.CHANGE_CART_NOTE, content };
-};
+// export const changeCartNote = content => {
+//   return { type: types.CHANGE_CART_NOTE, content };
+// };
 
 export const updateCartNote = content => {
   return dispatch => {
