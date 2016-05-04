@@ -40,9 +40,10 @@ const adminNoteStyles = StyleSheet.create({
 
 class OrderNotes extends Component {
   handleBlur(event) {
+    const { order, ordersActions } = this.props;
     const content = event.target.value;
     if (content !== "") {
-      this.props.ordersActions.updateOrderNote(content);
+      ordersActions.updateOrderNote(order._id, content);
     }
   }
 
@@ -55,6 +56,9 @@ class OrderNotes extends Component {
   render() {
     const { order, t } = this.props;
     // findIndex returns -1 of nothing was found, we are using this
+    // FIXME: we have a bug here. Then admin update a note, for the first time,
+    // looks like in minimongo only order.userId changes to admin userId, in
+    // a next second all goes back.
     const customerNoteIndex = order.notes && order.notes.length ?
       order.notes.findIndex(note => note.userId === order.userId) : -1;
     const adminNoteIndex = order.notes && order.notes.length ?
@@ -74,7 +78,7 @@ class OrderNotes extends Component {
           <div className={adminNoteStyles.onChange}>
             <TextField
               hintText={t("orders.noteToOrderPlaceholder")}
-              floatingLabelText={t("orders.noteToOrder")}
+              // floatingLabelText={t("orders.noteToOrder")}
               multiLine={true}
               fullWidth={true}
               defaultValue={adminNoteContent}

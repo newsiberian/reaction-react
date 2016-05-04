@@ -10,10 +10,9 @@ export const updateOrderNotes = new ValidatedMethod({
   name: "updateOrderNotes",
   validate: new SimpleSchema({
     orderId: { type: String },
-    content: { type: String },
-    userId: { type: String }
+    content: { type: String }
   }).validator(),
-  run({ orderId, content, userId }) {
+  run({ orderId, content }) {
     if (!ReactionCore.hasPermission("orders")) {
       throw new Meteor.Error(403, "Access Denied");
     }
@@ -25,7 +24,7 @@ export const updateOrderNotes = new ValidatedMethod({
         notes: {
           _id: Random.id(),
           content,
-          userId: userId,
+          userId: this.userId,
           createdAt: new Date
         }
       }

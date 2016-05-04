@@ -168,14 +168,14 @@ export const sendNotification = order => {
   };
 };
 
-export const updateOrderNote = content => {
+export const updateOrderNote = (orderId, content) => {
   return dispatch => {
-    orderMethods.updateOrderNotes.call({ content }, (err, res) => {
+    orderMethods.updateOrderNotes.call({ orderId, content }, (err, res) => {
       if (err) {
         dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
       if (res) {
-        dispatch({ type: types.UPDATE_ORDER_NOTE, content });
+        dispatch({ type: types.UPDATE_ORDER_NOTE, orderId, content });
       }
     });
   };
