@@ -11,7 +11,7 @@ import DashboardHeader from "../DashboardHeader.jsx";
 import { layoutStyles } from "../../../layout/styles/layout";
 import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
 import OrderSummary from "./OrderSummary.jsx";
-import OrderItemsContainer from "../../containers/OrderItemsContainer.jsx";
+import OrderItemContainer from "../../containers/OrderItemContainer.jsx";
 import OrderNotes from "./OrderNotes.jsx";
 
 const styles = {
@@ -88,8 +88,12 @@ class Orders extends Component {
                               />
                             }
                           </div>
-                          <div className="col-xs-12 col-sm-3">
-                            <OrderSummary order={order} locale={locale} />
+                          <div className="col-xs-12 col-sm-3" style={styles.summary}>
+                            <OrderSummary
+                              order={order}
+                              locale={locale}
+                              float="right"
+                            />
                           </div>
                         </div>
 
@@ -105,7 +109,7 @@ class Orders extends Component {
                         {/* Order items list */}
                         <div className="row" style={styles.row}>
                           {order.items && order.items.map(item => (
-                            <OrderItemsContainer key={item._id} item={item} locale={locale} />
+                            <OrderItemContainer key={item._id} item={item} locale={locale} />
                           ))}
                         </div>
                       </Paper>

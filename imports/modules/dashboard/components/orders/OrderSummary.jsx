@@ -2,9 +2,9 @@ import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
 import { formatPrice } from "../../../../client/helpers/i18n";
 
-const OrderSummary = ({ locale, order, t }) => {
+const OrderSummary = ({ float, locale, order, t }) => {
   return (
-    <div style={{ float: "right" }}>
+    <div style={{float: float}}>
       {Boolean(order.billing && order.billing.length) && order.billing.map(billing => (
         <table
           key={billing._id}
@@ -32,6 +32,7 @@ const OrderSummary = ({ locale, order, t }) => {
 };
 
 OrderSummary.propTypes = {
+  float: PropTypes.string.isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
     language: PropTypes.string,

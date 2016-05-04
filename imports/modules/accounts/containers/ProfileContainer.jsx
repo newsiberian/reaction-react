@@ -37,6 +37,12 @@ class ProfileContainer extends Component {
 }
 
 ProfileContainer.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   location: PropTypes.object.isRequired, // for permission check
   orders: PropTypes.arrayOf(PropTypes.object),
   profileActions: PropTypes.shape({
@@ -47,7 +53,9 @@ ProfileContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    locale: state.layout.locale
+  };
 }
 
 function mapDispatchToProps(dispatch) {

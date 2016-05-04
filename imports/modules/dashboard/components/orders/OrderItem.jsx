@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from "react";
-import { translate } from "react-i18next";
 import { StyleSheet } from "react-look";
 import { formatPrice } from "../../../../client/helpers/i18n";
-// import Avatar from "material-ui/Avatar";
 import Badge from "../../../layout/components/Badge.jsx";
 
 const c = StyleSheet.combineStyles;
@@ -18,9 +16,9 @@ const styles = StyleSheet.create({
   price: { textAlign: "right" }
 });
 
-class OrderItems extends Component {
+class OrderItem extends Component {
   render() {
-    const { item, locale, media, t } = this.props;
+    const { item, locale, media } = this.props;
     return (
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div className={c("row", styles.container)}>
@@ -45,7 +43,7 @@ class OrderItems extends Component {
   }
 }
 
-OrderItems.propTypes = {
+OrderItem.propTypes = {
   item: PropTypes.object.isRequired,
   locale: PropTypes.shape({
     currency: PropTypes.object,
@@ -53,8 +51,7 @@ OrderItems.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired,
-  media: PropTypes.instanceOf(FS.File),
-  t: PropTypes.func
+  media: PropTypes.instanceOf(FS.File)
 };
 
-export default translate("core")(OrderItems);
+export default OrderItem;

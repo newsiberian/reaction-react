@@ -4,6 +4,8 @@ import { moment } from "meteor/momentjs:moment";
 import Divider from "material-ui/Divider";
 import Paper from "material-ui/Paper";
 import Subheader from "material-ui/Subheader";
+import OrderItemContainer from "../../../dashboard/containers/OrderItemContainer.jsx";
+import OrderSummary from "../../../dashboard/components/orders/OrderSummary.jsx";
 
 const styles = {
   base: {
@@ -12,18 +14,23 @@ const styles = {
   },
   item: {
     marginTop: "1rem",
-    marginBottom: "1rem",
-    cursor: "pointer"
+    marginBottom: "1rem"
   },
   row: {
     margin: 0,
-    padding: "0.5rem"
+    padding: "0.5rem 1rem 0.5rem 1rem"
+  },
+  infoContainer: {
+    padding: "1rem"
+  },
+  summary: {
+    padding: "0.5rem 0.5rem 0.5rem 1rem"
   }
 };
 
 class OrdersList extends Component {
   render() {
-    const { orders, t } = this.props;
+    const { locale, orders, t } = this.props;
     return (
       <div>
         {orders.length ? orders.map(order => (
@@ -37,7 +44,7 @@ class OrdersList extends Component {
             <Divider />
 
             {/* Order basic info */}
-            <div>
+            <div style={styles.infoContainer}>
               <div className="row">
                 <div className="col-xs-6 col-sm-2">
                   <b>{t("order.status")}</b>
@@ -103,6 +110,19 @@ class OrdersList extends Component {
               </div>
             </div>
             <Divider />
+
+            {/* Order items list */}
+            <div className="row" style={styles.row}>
+              {order.items && order.items.map(item => (
+                <OrderItemContainer key={item._id} item={item} locale={locale} />
+              ))}
+            </div>
+            <Divider />
+
+            {/* Order summary */}
+            <div style={styles.summary}>
+              <OrderSummary order={order} locale={locale} float="none" />
+            </div>
           </Paper>
         )) :
           t("cartCompleted.noOrdersFound")
@@ -113,6 +133,12 @@ class OrdersList extends Component {
 }
 
 OrdersList.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   orders: PropTypes.arrayOf(PropTypes.object),
   t: PropTypes.func
 };

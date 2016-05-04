@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 class Profile extends Component {
   render() {
-    const { orders, profileActions, t } = this.props;
+    const { locale, orders, profileActions, t } = this.props;
     // this won't be reactive. It's ok.
     const account = ReactionCore.Collections.Accounts.findOne({
       _id: Accounts.userId()
@@ -67,7 +67,7 @@ class Profile extends Component {
         <Paper className={styles.segment}>
           <Header label={t("accountsUI.yourOrders")} />
           <div className={styles.innerContainer}>
-            <OrderList orders={orders} />
+            <OrderList orders={orders} locale={locale} />
           </div>
         </Paper>
         <Paper className={styles.segment}>
@@ -82,6 +82,12 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
+  locale: PropTypes.shape({
+    currency: PropTypes.object,
+    language: PropTypes.string,
+    locale: PropTypes.object,
+    shopCurrency: PropTypes.object
+  }).isRequired,
   orders: PropTypes.arrayOf(PropTypes.object),
   profileActions: PropTypes.shape({
     changePassword: PropTypes.func,
