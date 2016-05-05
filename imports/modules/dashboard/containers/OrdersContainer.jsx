@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import * as ordersActions from "../actions/orders";
-import * as checkoutActions from "../../checkout/actions/checkout";
 import { routerActions } from "react-router-redux";
 import Loading from "../../layout/components/Loading.jsx";
 import Orders from "../components/orders/Orders.jsx";

@@ -16,7 +16,7 @@ import Management from "../components/accounts/Management.jsx";
  * @classdesc
  */
 class AccountsManagementContainer extends Component {
-  componentDidMount() {
+  componentWillMount() {
     // we already have this check within router, but this is sensitive place,
     // so we check again
     if (!ReactionCore.hasPermission("accounts")) {

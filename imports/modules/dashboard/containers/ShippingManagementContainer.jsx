@@ -11,6 +11,18 @@ import Loading from "../../layout/components/Loading.jsx";
 import Management from "../components/shipping/Management.jsx";
 
 class ShippingManagementContainer extends Component {
+  componentWillMount() {
+    // we already have this check within router, but this is sensitive place,
+    // so we check again
+    if (!ReactionCore.hasPermission("shipping")) {
+      // redirect if no permission
+      this.props.routerActions.push({
+        pathname: "/unauthorized",
+        state: { prevPath: this.props.location.pathname }
+      });
+    }
+  }
+
   render() {
     return (
       <Management {...this.props} />
@@ -19,13 +31,6 @@ class ShippingManagementContainer extends Component {
 }
 
 ShippingManagementContainer.propTypes = {
-  shippingActions: PropTypes.shape({
-    addShippingMethod: PropTypes.func,
-    deleteShippingMethod: PropTypes.func,
-    editShippingMethod: PropTypes.func,
-    removeShippingProvider: PropTypes.func
-  }).isRequired,
-  shippingProviders: PropTypes.arrayOf(PropTypes.object),
   layoutSettingsActions: PropTypes.shape({
     openSettings: PropTypes.func,
     closeSettings: PropTypes.func
@@ -35,7 +40,18 @@ ShippingManagementContainer.propTypes = {
     language: PropTypes.string,
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
-  }).isRequired
+  }).isRequired,
+  location: PropTypes.object,
+  routerActions: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired,
+  shippingActions: PropTypes.shape({
+    addShippingMethod: PropTypes.func,
+    deleteShippingMethod: PropTypes.func,
+    editShippingMethod: PropTypes.func,
+    removeShippingProvider: PropTypes.func
+  }).isRequired,
+  shippingProviders: PropTypes.arrayOf(PropTypes.object)
 };
 
 function mapStateToProps(state) {
@@ -57,7 +73,7 @@ function composer(props, onData) {
   if (handle.ready()) {
     const shippingProviders = ReactionCore.Collections.Shipping.find({
       shopId: ReactionCore.getShopId()
-    });
+    }).fetch();
     onData(null, { shippingProviders });
   }
 }

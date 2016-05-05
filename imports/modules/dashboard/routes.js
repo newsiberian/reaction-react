@@ -5,6 +5,7 @@ import DashboardGridContainer from "./containers/DashboardGridContainer.jsx";
 import AccountsManagementContainer from "./containers/AccountsManagementContainer.jsx";
 import OrdersContainer from "./containers/OrdersContainer.jsx";
 import CommentsManagementContainer from "./containers/CommentsManagementContainer.jsx";
+import ShippingManagementContainer from "./containers/ShippingManagementContainer.jsx";
 
 // People sais this is not reactive, so we implement the same but in component's
 // lifecycle methods
@@ -39,6 +40,10 @@ export default {
     {
       path: "comments",
       component: CommentsManagementContainer
+    },
+    {
+      path: "shipping",
+      component: ShippingManagementContainer
     }
   ]
 };

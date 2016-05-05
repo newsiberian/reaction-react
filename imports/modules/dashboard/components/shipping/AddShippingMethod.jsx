@@ -2,12 +2,12 @@ import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
-import AddShippingMethodForm from "./AddShippingMethodForm.jsx";
+import MethodForm from "./MethodForm.jsx";
 
 const AddShippingMethod = ({ shippingActions }) => (
   <div>
     <h3>{provider.name}</h3>
-    <AddShippingMethodForm
+    <MethodForm
       onSubmit={shippingActions.addShippingMethod}
     />
   </div>

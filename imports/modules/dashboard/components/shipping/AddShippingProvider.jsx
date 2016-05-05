@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
