@@ -47,7 +47,7 @@ class Profile extends Component {
           <div className={styles.innerContainer}>
             <ProfileAboutForm
               initialValues={{
-                name: account.profile ? account.profile.name : null
+                name: account.profile && account.profile.name
               }}
               onSubmit={profileActions.changeProfileFields}
             />
@@ -56,12 +56,7 @@ class Profile extends Component {
         <Paper className={styles.segment}>
           <Header label={t("accountsUI.changePassword")} />
           <div className={styles.innerContainer}>
-            <ChangePasswordForm
-              // initialValues={{
-              //   name: account.profile ? account.profile.name : null
-              // }}
-              onSubmit={profileActions.changePassword}
-            />
+            <ChangePasswordForm onSubmit={profileActions.changePassword} />
           </div>
         </Paper>
         <Paper className={styles.segment}>

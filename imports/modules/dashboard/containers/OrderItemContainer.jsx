@@ -20,8 +20,8 @@ function composer(props, onData) {
   // const handle = Meteor.subscribe("Media", props.userId);
 
   // if (handle.ready()) {
-    const media = getMedia(props.item);
-    onData(null, { media });
+  const media = getMedia(props.item);
+  onData(null, { media });
   // }
 }
 

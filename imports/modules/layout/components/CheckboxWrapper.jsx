@@ -10,7 +10,7 @@ import Checkbox from "material-ui/Checkbox";
  */
 const CheckboxWrapper = props => {
   const newProps = Object.assign({}, props, {
-    value: null,
+    value: "",
     checked: Boolean(props.value), // value is a string, but we need boolean
     onCheck: (e, checked) => props.onChange(checked)
   });

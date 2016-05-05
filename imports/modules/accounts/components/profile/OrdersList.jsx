@@ -98,7 +98,7 @@ class OrdersList extends Component {
                       <div key={index}>
                         {billing.paymentMethod.storedCard ?
                           billing.paymentMethod.storedCard + " " +
-                          t("cartCompleted.reference") + " " +
+                          t("order.reference") + " " +
                           billing.paymentMethod.transactionId +
                           <br /> :
                           <span>{"-"}</span>
