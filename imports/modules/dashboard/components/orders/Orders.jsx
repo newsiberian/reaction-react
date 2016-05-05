@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
 import { moment } from "meteor/momentjs:moment";
+import Helmet from "react-helmet";
 import Paper from "material-ui/Paper";
 import FontIcon from "material-ui/FontIcon";
 import RaisedButton from "material-ui/RaisedButton";
 import Divider from "material-ui/Divider";
 import { Tabs, Tab } from "material-ui/Tabs";
 import DashboardHeader from "../DashboardHeader.jsx";
-// import { ReactionCore } from "meteor/reactioncommerce:core";
+import { ReactionCore } from "meteor/reactioncommerce:core";
 import { layoutStyles } from "../../../layout/styles/layout";
 import OrderDetailsContainer from "../../containers/OrderDetailsContainer.jsx";
 import OrderSummary from "./OrderSummary.jsx";
@@ -45,6 +46,15 @@ class Orders extends Component {
     } = this.props;
     return (
       <div style={layoutStyles.parent}>
+        {/* Headers */}
+        <Helmet
+          title={t("admin.dashboard.ordersLabel")}
+          titleTemplate={`${ReactionCore.getShopName()} • ${t("admin.dashboard.ordersLabel")}`}
+          meta={[
+            {charset: "utf-8"}
+          ]}
+        />
+
         <section style={layoutStyles.section}>
           {/* header section */}
           <DashboardHeader label={t("admin.dashboard.ordersLabel")} />
