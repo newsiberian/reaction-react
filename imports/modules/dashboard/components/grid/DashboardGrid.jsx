@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { translate } from "react-i18next";
+import Helmet from "react-helmet";
 import Divider from "material-ui/Divider";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import Package from "./Package.jsx";
@@ -50,6 +51,15 @@ class DashboardGrid extends Component {
     console.log("DashboardGrid rendering...");
     return (
       <div style={layoutStyles.parent}>
+        {/* Headers */}
+        <Helmet
+          title={t("app.settings")}
+          titleTemplate={`${ReactionCore.getShopName()} • ${t("app.settings")}`}
+          meta={[
+            {charset: "utf-8"}
+          ]}
+        />
+        
         <section style={layoutStyles.section}>
           {/* header section */}
           <DashboardHeader label={t("app.settings")} />
