@@ -4,24 +4,30 @@ import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import MethodForm from "./MethodForm.jsx";
 
-const AddShippingMethod = ({ shippingActions }) => (
+const AddShippingMethod = ({ payload, shippingActions }) => (
   <div>
-    <h3>{provider.name}</h3>
     <MethodForm
-      onSubmit={shippingActions.addShippingMethod}
+      onSubmit={values => shippingActions.addShippingMethod(payload.providerId, values)}
     />
   </div>
 );
 
 AddShippingMethod.propTypes = {
+  layoutSettingsActions: PropTypes.shape({
+    openSettings: PropTypes.func,
+    closeSettings: PropTypes.func
+  }).isRequired,
+  payload: PropTypes.shape({
+    providerId: PropTypes.string
+  }).isRequired,
   shippingActions: PropTypes.shape({
     addShippingMethod: PropTypes.func
   }).isRequired
 };
 
 const options = {
-  title: "admin.settings.editShippingProviderLabel"
+  title: "shipping.addShippingMethod"
 };
 
 // translate needed to pass `t` to `ActionBarWrapper`
-export default translate("core")(ActionBarWrapper(EditShippingProvider, options));
+export default translate("core")(ActionBarWrapper(AddShippingMethod, options));

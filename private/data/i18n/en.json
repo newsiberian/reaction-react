@@ -5,7 +5,8 @@
   "translation": {
     "reaction-react": {
       "controls": {
-        "edit": "Edit"
+        "edit": "Edit",
+        "update": "Update"
       },
       "pageTitles": {
         "checkout": "Checkout",
@@ -102,16 +103,9 @@
         "askForEmail": "Hello. Please leave your email, so that you can be contacted while ordering, as well as to obtain information on the status of the order."
       },
       "shipping": {
-        "name": "Name",
-        "label": "Label",
-        "group": "Group",
-        "cost": "Cost",
-        "handling": "Handling",
-        "rate": "Rate",
-        "enabled": "Enabled",
-        "addShippingMethod": "Add Shipping Method",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "removeShippingProvider": "Remove Shipping Provider?"
       },
       "orders": {
         "start": "Start",

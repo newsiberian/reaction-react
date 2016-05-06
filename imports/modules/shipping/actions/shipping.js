@@ -3,7 +3,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { Meteor } from "meteor/meteor";
 import { displayAlert } from "../../layout/actions/alert";
 import { closeSettings } from "../../layout/actions/settings";
-// import i18next from "i18next";
+import i18next from "i18next";
 
 export const setShipmentMethod = (selectedIndex, method) => {
   const cart = ReactionCore.Collections.Cart.findOne();
@@ -53,9 +53,9 @@ export const addShippingMethod = (providerId, method) => {
   };
 };
 
-export const editShippingMethod = (providerId, origMethod, updatedMethod) => {
+export const updateShippingMethod = (providerId, methodId, updatedMethod) => {
   return dispatch => {
-    Meteor.call("updateShippingMethods", providerId, origMethod, updatedMethod, (err, res) => {
+    Meteor.call("updateShippingMethods", providerId, methodId, updatedMethod, (err, res) => {
       if (err) {
         dispatch(displayAlert({
           message: i18next.t("errors.somethingWentWrong",
@@ -63,7 +63,7 @@ export const editShippingMethod = (providerId, origMethod, updatedMethod) => {
         }));
       }
       if (res) {
-        dispatch({ type: types.EDIT_SHIPPING_METHOD, providerId, methodId: updatedMethod._id });
+        dispatch({ type: types.EDIT_SHIPPING_METHOD, providerId, methodId });
       }
     });
   };
@@ -71,48 +71,55 @@ export const editShippingMethod = (providerId, origMethod, updatedMethod) => {
 
 export const deleteShippingMethod = (providerId, method) => {
   return dispatch => {
-    Meteor.call("removeShippingMethod", providerId, method, (err, res) => {
-      if (err) {
-        dispatch(displayAlert({
-          message: i18next.t("errors.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-        }));
-      }
-      if (res) {
-        dispatch({ type: types.DELETE_SHIPPING_METHOD, providerId });
-      }
-    });
+    if (confirm(i18next.t("shipping.removeShippingMethod", { method: method.name }))) {
+      Meteor.call("removeShippingMethod", providerId, method, (err, res) => {
+        if (err) {
+          dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+        }
+        if (res) {
+          dispatch(displayAlert({ message: i18next.t("shipping.shippingMethodDeleted") }));
+          dispatch({ type: types.DELETE_SHIPPING_METHOD, providerId });
+        }
+      });
+    }
   };
 };
 
 export const updateShippingProvider = (providerId, values) => {
   return dispatch => {
-    Meteor.call("updateShippingProvider", values, providerId, (err, res) => {
+    const update = {
+      $set: {
+        "provider.name": values.name,
+        "provider.label": values.label,
+        "provider.enabled": values.enabled
+      }
+    };
+    Meteor.call("updateShippingProvider", update, providerId, (err, res) => {
       if (err) {
-        dispatch(displayAlert({
-          message: i18next.t("errors.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-        }));
+        dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
       if (res) {
         dispatch({ type: types.UPDATE_SHIPPING_PROVIDER, providerId });
+        dispatch(displayAlert({ message: i18next.t("shipping.shippingProviderUpdated") }));
       }
     });
   };
 };
 
-export const removeShippingProvider = providerId => {
-  return dispatch => {
-    Meteor.call("removeShippingProvider", providerId, (err, res) => {
-      if (err) {
-        dispatch(displayAlert({
-          message: i18next.t("errors.somethingWentWrong",
-            { err: err.reason ? err.reason : err.message, ns: "reaction-react" })
-        }));
-      }
-      if (res) {
-        dispatch({ type: types.REMOVE_SHIPPING_PROVIDER, providerId });
-      }
-    });
-  };
-};
+// don't know it is allowed to remove provider - provider is a package itself
+
+// export const removeShippingProvider = providerId => {
+//   return dispatch => {
+//     if (confirm(i18next.t("shipping.removeShippingProvider"))) {
+//       Meteor.call("removeShippingProvider", providerId, (err, res) => {
+//         if (err) {
+//           dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
+//         }
+//         if (res) {
+//           dispatch({ type: types.REMOVE_SHIPPING_PROVIDER, providerId });
+//           dispatch(displayAlert({ message: i18next.t("shipping.shippingProviderUpdated") }));
+//         }
+//       });
+//     };
+//   };
+// };

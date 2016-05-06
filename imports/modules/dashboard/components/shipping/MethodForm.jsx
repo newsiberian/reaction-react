@@ -4,7 +4,7 @@ import { reduxForm } from "redux-form";
 import i18next from "i18next";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
-import Toggle from "material-ui/Toggle";
+import ToggleWrapper from "../../../layout/components/ToggleWrapper.jsx";
 export const fields = [
   "name",
   "label",
@@ -36,11 +36,7 @@ const validate = values => {
     });
   }
 
-  if (!values.cost || !values.cost.trim()) {
-    errors.cost = i18next.t("error.isRequired", {
-      field: i18next.t("shipping.cost")
-    });
-  } else if (!Number.isInteger(+values.cost)) {
+  if (!Number.isFinite(+values.cost)) {
     errors.cost = i18next.t("error.mustBeNumber", {
       field: i18next.t("shipping.cost")
     });
@@ -48,11 +44,7 @@ const validate = values => {
     errors.cost = i18next.t("error.theValueMustNotBeNegative");
   }
 
-  if (!values.handling || !values.handling.trim()) {
-    errors.handling = i18next.t("error.isRequired", {
-      field: i18next.t("shipping.handling")
-    });
-  } else if (!Number.isInteger(+values.handling)) {
+  if (!Number.isFinite(+values.handling)) {
     errors.handling = i18next.t("error.mustBeNumber", {
       field: i18next.t("shipping.handling")
     });
@@ -60,11 +52,7 @@ const validate = values => {
     errors.handling = i18next.t("error.theValueMustNotBeNegative");
   }
 
-  if (!values.rate || !values.rate.trim()) {
-    errors.rate = i18next.t("error.isRequired", {
-      field: i18next.t("shipping.rate")
-    });
-  } else if (!Number.isInteger(+values.rate)) {
+  if (!Number.isFinite(+values.rate)) {
     errors.rate = i18next.t("error.mustBeNumber", {
       field: i18next.t("shipping.rate")
     });
@@ -115,12 +103,14 @@ class MethodForm extends Component {
           errorText={rate.touched && rate.error}
           type="number"
         />
-        <Toggle
-          {...enabled}
-          label={t("shipping.enabled")}
-        />
+        <div style={{paddingRight: 20, marginTop: "1rem", marginBottom: "1rem"}}>
+          <ToggleWrapper
+            {...enabled}
+            label={t("shipping.enabled")}
+          />
+        </div>
         <FlatButton
-          label={t("app.add")}
+          label={t("controls.update")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}

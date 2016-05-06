@@ -7,8 +7,8 @@ import NavigationClose from "material-ui/svg-icons/navigation/close";
 
 const styles = {
   base: {
-    //display: "flex",
-    //flexDirection: "column"
+    // display: "flex",
+    // flexDirection: "column"
   },
   header: {
     paddingLeft: "1rem",
@@ -18,6 +18,7 @@ const styles = {
     paddingRight: 4
   },
   title: {
+    fontSize: 19,
     maxWidth: 208 // this needed for cases when title is too long
   },
   group: {
@@ -32,7 +33,7 @@ const styles = {
 export const ActionBarWrapper = (ComposedComponent, options) =>
   class extends Component {
     render() {
-      const { layoutSettingsActions, handleSettingsClose, t } = this.props;
+      const { layoutSettingsActions, t } = this.props;
       return (
         <div style={styles.base}>
           <Toolbar style={styles.toolbar}>
@@ -43,7 +44,6 @@ export const ActionBarWrapper = (ComposedComponent, options) =>
             />
             <ToolbarGroup float="right" style={styles.group}>
               <IconButton
-                //onClick={() => handleSettingsClose()}
                 onClick={() => layoutSettingsActions.closeSettings()}
                 style={styles.closeButton}
               >

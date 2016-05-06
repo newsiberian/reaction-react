@@ -25,7 +25,7 @@ AddShippingProvider.propTypes = {
 };
 
 const options = {
-  title: "admin.settings.addShippingProviderLabel"
+  title: "shipping.addShippingProvider"
 };
 
 // translate needed to pass `t` to `ActionBarWrapper`

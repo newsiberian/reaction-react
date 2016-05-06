@@ -18,7 +18,6 @@ const CheckboxWrapper = props => {
 };
 
 CheckboxWrapper.propTypes = {
-  // children: PropTypes.node,
   onChange: PropTypes.func
 };
 

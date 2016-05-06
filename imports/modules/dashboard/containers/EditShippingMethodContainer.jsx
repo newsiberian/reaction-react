@@ -15,10 +15,10 @@ EditShippingMethodContainer.propTypes = {
   layoutSettingsActions: PropTypes.shape({
     closeSettings: PropTypes.func
   }).isRequired,
-  provider: PropTypes.object.isRequired,
+  method: PropTypes.object.isRequired,
   providerId: PropTypes.string.isRequired, // this is came from `payload`
   shippingActions: PropTypes.shape({
-    updateShippingProvider: PropTypes.func
+    updateShippingMethod: PropTypes.func
   }).isRequired
 };
 
@@ -37,9 +37,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const shippingProvider = ReactionCore.Collections.Shipping({ _id: props.providerId }).fetch();
-
-  onData(null, { shippingProvider });
+  const provider = ReactionCore.Collections.Shipping.findOne({
+    "_id": props.providerId,
+    "methods._id": props.methodId
+  }, { fields: { methods: 1 } });
+  if (provider.methods.length) {
+    const method = provider.methods.find(m => m._id === props.methodId);
+    onData(null, { method });
+  } else {
+    onData(null, {});
+  }
 }
 
 const EditShippingMethodContainerWithData = composeWithTracker(

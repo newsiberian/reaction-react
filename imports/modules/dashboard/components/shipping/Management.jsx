@@ -68,10 +68,11 @@ class Management extends Component {
                               }
                             })}
                           />
-                          <FlatButton
+                          {/* Maybe it we don't need to remove provider this way */}
+                          {/*<FlatButton
                             label={t("app.delete")}
-                            onTouchTap={() => shippingProviders.removeShippingProvider(provider._id)}
-                          />
+                            onTouchTap={() => shippingActions.removeShippingProvider(provider._id)}
+                          />*/}
                         </TableHeaderColumn>
                       </TableRow>
                       <TableRow>
@@ -101,17 +102,20 @@ class Management extends Component {
                           <TableRowColumn>{method.name}</TableRowColumn>
                           <TableRowColumn>{method.label}</TableRowColumn>
                           <TableRowColumn>{method.group}</TableRowColumn>
-                          <TableRowColumn>{formatPrice(method.cost || "0", locale)}</TableRowColumn>
-                          <TableRowColumn>{formatPrice(method.handling || "0", locale)}</TableRowColumn>
-                          <TableRowColumn>{formatPrice(method.rate || "0", locale)}</TableRowColumn>
+                          <TableRowColumn>{formatPrice(method.cost, locale)}</TableRowColumn>
+                          <TableRowColumn>{formatPrice(method.handling, locale)}</TableRowColumn>
+                          <TableRowColumn>{formatPrice(method.rate, locale)}</TableRowColumn>
                           <TableRowColumn>
-                            {method.enabled ? <ActionDone /> : <ContentClear />}
+                            {method.enabled ?
+                              <ActionDone title={t("shipping.enabled")} /> :
+                              <ContentClear title={t("shipping.disabled")} />
+                            }
                           </TableRowColumn>
                           <TableRowColumn>
                             <IconButton
                               tooltip={t("shipping.edit")}
                               onTouchTap={() => layoutSettingsActions.openSettings({
-                                name: "EditMethodProvider",
+                                name: "EditShippingMethod",
                                 payload: {
                                   providerId: provider._id,
                                   methodId: method._id
@@ -122,7 +126,8 @@ class Management extends Component {
                             </IconButton>
                             <IconButton
                               tooltip={t("shipping.delete")}
-                              onTouchTap={() => shippingActions.deleteShippingMethod(method._id)}
+                              onTouchTap={() =>
+                                shippingActions.deleteShippingMethod(provider._id, method)}
                             >
                               <ActionDeleteForever />
                             </IconButton>
@@ -157,8 +162,8 @@ Management.propTypes = {
     shopCurrency: PropTypes.object
   }).isRequired,
   shippingActions: PropTypes.shape({
-    deleteShippingMethod: PropTypes.func,
-    removeShippingProvider: PropTypes.func
+    deleteShippingMethod: PropTypes.func
+    // removeShippingProvider: PropTypes.func
   }).isRequired,
   shippingProviders: PropTypes.arrayOf(PropTypes.object),
   t: PropTypes.func

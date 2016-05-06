@@ -35,9 +35,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function composer(props, onData) {
-  const shippingProvider = ReactionCore.Collections.Shipping({ _id: props.providerId }).fetch();
-
-  onData(null, { shippingProvider });
+  const provider = ReactionCore.Collections.Shipping.findOne({
+    _id: props.providerId
+  });
+  onData(null, { provider });
 }
 
 const EditShippingProviderContainerWithData = composeWithTracker(

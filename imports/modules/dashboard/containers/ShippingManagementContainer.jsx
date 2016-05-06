@@ -46,10 +46,8 @@ ShippingManagementContainer.propTypes = {
     push: PropTypes.func
   }).isRequired,
   shippingActions: PropTypes.shape({
-    addShippingMethod: PropTypes.func,
-    deleteShippingMethod: PropTypes.func,
-    editShippingMethod: PropTypes.func,
-    removeShippingProvider: PropTypes.func
+    deleteShippingMethod: PropTypes.func
+    // removeShippingProvider: PropTypes.func
   }).isRequired,
   shippingProviders: PropTypes.arrayOf(PropTypes.object)
 };

@@ -59,7 +59,7 @@ class DashboardGrid extends Component {
             {charset: "utf-8"}
           ]}
         />
-        
+
         <section style={layoutStyles.section}>
           {/* header section */}
           <DashboardHeader label={t("app.settings")} />

@@ -1,35 +1,40 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
+import Subheader from "material-ui/Subheader";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import MethodForm from "./MethodForm.jsx";
 
-const EditShippingProvider = ({ provider, shippingActions }) => (
+const EditShippingMethod = ({ method, providerId, shippingActions }) => (
   <div>
-    <h3>{provider.name}</h3>
+    <Subheader>{method.name}</Subheader>
     <MethodForm
       initialValues={{
-        name: provider.name,
-        label: provider.label,
-        group: provider.group,
-        enabled: provider.enabled
+        name: method.name,
+        label: method.label,
+        group: method.group,
+        enabled: method.enabled,
+        cost: method.cost || 0,
+        handling: method.handling,
+        rate: method.rate
       }}
-      onSubmit={values => shippingActions.updateShippingProvider(provider._id, values)}
+      onSubmit={values => shippingActions.updateShippingMethod(providerId, method._id, values)}
     />
     {/* TODO: add least part of the logic here */}
   </div>
 );
 
-EditShippingProvider.propTypes = {
-  provider: PropTypes.object.isRequired,
+EditShippingMethod.propTypes = {
+  method: PropTypes.object.isRequired,
+  providerId: PropTypes.string.isRequired,
   shippingActions: PropTypes.shape({
-    updateShippingProvider: PropTypes.func
+    updateShippingMethod: PropTypes.func
   }).isRequired
 };
 
 const options = {
-  title: "admin.settings.editShippingProviderLabel"
+  title: "shipping.editShippingMethod"
 };
 
 // translate needed to pass `t` to `ActionBarWrapper`
-export default translate("core")(ActionBarWrapper(EditShippingProvider, options));
+export default translate("core")(ActionBarWrapper(EditShippingMethod, options));

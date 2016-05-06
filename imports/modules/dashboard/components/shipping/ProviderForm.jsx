@@ -4,7 +4,7 @@ import { reduxForm } from "redux-form";
 import i18next from "i18next";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
-import Toggle from "material-ui/Toggle";
+import ToggleWrapper from "../../../layout/components/ToggleWrapper.jsx";
 export const fields = [
   "name",
   "label",
@@ -38,18 +38,20 @@ class ProviderForm extends Component {
       <form onSubmit={handleSubmit} style={{ marginLeft: 20 }}>
         <TextField
           {...name}
-          floatingLabelText={t("shipping.name")}
+          floatingLabelText={t("shipping.provider.name")}
           errorText={name.touched && name.error}
         />
         <TextField
           {...label}
-          floatingLabelText={t("shipping.label")}
+          floatingLabelText={t("shipping.provider.label")}
           errorText={label.touched && label.error}
         />
-        <Toggle
-          {...enabled}
-          label={t("shipping.enabled")}
-        />
+        <div style={{paddingRight: 20, marginTop: "1rem", marginBottom: "1rem"}}>
+          <ToggleWrapper
+            {...enabled}
+            label={t("shipping.provider.enabled")}
+          />
+        </div>
         <FlatButton
           label={t("app.save")}
           primary={true}

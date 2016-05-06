@@ -1,17 +1,18 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
+import Subheader from "material-ui/Subheader";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import ProviderForm from "./ProviderForm.jsx";
 
 const EditShippingProvider = ({ provider, shippingActions }) => (
   <div>
-    <h3>{provider.name}</h3>
+    <Subheader>{provider.name}</Subheader>
     <ProviderForm
       initialValues={{
-        name: provider.name,
-        label: provider.label,
-        enabled: provider.enabled
+        name: provider.provider.name,
+        label: provider.provider.label,
+        enabled: provider.provider.enabled
       }}
       onSubmit={values => shippingActions.updateShippingProvider(provider._id, values)}
     />
@@ -26,7 +27,7 @@ EditShippingProvider.propTypes = {
 };
 
 const options = {
-  title: "admin.settings.editShippingProviderLabel"
+  title: "shipping.editShippingProvider"
 };
 
 // translate needed to pass `t` to `ActionBarWrapper`

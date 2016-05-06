@@ -60,6 +60,23 @@ components.registerComponent(
   "OrdersWorkflowContainer",
   require("../../dashboard/containers/OrdersWorkflowContainer").default
 );
+// Shipping
+components.registerComponent(
+  "AddShippingProvider",
+  require("../../dashboard/components/shipping/AddShippingProvider").default
+);
+components.registerComponent(
+  "EditShippingProvider",
+  require("../../dashboard/containers/EditShippingProviderContainer").default
+);
+components.registerComponent(
+  "AddShippingMethod",
+  require("../../dashboard/containers/AddShippingMethodContainer").default
+);
+components.registerComponent(
+  "EditShippingMethod",
+  require("../../dashboard/containers/EditShippingMethodContainer").default
+);
 
 function modifyRawTheme(muiTheme, newFontFamily) {
   const {
