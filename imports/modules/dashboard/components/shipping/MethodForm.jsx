@@ -40,7 +40,7 @@ const validate = values => {
     errors.cost = i18next.t("error.mustBeNumber", {
       field: i18next.t("shipping.cost")
     });
-  } else if (Number.isInteger(+values.cost) < 0) {
+  } else if (Number.isFinite(+values.cost) < 0) {
     errors.cost = i18next.t("error.theValueMustNotBeNegative");
   }
 
@@ -48,7 +48,7 @@ const validate = values => {
     errors.handling = i18next.t("error.mustBeNumber", {
       field: i18next.t("shipping.handling")
     });
-  } else if (Number.isInteger(+values.handling) < 0) {
+  } else if (Number.isFinite(+values.handling) < 0) {
     errors.handling = i18next.t("error.theValueMustNotBeNegative");
   }
 
@@ -56,7 +56,7 @@ const validate = values => {
     errors.rate = i18next.t("error.mustBeNumber", {
       field: i18next.t("shipping.rate")
     });
-  } else if (Number.isInteger(+values.rate) < 0) {
+  } else if (Number.isFinite(+values.rate) < 0) {
     errors.rate = i18next.t("error.theValueMustNotBeNegative");
   }
 

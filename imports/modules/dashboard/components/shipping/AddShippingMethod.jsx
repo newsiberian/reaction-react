@@ -7,6 +7,7 @@ import MethodForm from "./MethodForm.jsx";
 const AddShippingMethod = ({ payload, shippingActions }) => (
   <div>
     <MethodForm
+      initialValues={{enabled: true}}
       onSubmit={values => shippingActions.addShippingMethod(payload.providerId, values)}
     />
   </div>

@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as layoutSettingsActions from "../../layout/actions/settings";
+import * as shippingActions from "../../shipping/actions/shipping";
 import AddShippingMethod from "../components/shipping/AddShippingMethod.jsx";
 
 const AddShippingMethodContainer = props => <AddShippingMethod {...props} />;
@@ -26,7 +27,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch)
+    layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
+    shippingActions: bindActionCreators(shippingActions, dispatch)
   };
 }
 
