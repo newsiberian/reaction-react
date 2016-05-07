@@ -2,11 +2,11 @@ import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
-import MethodForm from "./MethodForm.jsx";
+import AddMethodForm from "./AddMethodForm.jsx";
 
 const AddShippingMethod = ({ payload, shippingActions }) => (
   <div>
-    <MethodForm
+    <AddMethodForm
       initialValues={{enabled: true}}
       onSubmit={values => shippingActions.addShippingMethod(payload.providerId, values)}
     />

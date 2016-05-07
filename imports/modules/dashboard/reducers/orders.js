@@ -21,10 +21,11 @@ const trackingEdit = (state = { visible: false }, action) => {
   }
 };
 
-export default function note(state = { isChanged: false }, action) {
+export default function note(state = { _id: null, isChanged: false }, action) {
   switch (action.type) {
   case types.UPDATE_ORDER_NOTE:
     return Object.assign({}, state, {
+      _id: action.noteId,
       isChanged: true
     });
   case types.ROLLBACK_ORDER_NOTE_STATE:

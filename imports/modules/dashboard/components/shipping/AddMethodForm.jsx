@@ -63,7 +63,7 @@ const validate = values => {
   return errors;
 };
 
-class MethodForm extends Component {
+class AddMethodForm extends Component {
   render() {
     const {
       fields: { name, label, group, enabled, cost, handling, rate }, handleSubmit, pristine, submitting, t
@@ -114,13 +114,14 @@ class MethodForm extends Component {
           primary={true}
           type="submit"
           disabled={pristine || submitting}
+          style={{ marginBottom: "1rem" }}
         />
       </form>
     );
   }
 }
 
-MethodForm.propTypes = {
+AddMethodForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
@@ -129,7 +130,7 @@ MethodForm.propTypes = {
 };
 
 export default translate(["core", "reaction-react"])(reduxForm({
-  form: "shippingMethodForm",
+  form: "shippingAddMethodForm",
   fields,
   validate
-})(MethodForm));
+})(AddMethodForm));

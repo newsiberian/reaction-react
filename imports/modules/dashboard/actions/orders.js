@@ -174,14 +174,14 @@ export const updateOrderNote = (orderId, content) => {
       if (err) {
         dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
       }
-      if (res) {
-        dispatch({ type: types.UPDATE_ORDER_NOTE, orderId, content });
+      if (res.result === 1) {
+        dispatch({ type: types.UPDATE_ORDER_NOTE, orderId, noteId: res.noteId, content });
       }
     });
   };
 };
 
 // this needed to rollback `isChanged` field state to remove animation effect
-export const rollbackOrderState = () => {
-  return { type: types.ROLLBACK_ORDER_NOTE_STATE };
+export const rollbackOrderState = _id => {
+  return { type: types.ROLLBACK_ORDER_NOTE_STATE, _id };
 };

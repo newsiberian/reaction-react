@@ -26,10 +26,11 @@ const styles = {
 const adminNoteStyles = StyleSheet.create({
   onChange: {
     backgroundColor: props => {
-      if (props.note.isChanged) {
+      if (props.note.isChanged && props.order.notes && props.order.notes.length &&
+        props.order.notes.some(note => note._id === props.note._id)) {
         // fires effect rollback
         setTimeout(() => {
-          props.ordersActions.rollbackOrderState();
+          props.ordersActions.rollbackOrderState(props.note._id);
         }, 400);
         return "#e2f2e2";
       }
@@ -39,6 +40,10 @@ const adminNoteStyles = StyleSheet.create({
 });
 
 class OrderNotes extends Component {
+  // shouldComponentUpdate(nextProps) {
+  //   return nextProps.note.isChanged !== this.props.note.isChanged;
+  // }
+
   handleBlur(event) {
     const { order, ordersActions } = this.props;
     const content = event.target.value;
@@ -65,6 +70,7 @@ class OrderNotes extends Component {
       order.notes.findIndex(note => note.userId !== order.userId) : -1;
     const adminNoteContent = adminNoteIndex !== -1 ? order.notes[adminNoteIndex].content : "";
 
+    // TODO: after note update order removing to the top of list because of updateAt
     return (
       <div className="row" style={{ margin: 0 }}>
         {customerNoteIndex !== -1 &&
@@ -97,6 +103,7 @@ class OrderNotes extends Component {
 
 OrderNotes.propTypes = {
   note: PropTypes.shape({
+    _id: PropTypes.string,
     isChanged: PropTypes.bool
   }),
   order: PropTypes.object.isRequired,

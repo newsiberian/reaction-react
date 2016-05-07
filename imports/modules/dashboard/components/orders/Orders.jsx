@@ -155,6 +155,7 @@ Orders.propTypes = {
   }).isRequired,
   location: PropTypes.object.isRequired,
   note: PropTypes.shape({
+    _id: PropTypes.string,
     isChanged: PropTypes.bool
   }),
   orders: PropTypes.arrayOf(PropTypes.object),

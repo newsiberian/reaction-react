@@ -104,6 +104,7 @@ OrdersContainer.propTypes = {
   }).isRequired,
   location: PropTypes.object,
   note: PropTypes.shape({
+    _id: PropTypes.string,
     isChanged: PropTypes.bool
   }),
   orders: PropTypes.arrayOf(PropTypes.object),
