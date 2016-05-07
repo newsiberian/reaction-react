@@ -29,7 +29,7 @@ class ValidRanges extends Component {
             <ActionDelete />
           </IconButton>
         </div>
-        <Divider />
+        <Divider style={{marginLeft: -20}} />
       </div>
     );
   }

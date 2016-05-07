@@ -9,6 +9,7 @@ import IconButton from "material-ui/IconButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import ToggleWrapper from "../../../layout/components/ToggleWrapper.jsx";
 import ValidRanges from "./ValidRanges.jsx";
+import ValidLocales from "./ValidLocales.jsx";
 export const fields = [
   "name",
   "label",
@@ -148,6 +149,29 @@ class EditMethodForm extends Component {
         }
 
         <Subheader style={styles.subheader}>{t("shippingMethod.matchingLocales")}</Subheader>
+        <IconButton
+          tooltip={t("shipping.addNewCondition")}
+          onTouchTap={() => validLocales.addField()}
+        >
+          <ContentAdd />
+        </IconButton>
+        {validLocales.length ? validLocales.map((validLocale, index) => (
+          <ValidLocales
+            key={index}
+            index={index}
+            {...validLocale}
+            validLocales={validLocales}
+          />
+        )) :
+          <ValidLocales
+            index={0}
+            origination={validLocales.origination}
+            destination={validLocales.destination}
+            deliveryBegin={validLocales.deliveryBegin}
+            deliveryEnd={validLocales.deliveryEnd}
+            validLocales={validLocales}
+          />
+        }
         <FlatButton
           label={t("app.save")}
           primary={true}
