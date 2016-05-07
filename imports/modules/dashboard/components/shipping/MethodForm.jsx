@@ -110,7 +110,7 @@ class MethodForm extends Component {
           />
         </div>
         <FlatButton
-          label={t("controls.update")}
+          label={t("app.save")}
           primary={true}
           type="submit"
           disabled={pristine || submitting}

@@ -1,11 +1,12 @@
 import React, { PropTypes } from "react";
 import { translate } from "react-i18next";
+import Divider from "material-ui/Divider";
 import Subheader from "material-ui/Subheader";
 import { ActionBarWrapper } from
   "../../../layout/components/ActionBarWrapper.jsx";
 import MethodForm from "./MethodForm.jsx";
 
-const EditShippingMethod = ({ method, providerId, shippingActions }) => (
+const EditShippingMethod = ({ method, providerId, shippingActions, t }) => (
   <div>
     <Subheader>{method.name}</Subheader>
     <MethodForm
@@ -20,6 +21,8 @@ const EditShippingMethod = ({ method, providerId, shippingActions }) => (
       }}
       onSubmit={values => shippingActions.updateShippingMethod(providerId, method._id, values)}
     />
+    <Subheader>{t("shippingMethod.matchingCartRanges")}</Subheader>
+    <Subheader>{t("shippingMethod.matchingLocales")}</Subheader>
     {/* TODO: add least part of the logic here */}
   </div>
 );
