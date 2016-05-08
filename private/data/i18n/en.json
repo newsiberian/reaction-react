@@ -17,7 +17,11 @@
           "reactUiLabel": "React UI",
           "reactUiTitle": "React UI",
           "reactUiDescription": "ReactJS UI for Reaction",
-          "sberbankPaymentLabel": "Sberbank Payment"
+          "sberbankPaymentLabel": "Sberbank Payment",
+          "sberbankPaymentDescription": "Mock for Sberband Payment"
+        },
+        "settings": {
+          "sberbankPaymentSettingsLabel": "Sberbank Payment Settings"
         },
         "accounts": {
           "avatar": "Avatar",

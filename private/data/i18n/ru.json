@@ -17,7 +17,11 @@
           "reactUiLabel": "React UI",
           "reactUiTitle": "React UI",
           "reactUiDescription": "Интерфейс ReactJS для Reaction",
-          "sberbankPaymentLabel": "Платёж через Сбербанк"
+          "sberbankPaymentLabel": "Платёж через Сбербанк",
+          "sberbankPaymentDescription": "Заглушка для платежей через Сбербанк"
+        },
+        "settings": {
+          "sberbankPaymentSettingsLabel": "Настройки платежей через Сбербанк"
         },
         "accounts": {
           "avatar": "Аватар",
