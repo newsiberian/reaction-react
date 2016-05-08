@@ -40,14 +40,17 @@ const adminNoteStyles = StyleSheet.create({
 });
 
 class OrderNotes extends Component {
-  // shouldComponentUpdate(nextProps) {
-  //   return nextProps.note.isChanged !== this.props.note.isChanged;
-  // }
-
   handleBlur(event) {
     const { order, ordersActions } = this.props;
     const content = event.target.value;
-    if (content !== "") {
+
+    // we need to compare origin note content with new one, to prevent unnecessary
+    // updates
+    const originNote = order.notes && order.notes.length ?
+      order.notes.find(note => note.userId !== order.userId) :
+      { content: "" };
+
+    if (originNote.content !== content) {
       ordersActions.updateOrderNote(order._id, content);
     }
   }

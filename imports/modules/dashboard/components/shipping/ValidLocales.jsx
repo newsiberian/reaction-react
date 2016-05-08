@@ -41,7 +41,7 @@ class ValidLocales extends Component {
             <ActionDelete />
           </IconButton>
         </div>
-        <Divider style={{marginLeft: -20}} />
+        <Divider style={{marginLeft: -16}} />
       </div>
     );
   }

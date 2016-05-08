@@ -84,9 +84,11 @@ const styles = {
 
 class EditMethodForm extends Component {
   render() {
+    // we can't use `pristine` here because of included forms, which could be
+    // added or removed
     const {
       fields: { name, label, group, enabled, cost, handling, rate, validRanges,
-      validLocales }, handleSubmit, pristine, submitting, t
+      validLocales }, handleSubmit, submitting, t
     } = this.props;
     return (
       <form onSubmit={handleSubmit} style={{ marginLeft: 20 }}>
@@ -129,24 +131,6 @@ class EditMethodForm extends Component {
             label={t("shipping.enabled")}
           />
         </div>
-        
-        <Subheader style={styles.subheader}>{t("shippingMethod.matchingCartRanges")}</Subheader>
-        <IconButton
-          tooltip={t("shipping.addNewCondition")}
-          onTouchTap={() => validRanges.addField()}
-        >
-          <ContentAdd />
-        </IconButton>
-        {validRanges.length ? validRanges.map((validRange, index) => (
-          <ValidRanges
-            key={index}
-            index={index}
-            {...validRange}
-            validRanges={validRanges}
-          />
-        )) :
-          <ValidRanges index={0} begin={validRanges.begin} end={validRanges.end} validRanges={validRanges} />
-        }
 
         <Subheader style={styles.subheader}>{t("shippingMethod.matchingLocales")}</Subheader>
         <IconButton
@@ -172,11 +156,30 @@ class EditMethodForm extends Component {
             validLocales={validLocales}
           />
         }
+
+        <Subheader style={styles.subheader}>{t("shippingMethod.matchingCartRanges")}</Subheader>
+        <IconButton
+          tooltip={t("shipping.addNewCondition")}
+          onTouchTap={() => validRanges.addField()}
+        >
+          <ContentAdd />
+        </IconButton>
+        {validRanges.length ? validRanges.map((validRange, index) => (
+          <ValidRanges
+            key={index}
+            index={index}
+            {...validRange}
+            validRanges={validRanges}
+          />
+        )) :
+          <ValidRanges index={0} begin={validRanges.begin} end={validRanges.end} validRanges={validRanges} />
+        }
+
         <FlatButton
           label={t("app.save")}
           primary={true}
           type="submit"
-          disabled={pristine || submitting}
+          disabled={submitting}
           style={{ marginBottom: "1rem" }}
         />
       </form>
@@ -187,7 +190,6 @@ class EditMethodForm extends Component {
 EditMethodForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };
