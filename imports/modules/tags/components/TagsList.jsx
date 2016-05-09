@@ -34,7 +34,7 @@ class TagsList extends Component {
   // }
   
   render() {
-    const { push, t, tags, tagsActions } = this.props;
+    const { location, push, t, tags, tagsActions } = this.props;
     return (
       <SelectableList
         value={location.pathname}
