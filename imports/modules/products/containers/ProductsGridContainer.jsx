@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { ReactionCore } from "meteor/reactioncommerce:core";
 import { getTag } from "../../../client/helpers/products";
 import * as productActions from "../actions/product";
+import * as tagsActions from "../../tags/actions/tags";
 import * as layoutSettingsActions from "../../layout/actions/settings";
 import ProductsGrid from "../components/productsGrid/ProductsGrid.jsx";
 import Loading from "../../layout/components/Loading.jsx";
@@ -221,7 +222,10 @@ ProductsGridContainer.propTypes = {
     flushProductsList: PropTypes.func
   }).isRequired,
   productsScrollLimit: PropTypes.number.isRequired,
-  selectedProducts: PropTypes.arrayOf(PropTypes.string)
+  selectedProducts: PropTypes.arrayOf(PropTypes.string),
+  tagsActions: PropTypes.shape({
+    toggleTagsNav: PropTypes.func
+  }).isRequired
 };
 
 function mapStateToProps(state) {
@@ -235,7 +239,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     layoutSettingsActions: bindActionCreators(layoutSettingsActions, dispatch),
-    productActions: bindActionCreators(productActions, dispatch)
+    productActions: bindActionCreators(productActions, dispatch),
+    tagsActions: bindActionCreators(tagsActions, dispatch)
   };
 }
 
@@ -247,7 +252,7 @@ function composer(props, onData) {
 
   if (Shops.ready() && Packages.ready() && handle.ready()) {
     const products = loadProducts(location, params);
-    onData(null, { products: products });
+    onData(null, { products });
   }
 }
 

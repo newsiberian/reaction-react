@@ -4,6 +4,8 @@ import React, { Component, PropTypes } from "react";
 import ProductsGridItem from "./ProductsGridItem.jsx";
 // import { styles } from "../../styles/productsGrid"
 import { layoutStyles } from "../../../layout/styles/layout";
+import SidebarButton from "../../../layout/components/SidebarButton.jsx";
+import TagsNavContainer from "../../../tags/containers/TagsNavContainer.jsx";
 
 const styles = {
   container: {
@@ -19,12 +21,16 @@ class ProductsGrid extends Component {
   render() {
     const {
       layoutSettingsActions, locale, params, products, productActions,
-      selectedProducts
+      selectedProducts, tagsActions, location
     } = this.props;
 
     console.log("ProductGrid: rendering...");
     return (
       <div style={layoutStyles.parent}>
+        {/* Tags menu toggle button */}
+        <SidebarButton handleClick={tagsActions.toggleTagsNav} />
+        <TagsNavContainer location={location} />
+
         <section className="row" style={styles.container}>
           {products.length && products.map(product => (
             <ProductsGridItem
@@ -55,6 +61,7 @@ ProductsGrid.propTypes = {
     locale: PropTypes.object,
     shopCurrency: PropTypes.object
   }).isRequired,
+  location: PropTypes.object.isRequired,
   params: PropTypes.shape({
     slug: PropTypes.string
   }).isRequired,
@@ -65,7 +72,10 @@ ProductsGrid.propTypes = {
     unselectProduct: PropTypes.func,
     flushProductsList: PropTypes.func
   }).isRequired,
-  selectedProducts: PropTypes.arrayOf(PropTypes.string)
+  selectedProducts: PropTypes.arrayOf(PropTypes.string),
+  tagsActions: PropTypes.shape({
+    toggleTagsNav: PropTypes.func
+  }).isRequired
 };
 
 export default ProductsGrid;

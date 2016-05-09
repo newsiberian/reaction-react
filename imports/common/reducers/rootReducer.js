@@ -9,6 +9,7 @@ import cart from "../../modules/cart/reducers";
 import checkout from "../../modules/checkout/reducers";
 import comments from "../../modules/comments/reducers";
 import shipping from "../../modules/shipping/reducers";
+import tags from "../../modules/tags/reducers";
 
 const rootReducer = combineReducers({
   layout,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   checkout,
   comments,
   shipping,
+  tags,
   form: formReducer,
   routing: routerReducer
 });

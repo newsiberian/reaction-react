@@ -4,6 +4,7 @@ import { ReactionCore } from "meteor/reactioncommerce:core";
 import { formatPrice } from "../../../../client/helpers/i18n";
 import Avatar from "material-ui/Avatar";
 import { List, ListItem, MakeSelectable } from "material-ui/List";
+
 let SelectableList = MakeSelectable(List);
 
 const styles = {
@@ -17,27 +18,24 @@ const styles = {
 };
 
 // HOC
-const wrapState = ComposedComponent =>
-  class SelectableList extends Component {
-    handleSelect(index) {
-      const { shippingActions, shipmentQuotes } = this.props;
-      shippingActions.setShipmentMethod(index, shipmentQuotes[index].method);
-    }
+const wrapState = ComposedComponent => class SelectableList extends Component {
+  handleSelect(index) {
+    const { shippingActions, shipmentQuotes } = this.props;
+    shippingActions.setShipmentMethod(index, shipmentQuotes[index].method);
+  }
 
-    render() {
-      const { children, selectedIndex } = this.props;
-      return (
-        <ComposedComponent
-          // {...this.props}
-          // {...this.state}
-          value={selectedIndex}
-          onChange={(event, index) => this.handleSelect(index)}
-        >
-          {children}
-        </ComposedComponent>
-      );
-    }
-  };
+  render() {
+    const { children, selectedIndex } = this.props;
+    return (
+      <ComposedComponent
+        value={selectedIndex}
+        onChange={(event, index) => this.handleSelect(index)}
+      >
+        {children}
+      </ComposedComponent>
+    );
+  }
+};
 
 
 SelectableList = wrapState(SelectableList);

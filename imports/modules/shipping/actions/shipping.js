@@ -71,7 +71,7 @@ export const updateShippingMethod = (providerId, methodId, updatedMethod) => {
 
 export const deleteShippingMethod = (providerId, method) => {
   return dispatch => {
-    if (confirm(i18next.t("shipping.removeShippingMethod", { method: method.name }))) {
+    if (confirm(i18next.t("shipping.removeShippingMethodConfirm", { method: method.name }))) {
       Meteor.call("removeShippingMethod", providerId, method, (err, res) => {
         if (err) {
           dispatch(displayAlert({ message: err.reason ? err.reason : err.message }));
